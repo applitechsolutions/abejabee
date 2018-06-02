@@ -1,0 +1,674 @@
+h1, h2, h3, h4, h5, h6, p, body, html, a, button, input, ul, ol, li, table, em, b, tr, tbody, thead, td
+{
+	font-family: 'Open Sans', sans-serif;
+
+}
+
+a:hover
+{
+  text-decoration: none;
+}
+input
+{
+    outline: none;
+}
+body, html {
+    height: 100%;
+    color: #777;
+    line-height: 1.8;
+}
+.result-count-input
+{
+  width: 60px; 
+  margin-top: -7px;
+  float: left; 
+  margin-right: 2px; 
+  margin-left: 2px;
+}
+.report-sidebar
+{
+  height:100%;
+  width:200px;
+  background-color:#fff;
+  z-index:1;
+  float: left;
+}
+.round-header
+{
+  border-radius: 8px 8px 0 0;
+}
+.round-footer
+{
+  border-radius: 0 0 8px 8px;
+}
+.gdp-round
+{
+	border-radius: 5px;
+}
+.gdp-round-top
+{
+	border-radius: 5px 5px 0 0;
+}
+.gdp-round-bottom
+{
+	border-radius: 0 0 5px 5px;
+}
+.gdp-teal
+{
+  background-color: #007267;
+  color: white;
+}
+.gdp-text-teal
+{
+  color: #007267 !important;
+}
+.user-image
+{
+  max-width: 200px !important; 
+  width: 100% !important;
+}
+.gdp-pale-red
+{
+  background-color: #DF5E5E !important;
+  color: white;
+}
+.gdp-pale-green
+{
+  background-color: #729A66 !important;
+  color: white;
+}
+.role-list
+{
+  height: 200px; 
+  overflow: auto;
+}
+.gdp-empleado
+{
+  min-height: 150px;
+}
+.gdp-maquina
+{
+  min-height: 100px;
+  max-height: 100px;
+  height: 100px;
+}
+.gdp-producto
+{
+  color: white;
+  background-color: #1C7393 !important;
+}
+.gdp-border-product-blue
+{
+  border-color:#1C7393!important;
+}
+.gdp-border-product-dark-blue
+{
+  border-color:#155268!important;
+}
+.gdp-border-bottom-producto
+{
+  border-style: solid;
+  border-bottom: 1px solid #1C7393;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+}
+.search-icon
+{
+  color: #A4A4A4;
+}
+
+.gdp-gray
+{
+  background-color: #4F504F;
+  color: white !important;
+}
+.provider-truck
+{
+  color: #4F504F !important;
+}
+.gdp-light-gray
+{
+  background-color: #727272 !important;
+  color: white !important;
+}
+.little-modal
+{
+  max-width: 400px;
+}
+.medium-modal
+{
+  max-width: 600px;
+}
+.gdp-producto-edit
+{
+  color: white;
+  background-color: #155268 !important;
+}
+.gdp-product-icon
+{
+  color: #155268;
+}
+.roles-dialog
+{
+  max-height: 180px; 
+
+  overflow-y:scroll;
+}
+li {
+    list-style-type: none;
+}
+.hidden-section
+{
+  display: none;
+}
+.gdp-profile-pic-add
+{
+  max-width: 200px;
+}
+.gdp-hover-blue-button:hover
+{
+  background-color: #67BAFE !important;
+  color: white !important;
+  transition: 0.3s;
+}
+.sidebar-text-gray
+{
+  color: #A4ADB6 !important;
+}
+.little-logo
+{
+  max-height: 40px;
+}
+.center-logo
+{
+  max-height: 300px;
+}
+.center-logo-height
+{
+  max-height: 320px;
+}
+#notBar
+{
+  margin-top: 43px;
+}
+.left-icon
+{
+  float: left; 
+  height: 22px; 
+  margin-right: 5px;
+}
+.gdp-blue
+{
+  background-color: #1E84D7 !important;
+  color: white !important;
+}
+
+.gdp-hover-blue:hover
+{
+  background-color: #1E84D7 !important;
+  color: white !important;
+  transition: 0.3s;
+}
+
+
+.product-images
+{
+	max-width: 200px;
+	
+}
+
+.bgimg-1, .bgimg-2, .bgimg-3
+{
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/* First image (Logo. Full height) */
+.bgimg-1 {
+    background-image: url('https://userscontent2.emaze.com/images/3026d3c9-f564-4356-886d-6a5da5221dfc/63e69601816845aa6f22ef345aad4837.jpg');
+    min-height: 100%;
+}
+.bgimg-2 {
+    background-image: url('https://ucmedia.escapadarural.com/es/pan/ucmainimage/corner891/corner891.jpg');
+    min-height: 30%;
+}
+
+@media only screen and (max-device-width: 1024px) {
+    .bgimg-1, .bgimg-2, .bgimg-3
+    {
+        background-attachment: scroll;
+    }
+}
+
+@media (min-width: 1200px) 
+{
+  #nosotros
+  {
+    height: 500px;
+  }
+  #productos
+  {
+    height: 650px;
+  }
+  #servicios
+  {
+    height: 100px;
+  }
+  #proceso
+  {
+    height: 500px;
+  }
+  #galeria
+  {
+    height: 600px;
+  }
+}
+
+@media (min-width: 992px) 
+{
+  #nosotros
+  {
+    height: 500px;
+  }
+  #productos
+  {
+    height: 650px
+  }
+  #servicios
+  {
+    height: 350px;
+  }
+
+}
+
+@media (max-width: 782px) {
+  #servicios
+  {
+    height: 1050px;
+  }
+}
+
+
+.seosa-dark-blue 
+{
+	background-color: #282C32;
+	color: white;
+}
+.general-static
+{
+  height: 100px !important;
+  min-height: 100px;
+}
+@media (max-width:600px)
+{
+  #usericon, #producticon, #empIcon, #proIcon, #cellarIcon, #rootIcon
+  {
+    font-size: 15vw !important;
+  }
+}
+
+@media (max-width:992px)
+{
+  #usericon, #producticon, #empIcon, #proIcon, #cellarIcon, #rootIcon
+  {
+    font-size: 10vw !important;
+
+  }
+  .gdp-empleado
+  {
+    min-height: 250px;
+  }
+}
+
+@media (min-width:993px)
+{
+  #usericon, #producticon, #empIcon, #proIcon, #cellarIcon, #rootIcon
+  {
+    font-size: 3.5vw !important;
+  }
+}
+
+.gdp-light-blue
+{
+  background-color: #7ABCD6 !important;
+  color: white;
+}
+.gdp-dashboard
+{
+  background-color: #1A1D21 !important;
+  color: white !important; 
+}
+.gdp-text-light-blue
+{
+  color: #7ABCD6 !important;
+}
+.smallText
+{
+  font-size: 14px;
+  color: white !important;
+}
+.gdp-dark-blue 
+{
+  background-color: #282C32 !important;
+  color: white;
+}
+.gdp-text-dark-blue
+{
+  color: #282C32 !important;
+}
+
+.little-margin
+{
+  margin-left: 5px;
+}
+.margin-right-large
+{
+  margin-right: 50px;
+}
+.cursor-pointer
+{
+  cursor: pointer;
+}
+.gdp-text-dark-blue2
+{
+  color: #364A64 !important;
+}
+.gdp-profile-image
+{
+  width: 25px;
+  max-width: 25px;
+  height: 25px;
+  max-height: 25px;
+}
+.float-left
+{
+  float: left;
+}
+.gdp-hover-text-dark-blue:hover
+{
+  color: #364A64 !important;
+  transition: 0.3s
+}
+@media (min-width:300px)
+{
+  #main-content
+  {
+    margin-left: 50px;
+  }
+  
+}
+
+@media (min-width:993px)
+{
+  #main-content
+  {
+    margin-left: 200px;
+  }
+
+}
+
+.hide-element
+{
+  display: none !important;
+}
+
+#gdp-sidebar
+{
+  width:200px;
+  
+}
+
+#gdp-sidebar-icons
+{
+  width: 50px;
+  min-width: 50px;
+  max-width: 50px;
+}
+
+.seosa-text-dark-blue
+{
+	color: #282C32;
+}
+
+.login-header
+{
+    border-radius: 4px 4px 0 0;
+}
+.login-modal
+{
+    max-width: 500px;
+}
+
+
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+::-webkit-scrollbar-thumb {
+  background: #e1e1e1;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ffffff;
+}
+::-webkit-scrollbar-thumb:active {
+  background: #000000;
+}
+::-webkit-scrollbar-track {
+  background: #666666;
+  border: 0px none #ffffff;
+  border-radius: 0px;
+}
+::-webkit-scrollbar-track:hover {
+  background: #666666;
+}
+::-webkit-scrollbar-track:active {
+  background: #333333;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+
+.tunnel {
+  counter-reset: progress;
+  padding-left: 0;
+  display: flex;
+}
+
+/* li is flex-item and flex-container */
+.tunnel li {
+  display: flex;
+  align-items: center;
+  list-style-type: none;
+  counter-increment: progress
+}
+
+/* everyone flexible except first */
+.tunnel li+li {
+  flex: 1 0 auto;
+}
+
+/* hide further steps */
+.tunnel .is-current ~ li {
+  opacity: .3;
+}
+
+/* show counter numbers */
+.tunnel li::after {
+  content: counter(progress);
+  display: inline-block;
+  box-sizing: border-box;
+  width: 2em;
+  height: 2em;
+  line-height: 2em;
+  background: #282C32;
+  border-radius: 50%;
+  text-align: center;
+  color: #fff;		
+}
+
+/* show progress bars except for first */
+.tunnel li+li::before {
+  content: "";
+  flex: 1;
+  display: block; /* IE10 fix */
+  border-bottom: 2px solid #282C32;
+}
+.tunnel .is-current ~ li::before {
+  border-bottom-style: dotted;
+}
+
+.discrete {
+  margin-top: 3em;
+  font-size: 1.2rem;
+  color: #282C32;
+  line-height: 1.5;
+}
+
+
+.row > .column {
+  padding: 0 8px;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.column {
+  float: left;
+  width: 25%;
+}
+#googleMap {
+    width: 100%; /* Span the entire width of the screen */
+    height: 300px; /* Set the height to 400 pixels */
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%); 
+}
+
+.cfont
+{
+	font-size: 14px;
+}
+/* The Modal (background) */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: black;
+}
+
+/* Modal Content */
+.modal-content {
+  position: relative;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 0;
+  width: 90%;
+  max-width: 1200px;
+}
+
+/* The Close Button */
+.close {
+  color: white;
+  position: absolute;
+  top: 10px;
+  right: 25px;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #999;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.mySlides {
+  display: none;
+}
+
+/* Next & previous buttons */
+.prev,
+.next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -50px;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover,
+.next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+.i-galery
+{
+	width: 100%;
+}
+.caption-container {
+  text-align: center;
+  background-color: black;
+  padding: 2px 16px;
+  color: white;
+}
+
+img.demo {
+  opacity: 0.6;
+}
+
+.active,
+.demo:hover {
+  opacity: 1;
+}
+
+img.hover-shadow {
+  transition: 0.3s
+}
+
+.hover-shadow:hover {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)
+}
