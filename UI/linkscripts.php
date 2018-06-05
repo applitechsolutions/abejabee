@@ -2,6 +2,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1 user-scalable=no">
 <link rel="stylesheet" type="text/css" href="UI/css/bootstrap.css">
+<base href="<?php include(APP_URL); ?>">
 <link rel="stylesheet" type="text/css" href="UI/css/w3styles.css">
 <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="UI/css/gdp.css">
