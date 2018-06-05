@@ -855,42 +855,7 @@
                             </ul>
                         </div>
                         <!-- /.panel-body -->
-                        <div class="panel-footer">
-                            <div class="input-group">
-                                <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
-                                <span class="input-group-btn">
-                                    <button class="btn btn-warning btn-sm" id="btn-chat">
-                                        Send
-                                    </button>
-                                </span>
-                            </div>
-                        </div>
-                        <!-- /.panel-footer -->
-                    </div>
-                    <!-- /.panel .chat-panel -->
-                </div>
-                <!-- /.col-lg-4 -->
-            </div>
-            <!-- /.row -->
-        </div>
-        <!-- /#page-wrapper -->
-    </div>
-    <script src="UI/jquery.autocomplete.js"></script>
-    <script src="UI/js/jquery.min.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="UI/js/bootstrap.min.js"></script>
-
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="UI/js/metisMenu.min.js"></script>
-
-    <!-- Morris Charts JavaScript -->
-    <script src="UI/js/raphael.min.js"></script>
-    <script src="UI/js/morris.min.js"></script>
-    <script src="UI/js/morris-data.js"></script>
-
-    <!-- Custom Theme JavaScript -->
-    <script src="UI/js/sb.js"></script>
+    <?php include(HTML_DIR.'overall/footer.php'); ?>
     
 </body>
 </html>

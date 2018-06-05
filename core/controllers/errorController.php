@@ -1,3 +1,3 @@
 <?php
-  echo "error";
+  include (HTML_DIR.'index/login.php');
 ?>
