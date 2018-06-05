@@ -24,7 +24,7 @@
                                     </label>
                                 </div>
                                 <!-- Change this to a button or input when using this as a form -->
-                                <button type="button" class="btn btn-default btn-success btn-block" onclick="goLogin()"><span class="fa fa-power-off">Ingresar</span></button>
+                                <button type="button" class="btn btn-default btn-success btn-block" onclick="goLogin()"><span class="fa fa-power-off"> Ingresar</span></button>
                             </fieldset>
                         </form>
                     </div>
