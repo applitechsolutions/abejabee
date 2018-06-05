@@ -10,4 +10,6 @@
   } else {
     include('core/controllers/indexController.php');
   }
+
+  
 ?>
