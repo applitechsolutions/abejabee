@@ -2,10 +2,8 @@ function goLogin() {
     var connect, form, response, result, user, pass, session;
     user = __('user_login').value;
     pass = __('pass_login').value;
-    session = __('session').value;
-
-    form = 'variable-contenido';
-    index = 'index';
+    session = __('session').checked ? true : false;
+    form = 'username=' + user + '&password=' + pass + '&remember=' + session;
     connect = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
     connect.onreadystatechange = function(){
         if (connect.readyState == 4 && connect.status == 200) {
@@ -16,7 +14,7 @@ function goLogin() {
                 result += '<p class="mb-0"><strong>Estamos redireccionando...</strong></p>';
                 result += '</div>';
                 __('_AJAX_LOGIN_').innerHTML = result;
-                window.location = 'index.php?view='+index;
+                window.location = 'index.php?view=index';
             }else {
                 __('_AJAX_LOGIN_').innerHTML = connect.responseText;
             }
@@ -31,7 +29,7 @@ function goLogin() {
         }
     }  
 
-    connect.open('POST', 'Ajax.php?mode=login', true);
+    connect.open('POST', 'ajax.php?mode=login', true);
     connect.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     connect.send(form);
     
