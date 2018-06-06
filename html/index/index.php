@@ -13,8 +13,7 @@
                 </button>
                 <a class="navbar-brand" href="index.html">Schlenker Pharma S.A</a>
             </div>
-            <!-- /.navbar-header -->
-
+            
             <ul class="nav navbar-top-links navbar-right">
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
