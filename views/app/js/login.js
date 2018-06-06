@@ -1,5 +1,9 @@
 function goLogin() {
-    var connect, form, response, result;
+    var connect, form, response, result, user, pass, session;
+    user = __('user_login').valor;
+    pass = __('pass_login').valor;
+    session = __('session').valor;
+
     form = 'variable-contenido';
     connect = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
     connect.onreadystatechange = function(){
