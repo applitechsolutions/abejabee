@@ -10,6 +10,7 @@
 <link href="UI/css/metisMenu.min.css" rel="stylesheet">
 <link href="UI/css/morris.css" rel="stylesheet">
 <link href="UI/css/bootstrap.min.css" rel="stylesheet">
+<link href="UI/css/sb.css" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js"></script>  
 <script src="UI/js/md5.min.js"></script>
