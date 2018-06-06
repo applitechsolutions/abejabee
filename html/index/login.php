@@ -1,7 +1,13 @@
 <?php include(HTML_DIR.'overall/header.php')?>
 
 <body>
-
+    <div id="_AJAX_LOGIN_">
+        <div class="alert alert-dismissible alert-warning">
+            <button class="close" type="button" data-dismiss="alert">&times;</button>
+            <h4 class="alert-heading">Warning!</h4>
+            <p class="mb-0">Best check yo self, you're not looking too good. Nulla vitae elit libero, a pharetra augue. Praesent commodo cursus magna, <a class="alert-link" href="#">vel scelerisque nisl consectetur et</a>.</p>
+        </div>
+    </div>
     <div class="container">
         <div class="row">
             <div class="col-md-4 col-md-offset-4">
