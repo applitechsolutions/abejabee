@@ -5,6 +5,7 @@ function goLogin() {
     session = __('session').value;
 
     form = 'variable-contenido';
+    index = 'index';
     connect = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
     connect.onreadystatechange = function(){
         if (connect.readyState == 4 && connect.status == 200) {
@@ -15,7 +16,7 @@ function goLogin() {
                 result += '<p class="mb-0"><strong>Estamos redireccionando...</strong></p>';
                 result += '</div>';
                 __('_AJAX_LOGIN_').innerHTML = result;
-                location.replace('./html/index/index.php');
+                window.location = 'index.php?view='+index;
             }else {
                 __('_AJAX_LOGIN_').innerHTML = connect.responseText;
             }
