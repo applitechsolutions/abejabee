@@ -1,3 +1,3 @@
 <?php
-  include (HTML_DIR.'index/login.php');
+  Echo "Error en la dirección";
 ?>

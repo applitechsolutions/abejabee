@@ -8,7 +8,7 @@
       include('core/controllers/errorController.php');
     }
   } else {
-    include('core/controllers/errorController.php');
+    include('core/controllers/loginController.php');
   }
 
   
