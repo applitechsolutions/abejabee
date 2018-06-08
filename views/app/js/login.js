@@ -29,7 +29,7 @@ function goLogin() {
         }
     }  
 
-    connect.open('POST', 'ajax.php?mode=loginn', true);
+    connect.open('POST', 'ajax.php?mode=login', true);
     connect.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     connect.send(form);
     
