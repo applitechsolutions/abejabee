@@ -9,11 +9,11 @@
                 break;
             
             default:
-                header('location: login.php');
+                header('location: index.php');
                 break;
         }
     } else {
-        header('location: login.php');
+        header('location: index.php');
     }
     
 
