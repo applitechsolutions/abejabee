@@ -1,6 +1,11 @@
 <?php include(HTML_DIR.'overall/header.php')?>
+<?php
+     if (!isset($_SESSION['app_id'])){
+      include(HTML_DIR.'public/login.php');
+     }
+   else { ?>
 
-<body>
+   <body>
     <div id="wrapper">
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
@@ -210,8 +215,9 @@
                         <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                        </li>
+                        <?php
+                        echo '<li><a href="#"><i class="fa fa-user fa-fw"></i>'. strtoupper($users[$_SESSION['app_id']]['userName']) . '</a> </li>';
+                        ?>
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
@@ -857,4 +863,9 @@
     <?php include(HTML_DIR.'overall/footer.php'); ?>
     
 </body>
-</html>
+</html>   
+  <?php 
+   }
+  ?>
+
+

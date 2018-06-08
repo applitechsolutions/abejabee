@@ -20,4 +20,6 @@ require('core/models/classConnection.php');
 require('core/bin/functions/Encrypt.php');
 require('core/bin/functions/Users.php');
 
+$users = Users();
+
 ?>

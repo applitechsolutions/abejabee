@@ -1,21 +1,22 @@
 <?php
     function Users(){
         $db = new Conexion();
-        $sql = $db->query("SELECT * FROM users;");
+        $sql = $db->query("SELECT * FROM user;");
         if ($db->rows($sql)>0) {
             while ($d = $db->recorrer($sql)) {
-                $users[$d['id']] = array(
+                $users[$d['idUser']] = array(
                     'idUser' => $d['idUser'],
                     'firstName' => $d['firstName'],
                     'lastName' => $d['lastName'],
                     'userName' => $d['userName'],
-                    'passWord' => $d['passWord']
+                    'passWord' => $d['passWord'],
+                    'permissions' => $d['permissions']
                 );
             }
         }else {
-            $user = false;
+            $users = false;
         }
-        return $user;
+        return $users;
         $db->liberar($sql);
         $db->close();
     }

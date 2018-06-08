@@ -10,7 +10,7 @@
         public function rows($query){
             return mysqli_num_rows($query);
         }
-
+        
         public function liberar($query){
             return mysqli_free_result($query);
         }
