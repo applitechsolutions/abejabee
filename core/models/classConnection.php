@@ -15,7 +15,7 @@
             return mysqli_free_result($query);
         }
 
-        public function recorerr($query){
+        public function recorrer($query){
             return mysqli_fetch_array($query);
         }
     }

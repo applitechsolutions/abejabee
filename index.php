@@ -9,7 +9,5 @@
     }
   } else {
     include('core/controllers/loginController.php');
-  }
-
-  
+  }  
 ?>
