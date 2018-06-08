@@ -2,10 +2,8 @@
      if (!isset($_SESSION['app_id'])){
       include(HTML_DIR.'public/login.php');
      }
-   else { ?>
+   else { 
 
-   echo "Error"
-   
-  <?php 
+   echo "Error";
    }
   ?>
