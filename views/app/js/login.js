@@ -31,8 +31,7 @@ function goLogin() {
 
     connect.open('POST', 'ajax.php?mode=login', true);
     connect.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    connect.send(form);
-    
+    connect.send(form);    
 }
 
 function runScriptLogin(e) {
