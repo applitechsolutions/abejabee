@@ -112,7 +112,7 @@
                             <a></a>
                         </li>
                         <li>
-                            <a href="tables.html"><i class="fa fa-shopping-cart fa-fw"></i> Ventas</a>
+                            <a href="javascript:openLink('venta-item','venta')" id="venta-item"><i class="tablink fa fa-shopping-cart fa-fw"></i> Ventas</a>
                         </li>
                         <li>
                             <a href="tables.html"><i class="fa fa-truck fa-fw"></i> Rutas</a>
@@ -158,7 +158,12 @@
 
                         <div id="inicio" class="city w3-animate-left hidden-section">
                         <h1 class="page-header">Inventario</h1>
-		                <?php include 'usuarios.php'; ?>
+		                <?php include 'inventario/inventario.php'; ?>
+	                    </div>
+
+                        <div id="venta" class="city w3-animate-left hidden-section">
+                        <h1 class="page-header">Ventas</h1>
+		                <?php include 'venta/venta.php'; ?>
 	                    </div>
                     <!-- /.col-lg-12 -->
                      </div>                
