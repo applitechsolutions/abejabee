@@ -1,4 +1,3 @@
-    <script src="UI/jquery.autocomplete.js"></script>
     <script src="UI/js/jquery.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->

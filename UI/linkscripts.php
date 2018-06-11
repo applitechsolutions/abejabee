@@ -7,8 +7,6 @@
 <link rel="stylesheet" type="text/css" href="UI/css/gdp.css">
 <link rel="stylesheet" type="text/css" href="UI/css/sb.css">
 <link rel="stylesheet" type="text/css" href="UI/font-awesome/css/font-awesome.css">
-<link href="UI/css/metisMenu.min.css" rel="stylesheet">
-<link href="UI/css/morris.css" rel="stylesheet">
 <link href="UI/css/bootstrap.min.css" rel="stylesheet">
 <link href="UI/css/sb.css" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
