@@ -15,3 +15,4 @@
     <!-- Custom Theme JavaScript -->
     <script src="UI/js/sb.js"></script>
     <script src="views/app/js/login.js"></script>
+    <script src="views/app/js/ui.js"></script>
