@@ -1,10 +1,9 @@
-<?php include(HTML_DIR.'overall/header.php')?>
 <?php
      if (!isset($_SESSION['app_id'])){
       include(HTML_DIR.'public/login.php');
      }
    else { ?>
-
+    <?php include(HTML_DIR.'overall/header.php')?>
    <body onload="openLink('inicio-item', 'inicio')">
     <div id="wrapper">
         <!-- Navigation -->
@@ -243,9 +242,9 @@
         <!-- /#page-wrapper -->
     </div>
                         <!-- /.panel-body -->
-    <?php include(HTML_DIR.'overall/footer.php'); ?>    
 </body>
 </html>   
+    <?php include(HTML_DIR.'overall/footer.php'); ?>    
   <?php 
    }
   ?>
