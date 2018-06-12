@@ -185,12 +185,12 @@
                     <div class="col-lg-12">
 
                         <div id="inicio" class="city w3-animate-left hidden-section">
-                        <h1 class="page-header">Inventario</h1>
+                        <h2 class="page-header">Inventario</h2>
 		                <?php include 'inventario.php'; ?>
 	                    </div>
 
                         <div id="venta" class="city w3-animate-left hidden-section">
-                        <h1 class="page-header">Ventas</h1>
+                        <h2 class="page-header">Ventas</h2>
 		                <?php include 'venta.php'; ?>
                         </div>
                         
@@ -200,37 +200,37 @@
                         </div>
                         
                         <div id="cliente" class="city w3-animate-left hidden-section">
-                        <h1 class="page-header">Clientes</h1>
+                        <h2 class="page-header">Clientes</h2>
 		                <?php include 'cliente.php'; ?>
                         </div>
                         
                         <div id="catalogo" class="city w3-animate-left hidden-section">
-                        <h1 class="page-header">Catalogo</h1>
+                        <h2 class="page-header">Catalogo</h2>
 		                <?php include 'catalogo.php'; ?>
                         </div>
                         
                         <div id="compra" class="city w3-animate-left hidden-section">
-                        <h1 class="page-header">Compras</h1>
+                        <h2 class="page-header">Compras</h2>
 		                <?php include 'compra.php'; ?>
                         </div>
                         
                         <div id="proveedor" class="city w3-animate-left hidden-section">
-                        <h1 class="page-header">Proveedores</h1>
+                        <h2 class="page-header">Proveedores</h2>
 		                <?php include 'proveedor.php'; ?>
                         </div>
                         
                         <div id="vendedor" class="city w3-animate-left hidden-section">
-                        <h1 class="page-header">Vendedores</h1>
+                        <h2 class="page-header">Vendedores</h2>
 		                <?php include 'vendedor.php'; ?>
                         </div>
                         
                         <div id="usuario" class="city w3-animate-left hidden-section">
-                        <h1 class="page-header">Usuarios</h1>
+                        <h2 class="page-header">Usuarios</h2>
 		                <?php include 'usuario.php'; ?>
                         </div>
                         
                         <div id="reporte" class="city w3-animate-left hidden-section">
-                        <h1 class="page-header">Reportes</h1>
+                        <h2 class="page-header">Reportes</h2>
 		                <?php include 'reporte.php'; ?>
 	                    </div>
                     <!-- /.col-lg-12 -->
