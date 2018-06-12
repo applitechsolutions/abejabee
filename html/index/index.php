@@ -115,34 +115,34 @@
                             <a href="javascript:openLink('venta-item','venta')" id="venta-item"><i class="tablink fa fa-shopping-cart fa-fw"></i> Ventas</a>
                         </li>
                         <li>
-                            <a href="tables.html"><i class="fa fa-truck fa-fw"></i> Rutas</a>
+                            <a href="#"><i class="fa fa-truck fa-fw"></i> Rutas</a>
                         </li>
                         <li>
-                            <a href="forms.html"><i class="fa fa-hospital-o fa-fw"></i> Clientes</a>
+                            <a href="#"><i class="fa fa-hospital-o fa-fw"></i> Clientes</a>
                         </li>
                         <li>
-                            <a href="forms.html"><i class="fa fa-th-list fa-fw"></i> Catalogo</a>                            
-                        </li>
-                        <li>
-                            <a><i class=""></i></a>
-                        </li>
-                        <li>
-                            <a href="forms.html"><i class="fa fa-medkit fa-fw"></i> Compras</a>
-                        </li>
-                        <li>
-                            <a href="forms.html"><i class="fa  fa-sitemap fa-fw"></i> Proveedores</a>
+                            <a href="#"><i class="fa fa-th-list fa-fw"></i> Catalogo</a>                            
                         </li>
                         <li>
                             <a><i class=""></i></a>
                         </li>
                         <li>
-                            <a href="forms.html"><i class="fa fa-users fa-fw"></i> Vendedores</a>
+                            <a href="#"><i class="fa fa-medkit fa-fw"></i> Compras</a>
                         </li>
                         <li>
-                            <a href="forms.html"><i class="fa fa-user fa-fw"></i> Usuarios</a>
+                            <a href="#"><i class="fa  fa-sitemap fa-fw"></i> Proveedores</a>
                         </li>
                         <li>
-                            <a href="forms.html"><i class="fa fa-bar-chart-o fa-fw"></i> Reportes</a>
+                            <a><i class=""></i></a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-users fa-fw"></i> Vendedores</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-user fa-fw"></i> Usuarios</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Reportes</a>
                         </li>
                     </ul>
                 </div>
@@ -158,7 +158,7 @@
 
                         <div id="inicio" class="city w3-animate-left hidden-section">
                         <h1 class="page-header">Inventario</h1>
-		                <?php include 'inventario/inventario.php'; ?>
+		                <?php include 'inventario.php'; ?>
 	                    </div>
 
                         <div id="venta" class="city w3-animate-left hidden-section">

@@ -6,12 +6,11 @@
     <!-- Metis Menu Plugin JavaScript -->
     <script src="UI/js/metisMenu.min.js"></script>
 
-    <!-- Morris Charts JavaScript -->
-    <script src="UI/js/raphael.min.js"></script>
-    <script src="UI/js/morris.min.js"></script>
-    <script src="UI/js/morris-data.js"></script>
-
     <!-- Custom Theme JavaScript -->
     <script src="UI/js/sb.js"></script>
     <script src="views/app/js/login.js"></script>
     <script src="views/app/js/ui.js"></script>
+
+    <script src="UI/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="UI/datatables-plugins/dataTables.bootstrap.min.js"></script>
+    <script src="UI/datatables-responsive/dataTables.responsive.js"></script>

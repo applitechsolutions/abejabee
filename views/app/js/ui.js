@@ -12,3 +12,25 @@ function openLink(evt, animName) {
     }
     __(animName).style.display = "block";
 }
+
+$(document).ready(function(){
+    $("#add-empleado").click(function(){
+    $("#form-empleado").slideDown("fast");
+    });
+});
+$(document).ready(function(){
+    $("#close-add-empleado").click(function(){
+    $("#form-empleado").slideUp("fast");
+    document.getElementById('add-empleado').style.display='inline'
+    });
+    $("#cancel-add-empleado").click(function(){
+    $("#form-empleado").slideUp("fast");
+    document.getElementById('add-empleado').style.display='inline'
+    });
+});
+
+$(document).ready(function() {
+    $('#dataTables-example').DataTable({
+        responsive: true
+    });
+});
