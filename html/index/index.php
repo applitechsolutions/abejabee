@@ -131,15 +131,6 @@
                                 Clientes</button>
                         </li>
                         <li>
-<<<<<<< HEAD
-                            <a href="#"><i class="fa fa-truck fa-fw"></i> Rutas</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-hospital-o fa-fw"></i> Clientes</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-th-list fa-fw"></i> Catalogo</a>                            
-=======
                              <button id="catalogo-item" onclick="openLink('catalogo-item','catalogo')" class="btn btn-outline btn-primary btn-lg btn-block">
                             <div class="w3-col" style="width: 30px">
                             <i class="tablink fa fa-th-list fa-fw"></i> 
@@ -159,7 +150,6 @@
                             <i class="tablink fa fa-sitemap  fa-fw"></i> 
 					  			</div>                               
                                 Proveedores</button>
->>>>>>> 4d8a02ffb60e75b6f85c2981ae362e9bc17b69b1
                         </li>
                         <li>
                             <button id="vendedor-item" onclick="openLink('vendedor-item','vendedor')" class="btn btn-outline btn-primary btn-lg btn-block">
@@ -169,24 +159,6 @@
                                 Vendedores</button>
                         </li>
                         <li>
-<<<<<<< HEAD
-                            <a href="#"><i class="fa fa-medkit fa-fw"></i> Compras</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa  fa-sitemap fa-fw"></i> Proveedores</a>
-                        </li>
-                        <li>
-                            <a><i class=""></i></a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-users fa-fw"></i> Vendedores</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-user fa-fw"></i> Usuarios</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Reportes</a>
-=======
                             <button id="usuario-item" onclick="openLink('usuario-item','usuario')" class="btn btn-outline btn-primary btn-lg btn-block">
                             <div class="w3-col" style="width: 30px">
                             <i class="tablink fa fa-user fa-fw"></i> 
@@ -199,7 +171,6 @@
                             <i class="tablink fa fa-bar-chart-o fa-fw"></i> 
 					  			</div>                               
                                 Reportes</button>
->>>>>>> 4d8a02ffb60e75b6f85c2981ae362e9bc17b69b1
                         </li>
                     </ul>
                 </div>
@@ -214,11 +185,7 @@
                     <div class="col-lg-12">
 
                         <div id="inicio" class="city w3-animate-left hidden-section">
-<<<<<<< HEAD
-                        <h1 class="page-header">Inventario</h1>
-=======
                         <h2 class="page-header">Inventario</h2>
->>>>>>> 4d8a02ffb60e75b6f85c2981ae362e9bc17b69b1
 		                <?php include 'inventario.php'; ?>
 	                    </div>
 
