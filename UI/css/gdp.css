@@ -7,6 +7,7 @@ h1, h2, h3, h4, h5, h6, p, body, html, a, button, input, ul, ol, li, table, em, 
 a:hover
 {
   text-decoration: none;
+  color: #007267;
 }
 input
 {
@@ -171,6 +172,7 @@ li {
   background-color: #67BAFE !important;
   color: white !important;
   transition: 0.3s;
+  
 }
 .sidebar-text-gray
 {

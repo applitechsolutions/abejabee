@@ -103,46 +103,74 @@
                 <div class="sidebar-nav navbar-collapse">                
                     <ul class="nav" id="side-menu">
                         <li>
-                            <a></a>
+                        <button id="inicio-item" onclick="openLink('inicio-item', 'inicio')" class="btn btn-outline btn-primary btn-lg btn-block">
+                        <div class="w3-col" style="width: 30px">    
+                        <i class="tablink fa fa-home fa-fw"></i>
+                        </div>  
+                             Inicio</button>
                         </li>
                         <li>
-                        <a id="inicio-item" onclick="openLink('inicio-item', 'inicio')"><i class="tablink fa fa-home fa-fw"></i> Inicio</a>
+                            <button id="venta-item" onclick="openLink('venta-item','venta')" class="btn btn-outline btn-primary btn-lg btn-block">
+                            <div class="w3-col" style="width: 30px">
+                            <i class="tablink fa fa-shopping-cart fa-fw"></i> 
+					  			</div>                               
+                                Ventas</button>
                         </li>
                         <li>
-                            <a></a>
+                            <button id="ruta-item" onclick="openLink('ruta-item','ruta')" class="btn btn-outline btn-primary btn-lg btn-block">
+                            <div class="w3-col" style="width: 30px">
+                            <i class="tablink fa fa-truck fa-fw"></i> 
+					  			</div>                               
+                                Rutas</button>
                         </li>
                         <li>
-                            <a href="javascript:openLink('venta-item','venta')" id="venta-item"><i class="tablink fa fa-shopping-cart fa-fw"></i> Ventas</a>
+                        <button id="cliente-item" onclick="openLink('cliente-item','cliente')" class="btn btn-outline btn-primary btn-lg btn-block">
+                            <div class="w3-col" style="width: 30px">
+                            <i class="tablink fa fa-hospital-o fa-fw"></i> 
+					  			</div>                               
+                                Clientes</button>
                         </li>
                         <li>
-                            <a href="tables.html"><i class="fa fa-truck fa-fw"></i> Rutas</a>
+                             <button id="catalogo-item" onclick="openLink('catalogo-item','catalogo')" class="btn btn-outline btn-primary btn-lg btn-block">
+                            <div class="w3-col" style="width: 30px">
+                            <i class="tablink fa fa-th-list fa-fw"></i> 
+					  			</div>                               
+                                Catalogo</button>                            
                         </li>
                         <li>
-                            <a href="forms.html"><i class="fa fa-hospital-o fa-fw"></i> Clientes</a>
+                            <button id="compra-item" onclick="openLink('compra-item','compra')" class="btn btn-outline btn-primary btn-lg btn-block">
+                            <div class="w3-col" style="width: 30px">
+                            <i class="tablink fa fa-medkit fa-fw"></i> 
+					  			</div>                               
+                                Compras</button>
                         </li>
                         <li>
-                            <a href="forms.html"><i class="fa fa-th-list fa-fw"></i> Catalogo</a>                            
+                            <button id="proveedor-item" onclick="openLink('proveedor-item','proveedor')" class="btn btn-outline btn-primary btn-lg btn-block">
+                            <div class="w3-col" style="width: 30px">
+                            <i class="tablink fa fa-sitemap  fa-fw"></i> 
+					  			</div>                               
+                                Proveedores</button>
                         </li>
                         <li>
-                            <a><i class=""></i></a>
+                            <button id="vendedor-item" onclick="openLink('vendedor-item','vendedor')" class="btn btn-outline btn-primary btn-lg btn-block">
+                            <div class="w3-col" style="width: 30px">
+                            <i class="tablink fa fa-users fa-fw"></i> 
+					  			</div>                               
+                                Vendedores</button>
                         </li>
                         <li>
-                            <a href="forms.html"><i class="fa fa-medkit fa-fw"></i> Compras</a>
+                            <button id="usuario-item" onclick="openLink('usuario-item','usuario')" class="btn btn-outline btn-primary btn-lg btn-block">
+                            <div class="w3-col" style="width: 30px">
+                            <i class="tablink fa fa-user fa-fw"></i> 
+					  			</div>                               
+                                Usuarios</button>
                         </li>
                         <li>
-                            <a href="forms.html"><i class="fa  fa-sitemap fa-fw"></i> Proveedores</a>
-                        </li>
-                        <li>
-                            <a><i class=""></i></a>
-                        </li>
-                        <li>
-                            <a href="forms.html"><i class="fa fa-users fa-fw"></i> Vendedores</a>
-                        </li>
-                        <li>
-                            <a href="forms.html"><i class="fa fa-user fa-fw"></i> Usuarios</a>
-                        </li>
-                        <li>
-                            <a href="forms.html"><i class="fa fa-bar-chart-o fa-fw"></i> Reportes</a>
+                            <button id="reporte-item" onclick="openLink('reporte-item','reporte')" class="btn btn-outline btn-primary btn-lg btn-block">
+                            <div class="w3-col" style="width: 30px">
+                            <i class="tablink fa fa-bar-chart-o fa-fw"></i> 
+					  			</div>                               
+                                Reportes</button>
                         </li>
                     </ul>
                 </div>
@@ -158,12 +186,52 @@
 
                         <div id="inicio" class="city w3-animate-left hidden-section">
                         <h1 class="page-header">Inventario</h1>
-		                <?php include 'inventario/inventario.php'; ?>
+		                <?php include 'inventario.php'; ?>
 	                    </div>
 
                         <div id="venta" class="city w3-animate-left hidden-section">
                         <h1 class="page-header">Ventas</h1>
-		                <?php include 'venta/venta.php'; ?>
+		                <?php include 'venta.php'; ?>
+                        </div>
+                        
+                        <div id="ruta" class="city w3-animate-left hidden-section">
+                        <h2 class="page-header">Rutas</h2>
+		                <?php include 'ruta.php'; ?>
+                        </div>
+                        
+                        <div id="cliente" class="city w3-animate-left hidden-section">
+                        <h1 class="page-header">Clientes</h1>
+		                <?php include 'cliente.php'; ?>
+                        </div>
+                        
+                        <div id="catalogo" class="city w3-animate-left hidden-section">
+                        <h1 class="page-header">Catalogo</h1>
+		                <?php include 'catalogo.php'; ?>
+                        </div>
+                        
+                        <div id="compra" class="city w3-animate-left hidden-section">
+                        <h1 class="page-header">Compras</h1>
+		                <?php include 'compra.php'; ?>
+                        </div>
+                        
+                        <div id="proveedor" class="city w3-animate-left hidden-section">
+                        <h1 class="page-header">Proveedores</h1>
+		                <?php include 'proveedor.php'; ?>
+                        </div>
+                        
+                        <div id="vendedor" class="city w3-animate-left hidden-section">
+                        <h1 class="page-header">Vendedores</h1>
+		                <?php include 'vendedor.php'; ?>
+                        </div>
+                        
+                        <div id="usuario" class="city w3-animate-left hidden-section">
+                        <h1 class="page-header">Usuarios</h1>
+		                <?php include 'usuario.php'; ?>
+                        </div>
+                        
+                        <div id="reporte" class="city w3-animate-left hidden-section">
+                        <h1 class="page-header">Reportes</h1>
+		                <?php include 'reporte.php'; ?>
 	                    </div>
                     <!-- /.col-lg-12 -->
                      </div>                
