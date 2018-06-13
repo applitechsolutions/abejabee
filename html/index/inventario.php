@@ -1,52 +1,64 @@
-<div class="w3-border-bottom w3-margin-bottom">
-	<h3><i class="fa fa-users" aria-hidden="true"></i> Empleados</h3>
-</div>
-<div id="empleados-contenido" class="w3-container w3-margin-top">
-	<!--ADD EMPLEADO/////////////////////////////////////////////////////////////////////////////////////-->
-		<div id="agregar-empleado" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 w3-margin-bottom" >
-			<div >
-				<a id="add-empleado" class="w3-btn w3-blue w3-round" onclick="document.getElementById('add-empleado').style.display='none';">
-					<i class="fa fa-plus"></i> Agregar Empleado 
-				</a>
-				<div id="form-empleado" class="w3-card-2 w3-white col-lg-8 col-md-8 col-sm-10 col-xs-12 hidden-section">
-					<header>
-						<i id="close-add-empleado" class="w3-closebtn fa fa-times fa-2x"></i>
-						<h3>Agregar Empleado</h3>
-					</header>
-					<div class="w3-container">
-						<div class="w3-half w3-padding-small">
-							<label>Nombre</label>
-                            <input type="text" class="w3-input w3-large" placeholder="Ingrese el nombre">
-                            <label>Seleccione el Género</label>
-							<select class="w3-select" name="genero_empleado">
-								<option value="m">Masculino</option>
-								<option value="f">Femenino</option>
-							</select>
-							<label>Seleccione el puesto</label>
-							<select id="jobselect" onchange="newJob()" class="w3-input w3-round w3-light-gray w3-border-light-gray" name="puesto_empleado">
-								<option value="" disabled selected>Elige un Puesto</option>
-								<option value="0">+ Nuevo Puesto</option>
-								
-								
-							</select>	
-						</div>
-						<div class="w3-half w3-padding-small">
-							<label>Apellido</label>
-							<input type="text" class="w3-input w3-round w3-light-gray w3-border-light-gray" placeholder="ingrese el apellido del nuevo empleado" name="apellido_empleado">	
-							<label>Fecha de nacimiento</label>
-							<input type="date" class="w3-select" placeholder="ingrese la fecha de nacimiento del nuevo empleado" name="fecha_empleado">	
-						</div>
-						<footer class="modal-footer">
-							<button class="w3-btn w3-round-large w3-light-gray w3-hover-red w3-medium" id="cancel-add-empleado"> Cancelar</button>
-							<button class="w3-btn w3-round-large w3-green w3-large" onclick="saveEmployee()"><i class="fa fa-floppy-o"></i> Agregar</button>
-						</footer>
+<div class="w3-container">
+  <button onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-blue w3-large w3-round-large w3-right fa fa-plus"> Nuevo</button>
+  	<div id="id01" class="w3-modal">
+  
+		<div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
+			<div class="w3-card-2 w3-white col-lg-12 col-md-8 col-sm-8 col-xs-10">
+				<header>
+					<h3>Agregar Producto</h3>
+					<span onclick="document.getElementById('id01').style.display='none'" class="w3-closebtn fa fa-times fa-2x"</span>
+				</header>
+				<div class="w3-container">
+					<div class="w3-half w3-padding-small">
+						<br>
+						<label class="w3-left">Nombre</label>
+						<input class="w3-input" type="text" placeholder="Ingrese el nombre del producto">
+						<br>
+						<label class="w3-left">Costo</label>
+						<input class="w3-input" type="text" placeholder="Ingrese el costo del producto">
+						<br>
+						<label class="w3-left">Imagen</label>
+						<input class="inputFile" type="file">
+						<br>
+						<select class="w3-select" name="option">
+							<option value="" disabled selected>Seleccione la Categoría</option>
+							<option value="1">Option 1</option>
+							<option value="2">Option 2</option>
+							<option value="3">Option 3</option>
+						</select>
+					</div>
+					<div class="w3-half w3-padding-small">
+						<br>
+						<label class="w3-left">Código</label>
+						<input class="w3-input" type="text" placeholder="Ingrese el código del producto">
+						<br>
+						<label class="w3-left">Descripción</label>
+						<input class="w3-input" type="textarea" placeholder="Ingrese una descripción">
+						<br>
+						<select class="w3-select" name="option">
+							<option value="" disabled selected>Seleccione la Unidad</option>
+							<option value="1">Option 1</option>
+							<option value="2">Option 2</option>
+							<option value="3">Option 3</option>
+						</select>
+
+						<br>
+						<select class="w3-select" name="option">
+							<option value="" disabled selected>Seleccione la Marca</option>
+							<option value="1">Option 1</option>
+							<option value="2">Option 2</option>
+							<option value="3">Option 3</option>
+						</select>
 					</div>
 				</div>
+				<footer class="modal-footer">
+					<button class="w3-btn w3-round w3-light-gray w3-hover-red" id="cancel-add-empleado" onclick="document.getElementById('id01').style.display='none'"> Cancelar</button>
+					<button class="w3-btn w3-round w3-green" onclick=""><i class="fa fa-floppy-o"></i> Guardar</button>
+				</footer>
 			</div>
-        </div>
-
-
-
+		</div>
+  	</div>
+</div>
 	<h1 class="page-header">Tables</h1>
 	<div class="panel panel-default">
 		<div class="panel-heading">
@@ -215,5 +227,4 @@
 			</div>
 		</div>
 	</div>
-</div>
 
