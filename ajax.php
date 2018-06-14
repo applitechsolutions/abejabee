@@ -7,7 +7,10 @@
             case 'login':
                 require('core/bin/ajax/goLogin.php');
                 break;
-            
+            case 'insert':
+                require('core/bin/ajax/insertUser.php');
+                break;
+                            
             default:
                 header('location: login.php');
                 break;

@@ -4,7 +4,7 @@
      }
    else { ?>
     <?php include(HTML_DIR.'overall/header.php')?>
-   <body onload="openLink('inicio-item', 'inicio')">
+       <body onload="openLink('inicio-item', 'inicio')">
     <div id="wrapper">
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
@@ -241,9 +241,9 @@
         </div>
         <!-- /#page-wrapper -->
     </div>
-                        <!-- /.panel-body -->
+               <!-- /.panel-body -->
 </body>
-</html>   
+</html> 
     <?php include(HTML_DIR.'overall/footer.php'); ?>    
   <?php 
    }

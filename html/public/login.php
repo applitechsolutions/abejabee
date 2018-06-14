@@ -9,8 +9,7 @@
                         <h3 class="panel-title">Iniciar Sesión</h3>
                     </div>
                     <div class="panel-body">
-                        <div id="_AJAX_LOGIN_">
-                            
+                        <div id="_AJAX_LOGIN_">                            
                         </div>
                         <form role="form" onkeypress="return runScriptLogin(event)" >
                             <fieldset>

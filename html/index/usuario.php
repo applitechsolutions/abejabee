@@ -9,6 +9,8 @@
                         <h3><i class="fa fa-user"></i> Agregar Usuario</h3>
                         <span onclick="document.getElementById('modal_new_user').style.display='none'" class="w3-closebtn fa fa-times fa-2x"</span>
                     </header>
+                    <div id="_AJAX_INSERT_">                            
+                        </div>
                     <div class="w3-container">
                         <div class="w3-half w3-padding-small">
                             <br>
