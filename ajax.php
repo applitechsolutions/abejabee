@@ -7,8 +7,8 @@
             case 'login':
                 require('core/bin/ajax/goLogin.php');
                 break;
-            case 'insert':
-                require('core/bin/ajax/insertUser.php');
+            case 'newUser':
+                require('core/bin/ajax/newUser.php');
                 break;
                             
             default:

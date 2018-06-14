@@ -9,6 +9,7 @@
     <!-- Custom Theme JavaScript -->
     <script src="UI/js/sb.js"></script>
     <script src="views/app/js/login.js"></script>
+    <script src="views/app/js/usuariosJs/newUser.js"></script>
     <script src="views/app/js/ui.js"></script>
 
     <script src="UI/datatables/js/jquery.dataTables.min.js"></script>

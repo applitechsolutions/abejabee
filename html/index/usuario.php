@@ -4,7 +4,7 @@
         <div id="modal_new_user" class="w3-modal">
     
             <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
-                <div class="w3-card-2 w3-white col-lg-12 col-md-8 col-sm-8 col-xs-10">
+                <div id="form" class="w3-card-2 w3-white col-lg-12 col-md-8 col-sm-8 col-xs-10">
                     <header>
                         <h3><i class="fa fa-user"></i> Agregar Usuario</h3>
                         <span onclick="document.getElementById('modal_new_user').style.display='none'" class="w3-closebtn fa fa-times fa-2x"</span>
@@ -31,7 +31,7 @@
                     </div>
                     <footer class="modal-footer">
                         <button class="w3-btn w3-round w3-light-gray w3-hover-red" id="cancel-add-empleado" onclick="document.getElementById('modal_new_user').style.display='none'"> Cancelar</button>
-                        <button class="w3-btn w3-round w3-green" onclick="insertUser()"><i class="fa fa-floppy-o"></i> Guardar</button>
+                        <button class="w3-btn w3-round w3-green" onclick="newUser()"><i class="fa fa-floppy-o"></i> Guardar</button>
                     </footer>
                 </div>
             </div>
