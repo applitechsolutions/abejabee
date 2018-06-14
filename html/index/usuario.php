@@ -15,23 +15,23 @@
                         <div class="w3-half w3-padding-small">
                             <br>
                             <label class="w3-left">Nombre</label>
-                            <input id="nombre_usuario" class="w3-input" type="text" placeholder="Ingrese su nombre">
+                            <input id="nombre_usuario" name="nombre" class="w3-input" type="text" placeholder="Ingrese su nombre">
                             <br>
                             <label class="w3-left">Apellido</label>
-                            <input id="apel_usuario" class="w3-input" type="text" placeholder="Ingrese su apellido">
+                            <input id="apel_usuario" name="apel" class="w3-input" type="text" placeholder="Ingrese su apellido">
                         </div>
                         <div class="w3-half w3-padding-small">
                             <br>
                             <label class="w3-left">Nombre de Usuario</label>
-                            <input id="username" class="w3-input" type="text" placeholder="Ingrese su nombre de usuario">
+                            <input id="username" name="user" class="w3-input" type="text" placeholder="Ingrese su nombre de usuario">
                             <br>
                             <label class="w3-left">Contraseña</label>
-                            <input id="password" class="w3-input" type="password" placeholder="Ingrese una contraseña">
+                            <input id="password" name="pass" class="w3-input" type="password" placeholder="Ingrese una contraseña">
                         </div>
                     </div>
                     <footer class="modal-footer">
                         <button class="w3-btn w3-round w3-light-gray w3-hover-red" id="cancel-add-empleado" onclick="document.getElementById('modal_new_user').style.display='none'"> Cancelar</button>
-                        <button class="w3-btn w3-round w3-green" onclick=""><i class="fa fa-floppy-o"></i> Guardar</button>
+                        <button class="w3-btn w3-round w3-green" onclick="insertUser()"><i class="fa fa-floppy-o"></i> Guardar</button>
                     </footer>
                 </div>
             </div>

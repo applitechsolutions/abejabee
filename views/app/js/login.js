@@ -37,14 +37,13 @@ function goLogin() {
 }
 
 function insertUser() {
-    var connect, form, response, result, firstName, lastName, userName, passWord, permissions;
-    firstName = __('user_login').value;
-    lastName = __('pass_login').value;
-    userName = __('session').value;
-    passWord = __('pass').value;
-    permissions = __('perr').value;
+    var connect, form, response, result, firstName, lastName, userName, passWord;
+    firstName = __('nombre_usuario').value;
+    lastName = __('apel_usuario').value;
+    userName = __('username').value;
+    passWord = __('password').value;
 
-    form = 'first=' + firstName + '&last=' + lastName + '&user=' + userName + '&pass=' + passWord + '&per=' + permissions;
+    form = 'nombre=' + firstName + '&apel=' + lastName + '&user=' + userName + '&pass=' + passWord;
     connect = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
     connect.onreadystatechange = function(){
         if (connect.readyState == 4 && connect.status == 200) {
