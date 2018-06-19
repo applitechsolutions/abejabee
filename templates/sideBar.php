@@ -31,46 +31,46 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="../../index.html"><i class="fa fa-circle-o"></i> Dashboard v1</a></li>
-            <li><a href="../../index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i> Dashboard</a></li>
           </ul>
         </li>
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-files-o"></i>
-            <span>Layout Options</span>
-            <span class="pull-right-container">
-              <span class="label label-primary pull-right">4</span>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="../layout/top-nav.html"><i class="fa fa-circle-o"></i> Top Navigation</a></li>
-            <li><a href="../layout/boxed.html"><i class="fa fa-circle-o"></i> Boxed</a></li>
-            <li><a href="../layout/fixed.html"><i class="fa fa-circle-o"></i> Fixed</a></li>
-            <li><a href="../layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>
-          </ul>
-        </li>
-        <li>
-          <a href="../widgets.html">
-            <i class="fa fa-th"></i> <span>Widgets</span>
-            <span class="pull-right-container">
-              <small class="label pull-right bg-green">Hot</small>
-            </span>
-          </a>
-        </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-pie-chart"></i>
-            <span>Charts</span>
+          <i class="fa fa-money" aria-hidden="true"></i>
+            <span>Ventas</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="../charts/chartjs.html"><i class="fa fa-circle-o"></i> ChartJS</a></li>
-            <li><a href="../charts/morris.html"><i class="fa fa-circle-o"></i> Morris</a></li>
-            <li><a href="../charts/flot.html"><i class="fa fa-circle-o"></i> Flot</a></li>
-            <li><a href="../charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li>
+            <li><a href="#"><i class="fa fa-list-ul" aria-hidden="true"></i> Ver Todas</a></li>
+            <li><a href="#"><i class="fa fa-plus-circle" aria-hidden="true"></i> Nueva Venta</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+          <i class="fa fa-truck" aria-hidden="true"></i> 
+          <span>Ruta</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="#"><i class="fa fa-list-ul" aria-hidden="true"></i> Ver Todas</a></li>
+            <li><a href="#"><i class="fa fa-plus-circle" aria-hidden="true"></i> Nueva Ruta</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+          <i class="fa fa-th" aria-hidden="true"></i>
+            <span>Catálogo</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="#"><i class="fa fa-list-ul" aria-hidden="true"></i> Ver Todos</a></li>
+            <li><a href="#"><i class="fa fa-plus-circle" aria-hidden="true"></i> Nuevo Producto</a></li>
           </ul>
         </li>
         <li class="treeview">
