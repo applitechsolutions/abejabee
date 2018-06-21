@@ -25,10 +25,23 @@
 <script src="js/sweetalert2.min.js"></script>
 <script src="js/ajax/user-ajax.js"></script>
 <script src="js/ajax/login.js"></script>
+<script src="js/jquery.dataTables.min.js"></script>
+<script src="js/dataTables.bootstrap.min.js"></script>
+
 
 <script>
   $(document).ready(function () {
     $('.sidebar-menu').tree()
+
+    $('#example1').DataTable()
+    $('#example2').DataTable({
+      'paging'      : true,
+      'lengthChange': false,
+      'searching'   : false,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : false
+    });
   })
 </script>
 </body>

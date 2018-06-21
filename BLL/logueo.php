@@ -16,6 +16,9 @@ if (isset($_POST['ingresar'])) {
             $existe = $stmt->fetch();
             if ($existe) {
                 if (password_verify($password, $pass_log)) {
+                    session_start();
+                    $_SESSION['usuario'] = $usuario_log;
+                    $_SESSION['nombre'] = $nombre_log;
                     $respuesta = array(
                         'respuesta' => 'exitoso',
                         'usuario' => $nombre_log

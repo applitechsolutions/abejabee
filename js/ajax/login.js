@@ -18,6 +18,9 @@ $(document).ready(function() {
                         'Bienvenid@ '+resultado.usuario+'!!',
                         'success'
                       )
+                      setTimeout(function() {
+                          window.location.href = 'index.php';
+                      }, 1000);
                 } else {
                     swal({
                         type: 'error',

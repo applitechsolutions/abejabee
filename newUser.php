@@ -1,4 +1,5 @@
 <?php
+  include_once 'funciones/sesiones.php';
   include_once 'templates/header.php';
   include_once 'templates/navBar.php';
   include_once 'templates/sideBar.php';
@@ -24,7 +25,7 @@
               <h3 class="box-title">Crear Usuario</h3>
             </div>
             <div class="box-body">
-              <form role="form" id="nuevo-usuario" name="nuevo-usuario" method="post" action="BLL/newUser.php">
+              <form role="form" id="nuevo-usuario" name="nuevo-usuario" method="post" action="BLL/user.php">
                 <div class="box-body">
                   <div class="form-group">
                     <label for="nombre">Nombre</label>
@@ -52,7 +53,8 @@
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer">
-                  <button type="submit" id="guardar-admin" name="guardar-admin"class="btn btn-info"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+                  <input type="hidden" name="guardar-usuario" value="1">
+                  <button type="submit" class="btn btn-info"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
                 </div>
               </form>
             </div>

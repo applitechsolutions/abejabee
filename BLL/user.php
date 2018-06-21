@@ -1,5 +1,6 @@
 <?php
-
+if (isset($_POST['guardar-usuario'])) {
+    
     $nombre = $_POST['nombre'];
     $apellido = $_POST['apellido'];
     $usuario = $_POST['usuario'];
@@ -32,5 +33,5 @@
         echo 'Error: '. $e.getMessage();
     }
     die(json_encode($respuesta));
-
+}
 ?>
