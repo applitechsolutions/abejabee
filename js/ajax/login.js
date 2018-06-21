@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('#nuevo-usuario').on('submit', function(e) {
+    $('#form-login').on('submit', function(e) {
         e.preventDefault();
 
         var datos = $(this).serializeArray();
@@ -10,18 +10,19 @@ $(document).ready(function() {
             url: $(this).attr('action'),
             dataType: 'json',
             success: function(data){
+                console.log(data);
                 var resultado = data;
-                if (resultado.respuesta == 'exito') {
+                if (resultado.respuesta == 'exitoso') {
                     swal(
-                        'Exito!',
-                        'Usuario creado correctamente!',
+                        'Login Correcto!',
+                        'Bienvenid@ '+resultado.usuario+'!!',
                         'success'
                       )
                 } else {
                     swal({
                         type: 'error',
-                        title: 'Error',
-                        text: 'No se pudo guardar en la base de datos',
+                        title: 'Error!',
+                        text: 'Usuario o Contraseña incorrectos, intente de nuevo',
                       })
                 }
             }

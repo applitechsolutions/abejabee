@@ -14,7 +14,7 @@
         $stmt->bind_param("ssssi", $nombre, $apellido, $usuario, $pass_hashed, $rol);
         $stmt->execute();
         $id_registro = $stmt->insert_id;
-        if ($stmt->affected_rows) {
+        if ($id_registro > 0) {
             $respuesta = array(
                 'respuesta' => 'exito',
                 'idUser' => $id_registro

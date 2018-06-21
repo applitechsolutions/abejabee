@@ -24,6 +24,7 @@
 <script src="js/demo.js"></script>
 <script src="js/sweetalert2.min.js"></script>
 <script src="js/ajax/user-ajax.js"></script>
+<script src="js/ajax/login.js"></script>
 
 <script>
   $(document).ready(function () {
