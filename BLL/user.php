@@ -1,5 +1,5 @@
 <?php
-if (isset($_POST['guardar-usuario'])) {
+if ($_POST['guardar-usuario'] == 'nuevo') {
     
     $nombre = $_POST['nombre'];
     $apellido = $_POST['apellido'];
@@ -33,5 +33,9 @@ if (isset($_POST['guardar-usuario'])) {
         echo 'Error: '. $e.getMessage();
     }
     die(json_encode($respuesta));
+}
+
+if ($_POST['registro'] == 'actualizar') {
+    # code...
 }
 ?>

@@ -1,6 +1,12 @@
 <?php
-  session_start();
-  $cerrar_sesion = $_GET['cerrar_sesion'];
+  
+  if ($_GET) {
+    session_start();
+    $cerrar_sesion = $_GET['cerrar_sesion'];
+  } else {
+    $cerrar_sesion = false;
+  }
+ 
   if ($cerrar_sesion) {
     session_destroy();
   }
