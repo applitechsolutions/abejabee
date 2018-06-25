@@ -28,34 +28,39 @@
               <form role="form" id="nuevo-usuario" name="nuevo-usuario" method="post" action="BLL/user.php">
                 <div class="box-body">
                   <div class="form-group">
-                    <label for="nombre">Nombre</label>
-                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Escribe tu nombre">
+                    <span class="text-danger text-uppercase">*</span><label for="nombre">Nombre</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Escribe tu nombre" autofocus>
                   </div>
                   <div class="form-group">
-                    <label for="apellido">Apellido</label>
+                    <span class="text-danger text-uppercase">*</span><label for="apellido">Apellido</label>
                     <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Escribe tu apellido">
                   </div>
                   <div class="form-group">
-                    <label for="usuario">Nombre de Usuario</label>
+                    <span class="text-danger text-uppercase">*</span><label for="usuario">Nombre de Usuario</label>
                     <input type="text" class="form-control" id="usuario" name="usuario" placeholder="Escribe tu nombre de Usuario">
                   </div>
                   <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" class="form-control" id="password" name="password" placeholder="Escribe tu contraseña de acceso">
-                  </div>
-                  <div class="form-group">
-                    <label>Rol</label>
+                    <span class="text-danger text-uppercase">*</span><label>Rol</label>
                     <select id="rol" name="rol" class="form-control">
                       <option value="" disabled selected>Seleccione el Rol</option>
                       <option value=1>Administrador</option>
                       <option value=2>Consultor</option>
                     </select>
                   </div>
+                  <div class="form-group">
+                    <span class="text-danger text-uppercase">*</span><label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Escribe tu contraseña de acceso">
+                  </div>
+                  <div class="form-group">
+                    <span class="text-danger text-uppercase">*</span><label for="password">Confirmar Constraseña</label>
+                    <input type="password" class="form-control" id="confirmar_password" name="confirmar_password" placeholder="Escribe tu contraseña de nuevo">
+                    <span id="resultado-password" class="help-block"></span>
+                  </div>
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer">
                   <input type="hidden" name="registro" value="nuevo">
-                  <button type="submit" class="btn btn-info"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+                  <button type="submit" class="btn btn-info" id="crear-usuario"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button><span class="text-warning"> Debe llenar los campos obligatorios *</span>
                 </div>
               </form>
             </div>
