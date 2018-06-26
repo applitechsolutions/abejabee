@@ -10,8 +10,8 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Blank page
-        <small>it all starts here</small>
+        Usuarios
+        <small>Activos</small>
       </h1>
     </section>
 
@@ -21,7 +21,7 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Data Table With Full Features</h3>
+              <h3 class="box-title">Listado general de usuarios en el sistema</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
