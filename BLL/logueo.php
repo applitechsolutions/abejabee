@@ -17,6 +17,7 @@ if (isset($_POST['ingresar'])) {
             if ($existe) {
                 if (password_verify($password, $pass_log)) {
                     session_start();
+                    $_SESSION['idusuario'] = $id_log;
                     $_SESSION['usuario'] = $usuario_log;
                     $_SESSION['nombre'] = $nombre_log;
                     $respuesta = array(

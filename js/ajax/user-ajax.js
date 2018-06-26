@@ -15,7 +15,7 @@ $(document).ready(function() {
         }
     }
 
-    $('#nuevo-usuario').on('submit', function(e) {
+    $('#form-usuario').on('submit', function(e) {
         e.preventDefault();
 
         var datos = $(this).serializeArray();
@@ -26,11 +26,12 @@ $(document).ready(function() {
             url: $(this).attr('action'),
             dataType: 'json',
             success: function(data){
+                console.log(data);
                 var resultado = data;
                 if (resultado.respuesta == 'exito') {
                     swal(
                         'Exito!',
-                        'Usuario creado correctamente!',
+                        '¡'+resultado.mensaje,
                         'success'
                       )
                 } else {

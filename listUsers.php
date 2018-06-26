@@ -31,14 +31,14 @@
                   <th>Nombre</th>
                   <th>Apellido</th>
                   <th>Nombre de Usuario</th>
-                  <th>Permisos</th>
+                  <th>Rol</th>
                   <th>Acciones</th>
                 </tr>
                 </thead>
                 <tbody>
                 <?php
                   try{
-                    $sql = "SELECT idUser, firstName, lastName, userName, permissions FROM user";
+                    $sql = "SELECT idUser, firstName, lastName, userName, permissions FROM user WHERE idUser !=".$_SESSION['idusuario']." AND state = 0";
                     $resultado = $conn->query($sql);
                   } catch (Exception $e){
                     $error= $e->getMessage();
@@ -69,7 +69,7 @@
                   <th>Nombre</th>
                   <th>Apellido</th>
                   <th>Nombre de Usuario</th>
-                  <th>Permisos</th>
+                  <th>Rol</th>
                   <th>Acciones</th>
                 </tr>
                 </tfoot>

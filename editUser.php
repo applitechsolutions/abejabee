@@ -34,7 +34,7 @@
               $resultado = $conn->query($sql);
               $user = $resultado->fetch_assoc();
             ?>
-              <form role="form" id="editar-usuario" name="editar-usuario" method="post" action="BLL/user.php">
+              <form role="form" id="form-usuario" name="form-usuario" method="post" action="BLL/user.php">
                 <div class="box-body">
                   <div class="form-group">
                     <label for="nombre">Nombre</label>
@@ -43,10 +43,6 @@
                   <div class="form-group">
                     <label for="apellido">Apellido</label>
                     <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Escribe tu apellido" value="<?php echo $user['lastName']; ?>">
-                  </div>
-                  <div class="form-group">
-                    <label for="usuario">Nombre de Usuario</label>
-                    <input type="text" class="form-control" id="usuario" name="usuario" placeholder="Escribe tu nombre de Usuario" value="<?php echo $user['userName']; ?>">
                   </div>
                   <div class="form-group">
                     <label>Rol</label>
