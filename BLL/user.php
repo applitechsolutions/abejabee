@@ -1,12 +1,11 @@
 <?php
 include_once '../funciones/bd_conexion.php';
-$nombre = $_POST['nombre'];
-$apellido = $_POST['apellido'];
-$rol = $_POST['rol'];
-
 
 if ($_POST['registro'] == 'nuevo') {
-    
+
+    $nombre = $_POST['nombre'];
+    $apellido = $_POST['apellido'];
+    $rol = $_POST['rol'];
     $usuario = $_POST['usuario'];
     $password = $_POST['password'];
     $pass_hashed = password_hash($password, PASSWORD_BCRYPT);
@@ -39,6 +38,9 @@ if ($_POST['registro'] == 'nuevo') {
 }
 
 if ($_POST['registro'] == 'actualizar') {
+    $nombre = $_POST['nombre'];
+    $apellido = $_POST['apellido'];
+    $rol = $_POST['rol'];
     $id_registro = $_POST['id_registro'];
     try {
         $stmt = $conn->prepare('UPDATE user SET firstName = ?, lastName = ?, permissions = ? WHERE idUser = ?');
@@ -63,6 +65,33 @@ if ($_POST['registro'] == 'actualizar') {
         );
     }
 
+    die(json_encode($respuesta));
+}
+
+if ($_POST['registro'] == 'eliminar') {
+    $id_eliminar = $_POST['id'];
+
+    try {
+        $stmt = $conn->prepare('UPDATE user SET state = 1 WHERE idUser = ?');
+        $stmt->bind_param("i", $id_eliminar);
+        $stmt->execute();
+        if ($stmt->affected_rows) {
+            $respuesta = array(
+                'respuesta' => 'exito',
+                'id_eliminado' => $id_eliminar
+            );
+        }else {
+            $respuesta = array(
+                'respuesta' => 'error'
+            );
+        }
+        $stmt->close();
+        $conn->close();
+    }catch(Exception $e) {
+        $respuesta = array(
+            'respuesta' => $e->getMessage()
+        );
+    }
     die(json_encode($respuesta));
 }
 ?>

@@ -58,7 +58,7 @@
                       }   ?>
                       <td>
                         <a class="btn bg-green btn-flat margin" href="editUser.php?id=<?php echo $user['idUser'] ?>"><i class="fa fa-pencil"></i></a>
-                        <a href="#" data-id="<?php echo $user['idUser']; ?>" data-tipo="admin" class="btn bg-maroon btn-flat margin borrar_registro"><i class="fa fa-trash"></i></a>
+                        <a href="#" data-id="<?php echo $user['idUser']; ?>" data-tipo="user" class="btn bg-maroon btn-flat margin borrar_usuario"><i class="fa fa-trash"></i></a>
                       </td>
                     </tr>
                 <?php }
