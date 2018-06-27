@@ -1,6 +1,6 @@
 <footer class="main-footer">
     <div class="pull-right hidden-xs">
-      <b>Version</b> 2.4.0
+      <b>Version</b> 1.0.0
     </div>
     <strong>Copyright &copy; 2018 <a href="#">Applitech Solutions</a>.</strong> All rights
     reserved.
@@ -20,11 +20,14 @@
 <script src="js/fastclick.js"></script>
 <!-- AdminLTE App -->
 <script src="js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
+
 <script src="js/demo.js"></script>
 <script src="js/sweetalert2.min.js"></script>
+<!-- AJAX FOR SCHLENKER PHARMA -->
+<script src="js/ajax/provider-ajax.js"></script>
 <script src="js/ajax/user-ajax.js"></script>
 <script src="js/ajax/login.js"></script>
+
 <script src="js/jquery.dataTables.min.js"></script>
 <script src="js/dataTables.bootstrap.min.js"></script>
 

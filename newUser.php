@@ -25,6 +25,7 @@
               <h3 class="box-title">Crear Usuario</h3>
             </div>
             <div class="box-body">
+            
               <form role="form" id="form-usuario" name="form-usuario" method="post" action="BLL/user.php">
                 <div class="box-body">
                   <div class="form-group">

@@ -6,7 +6,7 @@
       <div class="user-panel">
         <div class="pull-left info">
           <p><?php echo $_SESSION['nombre']; ?></p>
-          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+          <a href="#"><i class="fa fa-circle text-success"></i> Enlinea</a>
         </div>
       </div>
       <!-- search form -->
@@ -100,8 +100,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="#"><i class="fa fa-list-ul" aria-hidden="true"></i> Ver Todos</a></li>
-            <li><a href="#"><i class="fa fa-plus-circle" aria-hidden="true"></i> Nuevo Proveedor</a></li>
+            <li><a href="listProviders.php"><i class="fa fa-list-ul" aria-hidden="true"></i> Ver Todos</a></li>
+            <li><a href="newProvider.php"><i class="fa fa-plus-circle" aria-hidden="true"></i> Nuevo Proveedor</a></li>
           </ul>
         </li>
         <li class="treeview">
@@ -143,10 +143,6 @@
             <li><a href="newUser.php"><i class="fa fa-plus-circle" aria-hidden="true"></i> Nuevo Usuario</a></li>
           </ul>
         </li>
-        <li class="header">LABELS</li>
-        <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
-        <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
-        <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>
       </ul>
     </section>
     <!-- /.sidebar -->
