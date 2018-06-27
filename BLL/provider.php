@@ -52,7 +52,7 @@ if ($_POST['registro'] == 'actualizar') {
 
     try {
         $stmt = $conn->prepare('UPDATE provider SET providerName = ?, providerAddress = ?, providerTel = ?, providerMobile = ?, providerEmail = ?, account1 = ?, account2 = ?, details = ? WHERE idProvider = ?');
-        $stmt->bind_param("ssssssss", $name, $address, $tel, $mobile, $email, $account1, $account2, $details, $id_registro);
+        $stmt->bind_param("ssssssssi", $name, $address, $tel, $mobile, $email, $account1, $account2, $details, $id_registro);
         $stmt->execute();
         if ($stmt->affected_rows) {
             $respuesta = array(
