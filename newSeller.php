@@ -29,23 +29,23 @@
                 <div class="box-body">
                   <div class="form-group">
                     <span class="text-danger text-uppercase">*</span><label for="nombre">Nombre</label>
-                    <input type="text" class="form-control" id="nombre-vendedor" name="nombre-vendedor" placeholder="Escribe tu nombre" autofocus>
+                    <input type="text" class="form-control" id="nombre-vendedor" name="nombre-vendedor" placeholder="Escribe el nombre del vendedor" autofocus>
                   </div>
                   <div class="form-group">
                     <span class="text-danger text-uppercase">*</span><label for="apellido">Apellido</label>
-                    <input type="text" class="form-control" id="apel-vendedor" name="apel-vendedor" placeholder="Escribe tu apellido">
+                    <input type="text" class="form-control" id="apel-vendedor" name="apel-vendedor" placeholder="Escribe el apellido del vendedor">
                   </div>
                   <div class="form-group">
                     <label for="usuario">Dirección</label>
-                    <input type="text" class="form-control" id="direc" name="direc" placeholder="Escribe la dirección del vendedor">
+                    <input type="text" class="form-control" id="direc-vendedor" name="direc-vendedor" placeholder="Escribe la dirección del vendedor">
                   </div>
                   <div class="form-group">
                     <span class="text-danger text-uppercase">*</span><label>Teléfono</label>
-                    <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Escribe el teléfono del vendedor">
+                    <input type="text" class="form-control" id="tel-vendedor" name="tel-vendedor" placeholder="Escribe el teléfono del vendedor">
                   </div>
                   <div class="form-group">
-                    <span class="text-danger text-uppercase">*</span><label for="password">DPI</label>
-                    <input type="password" class="form-control" id="dpi" name="dpi" placeholder="Escribe el dpi del vendendor">
+                    <span class="text-danger text-uppercase">*</span><label>DPI</label>
+                    <input type="password" class="form-control" id="dpi-vendedor" name="dpi-vendedor" placeholder="Escribe el dpi del vendendor">
                   </div>
                   <div class="form-group">
                     <label>Fecha de Nacimiento</label>
@@ -53,26 +53,20 @@
                       <div class="input-group-addon">
                         <i class="fa fa-calendar"></i>
                       </div>
-                      <input type="date" class="form-control pull-right" max="<?php echo date("Y").'-'.date("m").'-'.date("d") ?>">
+                      <input type="date" id="bday-vendedor" name="bday-vendedor" class="form-control pull-right" max="<?php echo date("Y").'-'.date("m").'-'.date("d") ?>">
                     </div>
                   </div>
                   <div class="form-group">
-                    <label>
-                      <input type="checkbox" class="flat-red" checked>
-                    </label>
-                    <label>
-                      <input type="checkbox" class="flat-red">
-                    </label>
-                    <label>
-                      <input type="checkbox" class="flat-red" disabled>
-                      Flat green skin checkbox
-                    </label>
+                    <span class="text-danger text-uppercase">*</span><label>Masculino</label>
+                    <input type="radio" id="gen-vendedor" name="gen-vendedor" class="flat-red" value="0">
+                    <span class="text-danger text-uppercase">*</span><label>Femenino</label>
+                    <input type="radio" id="gen-vendedor" name="gen-vendedor" class="flat-red" value="1">
                   </div>
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer">
-                  <input type="hidden" name="registro" value="nuevo">
-                  <button type="submit" class="btn btn-info" id="crear-usuario"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button><span class="text-warning"> Debe llenar los campos obligatorios *</span>
+                  <input type="hidden" name="reg-vendedor" value="nuevo">
+                  <button type="submit" class="btn btn-info" id="crear-vendedor"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button><span class="text-warning"> Debe llenar los campos obligatorios *</span>
                 </div>
               </form>
             </div>
