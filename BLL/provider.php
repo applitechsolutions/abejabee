@@ -21,7 +21,8 @@ if ($_POST['registro'] == 'nuevo') {
             $respuesta = array(
                 'respuesta' => 'exito',
                 'idProvider' => $id_registro,
-                'mensaje' => 'Proveedor creado correctamente!'
+                'mensaje' => 'Proveedor creado correctamente!',
+                'proceso' => 'nuevo'
             );
             
         }else {
@@ -58,7 +59,8 @@ if ($_POST['registro'] == 'actualizar') {
             $respuesta = array(
                 'respuesta' => 'exito',
                 'id_actualizado' => $stmt->insert_id,
-                'mensaje' => 'Proveedor actualizado correctamente!'
+                'mensaje' => 'Proveedor actualizado correctamente!',
+                'proceso' => 'editado'
             );
         }else {
             $respuesta = array(

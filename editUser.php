@@ -46,7 +46,7 @@
                   </div>
                   <div class="form-group">
                     <label>Rol</label>
-                    <select id="rol" name="rol" class="form-control">
+                    <select id="rol" name="rol" class="form-control select2" style="width: 100%;">
                       <option value="" disabled selected>Seleccione el Rol</option>
                       <?php 
                         if ($user['permissions'] == '1') {?>

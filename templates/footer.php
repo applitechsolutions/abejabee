@@ -32,15 +32,18 @@
 <script src="js/dataTables.bootstrap.min.js"></script>
 <script src="js/bootstrap-datepicker.min.js"></script>
 <script src="js/icheck.min.js"></script>
+<script src="js/select2.full.min.js"></script>
 
 
 <script>
   $(document).ready(function () {
     $('.sidebar-menu').tree()
 
+    $('.select2').select2()
+
     $('#datepicker').datepicker({
       autoclose: true
-    })
+    });
 
     //iCheck for checkbox and radio inputs
     $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
