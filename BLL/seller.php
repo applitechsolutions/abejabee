@@ -9,24 +9,23 @@ if ($_POST['reg-vendedor' == 'nuevo']) {
     $dpi = $_POST['dpi-vendedor'];
     $bday = $_POST['bday-vendedor'];
     $genero = $_POST['gen-vendedor'];
-
-
+    
     try{
         $stmt = $conn->prepare("INSERT INTO seller (sellerFirstName, sellerLastName, selllerAddress, sellerMobile, DPI, birthDate, gender) VALUES (?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("ssssi", $nombre, $apellido, $usuario, $pass_hashed, $rol);
+        $stmt->bind_param("ssssssi", $nombre, $apellido, $direccion, $telefono, $dpi, $bday, $genero);
         $stmt->execute();
         $id_registro = $stmt->insert_id;
         if ($id_registro > 0) {
             $respuesta = array(
                 'respuesta' => 'exito',
-                'idUser' => $id_registro,
-                'mensaje' => 'Usuario creado correctamente!'
+                'idSeller' => $id_registro,
+                'mensaje' => 'Vendedor creado correctamente!'
             );
             
         }else {
             $respuesta = array(
                 'respuesta' => 'error',
-                'idUser' => $id_registro
+                'idSeller' => $id_registro
             );
         }
         $stmt->close();
