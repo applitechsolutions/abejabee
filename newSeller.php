@@ -45,7 +45,7 @@
                   </div>
                   <div class="form-group">
                     <span class="text-danger text-uppercase">*</span><label>DPI</label>
-                    <input type="password" class="form-control" id="dpi-vendedor" name="dpi-vendedor" placeholder="Escribe el dpi del vendendor">
+                    <input type="text" class="form-control" id="dpi-vendedor" name="dpi-vendedor" placeholder="Escribe el dpi del vendendor">
                   </div>
                   <div class="form-group">
                     <label>Fecha de Nacimiento</label>
@@ -65,7 +65,7 @@
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer">
-                  <input type="hidden" name="reg-vendedor" value="nuevo">
+                  <input type="hidden" name="registro" value="nuevo">
                   <button type="submit" class="btn btn-info" id="crear-vendedor"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button><span class="text-warning"> Debe llenar los campos obligatorios *</span>
                 </div>
               </form>
