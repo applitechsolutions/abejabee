@@ -65,7 +65,7 @@
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer">
-                  <input type="hidden" name="reg-vendedor" value="nuevo">
+                  <input type="hidden" name="registro" value="nuevo">
                   <button type="submit" class="btn btn-info" id="crear-vendedor"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button><span class="text-warning"> Debe llenar los campos obligatorios *</span>
                 </div>
               </form>
