@@ -20,7 +20,8 @@ if ($_POST['registro'] == 'nuevo') {
             $respuesta = array(
                 'respuesta' => 'exito',
                 'idUser' => $id_registro,
-                'mensaje' => 'Usuario creado correctamente!'
+                'mensaje' => 'Usuario creado correctamente!',
+                'proceso' => 'nuevo'
             );
             
         }else {
@@ -50,7 +51,8 @@ if ($_POST['registro'] == 'actualizar') {
             $respuesta = array(
                 'respuesta' => 'exito',
                 'id_actualizado' => $stmt->insert_id,
-                'mensaje' => 'Usuario actualizado correctamente!'
+                'mensaje' => 'Usuario actualizado correctamente!',
+                'proceso' => 'editado'
             );
         }else {
             $respuesta = array(

@@ -58,7 +58,7 @@
                   </div>
                   <div class="form-group">
                     <span class="text-danger text-uppercase">*</span><label>Masculino</label>
-                    <input type="radio" id="gen-vendedor" name="gen-vendedor" class="flat-red" value="0">
+                    <input type="radio" id="gen-vendedor" name="gen-vendedor" class="flat-red" value="0" checked>
                     <span class="text-danger text-uppercase">*</span><label>Femenino</label>
                     <input type="radio" id="gen-vendedor" name="gen-vendedor" class="flat-red" value="1">
                   </div>

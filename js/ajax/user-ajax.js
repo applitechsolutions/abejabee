@@ -34,6 +34,15 @@ $(document).ready(function() {
                         '¡'+resultado.mensaje,
                         'success'
                       )
+                    if (resultado.proceso == 'nuevo') {
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1500);
+                    } else if (resultado.proceso == 'editado'){
+                        setTimeout(function() {
+                            window.location.href = 'listUsers.php';
+                        }, 1500);
+                    }
                 } else {
                     swal({
                         type: 'error',

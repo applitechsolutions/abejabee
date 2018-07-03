@@ -16,7 +16,7 @@ if ($_POST['reg-vendedor'] == 'nuevo') {
    // die(json_encode($fecha_formateada));
     
     try{
-        if ($_POST['nombre-vendedor'] == '') {
+        if ($nombre == '' || $apellido == '' || $telefono == '' || $dpi == '' || $genero == '') {
             $respuesta = array(
                 'respuesta' => 'vacio'
             );
@@ -29,7 +29,8 @@ if ($_POST['reg-vendedor'] == 'nuevo') {
                 $respuesta = array(
                     'respuesta' => 'exito',
                     'idSeller' => $id_registro,
-                    'mensaje' => 'Vendedor creado correctamente!'
+                    'mensaje' => 'Vendedor creado correctamente!',
+                    'proceso' => 'nuevo'
                 );
                 
             }else {

@@ -35,6 +35,15 @@ $(document).ready(function() {
                         '¡'+resultado.mensaje,
                         'success'
                       )
+                      if (resultado.proceso == 'nuevo') {
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1500);
+                    } else if (resultado.proceso == 'editado'){
+                        setTimeout(function() {
+                            window.location.href = 'listSellers.php';
+                        }, 1500);
+                    }
                 } else if (resultado.respuesta == 'vacio') {
                     swal({
                         type: 'warning',
