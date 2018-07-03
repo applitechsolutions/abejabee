@@ -39,7 +39,7 @@ $(document).ready(function() {
                     swal({
                         type: 'warning',
                         title: 'Oops...',
-                        text: 'Debe llenar todos los campos :/',
+                        text: 'Debe llenar todos los campos',
                       })
                 }else if (resultado.respuesta == 'error'){
                     swal({
