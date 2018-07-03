@@ -45,15 +45,15 @@
                   </div>
                   <div class="form-group">
                     <span class="text-danger text-uppercase">*</span><label>DPI</label>
-                    <input type="password" class="form-control" id="dpi-vendedor" name="dpi-vendedor" placeholder="Escribe el dpi del vendendor">
+                    <input type="text" class="form-control" id="dpi-vendedor" name="dpi-vendedor" placeholder="Escribe el dpi del vendendor">
                   </div>
                   <div class="form-group">
-                    <label>Fecha de Nacimiento</label>
+                    <label>Fecha de nacimiento</label>
                     <div class="input-group date">
                       <div class="input-group-addon">
                         <i class="fa fa-calendar"></i>
                       </div>
-                      <input type="date" id="bday-vendedor" name="bday-vendedor" class="form-control pull-right" max="<?php echo date("Y").'-'.date("m").'-'.date("d") ?>">
+                      <input type="text" class="form-control pull-right datepicker" id="datepicker" name="bday-vendedor">
                     </div>
                   </div>
                   <div class="form-group">
