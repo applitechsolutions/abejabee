@@ -88,4 +88,30 @@ if ($_POST['reg-vendedor'] == 'actualizar') {
     die(json_encode($respuesta));
 }
 
+if ($_POST['reg-vendedor'] == 'eliminar') {
+    $id_eliminar = $_POST['id'];
+
+    try {
+        $stmt = $conn->prepare('UPDATE seller SET state = 1 WHERE idSeller = ?');
+        $stmt->bind_param("i", $id_eliminar);
+        $stmt->execute();
+        if ($stmt->affected_rows) {
+            $respuesta = array(
+                'respuesta' => 'exito',
+                'id_eliminado' => $id_eliminar
+            );
+        }else {
+            $respuesta = array(
+                'respuesta' => 'error'
+            );
+        }
+        $stmt->close();
+        $conn->close();
+    }catch(Exception $e) {
+        $respuesta = array(
+            'respuesta' => $e->getMessage()
+        );
+    }
+    die(json_encode($respuesta));
+}
 ?>
