@@ -9,29 +9,35 @@ if ($_POST['registro'] == 'nuevo') {
     $usuario = $_POST['usuario'];
     $password = $_POST['password'];
     $pass_hashed = password_hash($password, PASSWORD_BCRYPT);
-
-
+    die(json_encode($_POST));
     try{
-        $stmt = $conn->prepare("INSERT INTO user (firstName, lastName, userName, passWord, permissions) VALUES (?, ?, ?, ?, ?)");
-        $stmt->bind_param("ssssi", $nombre, $apellido, $usuario, $pass_hashed, $rol);
-        $stmt->execute();
-        $id_registro = $stmt->insert_id;
-        if ($id_registro > 0) {
+        if ($nombre == '' || $apellido == '' || $rol == '' || $usuario = '' || $password == '') {
             $respuesta = array(
-                'respuesta' => 'exito',
-                'idUser' => $id_registro,
-                'mensaje' => 'Usuario creado correctamente!',
-                'proceso' => 'nuevo'
+                'respuesta' => 'vacio'
             );
-            
         }else {
-            $respuesta = array(
-                'respuesta' => 'error',
-                'idUser' => $id_registro
-            );
+            $stmt = $conn->prepare("INSERT INTO user (firstName, lastName, userName, passWord, permissions) VALUES (?, ?, ?, ?, ?)");
+            $stmt->bind_param("ssssi", $nombre, $apellido, $usuario, $pass_hashed, $rol);
+            $stmt->execute();
+            $id_registro = $stmt->insert_id;
+            if ($id_registro > 0) {
+                $respuesta = array(
+                    'respuesta' => 'exito',
+                    'idUser' => $id_registro,
+                    'mensaje' => 'Usuario creado correctamente!',
+                    'proceso' => 'nuevo'
+                );
+                
+            }else {
+                $respuesta = array(
+                    'respuesta' => 'error',
+                    'idUser' => $id_registro
+                );
+            }
+            $stmt->close();
+            $conn->close();
         }
-        $stmt->close();
-        $conn->close();
+        
     }catch(Exception $e){
         echo 'Error: '. $e.getMessage();
     }

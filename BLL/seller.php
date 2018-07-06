@@ -41,7 +41,7 @@ if ($_POST['reg-vendedor'] == 'nuevo') {
             }
             $stmt->close();
             $conn->close();
-            }
+        }
         
     }catch(Exception $e){
         echo 'Error: '. $e.getMessage();

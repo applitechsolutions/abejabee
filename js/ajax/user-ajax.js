@@ -1,6 +1,6 @@
 $(document).ready(function() {
-    $('#crear-usuario').attr('disabled', true);
-    function validacion() {
+    //$('#crear-usuario').attr('disabled', true);
+    /*function validacion() {
         var nombre = $('#nombre').val();
         var apellido = $('#apellido').val();
         var usuario = $('#usuario').val();
@@ -13,7 +13,7 @@ $(document).ready(function() {
         } else {
             $('#crear-usuario').attr('disabled', false);
         }
-    }
+    }*/
 
     $('#form-usuario').on('submit', function(e) {
         e.preventDefault();
@@ -43,7 +43,13 @@ $(document).ready(function() {
                             window.location.href = 'listUsers.php';
                         }, 1500);
                     }
-                } else {
+                } else if (resultado.respuesta == 'vacio') {
+                    swal({
+                        type: 'warning',
+                        title: 'Oops...',
+                        text: 'Debe llenar todos los campos',
+                      })
+                }else if (resultado.respuesta == 'error'){
                     swal({
                         type: 'error',
                         title: 'Error',
@@ -101,7 +107,7 @@ $(document).ready(function() {
                 });
             });
     });
-
+/*
     $('#nombre').on('blur', function(){
         if ($(this).val() !== null && $(this).val() !== '') {
             $('#nombre').parents('.form-group').addClass('has-success').removeClass('has-error');
@@ -125,7 +131,7 @@ $(document).ready(function() {
         }else {
             $('#usuario').parents('.form-group').addClass('has-error').removeClass('has-success');
         }
-    });
+    });*/
     $('#confirmar_password').on('input', function(){
         var password_nuevo = $('#password').val();
 
@@ -141,6 +147,8 @@ $(document).ready(function() {
             $('#crear-usuario').attr('disabled', true);
         }
     });
+
+    /*
     $('#rol').on('blur', function(){
         if ($(this).val() !== null && $(this).val() !== '') {
             $('#rol').parents('.form-group').addClass('has-success').removeClass('has-error');
@@ -151,7 +159,7 @@ $(document).ready(function() {
     });
 
     //////VALIDACIONES/////////////////////
-    
+    */
 
 
 });
