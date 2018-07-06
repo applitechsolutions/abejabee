@@ -29,6 +29,7 @@
                 <thead>
                 <tr>
                   <th>Nombre</th>
+                  <th>Apellido</th>
                   <th>Dirección</th>
                   <th>Teléfono</th>
                   <th>DPI</th>
@@ -50,7 +51,8 @@
                   while ($seller = $resultado->fetch_assoc()) {
                 ?>
                     <tr>
-                      <td><?php echo $seller['sellerFirstName']; ' '. $seller['sellerLastName']; ?></td>
+                      <td><?php echo $seller['sellerFirstName']; ?></td>
+                      <td><?php echo $seller['sellerLastName']; ?></td>
                       <td><?php echo $seller['sellerAddress']; ?></td>
                       <td><?php echo $seller['sellerMobile']; ?></td>
                       <td><?php echo $seller['DPI']; ?></td>
@@ -71,6 +73,7 @@
                 <tfoot>
                 <tr>
                   <th>Nombre</th>
+                  <th>Apellido</th>
                   <th>Dirección</th>
                   <th>Teléfono</th>
                   <th>DPI</th>

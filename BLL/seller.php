@@ -48,4 +48,44 @@ if ($_POST['reg-vendedor'] == 'nuevo') {
     }
     die(json_encode($respuesta));
 }
+
+if ($_POST['reg-vendedor'] == 'actualizar') {
+
+    $id_seller = $_POST['id-reg-vendedor'];
+    $nombre = $_POST['nombre-vendedor'];
+    $apellido = $_POST['apel-vendedor'];
+    $direccion = $_POST['direc-vendedor'];
+    $telefono = $_POST['tel-vendedor'];
+    $dpi = $_POST['dpi-vendedor'];
+    $bday = $_POST['bday-vendedor'];
+
+    $fecha_formateada = date('Y-m-d', strtotime($bday));
+    $genero = $_POST['gen-vendedor'];
+
+    try {
+        $stmt = $conn->prepare("UPDATE seller SET sellerFirstName = ?, sellerLastName = ?, sellerAddress = ?, sellerMobile = ?, DPI = ?, birthDate = ?, gender = ? WHERE idSeller = ?");
+        $stmt->bind_param("ssssssii", $nombre, $apellido, $direccion, $telefono, $dpi, $fecha_formateada, $genero, $id_seller);
+        $stmt->execute();
+        if ($stmt->affected_rows) {
+            $respuesta = array(
+                'respuesta' => 'exito',
+                'id_actualizado' => $stmt->insert_id,
+                'mensaje' => 'Vendedor actualizado correctamente!',
+                'proceso' => 'editado'
+            );
+            
+        }else {
+            $respuesta = array(
+                'respuesta' => 'error',
+                'idSeller' => $id_registro
+            );
+        }
+        $stmt->close();
+        $conn->close();
+    }catch(Exception $e) {
+        echo 'Error: '. $e.getMessage();
+    }
+    die(json_encode($respuesta));
+}
+
 ?>
