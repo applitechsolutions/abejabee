@@ -1,6 +1,5 @@
 $(document).ready(function () {
-
-    listCategory();
+    getData();
 
     $('#form-category').on('submit', function (e) {
         e.preventDefault();
@@ -22,7 +21,8 @@ $(document).ready(function () {
                         'success'
                     )
                     if (resultado.proceso == 'nuevo') {
-                        
+                        $("#catClose").click();
+                        getData();
                     } else if (resultado.proceso == 'editado') {
                         setTimeout(function () {
                             window.location.href = 'listSellers.php';
@@ -46,3 +46,21 @@ $(document).ready(function () {
 
     });
 });
+
+    
+function getData(){
+    $.ajax({
+      type: "GET",
+      url: 'BLL/listProduct.php', 
+      dataType: "json",
+      success: function(data){
+        console.log(data);
+        $.each(data,function(key, registro) {
+          $("#category").append('<option value='+registro.idCategory+'>'+registro.catName+'</option>');
+        });        
+      },
+      error: function(data) {
+        alert('error');
+      }
+    });
+  }
