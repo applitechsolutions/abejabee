@@ -2,15 +2,29 @@
     height: 60px;
 }
 
-.user-panel > .info {
+.user-panel>.info {
     position: relative;
     left: auto;
 }
 
-.skin-blue .sidebar-menu > li.header {
+.skin-blue .sidebar-menu>li.header {
     color: white;
 }
 
 .login-page .main-footer {
     display: none;
+}
+
+.example-modal .modal {
+    position: relative;
+    top: auto;
+    bottom: auto;
+    right: auto;
+    left: auto;
+    display: block;
+    z-index: 1;
+}
+
+.example-modal .modal {
+    background: transparent !important;
 }
