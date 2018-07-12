@@ -25,6 +25,7 @@ include_once 'funciones/bd_conexion.php';
         <!-- /.box-header -->
         <div class="box-body">
 
+          <!-- MODAL CATEGORIA -->
           <div class="modal fade" id="modal-category">
             <div class="modal-dialog">
               <div class="modal-content">
@@ -39,13 +40,75 @@ include_once 'funciones/bd_conexion.php';
                     <div class="form-group">
                       <span class="text-danger text-uppercase">*</span>
                       <label for="nombre">Nombre</label>
-                      <input type="text" class="form-control" id="name" name="name" placeholder="Escriba el nombre" autofocus>
+                      <input type="text" class="form-control" id="name" name="name" placeholder="Escriba un nombre" autofocus>
                     </div>
                     <div class="modal-footer">
                       <input type="hidden" name="categoria" value="nueva">
                       <button id="catClose" type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
                       <span class="text-warning"> Debe llenar los campos obligatorios *</span>
                       <button type="submit" class="btn btn-primary" id="crear-categoria">
+                        <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+                    </div>
+                </div>
+                </form>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+
+          <!-- MODAL UNIDAD -->
+          <div class="modal fade" id="modal-unity">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                  <h4 class="modal-title">Nueva Unidad</h4>
+                </div>
+                <div class="modal-body">
+                  <form role="form" id="form-unity" name="form-unity" method="post" action="BLL/unity.php">
+                    <div class="form-group">
+                      <span class="text-danger text-uppercase">*</span>
+                      <label for="nombre">Nombre</label>
+                      <input type="text" class="form-control" id="name" name="name" placeholder="Escriba un nombre" autofocus>
+                    </div>
+                    <div class="modal-footer">
+                      <input type="hidden" name="unidad" value="nueva">
+                      <button id="uniClose" type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                      <span class="text-warning"> Debe llenar los campos obligatorios *</span>
+                      <button type="submit" class="btn btn-primary" id="crear-unidad">
+                        <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+                    </div>
+                </div>
+                </form>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+
+          <!-- MODAL MARCA -->
+          <div class="modal fade" id="modal-make">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                  <h4 class="modal-title">Nueva Marca</h4>
+                </div>
+                <div class="modal-body">
+                  <form role="form" id="form-make" name="form-make" method="post" action="BLL/make.php">
+                    <div class="form-group">
+                      <span class="text-danger text-uppercase">*</span>
+                      <label for="nombre">Nombre</label>
+                      <input type="text" class="form-control" id="name" name="name" placeholder="Escriba un nombre" autofocus>
+                    </div>
+                    <div class="modal-footer">
+                      <input type="hidden" name="marca" value="nueva">
+                      <button id="makeClose" type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                      <span class="text-warning"> Debe llenar los campos obligatorios *</span>
+                      <button type="submit" class="btn btn-primary" id="crear-marca">
                         <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
                     </div>
                 </div>
@@ -83,33 +146,30 @@ include_once 'funciones/bd_conexion.php';
             <!-- /.col -->
             <div class="col-md-6">
               <div class="form-group">
-
                 <span class="text-danger text-uppercase">*</span>
                 <label>Categoría</label>
-                <li class="pull-right">
-                  <button type="button" class="btn btn-Normal bg-teal-active btn-xs" data-toggle="modal" data-target="#modal-category">+ Crear Nueva</button>
-                </li>
+                  <button type="button" class="btn btn-Normal bg-teal-active btn-xs pull-right" data-toggle="modal" data-target="#modal-category">+ Crear Nueva</button>
                 <select id="category" name="category" class="form-control select2" style="width: 100%;">
                     <option value="" disabled selected>Seleccione una categoría</option>
                   </select>
               </div>
-              <div class="form-group">
+
+               <div class="form-group">
                 <span class="text-danger text-uppercase">*</span>
                 <label>Unidad</label>
-                <select id="rol" name="rol" class="form-control select2" style="width: 100%;">
-                  <option value="" disabled selected>Seleccione el Rol</option>
-                  <option value=1>Administrador</option>
-                  <option value=2>Consultor</option>
-                </select>
+                <button type="button" class="btn btn-Normal bg-teal-active btn-xs pull-right" data-toggle="modal" data-target="#modal-unity">+ Crear Nueva</button>
+                <select id="unity" name="unity" class="form-control select2" style="width: 100%;">
+                    <option value="" disabled selected>Seleccione una unidad</option>
+                  </select>
               </div>
+
               <div class="form-group">
                 <span class="text-danger text-uppercase">*</span>
                 <label>Marca</label>
-                <select id="rol" name="rol" class="form-control select2" style="width: 100%;">
-                  <option value="" disabled selected>Seleccione el Rol</option>
-                  <option value=1>Administrador</option>
-                  <option value=2>Consultor</option>
-                </select>
+                <button type="button" class="btn btn-Normal bg-teal-active btn-xs pull-right" data-toggle="modal" data-target="#modal-make">+ Crear Nueva</button>
+                <select id="make" name="make" class="form-control select2" style="width: 100%;">
+                    <option value="" disabled selected>Seleccione una marca</option>
+                  </select>
               </div>
               <!-- /.box-body -->
               <div class="box-footer">
@@ -134,5 +194,5 @@ include_once 'funciones/bd_conexion.php';
   <!-- /.content-wrapper -->
 
   <?php
-  include_once 'templates/footer.php';
+include_once 'templates/footer.php';
 ?>

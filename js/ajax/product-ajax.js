@@ -1,5 +1,7 @@
 $(document).ready(function () {
-    getData();
+    getCategory();
+    getUnity();
+    getMake();
 
     $('#form-category').on('submit', function (e) {
         e.preventDefault();
@@ -21,8 +23,10 @@ $(document).ready(function () {
                         'success'
                     )
                     if (resultado.proceso == 'nuevo') {
+                        getCategory();
+                        document.getElementById("form-category").reset();
                         $("#catClose").click();
-                        getData();
+                        
                     } else if (resultado.proceso == 'editado') {
                         setTimeout(function () {
                             window.location.href = 'listSellers.php';
@@ -48,15 +52,49 @@ $(document).ready(function () {
 });
 
     
-function getData(){
+function getCategory(){
     $.ajax({
       type: "GET",
-      url: 'BLL/listProduct.php', 
+      url: 'BLL/listCategory.php', 
       dataType: "json",
       success: function(data){
         console.log(data);
         $.each(data,function(key, registro) {
           $("#category").append('<option value='+registro.idCategory+'>'+registro.catName+'</option>');
+        });        
+      },
+      error: function(data) {
+        alert('error');
+      }
+    });
+  }
+
+  function getUnity(){
+    $.ajax({
+      type: "GET",
+      url: 'BLL/listUnity.php', 
+      dataType: "json",
+      success: function(data){
+        console.log(data);
+        $.each(data,function(key, registro) {
+          $("#unity").append('<option value='+registro.idUnity+'>'+registro.unityName+'</option>');
+        });        
+      },
+      error: function(data) {
+        alert('error');
+      }
+    });
+  }
+
+  function getMake(){
+    $.ajax({
+      type: "GET",
+      url: 'BLL/listMake.php', 
+      dataType: "json",
+      success: function(data){
+        console.log(data);
+        $.each(data,function(key, registro) {
+          $("#make").append('<option value='+registro.idMake+'>'+registro.makeName+'</option>');
         });        
       },
       error: function(data) {
