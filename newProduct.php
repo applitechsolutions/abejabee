@@ -46,7 +46,7 @@ include_once 'funciones/bd_conexion.php';
                       <input type="hidden" name="categoria" value="nueva">
                       <button id="catClose" type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
                       <span class="text-warning"> Debe llenar los campos obligatorios *</span>
-                      <button type="submit" class="btn btn-primary" id="crear-categoria">
+                      <button type="submit" class="btn btn-info" id="crear-categoria">
                         <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
                     </div>
                 </div>
@@ -77,7 +77,7 @@ include_once 'funciones/bd_conexion.php';
                       <input type="hidden" name="unidad" value="nueva">
                       <button id="uniClose" type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
                       <span class="text-warning"> Debe llenar los campos obligatorios *</span>
-                      <button type="submit" class="btn btn-primary" id="crear-unidad">
+                      <button type="submit" class="btn btn-info" id="crear-unidad">
                         <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
                     </div>
                 </div>
@@ -108,7 +108,7 @@ include_once 'funciones/bd_conexion.php';
                       <input type="hidden" name="marca" value="nueva">
                       <button id="makeClose" type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
                       <span class="text-warning"> Debe llenar los campos obligatorios *</span>
-                      <button type="submit" class="btn btn-primary" id="crear-marca">
+                      <button type="submit" class="btn btn-info" id="crear-marca">
                         <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
                     </div>
                 </div>
@@ -124,20 +124,22 @@ include_once 'funciones/bd_conexion.php';
                 <div class="form-group">
                   <span class="text-danger text-uppercase">*</span>
                   <label for="nombre">Nombre</label>
-                  <input type="text" class="form-control" id="name" name="name" placeholder="Escriba un nombre..." autofocus>
+                  <input type="text" class="form-control" id="name" name="name" placeholder="Escriba un nombre" autofocus>
                 </div>
                 <div class="form-group">
                   <span class="text-danger text-uppercase">*</span>
                   <label for="codigo">Código</label>
-                  <input type="text" class="form-control" id="code" name="code" placeholder="Escriba un código...">
+                  <input type="text" class="form-control" id="code" name="code" placeholder="Escriba un código">
                 </div>
                 <div class="form-group">
                   <span class="text-danger text-uppercase">*</span>
                   <label for="costo">Costo</label>
-                  <input type="text" class="form-control" id="cost" name="cost" placeholder="Escriba un costo...">
+                  <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-money"></i></span>
+                  <input type="number" placeholder="0.00" min="0.00" step="0.01" class="form-control">
+                </div>
                 </div>
                 <div class="form-group">
-                  <span class="text-danger text-uppercase">*</span>
                   <label for="descripcion">Descripción</label>
                   <textarea class="form-control" rows="3" id="description" name="description" placeholder="Escriba la descripción del producto... "></textarea>
                 </div>
@@ -154,6 +156,8 @@ include_once 'funciones/bd_conexion.php';
                   </select>
               </div>
 
+              <br>
+
                <div class="form-group">
                 <span class="text-danger text-uppercase">*</span>
                 <label>Unidad</label>
@@ -162,6 +166,8 @@ include_once 'funciones/bd_conexion.php';
                     <option value="" disabled selected>Seleccione una unidad</option>
                   </select>
               </div>
+
+              <br>
 
               <div class="form-group">
                 <span class="text-danger text-uppercase">*</span>
@@ -174,7 +180,7 @@ include_once 'funciones/bd_conexion.php';
               <!-- /.box-body -->
               <div class="box-footer">
                 <input type="hidden" name="producto" value="nuevo">
-                <button type="submit" class="btn btn-info" id="crear-producto">
+                <button type="submit" class="btn btn-primary" id="crear-producto">
                   <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
                 <span class="text-warning"> Debe llenar los campos obligatorios *</span>
               </div>
