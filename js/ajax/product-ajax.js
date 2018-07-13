@@ -3,6 +3,55 @@ $(document).ready(function () {
     getUnity();
     getMake();
 
+    $('#form-product-file').on('submit', function (e) {
+        e.preventDefault();
+
+        var datos = new FormData(this);
+
+        $.ajax({
+            type: $(this).attr('method'),
+            data: datos,
+            url: $(this).attr('action'),
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            async: true,
+            cache: false,
+            success: function (data) {
+                console.log(data);
+                var resultado = data;
+                if (resultado.respuesta == 'exito') {
+                    swal(
+                        'Exito!',
+                        '¡' + resultado.mensaje,
+                        'success'
+                    )
+                    if (resultado.proceso == 'nuevo') {
+                        setTimeout(function() {
+                            location.reload();
+                        }, 1500);                 
+                    } else if (resultado.proceso == 'editado') {
+                        setTimeout(function () {
+                            window.location.href = 'listProducts.php';
+                        }, 1500);
+                    }
+                } else if (resultado.respuesta == 'vacio') {
+                    swal({
+                        type: 'warning',
+                        title: 'Oops...',
+                        text: 'Debe llenar todos los campos',
+                    })
+                } else if (resultado.respuesta == 'error') {
+                    swal({
+                        type: 'error',
+                        title: 'Error',
+                        text: 'No se pudo guardar en la base de datos',
+                    })
+                }
+            }
+        })
+    });
+
     $('#form-category').on('submit', function (e) {
         e.preventDefault();
 
@@ -49,6 +98,7 @@ $(document).ready(function () {
         })
 
     });
+
     $('#form-unity').on('submit', function (e) {
       e.preventDefault();
 
@@ -95,6 +145,7 @@ $(document).ready(function () {
       })
 
     });
+
     $('#form-make').on('submit', function (e) {
       e.preventDefault();
 

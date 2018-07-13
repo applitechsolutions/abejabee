@@ -27,6 +27,7 @@ include_once 'funciones/bd_conexion.php';
           <div class="row">
             <div class="col-md-6">
               <form role="form" id="form-provider" name="form-provider" method="post" action="BLL/provider.php">
+              <div class="box-body">
                 <div class="form-group">
                   <span class="text-danger text-uppercase">*</span>
                   <label for="name">Nombre</label>
@@ -56,9 +57,10 @@ include_once 'funciones/bd_conexion.php';
                     </div>                  
                 </div>
             </div>
-            <!-- /.form-group -->
+            </div>
             <!-- /.col -->
             <div class="col-md-6">
+            <div class="box-body">
               <div class="form-group">
                 <span class="text-danger text-uppercase"></span>
                 <label for="account">Cuenta Bancaria #1</label>
@@ -73,6 +75,7 @@ include_once 'funciones/bd_conexion.php';
                 <span class="text-danger text-uppercase"></span>
                 <label for="details">Detalles: </label>
                 <textarea class="form-control" rows="3" id="details" name="details" placeholder="Escriba todos los detalles sobre este proveedor... "></textarea>
+              </div>
               </div>
               <!-- /.box-body -->
               <div class="box-footer">

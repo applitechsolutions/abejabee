@@ -11,7 +11,7 @@ include_once 'funciones/bd_conexion.php';
     <section class="content-header">
       <h1>
         Productos
-        <small>llena el formulario para crear un nuevo producto</small>
+        <small>llene el formulario para crear un nuevo producto</small>
       </h1>
     </section>
 
@@ -120,7 +120,9 @@ include_once 'funciones/bd_conexion.php';
 
           <div class="row">
             <div class="col-md-6">
-              <form role="form" id="form-product" name="form-product" method="post" action="BLL/product.php">
+              <form role="form" id="form-product" name="form-product-file" method="post" action="BLL/product.php"
+              enctype="multipart/form-data">
+              <div class="box-body">
                 <div class="form-group">
                   <span class="text-danger text-uppercase">*</span>
                   <label for="nombre">Nombre</label>
@@ -136,7 +138,7 @@ include_once 'funciones/bd_conexion.php';
                   <label for="costo">Costo</label>
                   <div class="input-group">
                   <span class="input-group-addon"><i class="fa fa-money"></i></span>
-                  <input type="number" placeholder="0.00" min="0.00" step="0.01" class="form-control">
+                  <input type="number" id="cost" name="cost" placeholder="0.00" min="0.00" step="0.01" class="form-control">
                 </div>
                 </div>
                 <div class="form-group">
@@ -144,18 +146,35 @@ include_once 'funciones/bd_conexion.php';
                   <textarea class="form-control" rows="3" id="description" name="description" placeholder="Escriba la descripción del producto... "></textarea>
                 </div>
             </div>
+            </div>
             <!-- /.form-group -->
             <!-- /.col -->
             <div class="col-md-6">
+            <div class="box-body">
+              <div class="form-group">
+                  <label for="picture">Imagen</label>
+                  <input type="file" id="picture" name="file">
+
+                  <p class="help-block">Ingrese la imagen del producto aquí.</p>
+              </div>
+              <div class="form-group">
+                <span class="text-danger text-uppercase">*</span>
+                <label>Marca</label>
+                <button type="button" class="btn btn-Normal bg-teal-active btn-xs pull-right" data-toggle="modal" data-target="#modal-make">+ Crear Nueva</button>
+                <select id="make" name="make" class="form-control select2" style="width: 100%;">
+                    <option value="" disabled selected>Seleccione una marca</option>
+                  </select>
+              </div>
+              <br>
+
               <div class="form-group">
                 <span class="text-danger text-uppercase">*</span>
                 <label>Categoría</label>
                   <button type="button" class="btn btn-Normal bg-teal-active btn-xs pull-right" data-toggle="modal" data-target="#modal-category">+ Crear Nueva</button>
-                <select id="category" name="category" class="form-control select2 select2-hidden-accessible" style="width: 100%;">
+                <select id="category" name="category" class="form-control select2" style="width: 100%;">
                     <option value="" disabled selected>Seleccione una categoría</option>
-                  </select>
+                </select>
               </div>
-
               <br>
 
                <div class="form-group">
@@ -165,18 +184,8 @@ include_once 'funciones/bd_conexion.php';
                 <select id="unity" name="unity" class="form-control select2" style="width: 100%;">
                     <option value="" disabled selected>Seleccione una unidad</option>
                   </select>
-              </div>
-
-              <br>
-
-              <div class="form-group">
-                <span class="text-danger text-uppercase">*</span>
-                <label>Marca</label>
-                <button type="button" class="btn btn-Normal bg-teal-active btn-xs pull-right" data-toggle="modal" data-target="#modal-make">+ Crear Nueva</button>
-                <select id="make" name="make" class="form-control select2" style="width: 100%;">
-                    <option value="" disabled selected>Seleccione una marca</option>
-                  </select>
-              </div>
+              </div>        
+              </div>     
               <!-- /.box-body -->
               <div class="box-footer">
                 <input type="hidden" name="producto" value="nuevo">
