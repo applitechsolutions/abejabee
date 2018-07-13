@@ -151,7 +151,7 @@ include_once 'funciones/bd_conexion.php';
                 <span class="text-danger text-uppercase">*</span>
                 <label>Categoría</label>
                   <button type="button" class="btn btn-Normal bg-teal-active btn-xs pull-right" data-toggle="modal" data-target="#modal-category">+ Crear Nueva</button>
-                <select id="category" name="category" class="form-control select2" style="width: 100%;">
+                <select id="category" name="category" class="form-control select2 select2-hidden-accessible" style="width: 100%;">
                     <option value="" disabled selected>Seleccione una categoría</option>
                   </select>
               </div>
