@@ -3,7 +3,7 @@ $(document).ready(function () {
     getUnity();
     getMake();
 
-    $('#form-product-file').on('submit', function (e) {
+    $('#form-product').on('submit', function (e) {
         e.preventDefault();
 
         var datos = new FormData(this);
