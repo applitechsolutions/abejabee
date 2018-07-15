@@ -89,7 +89,7 @@ if (!filter_var($id, FILTER_VALIDATE_INT)) {
                 <span class="text-danger text-uppercase"></span>
                 <label for="details">Detalles: </label>
                 <textarea class="form-control" rows="3" id="details" name="details" placeholder="Escriba todos los detalles sobre este proveedor... "
-                value="<?php echo $provider['details']; ?>"></textarea>
+                ><?php echo $provider['details']; ?></textarea>
               </div>
               <!-- /.box-body -->
               <div class="box-footer">

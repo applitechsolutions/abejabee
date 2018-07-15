@@ -4,6 +4,10 @@ include_once 'templates/header.php';
 include_once 'templates/navBar.php';
 include_once 'templates/sideBar.php';
 include_once 'funciones/bd_conexion.php';
+$id = $_GET['id'];
+if (!filter_var($id, FILTER_VALIDATE_INT)) {
+    die("Error!");
+}
 ?>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -11,7 +15,7 @@ include_once 'funciones/bd_conexion.php';
     <section class="content-header">
       <h1>
         Productos
-        <small>llene el formulario para crear un nuevo producto</small>
+        <small>Aquí puede editar el producto</small>
       </h1>
     </section>
 
@@ -20,10 +24,15 @@ include_once 'funciones/bd_conexion.php';
       <!-- Default box -->
       <div class="box box-default">
         <div class="box-header with-border">
-          <h3 class="box-title">Crear Producto</h3>
+          <h3 class="box-title">Editar Producto</h3>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
+        <?php
+$sql = "SELECT * FROM `product` WHERE `idProduct` = $id ";
+$resultado = $conn->query($sql);
+$product = $resultado->fetch_assoc();
+?>
 
           <!-- MODAL CATEGORIA -->
           <div class="modal fade" id="modal-category">
@@ -126,24 +135,25 @@ include_once 'funciones/bd_conexion.php';
                 <div class="form-group">
                   <span class="text-danger text-uppercase">*</span>
                   <label for="nombre">Nombre</label>
-                  <input type="text" class="form-control" id="name" name="name" placeholder="Escriba un nombre" autofocus>
+                  <input type="text" class="form-control" id="name" name="name" placeholder="Escriba un nombre" autofocus value="<?php echo $product['productName']?>">
                 </div>
                 <div class="form-group">
                   <span class="text-danger text-uppercase">*</span>
                   <label for="codigo">Código</label>
-                  <input type="text" class="form-control" id="code" name="code" placeholder="Escriba un código">
+                  <input type="text" class="form-control" id="code" name="code" placeholder="Escriba un código"
+                  value = "<?php echo $product['productCode']?>">
                 </div>
                 <div class="form-group">
                   <span class="text-danger text-uppercase">*</span>
                   <label for="costo">Costo</label>
                   <div class="input-group">
                   <span class="input-group-addon"><i class="fa fa-money"></i></span>
-                  <input type="number" id="cost" name="cost" placeholder="0.00" min="0.00" step="0.01" class="form-control">
+                  <input type="number" id="cost" name="cost" placeholder="0.00" min="0.00" step="0.01" class="form-control" value="<?php echo $product['cost']?>">
                 </div>
                 </div>
                 <div class="form-group">
                   <label for="descripcion">Descripción</label>
-                  <textarea class="form-control" rows="3" id="description" name="description" placeholder="Escriba la descripción del producto... "></textarea>
+                  <textarea class="form-control" rows="3" id="description" name="description" placeholder="Escriba la descripción del producto... "><?php echo $product['description']; ?></textarea>
                 </div>
             </div>
             </div>
@@ -165,11 +175,17 @@ include_once 'funciones/bd_conexion.php';
                     <option value="" disabled selected>Seleccione una marca</option>
                     <?php
                     try {
+                      $marca_actual =  $product['_idMake'];
                       $sql = "SELECT * FROM make";
                       $resultado = $conn->query($sql);
-                      while ($category_product = $resultado->fetch_assoc()) {?>
-                          <option value="<?php echo $category_product['idMake']; ?>"><?php echo $category_product['makeName']; ?></option>
+                      while ($make_product = $resultado->fetch_assoc()) {
+                        if ($make_product['idMake']==$marca_actual) {?>
+                          <option value="<?php echo $make_product['idMake']; ?>" selected><?php echo $make_product['makeName']; ?></option>
                           <?php 
+                        }else{?>
+                          <option value="<?php echo $make_product['idMake']; ?>"><?php echo $make_product['makeName']; ?></option>
+                          <?php
+                        }
                       }
                     } catch (Exception $e) {
                         echo "Error: " . $e->getMessage();
@@ -187,11 +203,17 @@ include_once 'funciones/bd_conexion.php';
                     <option value="" disabled selected>Seleccione una categoría</option>
                     <?php
                     try {
+                      $category_actual =  $product['_idCategory'];
                       $sql = "SELECT * FROM category";
                       $resultado = $conn->query($sql);
-                      while ($category_product = $resultado->fetch_assoc()) {?>
-                          <option value="<?php echo $category_product['idCategory']; ?>"><?php echo $category_product['catName']; ?></option>
+                      while ($cat_product = $resultado->fetch_assoc()) {
+                        if ($cat_product['idCategory']==$category_actual) {?>
+                          <option value="<?php echo $cat_product['idCategory']; ?>" selected><?php echo $cat_product['catName']; ?></option>
                           <?php 
+                        }else{?>
+                          <option value="<?php echo $cat_product['idCategory']; ?>"><?php echo $cat_product['catName']; ?></option>
+                          <?php
+                        }
                       }
                     } catch (Exception $e) {
                         echo "Error: " . $e->getMessage();
@@ -209,19 +231,25 @@ include_once 'funciones/bd_conexion.php';
                     <option value="" disabled selected>Seleccione una unidad</option>
                     <?php
                     try {
+                      $unidad_actual =  $product['_idUnity'];
                       $sql = "SELECT * FROM unity";
                       $resultado = $conn->query($sql);
-                      while ($unity_product = $resultado->fetch_assoc()) {?>
-                          <option value="<?php echo $unity_product['idUnity']; ?>"><?php echo $unity_product['unityName']; ?></option>
+                      while ($unity_product = $resultado->fetch_assoc()) {
+                        if ($unity_product['idUnity']==$unidad_actual) {?>
+                          <option value="<?php echo $unity_product['idUnity']; ?>" selected><?php echo $unity_product['unityName']; ?></option>
                           <?php 
+                        }else{?>
+                          <option value="<?php echo $unity_product['idUnity']; ?>"><?php echo $unity_product['unityName']; ?></option>
+                          <?php
+                        }
                       }
                     } catch (Exception $e) {
                         echo "Error: " . $e->getMessage();
                     }
                     ?>
                   </select>
-              </div>        
-              </div>     
+              </div>
+              </div>
               <!-- /.box-body -->
               <div class="box-footer">
                 <input type="hidden" name="producto" value="nuevo">
