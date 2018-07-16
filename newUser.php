@@ -43,7 +43,7 @@
                   <div class="form-group">
                     <span class="text-danger text-uppercase">*</span><label>Rol</label>
                     <select id="rol" name="rol" class="form-control select2" style="width: 100%;">
-                      <option value="" disabled selected>Seleccione el Rol</option>
+                      <option value=0 disabled selected>Seleccione el Rol</option>
                       <option value=1>Administrador</option>
                       <option value=2>Consultor</option>
                     </select>

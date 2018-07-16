@@ -71,7 +71,7 @@ include_once 'funciones/bd_conexion.php';
                     <div class="form-group">
                       <span class="text-danger text-uppercase">*</span>
                       <label for="nombre">Nombre</label>
-                      <input type="text" class="form-control" id="name" name="name" placeholder="Escriba un nombre" autofocus>
+                      <input type="text" class="form-control" id="name" name="name" placeholder="Escriba una unidad" autofocus>
                     </div>
                     <div class="modal-footer">
                       <input type="hidden" name="unidad" value="nueva">

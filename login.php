@@ -16,8 +16,8 @@
 <body class="hold-transition login-page">
   <div class="login-box">
     <div class="login-logo">
-      <div class="pull-left image">
-      <img src="img/Schlenker.jpeg" class="img-circle" alt="Login Image"><a href="login.php"><b>Schlenker</b>Pharma</a>
+      <div class="image">
+      <img src="img/Schlenker.png" class="img-circle pull-left" alt="Login Image"><a href="login.php"><b>Schlenker</b>Pharma</a>
       </div>      
     </div>
     <!-- /.login-logo -->

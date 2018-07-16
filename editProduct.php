@@ -80,7 +80,7 @@ $product = $resultado->fetch_assoc();
                     <div class="form-group">
                       <span class="text-danger text-uppercase">*</span>
                       <label for="nombre">Nombre</label>
-                      <input type="text" class="form-control" id="name" name="name" placeholder="Escriba un nombre" autofocus>
+                      <input type="text" class="form-control" id="name" name="name" placeholder="Escriba una unidad" autofocus>
                     </div>
                     <div class="modal-footer">
                       <input type="hidden" name="unidad" value="nueva">
@@ -161,12 +161,25 @@ $product = $resultado->fetch_assoc();
             <!-- /.col -->
             <div class="col-md-6">
             <div class="box-body">
+            <div class="form-group pull-right">
+              <label for="imagen_actual">Imagen actual</label>
+              <br>
+              <?php 
+              if ($product['picture'] != "") {?>
+                <img src="img/products/<?php echo $product['picture']; ?>" width="100" >
+                <?php
+              }else{?>
+                <img src="img/products/notfound.jpg" width="100" >
+              <?php } ?>              
+            </div>
+            <br>
+            <br>
               <div class="form-group">
                   <label for="picture">Imagen</label>
                   <input type="file" id="picture" name="file">
-
                   <p class="help-block">Ingrese la imagen del producto aquí.</p>
               </div>
+              <br>
               <div class="form-group">
                 <span class="text-danger text-uppercase">*</span>
                 <label>Marca</label>
@@ -252,7 +265,8 @@ $product = $resultado->fetch_assoc();
               </div>
               <!-- /.box-body -->
               <div class="box-footer">
-                <input type="hidden" name="producto" value="nuevo">
+                <input type="hidden" name="producto" value="editar">
+                <input type="hidden" name="id_producto" value="<?php echo $id; ?>">
                 <button type="submit" class="btn btn-primary" id="crear-producto">
                   <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
                 <span class="text-warning"> Debe llenar los campos obligatorios *</span>

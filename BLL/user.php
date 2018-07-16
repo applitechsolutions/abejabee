@@ -9,9 +9,8 @@ if ($_POST['registro'] == 'nuevo') {
     $usuario = $_POST['usuario'];
     $password = $_POST['password'];
     $pass_hashed = password_hash($password, PASSWORD_BCRYPT);
-    die(json_encode($_POST));
     try{
-        if ($nombre == '' || $apellido == '' || $rol == '' || $usuario = '' || $password == '') {
+        if ($nombre == '' || $apellido == '' || $rol == '' || $usuario == '' || $password == '') {
             $respuesta = array(
                 'respuesta' => 'vacio'
             );

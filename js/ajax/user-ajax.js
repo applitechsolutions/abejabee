@@ -1,21 +1,18 @@
-$(document).ready(function() {
-    //$('#crear-usuario').attr('disabled', true);
-    /*function validacion() {
-        var nombre = $('#nombre').val();
-        var apellido = $('#apellido').val();
-        var usuario = $('#usuario').val();
+$(document).ready(function () {
+    $('#crear-usuario').attr('disabled', true);
+    function validacion() {
         var password = $('#password').val();
         var conf_pass = $('#confirmar_password').val();
         var rol = $('#rol').val();
 
-        if (nombre == '' || apellido == '' || usuario == '' || rol == '' || password == '' || conf_pass == '') {
+        if (rol == null || password == '' || conf_pass == '') {
             $('#crear-usuario').attr('disabled', true);
         } else {
             $('#crear-usuario').attr('disabled', false);
         }
-    }*/
+    }
 
-    $('#form-usuario').on('submit', function(e) {
+    $('#form-usuario').on('submit', function (e) {
         e.preventDefault();
 
         var datos = $(this).serializeArray();
@@ -25,21 +22,21 @@ $(document).ready(function() {
             data: datos,
             url: $(this).attr('action'),
             dataType: 'json',
-            success: function(data){
+            success: function (data) {
                 console.log(data);
                 var resultado = data;
                 if (resultado.respuesta == 'exito') {
                     swal(
                         'Exito!',
-                        '¡'+resultado.mensaje,
+                        '¡' + resultado.mensaje,
                         'success'
-                      )
+                    )
                     if (resultado.proceso == 'nuevo') {
-                    setTimeout(function() {
-                        location.reload();
-                    }, 1500);
-                    } else if (resultado.proceso == 'editado'){
-                        setTimeout(function() {
+                        setTimeout(function () {
+                            location.reload();
+                        }, 1500);
+                    } else if (resultado.proceso == 'editado') {
+                        setTimeout(function () {
                             window.location.href = 'listUsers.php';
                         }, 1500);
                     }
@@ -48,21 +45,21 @@ $(document).ready(function() {
                         type: 'warning',
                         title: 'Oops...',
                         text: 'Debe llenar todos los campos',
-                      })
-                }else if (resultado.respuesta == 'error'){
+                    })
+                } else if (resultado.respuesta == 'error') {
                     swal({
                         type: 'error',
                         title: 'Error',
                         text: 'No se pudo guardar en la base de datos',
-                      })
+                    })
                 }
             }
         })
-        
+
     });
 
     ///////////ELIMINAR USUARIO//////////////////
-    $('.borrar_usuario').on('click', function(e) {
+    $('.borrar_usuario').on('click', function (e) {
         e.preventDefault();
 
         var id = $(this).attr('data-id');
@@ -77,62 +74,38 @@ $(document).ready(function() {
             cancelButtonColor: '#d33',
             confirmButtonText: 'Sí, Eliminar!',
             cancelButtonText: 'Cancelar'
-          }).then((result) => {
-                $.ajax({
-                    type: 'POST',
-                    data: {
-                        'id': id,
-                        'registro': 'eliminar'
-                    },
-                    url: 'BLL/'+tipo+'.php',
-                    success(data){
-                        console.log(data);
-                        var resultado = JSON.parse(data);
-                        if (resultado.respuesta == 'exito') {
-                            swal(
-                                'Eliminado!',
-                                'El usuario ha sido borrado con exito.',
-                                'success'
-                              )
-                            jQuery('[data-id="'+resultado.id_eliminado+'"]').parents('tr').remove(); 
-                        }else {
-                            swal({
-                                type: 'error',
-                                title: 'Error!',
-                                text: 'No se pudo eliminar el usuario.'
-                              })
-                        }
-                        
+        }).then((result) => {
+            $.ajax({
+                type: 'POST',
+                data: {
+                    'id': id,
+                    'registro': 'eliminar'
+                },
+                url: 'BLL/' + tipo + '.php',
+                success(data) {
+                    console.log(data);
+                    var resultado = JSON.parse(data);
+                    if (resultado.respuesta == 'exito') {
+                        swal(
+                            'Eliminado!',
+                            'El usuario ha sido borrado con exito.',
+                            'success'
+                        )
+                        jQuery('[data-id="' + resultado.id_eliminado + '"]').parents('tr').remove();
+                    } else {
+                        swal({
+                            type: 'error',
+                            title: 'Error!',
+                            text: 'No se pudo eliminar el usuario.'
+                        })
                     }
-                });
+
+                }
             });
+        });
     });
-/*
-    $('#nombre').on('blur', function(){
-        if ($(this).val() !== null && $(this).val() !== '') {
-            $('#nombre').parents('.form-group').addClass('has-success').removeClass('has-error');
-            validacion();
-        }else {
-            $('#nombre').parents('.form-group').addClass('has-error').removeClass('has-success');
-        }
-    });
-    $('#apellido').on('blur', function(){
-        if ($(this).val() !== null && $(this).val() !== '') {
-            $('#apellido').parents('.form-group').addClass('has-success').removeClass('has-error');
-            validacion();
-        }else {
-            $('#apellido').parents('.form-group').addClass('has-error').removeClass('has-success');
-        }
-    });
-    $('#usuario').on('blur', function(){
-        if ($(this).val() !== null && $(this).val() !== '') {
-            $('#usuario').parents('.form-group').addClass('has-success').removeClass('has-error');
-            validacion();
-        }else {
-            $('#usuario').parents('.form-group').addClass('has-error').removeClass('has-success');
-        }
-    });*/
-    $('#confirmar_password').on('input', function(){
+
+    $('#confirmar_password').on('input', function () {
         var password_nuevo = $('#password').val();
 
         if ($(this).val() == password_nuevo) {
@@ -140,26 +113,21 @@ $(document).ready(function() {
             $('#resultado-password').parents('.form-group').addClass('has-success').removeClass('has-error');
             $('input#password').parents('.form-group').addClass('has-success').removeClass('has-error');
             validacion();
-        }else {
+        } else {
             $('#resultado-password').text('No coinciden!');
             $('#resultado-password').parents('.form-group').addClass('has-error').removeClass('has-success');
             $('input#password').parents('.form-group').addClass('has-error').removeClass('has-success');
             $('#crear-usuario').attr('disabled', true);
         }
     });
-
-    /*
-    $('#rol').on('blur', function(){
-        if ($(this).val() !== null && $(this).val() !== '') {
+    $('#rol').on('input', function () {
+        console.log($(this).val());
+        if ($(this).val() != null) {
             $('#rol').parents('.form-group').addClass('has-success').removeClass('has-error');
             validacion();
-        }else {
+        } else {
             $('#rol').parents('.form-group').addClass('has-error').removeClass('has-success');
+            $('#crear-usuario').attr('disabled', true);
         }
     });
-
-    //////VALIDACIONES/////////////////////
-    */
-
-
 });
