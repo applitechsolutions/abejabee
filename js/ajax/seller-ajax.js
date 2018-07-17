@@ -45,7 +45,7 @@ $(document).ready(function() {
         })
         
     });
-    ///////////ELIMINAR USUARIO//////////////////
+
     $('.borrar_vendedor').on('click', function(e) {
         e.preventDefault();
 

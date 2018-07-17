@@ -61,7 +61,7 @@
                       <td><?php echo date_format($dateE, 'd/m/y'); ?></td>
                       <td>
                         <a class="btn bg-green btn-flat margin" href="editRoute.php?id=<?php echo $route['idRoute'] ?>"><i class="fa fa-pencil"></i></a>
-                        <a href="#" data-id="<?php echo $route['idRoute']; ?>" data-tipo="route" class="btn bg-maroon btn-flat margin borrar_ruta"><i class="fa fa-trash"></i></a>
+                        <a href="#" data-id="<?php echo $route['idRoute'];?>" data-tipo="route" class="btn bg-maroon btn-flat margin borrar_ruta"><i class="fa fa-trash"></i></a>
                       </td>
                     </tr>
                 <?php }
