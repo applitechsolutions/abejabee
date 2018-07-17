@@ -32,10 +32,10 @@
                   <th>Código</th>
                   <th>Costo</th>
                   <th>Descripción</th>
-                  <th>Imagen</th>
                   <th>Marca</th>
                   <th>Categoría</th>
                   <th>Unidad</th>
+                  <th>Imagen</th>
                   <th>Acciones</th>
                 </tr>
                 </thead>
@@ -60,13 +60,13 @@
                       <td><?php echo $product['productCode']; ?></td>
                       <td>Q.<?php echo $product['cost']; ?></td>
                       <td><?php echo $product['description']; ?></td>
-                      <td><img src="img/products/<?php echo $product['picture']; ?>" width="100" onerror="this.src='img/products/notfound.jpg';"></td>
                       <td><?php echo $product['make']; ?></td>
                       <td><?php echo $product['category']; ?></td>
                       <td><?php echo $product['unity']; ?></td>
+                      <td><img src="img/products/<?php echo $product['picture']; ?>" width="100" onerror="this.src='img/products/notfound.jpg';"></td>
                       <td>
                         <a class="btn bg-green btn-flat margin" href="editProduct.php?id=<?php echo $product['idProduct'] ?>"><i class="fa fa-pencil"></i></a>
-                        <a href="#" data-id="<?php echo $product['idProduct']; ?>" data-tipo="product" class="btn bg-maroon btn-flat margin borrar_usuario"><i class="fa fa-trash"></i></a>
+                        <a href="#" data-id="<?php echo $product['idProduct']; ?>" data-tipo="product" class="btn bg-maroon btn-flat margin borrar_product"><i class="fa fa-trash"></i></a>
                       </td>
                     </tr>
                 <?php }
@@ -78,10 +78,10 @@
                   <th>Código</th>
                   <th>Costo</th>
                   <th>Descripción</th>
-                  <th>Imagen</th>
                   <th>Marca</th>
                   <th>Categoría</th>
                   <th>Unidad</th>
+                  <th>Imagen</th>
                   <th>Acciones</th>
                 </tr>
                 </tfoot>
