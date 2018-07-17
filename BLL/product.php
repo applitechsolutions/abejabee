@@ -91,28 +91,32 @@ if ($_POST['producto'] == 'actualizar') {
 
     try {
         if ($_FILES['file']['size'] > 0) {
-            
+            //con imagen
+            $stmt = $conn->prepare("UPDATE product SET productName = ?, productCode = ?, cost = ?, description = ?, picture = ?, _idUnity = ?, _idCategory = ?, _idMake = ? WHERE idProduct = ?");
+            $stmt->bind_param("ssdssiiii", $name, $code, $cost, $description, $picture_url, $unity, $category, $make, $id_product);
         } else {
-            $stmt = $conn->prepare("INSERT INTO product (productName, productCode, cost, description, picture, _idUnity, _idCategory, _idMake) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("ssdssiii", $name, $code, $cost, $description, $picture_url, $unity, $category, $make);
-            $stmt->execute();
-            $id_registro = $stmt->insert_id;
-            if ($id_registro > 0) {
-                $respuesta = array(
-                    'respuesta' => 'exito',
-                    'idProduct' => $id_registro,
-                    'mensaje' => 'Producto creado correctamente!',
-                    'proceso' => 'nuevo',
-                );
-            } else {
-                $respuesta = array(
-                    'respuesta' => 'error',
-                    'idProduct' => $id_registro,
-                );
-            }
-            $stmt->close();
-            $conn->close();
+            //sin imagen
+            $stmt = $conn->prepare("UPDATE product SET productName = ?, productCode = ?, cost = ?, description = ?, _idUnity = ?, _idCategory = ?, _idMake = ? WHERE idProduct = ?");
+            $stmt->bind_param("ssdsiiii", $name, $code, $cost, $description, $unity, $category, $make, $id_product);
         }
+        $estado = $stmt->execute();
+
+        if ($estado ==  true) {
+            $respuesta = array(
+                'respuesta' => 'exito',
+                'idProduct' => $id_product,
+                'mensaje' => 'Producto actualizado correctamente!',
+                'proceso' => 'editado',
+            );
+        } else {
+            $respuesta = array(
+                'respuesta' => 'error',
+                'idProduct' => $id_product,
+            );
+        }
+        $stmt->close();
+        $conn->close();
+        
     } catch (Exception $e) {
         echo 'Error: ' . $e . getMessage();
     }

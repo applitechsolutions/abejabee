@@ -153,9 +153,18 @@ $product = $resultado->fetch_assoc();
                     </div>
                     <div class="form-group">
                       <label for="descripcion">Descripción</label>
-                      <textarea class="form-control" rows="3" id="description" name="description" placeholder="Escriba la descripción del producto... ">
-                        <?php echo $product['description']; ?>
-                      </textarea>
+                      <textarea class="form-control" rows="3" id="description" name="description" placeholder="Escriba la descripción del producto... "><?php echo $product['description']; ?></textarea>
+                    </div>
+                    <div class="form-group">
+                      <label for="imagen_actual">Imagen actual:</label>
+                      <br>
+                      <?php 
+                        if ($product['picture'] != "") {?>
+                              <img src="img/products/<?php echo $product['picture']; ?>" width="100">
+                              <?php
+                        }else{?>
+                                <img src="img/products/notfound.jpg" width="100">
+                      <?php } ?>
                     </div>
                   </div>
               </div>
@@ -163,17 +172,7 @@ $product = $resultado->fetch_assoc();
               <!-- /.col -->
               <div class="col-md-6">
                 <div class="box-body">
-                  <div class="form-group pull-right">
-                    <label for="imagen_actual">Imagen actual:</label>
-                    <br>
-                    <?php 
-              if ($product['picture'] != "") {?>
-                    <img src="img/products/<?php echo $product['picture']; ?>" width="100">
-                    <?php
-              }else{?>
-                      <img src="img/products/notfound.jpg" width="100">
-                      <?php } ?>
-                  </div>
+                  
                   <br>
                   <div class="form-group">
                     <label for="picture">Imagen</label>
@@ -277,7 +276,7 @@ $product = $resultado->fetch_assoc();
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer">
-                  <input type="hidden" name="producto" value="editar">
+                  <input type="hidden" name="producto" value="actualizar">
                   <input type="hidden" name="id_producto" value="<?php echo $id; ?>">
                   <button type="submit" class="btn btn-primary" id="crear-producto">
                     <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>

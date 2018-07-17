@@ -60,7 +60,7 @@
                       <td><?php echo $product['productCode']; ?></td>
                       <td>Q.<?php echo $product['cost']; ?></td>
                       <td><?php echo $product['description']; ?></td>
-                      <td><?php echo $product['picture']; ?></td>
+                      <td><img src="img/products/<?php echo $product['picture']; ?>" width="100"></td>
                       <td><?php echo $product['make']; ?></td>
                       <td><?php echo $product['category']; ?></td>
                       <td><?php echo $product['unity']; ?></td>
