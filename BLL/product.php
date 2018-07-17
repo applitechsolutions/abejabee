@@ -9,12 +9,13 @@ if ($_POST['producto'] == 'nuevo') {
     $make = $_POST['make'];
     $category = $_POST['category'];
     $unity = $_POST['unity'];
+    
     $respuesta = array(
         'post' => $_POST,
         'file' => $_FILES
     );
 
-    die(json_encode($respuesta));
+    //die(json_encode($respuesta));
     $directorio = "../img/products/";
 
     if (!is_dir($directorio)) {
@@ -29,7 +30,7 @@ if ($_POST['producto'] == 'nuevo') {
     }
 
     try {
-        if ($name == '' || $code == '' || $cost == '') {
+        if ($name == '' || $code == '' || $cost == '' || $make == '' || $category == '' || $unity == '') {
             $respuesta = array(
                 'respuesta' => 'vacio',
             );
@@ -60,7 +61,7 @@ if ($_POST['producto'] == 'nuevo') {
     die(json_encode($respuesta));
 }
 
-if ($_POST['producto'] == 'editar') {
+if ($_POST['producto'] == 'actualizar') {
     $id_product = $_POST['id_producto'];
     $name = $_POST['name'];
     $code = $_POST['code'];
@@ -89,10 +90,8 @@ if ($_POST['producto'] == 'editar') {
     }
 
     try {
-        if ($name == '' || $code == '' || $cost == '') {
-            $respuesta = array(
-                'respuesta' => 'vacio',
-            );
+        if ($_FILES['file']['size'] > 0) {
+            
         } else {
             $stmt = $conn->prepare("INSERT INTO product (productName, productCode, cost, description, picture, _idUnity, _idCategory, _idMake) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
             $stmt->bind_param("ssdssiii", $name, $code, $cost, $description, $picture_url, $unity, $category, $make);

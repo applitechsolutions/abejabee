@@ -161,21 +161,21 @@ include_once 'funciones/bd_conexion.php';
                 <span class="text-danger text-uppercase">*</span>
                 <label>Marca</label>
                 <button type="button" class="btn btn-Normal bg-teal-active btn-xs pull-right" data-toggle="modal" data-target="#modal-make">+ Crear Nueva</button>
-                <select id="make" name="make" class="form-control select2" style="width: 100%;">
-                    <option value="" disabled selected>Seleccione una marca</option>
+                <select id="make" name="make" class="form-control select2" style="width: 100%;" value="0">
+                  <option value="" selected>Seleccione una marca</option>
                     <?php
-                    try {
-                      $sql = "SELECT * FROM make";
-                      $resultado = $conn->query($sql);
-                      while ($category_product = $resultado->fetch_assoc()) {?>
-                          <option value="<?php echo $category_product['idMake']; ?>"><?php echo $category_product['makeName']; ?></option>
-                          <?php 
+                      try {
+                        $sql = "SELECT * FROM make";
+                        $resultado = $conn->query($sql);
+                        while ($make_product = $resultado->fetch_assoc()) {?>
+                            <option value="<?php echo $make_product['idMake']; ?>"><?php echo $make_product['makeName']; ?></option>
+                            <?php 
+                        }
+                      } catch (Exception $e) {
+                          echo "Error: " . $e->getMessage();
                       }
-                    } catch (Exception $e) {
-                        echo "Error: " . $e->getMessage();
-                    }
                     ?>
-                  </select>
+                </select>
               </div>
               <br>
 
@@ -184,7 +184,7 @@ include_once 'funciones/bd_conexion.php';
                 <label>Categoría</label>
                   <button type="button" class="btn btn-Normal bg-teal-active btn-xs pull-right" data-toggle="modal" data-target="#modal-category">+ Crear Nueva</button>
                 <select id="category" name="category" class="form-control select2" style="width: 100%;">
-                    <option value="" disabled selected>Seleccione una categoría</option>
+                    <option value="" selected>Seleccione una categoría</option>
                     <?php
                     try {
                       $sql = "SELECT * FROM category";
@@ -206,7 +206,7 @@ include_once 'funciones/bd_conexion.php';
                 <label>Unidad</label>
                 <button type="button" class="btn btn-Normal bg-teal-active btn-xs pull-right" data-toggle="modal" data-target="#modal-unity">+ Crear Nueva</button>
                 <select id="unity" name="unity" class="form-control select2" style="width: 100%;">
-                    <option value="" disabled selected>Seleccione una unidad</option>
+                    <option value="" selected>Seleccione una unidad</option>
                     <?php
                     try {
                       $sql = "SELECT * FROM unity";
