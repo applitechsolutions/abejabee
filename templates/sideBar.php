@@ -56,8 +56,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="#"><i class="fa fa-list-ul" aria-hidden="true"></i> Ver Todas</a></li>
-            <li><a href="#"><i class="fa fa-plus-circle" aria-hidden="true"></i> Nueva Ruta</a></li>
+            <li><a href="listRoutes.php"><i class="fa fa-list-ul" aria-hidden="true"></i> Ver Todas</a></li>
+            <li><a href="newRoute.php"><i class="fa fa-plus-circle" aria-hidden="true"></i> Nueva Ruta</a></li>
           </ul>
         </li>
         <li class="treeview">

@@ -49,6 +49,7 @@
                   }
                   
                   while ($seller = $resultado->fetch_assoc()) {
+                    $date = date_create($seller['birthDate']);
                 ?>
                     <tr>
                       <td><?php echo $seller['sellerFirstName']; ?></td>
@@ -56,7 +57,7 @@
                       <td><?php echo $seller['sellerAddress']; ?></td>
                       <td><?php echo $seller['sellerMobile']; ?></td>
                       <td><?php echo $seller['DPI']; ?></td>
-                      <td><?php echo $seller['birthDate']; ?></td>
+                      <td><?php echo date_format($date, 'd/m/y'); ?></td>
                       <?php if ($seller['gender'] == '0') {
                         ?><td>Masculino</td><?php
                       }else if ($seller['gender'] == '1'){
