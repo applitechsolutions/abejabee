@@ -16,7 +16,7 @@
     </section>
 
     <div class="row">
-      <div class="col-md-8">
+      <div class="col-md-6">
         <!-- Main content -->
         <section class="content">
           <!-- Default box -->

@@ -23,6 +23,7 @@
 <script src="js/demo.js"></script>
 <script src="js/sweetalert2.min.js"></script>
 <!-- AJAX FOR SCHLENKER PHARMA -->
+<script src="js/ajax/route-ajax.js"></script>
 <script src="js/ajax/product-ajax.js"></script>
 <script src="js/ajax/seller-ajax.js"></script>
 <script src="js/ajax/provider-ajax.js"></script>
@@ -45,7 +46,10 @@
     $('#datepicker').datepicker({
       autoclose: true
     });
-    
+
+    $('#datepicker2').datepicker({
+      autoclose: true
+    });    
 
     //iCheck for checkbox and radio inputs
     $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({

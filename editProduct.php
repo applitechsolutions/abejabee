@@ -130,6 +130,7 @@ $product = $resultado->fetch_assoc();
               <div class="col-md-6">
                 <form role="form" id="form-product" name="form-product-file" method="post" action="BLL/product.php" enctype="multipart/form-data">
                   <div class="box-body">
+                  <br>
                     <div class="form-group">
                       <span class="text-danger text-uppercase">*</span>
                       <label for="nombre">Nombre</label>
@@ -163,7 +164,7 @@ $product = $resultado->fetch_assoc();
               <div class="col-md-6">
                 <div class="box-body">
                   <div class="form-group pull-right">
-                    <label for="imagen_actual">Imagen actual</label>
+                    <label for="imagen_actual">Imagen actual:</label>
                     <br>
                     <?php 
               if ($product['picture'] != "") {?>
@@ -173,7 +174,6 @@ $product = $resultado->fetch_assoc();
                       <img src="img/products/notfound.jpg" width="100">
                       <?php } ?>
                   </div>
-                  <br>
                   <br>
                   <div class="form-group">
                     <label for="picture">Imagen</label>

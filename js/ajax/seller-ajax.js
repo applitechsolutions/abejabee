@@ -1,20 +1,4 @@
 $(document).ready(function() {
-    //$('#crear-vendedor').attr('disabled', false);
-    // function validacion() {
-    //     var nombre = $('#nombre-vendedor').val();
-    //     var apellido = $_POST['apel-vendedor'];
-    //     var direccion = $_POST['direc-vendedor'];
-    //     var telefono = $_POST['tel-vendedor'];
-    //     var dpi = $_POST['dpi-vendedor'];
-    //     var bday = $_POST['bday-vendedor'];
-    //     var genero = $_POST['gen-vendedor'];
-
-    //     if (nombre == '' || apellido == '' || usuario == '' || rol == '' || password == '' || conf_pass == '') {
-    //         $('#crear-usuario').attr('disabled', true);
-    //     } else {
-    //         $('#crear-usuario').attr('disabled', false);
-    //     }
-    // }
 
     $('#form-vendedor').on('submit', function(e) {
         e.preventDefault();
