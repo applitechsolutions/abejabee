@@ -155,30 +155,24 @@ $product = $resultado->fetch_assoc();
                       <label for="descripcion">Descripción</label>
                       <textarea class="form-control" rows="3" id="description" name="description" placeholder="Escriba la descripción del producto... "><?php echo $product['description']; ?></textarea>
                     </div>
-                    <div class="form-group">
-                      <label for="imagen_actual">Imagen actual:</label>
-                      <br>
-                      <?php 
-                        if ($product['picture'] != "") {?>
-                              <img src="img/products/<?php echo $product['picture']; ?>" width="100">
-                              <?php
-                        }else{?>
-                                <img src="img/products/notfound.jpg" width="100">
-                      <?php } ?>
-                    </div>
                   </div>
               </div>
               <!-- /.form-group -->
               <!-- /.col -->
               <div class="col-md-6">
                 <div class="box-body">
-                  
+                  <div class="form-group pull-right">
+                    <label for="imagen_actual">Imagen actual:</label>
+                    <br>
+                    <img src="img/products/<?php echo $product['picture']; ?>" width="100" onerror="this.src='img/products/notfound.jpg';">
+                  </div>
                   <br>
                   <div class="form-group">
                     <label for="picture">Imagen</label>
                     <input type="file" id="picture" name="file">
                     <p class="help-block">Ingrese la imagen del producto aquí.</p>
                   </div>
+                  <br>
                   <br>
                   <div class="form-group">
                     <span class="text-danger text-uppercase">*</span>
