@@ -24,7 +24,7 @@
 <script src="js/sweetalert2.min.js"></script>
 <!-- AJAX FOR SCHLENKER PHARMA -->
 <script src="js/ajax/route-ajax.js"></script>
-<script src="js/ajax/product-ajax.js"></script>
+
 <script src="js/ajax/seller-ajax.js"></script>
 <script src="js/ajax/provider-ajax.js"></script>
 <script src="js/ajax/user-ajax.js"></script>
