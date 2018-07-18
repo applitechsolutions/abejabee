@@ -1,16 +1,5 @@
 $(document).ready(function () {
     $('#crear-usuario').attr('disabled', true);
-    function validacion() {
-        var password = $('#password').val();
-        var conf_pass = $('#confirmar_password').val();
-        var rol = $('#rol').val();
-
-        if (rol == null || password == '' || conf_pass == '') {
-            $('#crear-usuario').attr('disabled', true);
-        } else {
-            $('#crear-usuario').attr('disabled', false);
-        }
-    }
 
     $('#form-usuario').on('submit', function (e) {
         e.preventDefault();
@@ -44,7 +33,7 @@ $(document).ready(function () {
                     swal({
                         type: 'warning',
                         title: 'Oops...',
-                        text: 'Debe llenar todos los campos',
+                        text: 'Debe llenar todos los campos obligatorios',
                     })
                 } else if (resultado.respuesta == 'error') {
                     swal({
@@ -112,21 +101,11 @@ $(document).ready(function () {
             $('#resultado-password').text('Correcto!');
             $('#resultado-password').parents('.form-group').addClass('has-success').removeClass('has-error');
             $('input#password').parents('.form-group').addClass('has-success').removeClass('has-error');
-            validacion();
+            $('#crear-usuario').attr('disabled', false);
         } else {
             $('#resultado-password').text('No coinciden!');
             $('#resultado-password').parents('.form-group').addClass('has-error').removeClass('has-success');
             $('input#password').parents('.form-group').addClass('has-error').removeClass('has-success');
-            $('#crear-usuario').attr('disabled', true);
-        }
-    });
-    $('#rol').on('input', function () {
-        console.log($(this).val());
-        if ($(this).val() != null) {
-            $('#rol').parents('.form-group').addClass('has-success').removeClass('has-error');
-            validacion();
-        } else {
-            $('#rol').parents('.form-group').addClass('has-error').removeClass('has-success');
             $('#crear-usuario').attr('disabled', true);
         }
     });
