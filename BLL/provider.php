@@ -13,26 +13,32 @@ if ($_POST['registro'] == 'nuevo') {
     $details = $_POST['details'];
 
     try{
-        $stmt = $conn->prepare("INSERT INTO provider (providerName, providerAddress, providerTel, providerMobile, providerEmail, account1, account2, details) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("ssssssss", $name, $address, $tel, $mobile, $email, $account1, $account2, $details);
-        $stmt->execute();
-        $id_registro = $stmt->insert_id;
-        if ($id_registro > 0) {
+        if ($name == "" || $address == "" || $tel == "") {
             $respuesta = array(
-                'respuesta' => 'exito',
-                'idProvider' => $id_registro,
-                'mensaje' => 'Proveedor creado correctamente!',
-                'proceso' => 'nuevo'
+                'respuesta' => 'vacio',
             );
-            
         }else {
-            $respuesta = array(
-                'respuesta' => 'error',
-                'idProvider' => $id_registro
-            );
+            $stmt = $conn->prepare("INSERT INTO provider (providerName, providerAddress, providerTel, providerMobile, providerEmail, account1, account2, details) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("ssssssss", $name, $address, $tel, $mobile, $email, $account1, $account2, $details);
+            $stmt->execute();
+            $id_registro = $stmt->insert_id;
+            if ($id_registro > 0) {
+                $respuesta = array(
+                    'respuesta' => 'exito',
+                    'idProvider' => $id_registro,
+                    'mensaje' => 'Proveedor creado correctamente!',
+                    'proceso' => 'nuevo'
+                );
+                
+            }else {
+                $respuesta = array(
+                    'respuesta' => 'error',
+                    'idProvider' => $id_registro
+                );
+            }
+            $stmt->close();
+            $conn->close();
         }
-        $stmt->close();
-        $conn->close();
     }catch(Exception $e){
         echo 'Error: '. $e.getMessage();
     }

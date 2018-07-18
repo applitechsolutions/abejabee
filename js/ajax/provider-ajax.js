@@ -1,16 +1,4 @@
 $(document).ready(function() {
-    $('#crear-proveedor').attr('disabled', true);
-    function validacion() {
-        var name = $('#name').val();
-        var address = $('#address').val();
-        var tel = $('#tel').val();
-
-        if (name == '' || address == '' || tel == '') {
-            $('#crear-proveedor').attr('disabled', true);
-        } else {
-            $('#crear-proveedor').attr('disabled', false);
-        }
-    }
 
     $('#form-provider').on('submit', function(e) {
         e.preventDefault();
@@ -40,7 +28,13 @@ $(document).ready(function() {
                             window.location.href = 'listProviders.php';
                         }, 1500);
                     }
-                } else {
+                } else if (resultado.respuesta == 'vacio') {
+                    swal({
+                        type: 'warning',
+                        title: 'Oops...',
+                        text: 'Debe llenar todos los campos',
+                      })
+                }else if (resultado.respuesta == 'error'){
                     swal({
                         type: 'error',
                         title: 'Error',
@@ -94,30 +88,4 @@ $(document).ready(function() {
                   });
               });
     });
-
-    $('#name').on('blur', function(){
-        if ($(this).val() !== null && $(this).val() !== '') {
-            $('#name').parents('.form-group').addClass('has-success').removeClass('has-error');
-            validacion();
-        }else {
-            $('#name').parents('.form-group').addClass('has-error').removeClass('has-success');
-        }
-    });
-    $('#address').on('blur', function(){
-        if ($(this).val() !== null && $(this).val() !== '') {
-            $('#address').parents('.form-group').addClass('has-success').removeClass('has-error');
-            validacion();
-        }else {
-            $('#address').parents('.form-group').addClass('has-error').removeClass('has-success');
-        }
-    });
-    $('#tel').on('blur', function(){
-        if ($(this).val() !== null && $(this).val() !== '') {
-            $('#tel').parents('.form-group').addClass('has-success').removeClass('has-error');
-            validacion();
-        }else {
-            $('#tel').parents('.form-group').addClass('has-error').removeClass('has-success');
-        }
-    });
-    //////VALIDACIONES/////////////////////
 });

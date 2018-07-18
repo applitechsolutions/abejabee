@@ -30,7 +30,7 @@ if ($_POST['producto'] == 'nuevo') {
     }
 
     try {
-        if ($name == '' || $code == '' || $cost == '' || $make == '' || $category == '' || $unity == '') {
+        if ($name == "" || $code == '' || $cost == '' || $make == '' || $category == '' || $unity == '') {
             $respuesta = array(
                 'respuesta' => 'vacio',
             );
