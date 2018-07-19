@@ -10,8 +10,8 @@ include_once 'funciones/bd_conexion.php';
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Productos
-        <small>llene el formulario para crear un nuevo producto</small>
+        Compras
+        <small>Llene el formulario para realizar una nueva compra a los proveedores</small>
       </h1>
     </section>
 
@@ -20,7 +20,7 @@ include_once 'funciones/bd_conexion.php';
       <!-- Default box -->
       <div class="box box-default">
         <div class="box-header with-border">
-          <h3 class="box-title">Crear Producto</h3>
+          <h3 class="box-title">Nueva compra</h3>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
@@ -55,69 +55,7 @@ include_once 'funciones/bd_conexion.php';
             </div>
             <!-- /.modal-content -->
           </div>
-
-          <!-- MODAL UNIDAD -->
-          <div class="modal fade" id="modal-unity">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                  <h4 class="modal-title">Nueva Unidad</h4>
-                </div>
-                <div class="modal-body">
-                  <form role="form" id="form-unity" name="form-unity" method="post" action="BLL/unity.php">
-                    <div class="form-group">
-                      <span class="text-danger text-uppercase">*</span>
-                      <label for="nombre">Nombre</label>
-                      <input type="text" class="form-control" id="name" name="name" placeholder="Escriba una unidad" autofocus>
-                    </div>
-                    <div class="modal-footer">
-                      <input type="hidden" name="unidad" value="nueva">
-                      <button id="uniClose" type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
-                      <span class="text-warning"> Debe llenar los campos obligatorios *</span>
-                      <button type="submit" class="btn btn-info" id="crear-unidad">
-                        <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
-                    </div>
-                </div>
-                </form>
-              </div>
-            </div>
-            <!-- /.modal-content -->
-          </div>
-
-          <!-- MODAL MARCA -->
-          <div class="modal fade" id="modal-make">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                  <h4 class="modal-title">Nueva Marca</h4>
-                </div>
-                <div class="modal-body">
-                  <form role="form" id="form-make" name="form-make" method="post" action="BLL/make.php">
-                    <div class="form-group">
-                      <span class="text-danger text-uppercase">*</span>
-                      <label for="nombre">Nombre</label>
-                      <input type="text" class="form-control" id="name" name="name" placeholder="Escriba un nombre" autofocus>
-                    </div>
-                    <div class="modal-footer">
-                      <input type="hidden" name="marca" value="nueva">
-                      <button id="makeClose" type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
-                      <span class="text-warning"> Debe llenar los campos obligatorios *</span>
-                      <button type="submit" class="btn btn-info" id="crear-marca">
-                        <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
-                    </div>
-                </div>
-                </form>
-              </div>
-            </div>
-            <!-- /.modal-content -->
-          </div>
-
+          
           <div class="row">
             <div class="col-md-6">
               <form role="form" id="form-product" name="form-product-file" method="post" action="BLL/product.php"
