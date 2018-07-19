@@ -24,7 +24,7 @@
               <h3 class="box-title">Listado general de vendedores en el sistema</h3>
             </div>
             <!-- /.box-header -->
-            <div class="box-body">
+            <div class="box-body table-responsive no-padding">
               <table id="registros" class="table table-bordered table-striped">
                 <thead>
                 <tr>
