@@ -10,6 +10,7 @@ include_once 'funciones/bd_conexion.php';
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
+        <i class="fa fa-shopping-cart"></i>
         Compras
         <small>Llene el formulario para realizar una nueva compra a los proveedores</small>
       </h1>

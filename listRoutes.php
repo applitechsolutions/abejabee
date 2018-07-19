@@ -10,6 +10,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
+      <i class="fa fa-truck"></i>
         Rutas
         <small>Listado de rutas</small>
       </h1>

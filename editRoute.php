@@ -14,6 +14,7 @@ if (!filter_var($id, FILTER_VALIDATE_INT)) {
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
+      <i class="fa fa-truck"></i>
         Rutas
         <small>Llene el formulario para editar una nueva ruta</small>
       </h1>

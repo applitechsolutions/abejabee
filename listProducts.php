@@ -10,6 +10,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
+      <i class="fa fa-th"></i>
         Productos
         <small>Catalogo</small>
       </h1>

@@ -10,6 +10,7 @@ include_once 'funciones/bd_conexion.php';
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
+      <i class="fa fa-th"></i>
         Productos
         <small>llene el formulario para crear un nuevo producto</small>
       </h1>

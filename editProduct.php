@@ -14,6 +14,7 @@ if (!filter_var($id, FILTER_VALIDATE_INT)) {
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
+      <i class="fa fa-th"></i>
         Productos
         <small>Aquí puede editar el producto</small>
       </h1>

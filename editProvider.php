@@ -14,6 +14,7 @@ if (!filter_var($id, FILTER_VALIDATE_INT)) {
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
+      <i class="fa fa-male"></i>
         Proveedores
         <small>Puede realizar cualquier edición en los datos</small>
       </h1>

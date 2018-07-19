@@ -10,6 +10,7 @@ include_once 'funciones/bd_conexion.php';
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
+        <i class="fa fa-male"></i>
         Proveedores
         <small>Complete el formulario para crear un nuevo proveedor</small>
       </h1>

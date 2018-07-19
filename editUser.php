@@ -14,6 +14,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
+        <i class="fa fa-user"></i>
         Usuarios
         <small>cambia los datos del usuario</small>
       </h1>

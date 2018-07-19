@@ -10,6 +10,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
+        <i class="fa fa-user"></i>
         Usuarios
         <small>Activos</small>
       </h1>

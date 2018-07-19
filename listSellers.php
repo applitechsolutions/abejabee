@@ -10,6 +10,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
+        <i class="fa fa-briefcase"></i>
         Vendedores
         <small>Listado de Vendedores</small>
       </h1>
