@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="css/ionicons.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="css/AdminLTE.min.css">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> 
 
   <link rel="stylesheet" href="css/schlenker.css">
   
