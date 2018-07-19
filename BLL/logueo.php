@@ -20,6 +20,7 @@ if (isset($_POST['ingresar'])) {
                     $_SESSION['idusuario'] = $id_log;
                     $_SESSION['usuario'] = $usuario_log;
                     $_SESSION['nombre'] = $nombre_log;
+                    $_SESSION['rol'] = $permiso_log;
                     $respuesta = array(
                         'respuesta' => 'exitoso',
                         'usuario' => $nombre_log
