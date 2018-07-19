@@ -113,8 +113,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="#"><i class="fa fa-list-ul" aria-hidden="true"></i> Ver Todas</a></li>
-            <li><a href="#"><i class="fa fa-plus-circle" aria-hidden="true"></i> Nueva Compra</a></li>
+            <li><a href="listPurchase.php"><i class="fa fa-list-ul" aria-hidden="true"></i> Ver Todas</a></li>
+            <li><a href="newPurchase.php"><i class="fa fa-plus-circle" aria-hidden="true"></i> Nueva Compra</a></li>
           </ul>
         </li>
         <li class="treeview">
