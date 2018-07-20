@@ -56,111 +56,74 @@ include_once 'funciones/bd_conexion.php';
             </div>
             <!-- /.modal-content -->
           </div>
-          
+
           <div class="row">
             <div class="col-md-6">
-              <form role="form" id="form-product" name="form-product-file" method="post" action="BLL/product.php"
-              enctype="multipart/form-data">
-              <div class="box-body">
-                <div class="form-group">
-                  <span class="text-danger text-uppercase">*</span>
-                  <label for="nombre">Nombre</label>
-                  <input type="text" class="form-control" id="name" name="name" placeholder="Escriba un nombre" autofocus>
+              <form role="form" id="form-purchase" name="form-purchase" method="post" action="BLL/purchase.php">
+                <div class="box-body">
+                  <div class="form-group">
+                    <label>Fecha</label>
+                    <div class="input-group date">
+                      <div class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                      </div>
+                      <input type="text" class="form-control pull-right datepicker" id="datepicker" name="date">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <span class="text-danger text-uppercase">*</span>
+                    <label for="codigo">Código</label>
+                    <input type="text" class="form-control" id="code" name="code" placeholder="Escriba un código">
+                  </div>
+                  <div class="form-group">
+                    <span class="text-danger text-uppercase">*</span>
+                    <label for="costo">Costo</label>
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                        <i class="fa fa-money"></i>
+                      </span>
+                      <input type="number" id="cost" name="cost" placeholder="0.00" min="0.00" step="0.01" class="form-control">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="descripcion">Descripción</label>
+                    <textarea class="form-control" rows="3" id="description" name="description" placeholder="Escriba la descripción del producto... "></textarea>
+                  </div>
                 </div>
-                <div class="form-group">
-                  <span class="text-danger text-uppercase">*</span>
-                  <label for="codigo">Código</label>
-                  <input type="text" class="form-control" id="code" name="code" placeholder="Escriba un código">
-                </div>
-                <div class="form-group">
-                  <span class="text-danger text-uppercase">*</span>
-                  <label for="costo">Costo</label>
-                  <div class="input-group">
-                  <span class="input-group-addon"><i class="fa fa-money"></i></span>
-                  <input type="number" id="cost" name="cost" placeholder="0.00" min="0.00" step="0.01" class="form-control">
-                </div>
-                </div>
-                <div class="form-group">
-                  <label for="descripcion">Descripción</label>
-                  <textarea class="form-control" rows="3" id="description" name="description" placeholder="Escriba la descripción del producto... "></textarea>
-                </div>
-            </div>
             </div>
             <!-- /.form-group -->
             <!-- /.col -->
             <div class="col-md-6">
-            <div class="box-body">
-              <div class="form-group">
+              <div class="box-body">
+                <div class="form-group">
                   <label for="picture">Imagen</label>
                   <input type="file" id="picture" name="file">
 
                   <p class="help-block">Ingrese la imagen del producto aquí.</p>
-              </div>
-              <div class="form-group">
-                <span class="text-danger text-uppercase">*</span>
-                <label>Marca</label>
-                <button type="button" class="btn btn-Normal bg-teal-active btn-xs pull-right" data-toggle="modal" data-target="#modal-make">+ Crear Nueva</button>
-                <select id="make" name="make" class="form-control select2" style="width: 100%;" value="0">
-                  <option value="" selected>Seleccione una marca</option>
+                </div>
+                <div class="form-group">
+                  <span class="text-danger text-uppercase">*</span>
+                  <label>Marca</label>
+                  <button type="button" class="btn btn-Normal bg-teal-active btn-xs pull-right" data-toggle="modal" data-target="#modal-make">+ Crear Nueva</button>
+                  <select id="make" name="make" class="form-control select2" style="width: 100%;" value="0">
+                    <option value="" selected>Seleccione una marca</option>
                     <?php
                       try {
                         $sql = "SELECT * FROM make";
                         $resultado = $conn->query($sql);
                         while ($make_product = $resultado->fetch_assoc()) {?>
-                            <option value="<?php echo $make_product['idMake']; ?>"><?php echo $make_product['makeName']; ?></option>
-                            <?php 
+                      <option value="<?php echo $make_product['idMake']; ?>">
+                        <?php echo $make_product['makeName']; ?>
+                      </option>
+                      <?php 
                         }
                       } catch (Exception $e) {
                           echo "Error: " . $e->getMessage();
                       }
                     ?>
-                </select>
-              </div>
-              <br>
-
-              <div class="form-group">
-                <span class="text-danger text-uppercase">*</span>
-                <label>Categoría</label>
-                  <button type="button" class="btn btn-Normal bg-teal-active btn-xs pull-right" data-toggle="modal" data-target="#modal-category">+ Crear Nueva</button>
-                <select id="category" name="category" class="form-control select2" style="width: 100%;">
-                    <option value="" selected>Seleccione una categoría</option>
-                    <?php
-                    try {
-                      $sql = "SELECT * FROM category";
-                      $resultado = $conn->query($sql);
-                      while ($category_product = $resultado->fetch_assoc()) {?>
-                          <option value="<?php echo $category_product['idCategory']; ?>"><?php echo $category_product['catName']; ?></option>
-                          <?php 
-                      }
-                    } catch (Exception $e) {
-                        echo "Error: " . $e->getMessage();
-                    }
-                    ?>
-                </select>
-              </div>
-              <br>
-
-               <div class="form-group">
-                <span class="text-danger text-uppercase">*</span>
-                <label>Unidad</label>
-                <button type="button" class="btn btn-Normal bg-teal-active btn-xs pull-right" data-toggle="modal" data-target="#modal-unity">+ Crear Nueva</button>
-                <select id="unity" name="unity" class="form-control select2" style="width: 100%;">
-                    <option value="" selected>Seleccione una unidad</option>
-                    <?php
-                    try {
-                      $sql = "SELECT * FROM unity";
-                      $resultado = $conn->query($sql);
-                      while ($unity_product = $resultado->fetch_assoc()) {?>
-                          <option value="<?php echo $unity_product['idUnity']; ?>"><?php echo $unity_product['unityName']; ?></option>
-                          <?php 
-                      }
-                    } catch (Exception $e) {
-                        echo "Error: " . $e->getMessage();
-                    }
-                    ?>
                   </select>
-              </div>        
-              </div>     
+                </div>
+              </div>
               <!-- /.box-body -->
               <div class="box-footer">
                 <input type="hidden" name="producto" value="nuevo">

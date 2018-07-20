@@ -59,7 +59,7 @@
                     <tr>
                       <td><?php echo $product['productName']; ?></td>
                       <td><?php echo $product['productCode']; ?></td>
-                      <td>Q.<?php echo $product['cost']; ?></td>
+                      <td>Q <?php echo $product['cost']; ?></td>
                       <td><?php echo $product['description']; ?></td>
                       <td><?php echo $product['make']; ?></td>
                       <td><?php echo $product['category']; ?></td>
