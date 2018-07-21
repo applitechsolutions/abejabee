@@ -26,7 +26,7 @@ include_once 'funciones/bd_conexion.php';
         <!-- /.box-header -->
         <div class="box-body">
 
-          <!-- MODAL CATEGORIA -->
+          <!-- MODAL PRODUCTS -->
           <div class="modal fade" id="modal-products">
             <div class="modal-dialog modal-lg">
               <div class="modal-content">
@@ -96,7 +96,7 @@ include_once 'funciones/bd_conexion.php';
                                 </div>
                               </td>
                               <td>
-                                <div class="margin">Q 
+                                <div class="margin">Q
                                   <?php echo $product['cost']; ?>
                                 </div>
                               </td>
@@ -203,9 +203,107 @@ include_once 'funciones/bd_conexion.php';
                         <i class="fa fa-search" aria-hidden="true"></i> Buscar Productos</button>
                     </div>
                   </div>
+                  <div class="box box-primary">
+                    <div class="box-header">
+                      <h3 class="box-title">Detalle de compra</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body table-responsive no-padding">
+                      <table id="registros" class="table table-bordered table-striped">
+                        <thead>
+                          <tr>
+                            <th>Imagen</th>
+                            <th>Nombre</th>
+                            <th>Código</th>
+                            <th>Marca</th>
+                            <th>Unidad</th>
+                            <th>Costo/u</th>
+                            <th>Cantidad</th>
+                            <th>Subtotal</th>
+                            <th>Quitar</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <?php
+                                    try{
+                                      $sql = "SELECT idProduct, productName, productCode, cost, description, picture,
+                                      (select makeName from make where idMake = P._idMake and state = 0) as make,
+                                      (select catName from category where idCategory = P._idCategory and state = 0) as category,
+                                      (select unityName from unity where idUnity = P._idUnity and state = 0) as unity
+                                      FROM product P WHERE state = 0";
+                                      $resultado = $conn->query($sql);
+                                    } catch (Exception $e){
+                                      $error= $e->getMessage();
+                                      echo $error;
+                                    }
+                                    
+                                    while ($product = $resultado->fetch_assoc()) {
+                                  ?>
+                            <tr>
+                              <td>
+                                <img src="img/products/<?php echo $product['picture']; ?>" width="80" onerror="this.src='img/products/notfound.jpg';">
+                              </td>
+                              <td>
+                                <div class="margin">
+                                  <?php echo $product['productName']; ?>
+                                </div>
+                              </td>
+                              <td>
+                                <div class="margin">
+                                  <?php echo $product['productCode']; ?>
+                                </div>
+                              </td>
+                              <td>
+                                <div class="margin">
+                                  <?php echo $product['make']; ?>
+                                </div>
+                              </td>
+                              <td>
+                                <div class="margin">
+                                  <?php echo $product['unity']; ?>
+                                </div>
+                              </td>
+                              <td>
+                                <div class="margin">Q
+                                  <?php echo $product['cost']; ?>
+                                </div>
+                              </td>
+                              <td>
+
+                              </td>
+                              <td>
+                                <div class="margin">Q
+
+                                </div>
+                              </td>
+                              <td>
+                                <a class="btn bg-maroon margin" href="editProduct.php?id=<?php echo $product['idProduct'] ?>">
+                                  <i class="fa fa-remove"></i>
+                                </a>
+                              </td>
+                            </tr>
+                            <?php }
+                                  ?>
+                        </tbody>
+                        <tfoot>
+                          <tr>
+                            <th>Imagen</th>
+                            <th>Nombre</th>
+                            <th>Código</th>
+                            <th>Marca</th>
+                            <th>Unidad</th>
+                            <th>Costo</th>
+                            <th>Cantidad</th>
+                            <th>Subtotal</th>
+                            <th>Quitar</th>
+                          </tr>
+                        </tfoot>
+                      </table>
+                    </div>
+                    <!-- /.box-body -->
+                  </div>
                   <div class="box-footer">
                     <div class="row">
-
                       <div class="form-group col-lg-3 pull-right">
                         <div class="input-group">
                           <span class="input-group-addon">
@@ -213,10 +311,8 @@ include_once 'funciones/bd_conexion.php';
                             <label for="totalPurchase" class="control-label">Total: Q </label>
                           </span>
                           <input type="number" id="totalPurchase" name="totalPurchase" placeholder="0.00" min="0.00" step="0.01" class="form-control">
-
                         </div>
                       </div>
-
                     </div>
 
                     <div class="row">
