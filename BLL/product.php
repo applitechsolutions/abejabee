@@ -155,16 +155,20 @@ if ($_POST['producto'] == 'agregar') {
     $id_agregar = $_POST['id'];
 
     try {
-        $result = $conn->query("SELECT * FROM product WHERE idProduct = $id_agregar");
+        $result = $conn->query("SELECT idProduct, productName, productCode, cost, picture,
+        (select makeName from make where idMake = P._idMake and state = 0) as make,
+        (select catName from category where idCategory = P._idCategory and state = 0) as category,
+        (select unityName from unity where idUnity = P._idUnity and state = 0) as unity
+        FROM product P WHERE idProduct = $id_agregar");
         $outp = array();
-        $outp = $result->fetch_all(MYSQLI_ASSOC);
-    
-        echo json_encode($outp);
+        $outp = $result->fetch_all(MYSQLI_ASSOC);  
+       
     }catch(Exception $e) {
-        $respuesta = array(
+        $outp = array(
             'respuesta' => $e->getMessage()
         );
     }
+    echo json_encode($outp);
 }
 
 ?>

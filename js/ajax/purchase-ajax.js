@@ -15,17 +15,34 @@ $(document).ready(function () {
             success(data) {
                 console.log(data);
                 var nuevaFila = "<tr>";
-                $.each(data, function (key, registro) {
-                    
-                    nuevaFila += "<td>" + registro.idProduct + "</td>";
-                    
+                $.each(data, function (key, registro) {                    
+                    nuevaFila += "<td><img src='img/products/" + registro.picture  + "'width='80' onerror='ImgError(this);'></td>";
+                    nuevaFila +="<td>" + registro.productName +"</td>";
+                    nuevaFila +="<td>" + registro.productCode +"</td>";
+                    nuevaFila +="<td>" + +"</td>";
+                    nuevaFila +="<td>" + +"</td>";
+                    nuevaFila +="<td>" + +"</td>";
+                    nuevaFila +="<td>" + +"</td>";
+                    nuevaFila +="<td>" + +"</td>";
+                    nuevaFila +="<td>" + +"</td>";
+                    nuevaFila +="<td>" + +"</td>";
                 });      
                 nuevaFila += "</tr>";         
                 $("#agregados").append(nuevaFila);
             },
             error: function (data) {
-                alert('error');
+                swal({
+                    type: 'error',
+                    title: 'Error',
+                    text: 'No se puede agregar al carrito',
+                })
             }
         });
     });
 });
+
+function ImgError(source) {
+    source.src="img/products/notfound.jpg";
+    source.onerror = "";
+    return true;
+}

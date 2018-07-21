@@ -105,9 +105,6 @@ include_once 'funciones/bd_conexion.php';
                               </td>
                               <td>
                                 <a href="#" data-id="<?php echo $product['idProduct']; ?>" data-tipo="product" class="btn bg-green btn-flat margin agregar_producto"><i class="fa fa-shopping-cart"></i></a>
-                                <!-- <a href="#" data-id="<?php echo $product['idProduct']; ?>" data-tipo="product" class="btn bg-green margin agregar_producto">
-                                  <i class="fa fa-shopping-cart"></i>
-                                </a> -->
                               </td>
                             </tr>
                             <?php }
@@ -217,6 +214,7 @@ include_once 'funciones/bd_conexion.php';
                             <th>Nombre</th>
                             <th>Código</th>
                             <th>Marca</th>
+                            <th>Categoría</th>
                             <th>Unidad</th>
                             <th>Costo/u</th>
                             <th>Cantidad</th>
