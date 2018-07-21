@@ -76,19 +76,29 @@ include_once 'funciones/bd_conexion.php';
                                 <img src="img/products/<?php echo $product['picture']; ?>" width="80" onerror="this.src='img/products/notfound.jpg';">
                               </td>
                               <td>
-                                <?php echo $product['productName']; ?>
+                                <div class="margin">
+                                  <?php echo $product['productName']; ?>
+                                </div>
                               </td>
                               <td>
-                                <?php echo $product['productCode']; ?>
+                                <div class="margin">
+                                  <?php echo $product['productCode']; ?>
+                                </div>
                               </td>
                               <td>
-                                <?php echo $product['make']; ?>
+                                <div class="margin">
+                                  <?php echo $product['make']; ?>
+                                </div>
                               </td>
                               <td>
-                                <?php echo $product['unity']; ?>
+                                <div class="margin">
+                                  <?php echo $product['unity']; ?>
+                                </div>
                               </td>
-                              <td>Q
-                                <?php echo $product['cost']; ?>
+                              <td>
+                                <div class="margin">Q 
+                                  <?php echo $product['cost']; ?>
+                                </div>
                               </td>
                               <td>
                                 <input class="col-xs-4 margin" type="text">
