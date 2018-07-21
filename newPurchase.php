@@ -27,31 +27,103 @@ include_once 'funciones/bd_conexion.php';
         <div class="box-body">
 
           <!-- MODAL CATEGORIA -->
-          <div class="modal fade" id="modal-category">
-            <div class="modal-dialog">
+          <div class="modal fade" id="modal-products">
+            <div class="modal-dialog modal-lg">
               <div class="modal-content">
                 <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
-                  <h4 class="modal-title">Nueva Categoría</h4>
+                  <h4 class="modal-title">Catálogo Disponible</h4>
                 </div>
                 <div class="modal-body">
-                  <form role="form" id="form-category" name="form-category" method="post" action="BLL/category.php">
-                    <div class="form-group">
-                      <span class="text-danger text-uppercase">*</span>
-                      <label for="nombre">Nombre</label>
-                      <input type="text" class="form-control" id="name" name="name" placeholder="Escriba un nombre" autofocus>
+                  <div class="box">
+                    <div class="box-header">
                     </div>
-                    <div class="modal-footer">
-                      <input type="hidden" name="categoria" value="nueva">
-                      <button id="catClose" type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
-                      <span class="text-warning"> Debe llenar los campos obligatorios *</span>
-                      <button type="submit" class="btn btn-info" id="crear-categoria">
-                        <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+                    <!-- /.box-header -->
+                    <div class="box-body table-responsive no-padding">
+                      <table id="registros" class="table table-bordered table-striped">
+                        <thead>
+                          <tr>
+                            <th>Imagen</th>
+                            <th>Nombre</th>
+                            <th>Código</th>
+                            <th>Marca</th>
+                            <th>Unidad</th>
+                            <th>Costo/u</th>
+                            <th>Cantidad</th>
+                            <th>Agregar</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <?php
+                              try{
+                                $sql = "SELECT idProduct, productName, productCode, cost, description, picture,
+                                (select makeName from make where idMake = P._idMake and state = 0) as make,
+                                (select catName from category where idCategory = P._idCategory and state = 0) as category,
+                                (select unityName from unity where idUnity = P._idUnity and state = 0) as unity
+                                FROM product P WHERE state = 0";
+                                $resultado = $conn->query($sql);
+                              } catch (Exception $e){
+                                $error= $e->getMessage();
+                                echo $error;
+                              }
+                              
+                              while ($product = $resultado->fetch_assoc()) {
+                            ?>
+                            <tr>
+                              <td>
+                                <img src="img/products/<?php echo $product['picture']; ?>" width="80" onerror="this.src='img/products/notfound.jpg';">
+                              </td>
+                              <td>
+                                <?php echo $product['productName']; ?>
+                              </td>
+                              <td>
+                                <?php echo $product['productCode']; ?>
+                              </td>
+                              <td>
+                                <?php echo $product['make']; ?>
+                              </td>
+                              <td>
+                                <?php echo $product['unity']; ?>
+                              </td>
+                              <td>Q
+                                <?php echo $product['cost']; ?>
+                              </td>
+                              <td>
+                                <input class="col-xs-4" type="text">
+                              </td>
+                              <td>
+                                <a class="btn bg-green margin" href="#">
+                                  <i class="fa fa-shopping-cart"></i> Comprar
+                                </a>
+                                <!-- <a class="btn bg-green btn-flat margin" href="editProduct.php?id=<?php echo $product['idProduct'] ?>">
+                                  <i class="fa  fa-shopping-cart"></i>
+                                </a> -->
+                              </td>
+                            </tr>
+                            <?php }
+                            ?>
+                        </tbody>
+                        <tfoot>
+                          <tr>
+                            <th>Imagen</th>
+                            <th>Nombre</th>
+                            <th>Código</th>
+                            <th>Marca</th>
+                            <th>Unidad</th>
+                            <th>Costo</th>
+                            <th>Cantidad</th>
+                            <th>Agregar</th>
+                          </tr>
+                        </tfoot>
+                      </table>
                     </div>
+                    <!-- /.box-body -->
+                  </div>
+                  <div class="modal-footer">
+                  </div>
                 </div>
-                </form>
               </div>
             </div>
             <!-- /.modal-content -->
@@ -120,7 +192,7 @@ include_once 'funciones/bd_conexion.php';
 
                     <div class="form-group col-lg-3">
                       <label for="addProducts">Productos</label>
-                      <button type="button" class="btn btn-warning">
+                      <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-products">
                         <i class="fa fa-search" aria-hidden="true"></i> Buscar Productos</button>
                     </div>
                   </div>
@@ -144,8 +216,8 @@ include_once 'funciones/bd_conexion.php';
                       <div class="form-group col-lg-5 pull-right">
                         <input type="hidden" name="producto" value="nuevo">
                         <span class="text-warning">Debe llenar los campos obligatorios *</span>
-                          <button type="submit" class="btn btn-primary pull-right" id="crear-producto">
-                            <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+                        <button type="submit" class="btn btn-primary pull-right" id="crear-producto">
+                          <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
                       </div>
                     </div>
 

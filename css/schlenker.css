@@ -24,7 +24,9 @@
     display: block;
     z-index: 1;
 }
-
+.modal-content {
+    float:left;
+  }
 .example-modal .modal {
     background: transparent !important;
 }
