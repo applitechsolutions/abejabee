@@ -150,5 +150,22 @@ if ($_POST['producto'] == 'eliminar') {
     die(json_encode($respuesta));
 }
 
+if ($_POST['producto'] == 'agregar') {
+    header("Content-Type: application/json; charset=UTF-8");
+    $id_agregar = $_POST['id'];
+
+    try {
+        $result = $conn->query("SELECT * FROM product WHERE idProduct = $id_agregar");
+        $outp = array();
+        $outp = $result->fetch_all(MYSQLI_ASSOC);
+    
+        echo json_encode($outp);
+    }catch(Exception $e) {
+        $respuesta = array(
+            'respuesta' => $e->getMessage()
+        );
+    }
+}
+
 ?>
 
