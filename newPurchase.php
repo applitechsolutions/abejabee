@@ -37,7 +37,7 @@ include_once 'funciones/bd_conexion.php';
                   <h4 class="modal-title">Catálogo Disponible</h4>
                 </div>
                 <div class="modal-body">
-                  <div class="box">
+                  <div class="box box-success">
                     <div class="box-header">
                     </div>
                     <!-- /.box-header -->
@@ -91,15 +91,12 @@ include_once 'funciones/bd_conexion.php';
                                 <?php echo $product['cost']; ?>
                               </td>
                               <td>
-                                <input class="col-xs-4" type="text">
+                                <input class="col-xs-4 margin" type="text">
                               </td>
                               <td>
-                                <a class="btn bg-green margin" href="#">
-                                  <i class="fa fa-shopping-cart"></i> Comprar
+                                <a class="btn bg-green margin" href="editProduct.php?id=<?php echo $product['idProduct'] ?>">
+                                  <i class="fa fa-shopping-cart"></i>
                                 </a>
-                                <!-- <a class="btn bg-green btn-flat margin" href="editProduct.php?id=<?php echo $product['idProduct'] ?>">
-                                  <i class="fa  fa-shopping-cart"></i>
-                                </a> -->
                               </td>
                             </tr>
                             <?php }
@@ -213,11 +210,11 @@ include_once 'funciones/bd_conexion.php';
                     </div>
 
                     <div class="row">
-                      <div class="form-group col-lg-5 pull-right">
+                      <div class="form-group col-lg-6 pull-right">
                         <input type="hidden" name="producto" value="nuevo">
                         <span class="text-warning">Debe llenar los campos obligatorios *</span>
                         <button type="submit" class="btn btn-primary pull-right" id="crear-producto">
-                          <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+                          <i class="fa fa-floppy-o" aria-hidden="true"></i> Confirmar compra</button>
                       </div>
                     </div>
 
