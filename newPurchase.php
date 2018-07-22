@@ -223,7 +223,7 @@ include_once 'funciones/bd_conexion.php';
                           </tr>
                         </thead>
                         <tbody>
-                            
+                        <td><a href="#" data-id="11" class="btn bg-maroon btn-flat margin quitar_product"><i class="fa fa-remove"></i></a></td>
                         </tbody>
                       </table>
                     </div>
