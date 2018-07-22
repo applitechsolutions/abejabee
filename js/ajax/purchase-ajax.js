@@ -25,7 +25,7 @@ $(document).ready(function () {
                     nuevaFila += "<td>" + +"</td>";
                     nuevaFila += "<td>" + +"</td>";
                     nuevaFila += "<td>" + +"</td>";
-                    nuevaFila += "<td><a href='#' data-id='"+ registro.idProduct + "' class='btn bg-maroon btn-flat margin quitar_product'><i class='fa fa-remove'></i></a></td>";
+                    nuevaFila += "<td><a id='quitar' onclick='eliminar();' data-id='"+ registro.idProduct + "' class='btn bg-maroon btn-flat margin quitar_product'><i class='fa fa-remove'></i></a></td>";
                 });
                 nuevaFila += "</tr>";
                 $("#agregados").append(nuevaFila);
@@ -53,4 +53,9 @@ function ImgError(source) {
     source.src = "img/products/notfound.jpg";
     source.onerror = "";
     return true;
+}
+
+function eliminar(id) {
+    id = $('#quitar').attr('data-id');
+    jQuery('[data-id="' + id + '"]').parents('tr').remove();
 }
