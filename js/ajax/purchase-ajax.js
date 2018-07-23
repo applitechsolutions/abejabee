@@ -17,7 +17,7 @@ $(document).ready(function () {
                 var nuevaFila = "<tr>";
                 $.each(data, function (key, registro) {
                     nuevaFila += "<td><img src='img/products/" + registro.picture + "'width='80' onerror='ImgError(this);'></td>";
-                    nuevaFila += "<td>" + registro.productName + "</td>";
+                    nuevaFila += "<td><input type='hidden' value='"+ registro.idProduct +"'>" + registro.productName + "</td>";
                     nuevaFila += "<td>" + registro.productCode + "</td>";
                     nuevaFila += "<td>" + registro.make + "</td>";
                     nuevaFila += "<td>" + registro.category + "</td>";
@@ -39,14 +39,6 @@ $(document).ready(function () {
             }
         });
     });
-
-    $('.quitar_product').on('click', function (e) {
-        e.preventDefault();
-        var id = $(this).attr('data-id');
-        console.log(id);
-        jQuery('[data-id="' + id + '"]').parents('tr').remove();
-    });
-
 });
 
 function ImgError(source) {
