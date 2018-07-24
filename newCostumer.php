@@ -45,10 +45,9 @@ include_once 'funciones/bd_conexion.php';
                     </div>
                     <div class="modal-footer">
                       <input type="hidden" name="departamento" value="nuevo">
-                      <button id="depClose" type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
-                      <span class="text-warning"> Debe llenar los campos obligatorios *</span>
-                      <button type="submit" class="btn btn-info" id="crear-departamento">
-                        <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+                      <button type="submit" class="btn btn-info" id="crear-departamento"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+                      <span class="text-warning w3-small w3-padding">*Debe llenar los campos obligatorios</span>
+                      <button id="depClose" type="button" class="btn btn-danger w3-round-medium pull-right" data-dismiss="modal">Cerrar</button>
                     </div>
                 </div>
                 </form>
@@ -57,29 +56,28 @@ include_once 'funciones/bd_conexion.php';
             <!-- /.modal-content -->
           </div>
 
-          <!-- MODAL ciudad -->
-          <div class="modal fade" id="modal-ciudad">
+          <!-- MODAL municipio -->
+          <div class="modal fade" id="modal-muni">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
-                  <h4 class="modal-title">Nueva Ciudad</h4>
+                  <h4 class="modal-title">Nuevo Municipio</h4>
                 </div>
                 <div class="modal-body">
-                  <form role="form" id="form-ciudad" name="form-ciudad" method="post" action="BLL/city.php">
+                  <form role="form" id="form-muni" name="form-muni" method="post" action="BLL/town.php">
                     <div class="form-group">
                       <span class="text-danger text-uppercase">*</span>
                       <label for="nombre">Nombre</label>
-                      <input type="text" class="form-control" id="name" name="name" placeholder="Escriba una ciudad" autofocus>
+                      <input type="text" class="form-control" id="name" name="name" placeholder="Escriba el nombre del municipio" autofocus>
                     </div>
                     <div class="modal-footer">
-                      <input type="hidden" name="ciudad" value="nueva">
-                      <button id="uniClose" type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
-                      <span class="text-warning"> Debe llenar los campos obligatorios *</span>
-                      <button type="submit" class="btn btn-info" id="crear-ciudad">
-                        <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+                      <input type="hidden" name="muni" value="nuevo">
+                      <button type="submit" class="btn btn-info" id="crear-muni"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+                      <span class="text-warning w3-small w3-padding-small">*Debe llenar los campos obligatorios</span>
+                      <button id="muniClose" type="button" class="btn btn-danger w3-round-medium pull-right" data-dismiss="modal">Cerrar</button>
                     </div>
                 </div>
                 </form>
@@ -180,10 +178,10 @@ include_once 'funciones/bd_conexion.php';
                 <br>
                 <div class="form-group">
                   <span class="text-danger text-uppercase">*</span>
-                  <label>Ciudad</label>
-                  <button type="button" class="btn btn-Normal bg-teal-active btn-xs pull-right" data-toggle="modal" data-target="#modal-ciudad">+ Crear Nueva</button>
-                  <select id="ciudad" name="ciudad" class="form-control select2" style="width: 100%;">
-                    <option value="" selected>Seleccione una ciudad</option>
+                  <label>Municipio</label>
+                  <button type="button" class="btn btn-Normal bg-teal-active btn-xs pull-right" data-toggle="modal" data-target="#modal-muni">+ Crear Nuevo</button>
+                  <select id="muni" name="muni" class="form-control select2" style="width: 100%;">
+                    <option value="" selected>Seleccione un municipio</option>
                       <?php
                         try {
                           $sql = "SELECT * FROM town";
