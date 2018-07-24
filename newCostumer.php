@@ -244,9 +244,8 @@ include_once 'funciones/bd_conexion.php';
               <!-- /.box-body -->
               <div class="box-footer">
                 <input type="hidden" name="customer" value="nuevo">
-                <button type="submit" class="btn btn-primary" id="crear-customero">
-                  <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
-                <span class="text-warning"> Debe llenar los campos obligatorios *</span>
+                <button type="submit" class="btn btn-primary" id="crear-customer"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+                <span class="w3-text-orange w3-padding">*Debe llenar los campos obligatorios</span>
               </div>
             </div>
             </form>
