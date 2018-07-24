@@ -10,7 +10,7 @@ include_once 'funciones/bd_conexion.php';
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-      <i class="fa fa-th"></i>
+      <i class="fa fa-users"></i>
         Clientes
         <small>llene el formulario para crear un nuevo cliente</small>
       </h1>
@@ -246,7 +246,7 @@ include_once 'funciones/bd_conexion.php';
               </div>
               <!-- /.box-body -->
               <div class="box-footer">
-                <input type="hidden" name="customero" value="nuevo">
+                <input type="hidden" name="customer" value="nuevo">
                 <button type="submit" class="btn btn-primary" id="crear-customero">
                   <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
                 <span class="text-warning"> Debe llenar los campos obligatorios *</span>
