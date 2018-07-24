@@ -96,15 +96,16 @@ include_once 'funciones/bd_conexion.php';
                                 </div>
                               </td>
                               <td>
-                                <div class="margin">Q
-                                  <?php echo $product['cost']; ?>
-                                </div>
+                                  <input class="form-control margin" type="number" id="cost" name="cost" min="0.00" step="0.01" value="<?php echo $product['cost']?>"
+                                    style="width: 100%;">
                               </td>
                               <td>
-                                <input class="col-xs-4 margin" type="text">
+                                <input class="form-control margin" type="number" id="cantidad" name="cantidad" min="1" step="1" value="1" style="width: 60%;">
                               </td>
                               <td>
-                                <a href="#" data-id="<?php echo $product['idProduct']; ?>" data-tipo="product" class="btn bg-green btn-flat margin agregar_producto"><i class="fa fa-shopping-cart"></i></a>
+                                <a href="#" data-id="<?php echo $product['idProduct']; ?>" data-tipo="product" class="btn bg-green btn-lg margin agregar_producto">
+                                  <i class="fa fa-shopping-cart"></i>
+                                </a>
                               </td>
                             </tr>
                             <?php }
@@ -117,7 +118,7 @@ include_once 'funciones/bd_conexion.php';
                             <th>Código</th>
                             <th>Marca</th>
                             <th>Unidad</th>
-                            <th>Costo</th>
+                            <th>Costo/u</th>
                             <th>Cantidad</th>
                             <th>Agregar</th>
                           </tr>
@@ -223,7 +224,6 @@ include_once 'funciones/bd_conexion.php';
                           </tr>
                         </thead>
                         <tbody>
-                        <td><a href="#" data-id="11" class="btn bg-maroon btn-flat margin quitar_product"><i class="fa fa-remove"></i></a></td>
                         </tbody>
                       </table>
                     </div>
