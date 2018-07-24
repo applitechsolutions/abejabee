@@ -101,14 +101,13 @@ include_once 'funciones/bd_conexion.php';
                     <div class="form-group">
                       <span class="text-danger text-uppercase">*</span>
                       <label for="nombre">Nombre</label>
-                      <input type="text" class="form-control" id="name" name="name" placeholder="Escriba un nombre" autofocus>
+                      <input type="text" class="form-control" id="name" name="name" placeholder="Escriba el nombre de la aldea" autofocus>
                     </div>
                     <div class="modal-footer">
-                      <input type="hidden" name="aldea" value="nueva">
-                      <button id="aldeaClose" type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
-                      <span class="text-warning"> Debe llenar los campos obligatorios *</span>
-                      <button type="submit" class="btn btn-info" id="crear-aldea">
-                        <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+                      <input type="hidden" name="aldea" value="nuevo">
+                      <button type="submit" class="btn btn-info" id="crear-aldea"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+                      <span class="text-warning w3-small w3-padding-small">*Debe llenar los campos obligatorios</span>
+                      <button id="aldClose" type="button" class="btn btn-danger w3-round-medium pull-right" data-dismiss="modal">Cerrar</button>
                     </div>
                 </div>
                 </form>
