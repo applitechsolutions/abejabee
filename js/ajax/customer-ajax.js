@@ -45,6 +45,48 @@ $(document).ready(function() {
         })
     });
 
+    $('.borrar_customer').on('click', function(e) {
+        e.preventDefault();
+
+        var id = $(this).attr('data-id');
+        var tipo = $(this).attr('data-tipo');
+
+        swal({
+            title: '¿Estás Seguro?',
+            text: "Un registro eliminado no puede recuperarse",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, Eliminar!',
+            cancelButtonText: 'Cancelar'
+          }).then(() => {
+                  $.ajax({
+                      type: 'POST',
+                      data: {
+                          'id': id,
+                          'customer': 'eliminar'
+                      },
+                      url: 'BLL/' + tipo + '.php',
+                      success(data) {
+                          console.log(data);
+                          var resultado = JSON.parse(data);
+                          if (resultado.respuesta == 'exito') {
+                              swal('Eliminado!', 'El cliente ha sido borrado con exito.', 'success');
+                              jQuery('[data-id="' + resultado.id_eliminado + '"]').parents('tr').remove();
+                          }
+                          else {
+                              swal({
+                                  type: 'error',
+                                  title: 'Error!',
+                                  text: 'No se pudo eliminar el producto.'
+                              });
+                          }
+                      }
+                  });
+              });
+    });
+
     $('#form-departamento').on('submit', function (e) {
         e.preventDefault();
 

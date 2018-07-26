@@ -94,4 +94,31 @@ if ($_POST['customer'] == 'actualizar') {
 
 }
 
+if ($_POST['customer'] == 'eliminar') {
+    $id_eliminar = $_POST['id'];
+
+    try {
+        $stmt = $conn->prepare('UPDATE customer SET state = 1 WHERE idCustomer = ?');
+        $stmt->bind_param("i", $id_eliminar);
+        $stmt->execute();
+        if ($stmt->affected_rows) {
+            $respuesta = array(
+                'respuesta' => 'exito',
+                'id_eliminado' => $id_eliminar
+            );
+        }else {
+            $respuesta = array(
+                'respuesta' => 'error'
+            );
+        }
+        $stmt->close();
+        $conn->close();
+    }catch(Exception $e) {
+        $respuesta = array(
+            'respuesta' => $e->getMessage()
+        );
+    }
+    die(json_encode($respuesta));
+}
+
 ?>
