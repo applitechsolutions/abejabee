@@ -100,11 +100,11 @@ include_once 'funciones/bd_conexion.php';
                                 </div>
                               </td>
                               <td>
-                                <input class="form-control margin" type="number" id="cost" name="cost" min="0.00" step="0.01" value="<?php echo $product['cost']?>"
+                                <input class="form-control margin" type="number" id="new_<?php echo $product['idProduct']; ?>_costo" name="cost" min="0.00" step="0.01" value="<?php echo $product['cost']?>"
                                   style="width: 100%;">
                               </td>
                               <td>
-                                <input class="form-control margin" type="number" id="cantidad" name="cantidad" min="1" step="1" value="1" style="width: 60%;">
+                                <input class="form-control margin" type="number" id="new_<?php echo $product['idProduct']; ?>_cantidad" name="cantidad" min="1" step="1" value="1" style="width: 60%;">
                               </td>
                               <td>
                                 <a href="#" cost="" data-id="<?php echo $product['idProduct']; ?>" data-tipo="product"

@@ -6,9 +6,9 @@ $(document).ready(function () {
         var id = $(this).attr('data-id');
         var tipo = $(this).attr('data-tipo');
 
-        $subTotal = Subtotal();
+        
 
-        console.log($subTotal);
+        $(this).attr('disabled', true);
 
         $.ajax({
             type: 'POST',
@@ -19,17 +19,21 @@ $(document).ready(function () {
             url: 'BLL/' + tipo + '.php',
             success(data) {
                 console.log(data);
+
                 var nuevaFila = "<tr>";
                 $.each(data, function (key, registro) {
+                    var costo = $('#new_'+ registro.idProduct + '_costo').val();
+                    var cantidad = $('#new_'+ registro.idProduct + '_cantidad').val();
+                    var subtotal = costo * cantidad;
                     nuevaFila += "<td><img src='img/products/" + registro.picture + "'width='80' onerror='ImgError(this);'></td>";
                     nuevaFila += "<td><input type='hidden' value='"+ registro.idProduct +"'>" + registro.productName + "</td>";
                     nuevaFila += "<td>" + registro.productCode + "</td>";
                     nuevaFila += "<td>" + registro.make + "</td>";
                     nuevaFila += "<td>" + registro.category + "</td>";
                     nuevaFila += "<td>" + registro.unity + "</td>";
-                    nuevaFila += "<td>" + +"</td>";
-                    nuevaFila += "<td>" + +"</td>";
-                    nuevaFila += "<td>" + +"</td>";
+                    nuevaFila += "<td>Q." + costo +"</td>";
+                    nuevaFila += "<td>" + cantidad +"</td>";
+                    nuevaFila += "<td>Q." + subtotal +"</td>";
                     nuevaFila += "<td><a id='quitar' onclick='eliminar();' data-id='"+ registro.idProduct + "' class='btn bg-maroon btn-flat margin quitar_product'><i class='fa fa-remove'></i></a></td>";
                 });
                 nuevaFila += "</tr>";
@@ -46,10 +50,6 @@ $(document).ready(function () {
     });
 });
 
-function Subtotal() {
-    $cant = 
-    return $cant;
-}
 
 function ImgError(source) {
     source.src = "img/products/notfound.jpg";
@@ -60,4 +60,6 @@ function ImgError(source) {
 function eliminar(id) {
     id = $('#quitar').attr('data-id');
     jQuery('[data-id="' + id + '"]').parents('tr').remove();
+    
+    $('.agregar_producto').jQuery('[data-id="' + id + '"]').attr('disabled', false);
 }
