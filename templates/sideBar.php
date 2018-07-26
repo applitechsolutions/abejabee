@@ -82,9 +82,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="#"><i class="fa fa-list-ul" aria-hidden="true"></i> Ver Todos</a></li>
+            <li><a href="listCustomers.php"><i class="fa fa-list-ul" aria-hidden="true"></i> Ver Todos</a></li>
             <li><a href="newCostumer.php"><i class="fa fa-plus-circle" aria-hidden="true"></i> Nuevo Cliente</a></li>
-            <li><a href="#"><i class="fa fa-address-card" aria-hidden="true"></i> Agregar Direccón</a></li>
           </ul>
         </li>
         <li class="treeview">

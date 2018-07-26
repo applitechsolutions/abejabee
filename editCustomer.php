@@ -4,6 +4,10 @@ include_once 'templates/header.php';
 include_once 'templates/navBar.php';
 include_once 'templates/sideBar.php';
 include_once 'funciones/bd_conexion.php';
+$id = $_GET['id'];
+if (!filter_var($id, FILTER_VALIDATE_INT)) {
+    die("Error!");
+}
 ?>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -12,7 +16,7 @@ include_once 'funciones/bd_conexion.php';
       <h1>
       <i class="fa fa-users"></i>
         Clientes
-        <small>llene el formulario para crear un nuevo cliente</small>
+        <small>Aquí puedes editar a un cliente</small>
       </h1>
     </section>
 
@@ -21,10 +25,15 @@ include_once 'funciones/bd_conexion.php';
       <!-- Default box -->
       <div class="box box-default">
         <div class="box-header with-border">
-          <h3 class="box-title">Crear Clientes</h3>
+          <h3 class="box-title">Editar Clientes</h3>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
+        <?php
+          $sql = "SELECT * FROM `customer` WHERE `idCustomer` = $id ";
+          $resultado = $conn->query($sql);
+          $customer = $resultado->fetch_assoc();
+        ?>
 
           <!-- MODAL departamento -->
           <div class="modal fade" id="modal-departamento">
@@ -124,29 +133,29 @@ include_once 'funciones/bd_conexion.php';
                 <div class="form-group">
                   <span class="text-danger text-uppercase">*</span>
                   <label for="nombre">Nombre</label>
-                  <input type="text" class="form-control" id="name" name="name" placeholder="Escriba un nombre" autofocus>
+                  <input type="text" class="form-control" id="name" name="name" placeholder="Escriba un nombre" autofocus value="<?php echo $customer['customerName']?>">
                 </div>
                 <div class="form-group">
                   <span class="text-danger text-uppercase">*</span>
                   <label for="codigo">Código</label>
-                  <input type="text" class="form-control" id="code" name="code" placeholder="Escriba un código">
+                  <input type="text" class="form-control" id="code" name="code" placeholder="Escriba un código" value="<?php echo $customer['customerCode']?>">
                 </div>
                 <div class="form-group">
                   <label for="tel">Teléfono</label>
-                  <input type="text" class="form-control" id="tel" name="tel" placeholder="Escriba el número de teléfono">
+                  <input type="text" class="form-control" id="tel" name="tel" placeholder="Escriba el número de teléfono" value="<?php echo $customer['customerTel']?>">
                 </div>
                 <div class="form-group">
                   <label for="nit">Nit</label>
-                  <input type="text" class="form-control" id="nit" name="nit" placeholder="Escriba el número de Nit">
+                  <input type="text" class="form-control" id="nit" name="nit" placeholder="Escriba el número de Nit" value="<?php echo $customer['customerNit']?>">
                 </div>
                 <div class="form-group">
                   <span class="text-danger text-uppercase">*</span>
                   <label for="dir">Dirección</label>
-                  <input type="text" class="form-control" id="dir" name="dir" placeholder="Escriba la dirección del cliente">
+                  <input type="text" class="form-control" id="dir" name="dir" placeholder="Escriba la dirección del cliente" value="<?php echo $customer['customerAddress']?>">
                 </div>
                 <div class="form-group">
                   <label for="owner">Dueño</label>
-                  <input type="text" class="form-control" id="owner" name="owner" placeholder="Escriba el nombre del dueño">
+                  <input type="text" class="form-control" id="owner" name="owner" placeholder="Escriba el nombre del dueño" value="<?php echo $customer['owner']?>">
                 </div>
               </div>
             </div>
@@ -160,18 +169,28 @@ include_once 'funciones/bd_conexion.php';
                   <button type="button" class="btn btn-Normal bg-teal-active btn-xs pull-right" data-toggle="modal" data-target="#modal-departamento">+ Crear Nuevo</button>
                   <select id="departamento" name="departamento" class="form-control select2" style="width: 100%;">
                     <option value="" selected>Seleccione un departamento</option>
-                      <?php
-                        try {
-                          $sql = "SELECT * FROM deparment";
-                          $resultado = $conn->query($sql);
-                          while ($depa_customer = $resultado->fetch_assoc()) {?>
-                              <option value="<?php echo $depa_customer['idDeparment']; ?>"><?php echo $depa_customer['name']; ?></option>
-                              <?php 
+                    <?php
+                      try {
+                        $depa_actual =  $customer['_idDeparment'];
+                        $sql = "SELECT * FROM deparment";
+                        $resultado = $conn->query($sql);
+                        while ($depa_customer = $resultado->fetch_assoc()) {
+                          if ($depa_customer['idDeparment'] == $depa_actual) {?>
+                          <option value="<?php echo $depa_customer['idDeparment']; ?>" selected>
+                            <?php echo $depa_customer['name']; ?>
+                          </option>
+                          <?php 
+                          }else{?>
+                          <option value="<?php echo $depa_customer['idDeparment']; ?>">
+                            <?php echo $depa_customer['name']; ?>
+                          </option>
+                          <?php
                           }
-                        } catch (Exception $e) {
-                            echo "Error: " . $e->getMessage();
                         }
-                      ?>
+                      }catch (Exception $e) {
+                        echo "Error: " . $e->getMessage();
+                      }
+                    ?>
                   </select>
                 </div>
                 <br>
@@ -181,18 +200,28 @@ include_once 'funciones/bd_conexion.php';
                   <button type="button" class="btn btn-Normal bg-teal-active btn-xs pull-right" data-toggle="modal" data-target="#modal-muni">+ Crear Nuevo</button>
                   <select id="muni" name="muni" class="form-control select2" style="width: 100%;">
                     <option value="" selected>Seleccione un municipio</option>
-                      <?php
-                        try {
-                          $sql = "SELECT * FROM town";
-                          $resultado = $conn->query($sql);
-                          while ($town_customer = $resultado->fetch_assoc()) {?>
-                              <option value="<?php echo $town_customer['idTown']; ?>"><?php echo $town_customer['name']; ?></option>
-                              <?php 
+                    <?php
+                      try {
+                        $town_actual =  $customer['_idTown'];
+                        $sql = "SELECT * FROM town";
+                        $resultado = $conn->query($sql);
+                        while ($town_customer = $resultado->fetch_assoc()) {
+                          if ($town_customer['idTown'] == $town_actual) {?>
+                          <option value="<?php echo $town_customer['idTown']; ?>" selected>
+                            <?php echo $town_customer['name']; ?>
+                          </option>
+                          <?php 
+                          }else{?>
+                          <option value="<?php echo $town_customer['idTown']; ?>">
+                            <?php echo $town_customer['name']; ?>
+                          </option>
+                          <?php
                           }
-                        } catch (Exception $e) {
-                            echo "Error: " . $e->getMessage();
                         }
-                      ?>
+                      }catch (Exception $e) {
+                        echo "Error: " . $e->getMessage();
+                      }
+                    ?>
                   </select>
                 </div>
                 <br>
@@ -202,18 +231,28 @@ include_once 'funciones/bd_conexion.php';
                   <button type="button" class="btn btn-Normal bg-teal-active btn-xs pull-right" data-toggle="modal" data-target="#modal-aldea">+ Crear Nueva</button>
                   <select id="aldea" name="aldea" class="form-control select2" style="width: 100%;">
                     <option value="" selected>Seleccione una aldea</option>
-                      <?php
-                        try {
-                          $sql = "SELECT * FROM village";
-                          $resultado = $conn->query($sql);
-                          while ($villa_customer = $resultado->fetch_assoc()) {?>
-                              <option value="<?php echo $villa_customer['idVillage']; ?>"><?php echo $villa_customer['name']; ?></option>
-                              <?php 
+                    <?php
+                      try {
+                        $villa_actual =  $customer['_idVillage'];
+                        $sql = "SELECT * FROM village";
+                        $resultado = $conn->query($sql);
+                        while ($villa_customer = $resultado->fetch_assoc()) {
+                          if ($villa_customer['idVillage'] == $villa_actual) {?>
+                          <option value="<?php echo $villa_customer['idVillage']; ?>" selected>
+                            <?php echo $villa_customer['name']; ?>
+                          </option>
+                          <?php 
+                          }else{?>
+                          <option value="<?php echo $villa_customer['idVillage']; ?>">
+                            <?php echo $villa_customer['name']; ?>
+                          </option>
+                          <?php
                           }
-                        } catch (Exception $e) {
-                            echo "Error: " . $e->getMessage();
                         }
-                      ?>
+                      }catch (Exception $e) {
+                        echo "Error: " . $e->getMessage();
+                      }
+                    ?>
                   </select>
                 </div>
                 <br>
@@ -222,29 +261,40 @@ include_once 'funciones/bd_conexion.php';
                   <label>Ruta</label>
                   <select id="ruta" name="ruta" class="form-control select2" style="width: 100%;">
                     <option value="" selected>Seleccione una ruta</option>
-                      <?php
-                        try {
-                          $sql = "SELECT * FROM route WHERE state = 0";
-                          $resultado = $conn->query($sql);
-                          while ($rut_customer = $resultado->fetch_assoc()) {?>
-                              <option value="<?php echo $rut_customer['idRoute']; ?>"><?php echo $rut_customer['routeName']; ?></option>
-                              <?php 
+                    <?php
+                      try {
+                        $ruta_actual =  $customer['_idRoute'];
+                        $sql = "SELECT * FROM route";
+                        $resultado = $conn->query($sql);
+                        while ($ruta_customer = $resultado->fetch_assoc()) {
+                          if ($ruta_customer['idRoute'] == $ruta_actual) {?>
+                          <option value="<?php echo $ruta_customer['idRoute']; ?>" selected>
+                            <?php echo $ruta_customer['routeName']; ?>
+                          </option>
+                          <?php 
+                          }else{?>
+                          <option value="<?php echo $ruta_customer['idRoute']; ?>">
+                            <?php echo $ruta_customer['routeName']; ?>
+                          </option>
+                          <?php
                           }
-                        } catch (Exception $e) {
-                            echo "Error: " . $e->getMessage();
                         }
-                      ?>
+                      }catch (Exception $e) {
+                        echo "Error: " . $e->getMessage();
+                      }
+                    ?>
                   </select>
                 </div>
                 <div class="form-group">
                   <label for="incharge">Encargado</label>
-                  <input type="text" class="form-control" id="incharge" name="incharge" placeholder="Escriba el nombre del encargado">
+                  <input type="text" class="form-control" id="incharge" name="incharge" placeholder="Escriba el nombre del encargado" value="<?php echo $customer['inCharge']?>">
                 </div>
               </div>
               <!-- /.box-body -->
               <div class="box-footer">
-                <input type="hidden" name="customer" value="nuevo">
-                <button type="submit" class="btn btn-primary" id="crear-customer"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+                <input type="hidden" name="customer" value="actualizar">
+                <input type="hidden" name="id_customer" value="<?php echo $id; ?>">
+                <button type="submit" class="btn btn-primary" id="editar-customer"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
                 <span class="w3-text-orange w3-padding">*Debe llenar los campos obligatorios</span>
               </div>
             </div>

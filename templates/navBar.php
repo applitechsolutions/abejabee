@@ -41,7 +41,7 @@
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="w3-btn w3-green w3-round-medium">Editar</a>
+                  <a href="editLogued.php?id=<?php echo $_SESSION['idusuario'] ?>" class="w3-btn w3-green w3-round-medium">Editar</a>
                 </div>
                 <div class="pull-right">
                   <a href="login.php?cerrar_sesion=true" class="w3-btn w3-red w3-round-medium">Cerrar Sesión</a>
