@@ -50,8 +50,12 @@ include_once 'funciones/bd_conexion.php';
                             <th>Código</th>
                             <th>Marca</th>
                             <th>Unidad</th>
-                            <th>Costo/u</th>
-                            <th>Cantidad</th>
+                            <th>
+                              <span class="pull-right">Costo/u</span>
+                            </th>
+                            <th>
+                              <span class="pull-right">Cant.</span>
+                            </th>
                             <th>Agregar</th>
                           </tr>
                         </thead>
@@ -96,14 +100,15 @@ include_once 'funciones/bd_conexion.php';
                                 </div>
                               </td>
                               <td>
-                                  <input class="form-control margin" type="number" id="cost" name="cost" min="0.00" step="0.01" value="<?php echo $product['cost']?>"
-                                    style="width: 100%;">
+                                <input class="form-control margin" type="number" id="cost" name="cost" min="0.00" step="0.01" value="<?php echo $product['cost']?>"
+                                  style="width: 100%;">
                               </td>
                               <td>
                                 <input class="form-control margin" type="number" id="cantidad" name="cantidad" min="1" step="1" value="1" style="width: 60%;">
                               </td>
                               <td>
-                                <a href="#" data-id="<?php echo $product['idProduct']; ?>" data-tipo="product" class="btn bg-green btn-lg margin agregar_producto">
+                                <a href="#" cost="" data-id="<?php echo $product['idProduct']; ?>" data-tipo="product"
+                                  class="btn bg-green btn-lg margin agregar_producto">
                                   <i class="fa fa-shopping-cart"></i>
                                 </a>
                               </td>

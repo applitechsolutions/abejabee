@@ -1,9 +1,14 @@
 $(document).ready(function () {
+
     $('.agregar_producto').on('click', function (e) {
         e.preventDefault();
 
         var id = $(this).attr('data-id');
         var tipo = $(this).attr('data-tipo');
+
+        $subTotal = Subtotal();
+
+        console.log($subTotal);
 
         $.ajax({
             type: 'POST',
@@ -40,6 +45,11 @@ $(document).ready(function () {
         });
     });
 });
+
+function Subtotal() {
+    $cant = 
+    return $cant;
+}
 
 function ImgError(source) {
     source.src = "img/products/notfound.jpg";
