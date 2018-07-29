@@ -42,7 +42,7 @@ include_once 'funciones/bd_conexion.php';
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body table-responsive no-padding">
-                      <table id="registros" class="table table-bordered table-striped">
+                      <table id="reg-modal" class="table table-bordered table-striped">
                         <thead>
                           <tr>
                             <th>Imagen</th>
@@ -75,7 +75,7 @@ include_once 'funciones/bd_conexion.php';
                               
                               while ($product = $resultado->fetch_assoc()) {
                             ?>
-                            <tr>
+                            <tr id="catalogo">
                               <td>
                                 <img src="img/products/<?php echo $product['picture']; ?>" width="80" onerror="this.src='img/products/notfound.jpg';">
                               </td>
@@ -107,7 +107,7 @@ include_once 'funciones/bd_conexion.php';
                                 <input class="form-control margin" type="number" id="new_<?php echo $product['idProduct']; ?>_cantidad" name="cantidad" min="1" step="1" value="1" style="width: 60%;">
                               </td>
                               <td>
-                                <a href="#" cost="" data-id="<?php echo $product['idProduct']; ?>" data-tipo="product"
+                                <a id="boton" href="#" cost="" data-id="<?php echo $product['idProduct']; ?>" data-tipo="product"
                                   class="btn bg-green btn-lg margin agregar_producto">
                                   <i class="fa fa-shopping-cart"></i>
                                 </a>

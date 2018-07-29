@@ -96,6 +96,33 @@
         zeroRecords: "Sin resultados encontrados"
       }
     });
+
+    $('#reg-modal').DataTable({
+      'paging'      : false,
+      'lengthChange': false,
+      'searching'   : true,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : true,
+      'language'    : {
+        paginate: {
+          next:     'Siguiente',
+          previous: 'Anterior',
+          first:    'Primero',
+          last:     'Último'
+        },
+        info: 'Mostrando _START_ a _END_ de _TOTAL_ registros',
+        empyTable:  'No hay registros',
+        infoEmpty:  '0 registros',
+        lengthChange: 'Mostrar ',
+        infoFiltered: "(Filtrado de _MAX_ total de registros)",
+        lengthMenu: "Mostrar _MENU_ registros",
+        loadingRecords: "Cargando...",
+        processing: "Procesando...",
+        search: "Buscar:",
+        zeroRecords: "Sin resultados encontrados"
+      }
+    });
   })
 </script>
 </body>
