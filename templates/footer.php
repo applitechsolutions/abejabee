@@ -73,6 +73,7 @@
     $('#registros').DataTable({
       'paging'      : true,
       'lengthChange': true,
+      "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
       'searching'   : true,
       'ordering'    : true,
       'info'        : true,
@@ -97,7 +98,7 @@
       }
     });
 
-    $('#reg-modal').DataTable({
+    /*$('#reg-modal').DataTable({
       'paging'      : false,
       'lengthChange': false,
       'searching'   : true,
@@ -122,7 +123,7 @@
         search: "Buscar:",
         zeroRecords: "Sin resultados encontrados"
       }
-    });
+    });*/
   })
 </script>
 </body>
