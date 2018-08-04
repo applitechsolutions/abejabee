@@ -57,7 +57,11 @@ function ImgError(source) {
     return true;
 }
 
-function eliminar(idp) {    
+function eliminar(idp) {
+
+    $('#registros_length select').val('-1').trigger("change");
     jQuery('[data-id="' + idp + '"]').attr('hidden', false);
+    $('#registros_length select').val('10').trigger("change");
+
     jQuery('[data-id-detalle="' + idp + '"]').parents('#detalle').remove();
 }
