@@ -242,8 +242,8 @@ include_once 'funciones/bd_conexion.php';
                           <span class="input-group-addon">
                             <span class="text-danger text-uppercase">*</span>
                             <label for="totalPurchase" class="control-label">Total: Q </label>
+                            <h5 id="totalPurchase" class="description-text">Q 0.00</h5>
                           </span>
-                          <input type="number" id="totalPurchase" name="totalPurchase" placeholder="0.00" min="0.00" step="0.01" class="form-control">
                         </div>
                       </div>
                     </div>
@@ -251,6 +251,7 @@ include_once 'funciones/bd_conexion.php';
                     <div class="row">
                       <div class="form-group col-lg-6 pull-right">
                         <input type="hidden" name="compra" value="nueva">
+                        <input type="hidden" id="total" name="total" value="0">
                         <span class="text-warning">Debe llenar los campos obligatorios *</span>
                         <button type="submit" class="btn btn-primary pull-right" id="crear-compra">
                           <i class="fa fa-floppy-o" aria-hidden="true"></i> Confirmar compra</button>
