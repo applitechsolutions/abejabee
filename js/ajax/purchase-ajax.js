@@ -1,5 +1,4 @@
 $(document).ready(function () {
-    var total = 0;
 
     $('.agregar_producto').on('click', function (e) {
         e.preventDefault();
@@ -26,7 +25,6 @@ $(document).ready(function () {
                     var costo = $('#new_' + registro.idProduct + '_costo').val();
                     var cantidad = $('#new_' + registro.idProduct + '_cantidad').val();
                     var subtotal = costo * cantidad;
-                    total = total + subtotal;
                     nuevaFila += "<td><img src='img/products/" + registro.picture + "'width='80' onerror='ImgError(this);'></td>";
                     nuevaFila += "<td><input class='idproducto_class' type='hidden' value='" + registro.idProduct + "'>" + registro.productName + "</td>";
                     nuevaFila += "<td>" + registro.productCode + "</td>";
@@ -35,11 +33,9 @@ $(document).ready(function () {
                     nuevaFila += "<td>" + registro.unity + "</td>";
                     nuevaFila += "<td><input class='costo_class' type='hidden' value='" + costo + "'>Q." + costo + "</td>";
                     nuevaFila += "<td><input class='cantidad_class' type='hidden' value='" + cantidad + "'>" + cantidad + "</td>";
-                    nuevaFila += "<td>Q." + subtotal + "</td>";
+                    nuevaFila += "<td>Q." + subtotal.toFixed(2) + "</td>";
                     nuevaFila += "<td><a id='quitar' onclick='eliminar("+registro.idProduct+");' data-id-detalle='" + registro.idProduct + "' class='btn bg-maroon btn-flat margin quitar_product'><i class='fa fa-remove'></i></a></td>";
-                    console.log(total);
-                    $("#totalPurchase").text('Q. '+total);
-                    $("#total").val(total);
+                    updateTotal(cantidad, costo, 0);
                 });
                 nuevaFila += "</tr>";
                 $("#agregados").append(nuevaFila);
@@ -106,8 +102,26 @@ function eliminar(idp) {
     $('#registros_length select').val('-1').trigger("change");
     jQuery('[data-id="' + idp + '"]').attr('hidden', false);
     $('#registros_length select').val('10').trigger("change");
+    
+    var idproduct = document.getElementsByClassName("idproducto_class");
+    var ncosto = document.getElementsByClassName("costo_class");
+    var ncantidad = document.getElementsByClassName("cantidad_class");
+
+    var x;
+
+    for (x = 0; x < idproduct.length; x++) {
+
+        idprod = idproduct[x].value;
+        coston = ncosto[x].value;
+        cantn = ncantidad[x].value;
+
+        if (idprod == idp) {
+            updateTotal(cantn, coston, 1);
+        }
+    }
 
     jQuery('[data-id-detalle="' + idp + '"]').parents('#detalle').remove();
+
 }
 
 function saveDetail(idEnc) {
@@ -166,4 +180,25 @@ function saveStock(id_product, cantidad_detalle) {
             }
         }                
     })
+}
+
+function updateTotal(cant, cost, proc) {
+
+    var Total = $("#total").val();
+
+    var subTotal = 0;
+    
+
+    subTotal = cant * cost;
+
+    if (proc == 0) {
+        Total = parseFloat(Total) + parseFloat(subTotal);
+    } else if (proc == 1) {
+        Total = parseFloat(Total) - parseFloat(subTotal);
+    }
+
+    $("#totalPurchase").text('Q. '+Total.toFixed(2));
+    $("#total").val(parseFloat(Total));
+
+
 }
