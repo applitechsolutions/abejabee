@@ -125,15 +125,14 @@ include_once 'funciones/bd_conexion.php';
                 <div class="box-body">
                   <div class="form-group">
                     <span class="text-danger text-uppercase">*</span>
-                    <label for="nombre">Nombre</label>
-                    <input type="text" class="form-control" id="name" name="name" placeholder="Escriba un nombre" autofocus>
-                  </div>
-                  <div class="form-group">
-                    <span class="text-danger text-uppercase">*</span>
                     <label for="codigo">Código</label>
                     <input type="text" class="form-control" id="code" name="code" placeholder="Escriba un código">
                   </div>
-
+                  <div class="form-group">
+                    <span class="text-danger text-uppercase">*</span>
+                    <label for="nombre">Nombre</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Escriba un nombre" autofocus>
+                  </div>
                   <div class="form-group">
                     <span class="text-danger text-uppercase">*</span>
                     <label>Marca</label>
@@ -141,19 +140,19 @@ include_once 'funciones/bd_conexion.php';
                     <select id="make" name="make" class="form-control select2" style="width: 100%;" value="0">
                       <option value="" selected>Seleccione una marca</option>
                       <?php
-                        try {
-                          $sql = "SELECT * FROM make";
-                          $resultado = $conn->query($sql);
-                          while ($make_product = $resultado->fetch_assoc()) {?>
+try {
+    $sql = "SELECT * FROM make";
+    $resultado = $conn->query($sql);
+    while ($make_product = $resultado->fetch_assoc()) {?>
                         <option value="<?php echo $make_product['idMake']; ?>">
                           <?php echo $make_product['makeName']; ?>
                         </option>
-                        <?php 
-                          }
-                        } catch (Exception $e) {
-                            echo "Error: " . $e->getMessage();
-                        }
-                      ?>
+                        <?php
+}
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+}
+?>
                     </select>
                   </div>
                   <br>
@@ -165,19 +164,19 @@ include_once 'funciones/bd_conexion.php';
                     <select id="category" name="category" class="form-control select2" style="width: 100%;">
                       <option value="" selected>Seleccione una categoría</option>
                       <?php
-                      try {
-                        $sql = "SELECT * FROM category";
-                        $resultado = $conn->query($sql);
-                        while ($category_product = $resultado->fetch_assoc()) {?>
+try {
+    $sql = "SELECT * FROM category";
+    $resultado = $conn->query($sql);
+    while ($category_product = $resultado->fetch_assoc()) {?>
                         <option value="<?php echo $category_product['idCategory']; ?>">
                           <?php echo $category_product['catName']; ?>
                         </option>
-                        <?php 
-                        }
-                      } catch (Exception $e) {
-                          echo "Error: " . $e->getMessage();
-                      }
-                      ?>
+                        <?php
+}
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+}
+?>
                     </select>
                   </div>
                   <br>
@@ -189,19 +188,19 @@ include_once 'funciones/bd_conexion.php';
                     <select id="unity" name="unity" class="form-control select2" style="width: 100%;">
                       <option value="" selected>Seleccione una unidad</option>
                       <?php
-                      try {
-                        $sql = "SELECT * FROM unity";
-                        $resultado = $conn->query($sql);
-                        while ($unity_product = $resultado->fetch_assoc()) {?>
+try {
+    $sql = "SELECT * FROM unity";
+    $resultado = $conn->query($sql);
+    while ($unity_product = $resultado->fetch_assoc()) {?>
                         <option value="<?php echo $unity_product['idUnity']; ?>">
                           <?php echo $unity_product['unityName']; ?>
                         </option>
-                        <?php 
-                        }
-                      } catch (Exception $e) {
-                          echo "Error: " . $e->getMessage();
-                      }
-                      ?>
+                        <?php
+}
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+}
+?>
                     </select>
                   </div>
 
