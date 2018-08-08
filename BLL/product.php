@@ -2,13 +2,18 @@
 include_once '../funciones/bd_conexion.php';
 
 if ($_POST['producto'] == 'nuevo') {
-    $name = $_POST['name'];
     $code = $_POST['code'];
-    $cost = $_POST['cost'];
-    $description = $_POST['description'];
+    $name = $_POST['name'];
     $make = $_POST['make'];
     $category = $_POST['category'];
     $unity = $_POST['unity'];
+    $cost = $_POST['cost'];
+    $minStock = $_POST['minStock'];
+    $description = $_POST['description'];
+    $public = $_POST['public'];
+    $pharma = $_POST['pharma'];
+    $business = $_POST['business'];
+    $bonus = $_POST['bonus'];
     
     $respuesta = array(
         'post' => $_POST,
@@ -30,19 +35,23 @@ if ($_POST['producto'] == 'nuevo') {
     }
 
     try {
-        if ($name == "" || $code == '' || $cost == '' || $make == '' || $category == '' || $unity == '') {
+        if ($name == "" || $code == '' || $cost == '' || $make == '' || $category == '' || $unity == '' || $minStock == '' || $public == '' || $pharma == '' || $business == '' || $bonus == '') {
             $respuesta = array(
                 'respuesta' => 'vacio',
             );
         } else {
-            $stmt = $conn->prepare("INSERT INTO product (productName, productCode, cost, description, picture, _idUnity, _idCategory, _idMake) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("ssdssiii", $name, $code, $cost, $description, $picture_url, $unity, $category, $make);
+            $stmt = $conn->prepare("INSERT INTO product (productName, productCode, cost, description, picture, minStock, _idUnity, _idCategory, _idMake) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("ssdssiiii", $name, $code, $cost, $description, $picture_url, $minStock, $unity, $category, $make);
             $stmt->execute();
             $id_registro = $stmt->insert_id;
             if ($id_registro > 0) {
                 $respuesta = array(
                     'respuesta' => 'exito',
                     'idProduct' => $id_registro,
+                    'public' => $public,
+                    'pharma' => $pharma,
+                    'business' => $business,
+                    'bonus' => $bonus,
                     'mensaje' => 'Producto creado correctamente!',
                     'proceso' => 'nuevo',
                 );

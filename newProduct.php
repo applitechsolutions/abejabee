@@ -260,7 +260,7 @@ try {
                             <span class="input-group-addon">
                               <i>Q.</i>
                             </span>
-                            <input type="number" id="cost" name="cost" placeholder="0.00" min="0.00" step="0.01" class="form-control">
+                            <input type="number" id="public" name="public" placeholder="0.00" min="0.00" step="0.01" class="form-control">
                           </div>
                         </div>
                       </div>
@@ -272,7 +272,7 @@ try {
                             <span class="input-group-addon">
                               <i>Q.</i>
                             </span>
-                            <input type="number" id="minStock" name="minStock" placeholder="0.00" min="0.00" step="0.01" class="form-control">
+                            <input type="number" id="pharma" name="pharma" placeholder="0.00" min="0.00" step="0.01" class="form-control">
                           </div>
                         </div>
                       </div>
@@ -286,7 +286,7 @@ try {
                             <span class="input-group-addon">
                               <i>Q.</i>
                             </span>
-                            <input type="number" id="cost" name="cost" placeholder="0.00" min="0.00" step="0.01" class="form-control">
+                            <input type="number" id="business" name="business" placeholder="0.00" min="0.00" step="0.01" class="form-control">
                           </div>
                         </div>
                       </div>
@@ -298,14 +298,13 @@ try {
                             <span class="input-group-addon">
                               <i>Q.</i>
                             </span>
-                            <input type="number" id="minStock" name="minStock" placeholder="0.00" min="0.00" step="0.01" class="form-control">
+                            <input type="number" id="bonus" name="bonus" placeholder="0.00" min="0.00" step="0.01" class="form-control">
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-
               </div>
               <!-- /.box-body -->
               <div class="box-footer">

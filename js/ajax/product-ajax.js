@@ -18,12 +18,17 @@ $(document).ready(function () {
                 console.log(data);
                 var resultado = data;
                 if (resultado.respuesta == 'exito') {
-                    swal(
-                        'Exito!',
-                        '¡' + resultado.mensaje,
-                        'success'
-                    )
                     if (resultado.proceso == 'nuevo') {
+                        swal({                            
+                            title: 'Exito!',
+                            text: '¡' + resultado.mensaje,
+                            timer: 2000,
+                            type: 'success'
+                          }).then(
+                            priceSale(resultado.idProduct, 1, resultado.public),
+                            priceSale(resultado.idProduct, 11, resultado.pharma),
+                            priceSale(resultado.idProduct, 21, resultado.business),
+                            priceSale(resultado.idProduct, 31, resultado.bonus))
                         setTimeout(function () {
                             location.reload();
                         }, 1500);
@@ -233,6 +238,32 @@ $(document).ready(function () {
     });
 });
 
+function priceSale(idProduct, idPrice, price) {
+
+    $.ajax({
+        type: 'POST',
+        data: {
+            'priceSale': 'nuevo',
+            'id_product': idProduct,
+            'id_price' : idPrice,
+            'price' : price
+        },
+        url: 'BLL/priceSale.php',
+        dataType: 'json',
+        success: function (data) {
+            console.log(data);
+            var resultado = data;
+            if (resultado.respuesta == 'exito') {
+            } else if (resultado.respuesta == 'error') {
+                swal({
+                    type: 'error',
+                    title: 'Error',
+                    text: 'No se pudo guardar en la base de datos',
+                })
+            }
+        }
+    })
+}
 
 function getCategory() {
     $("#category").html("");
