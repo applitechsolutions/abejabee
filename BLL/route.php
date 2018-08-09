@@ -6,12 +6,7 @@ if ($_POST['ruta'] == 'nueva') {
     $code = $_POST['codeR'];
     $name = $_POST['nameR'];
     $details = $_POST['detailsR'];
-    $Start = $_POST['dateStart'];
-    $End = $_POST['dateEnd'];
     $idSeller = $_POST['sellerR'];
-
-    $dateStart = date('Y-m-d', strtotime($Start));
-    $dateEnd = date('Y-m-d', strtotime($End));
     // die(json_encode($fecha_formateada));
 
     try {
@@ -20,8 +15,8 @@ if ($_POST['ruta'] == 'nueva') {
                 'respuesta' => 'vacio',
             );
         } else {
-            $stmt = $conn->prepare("INSERT INTO route (codeRoute, routeName, details, dateStart, dateEnd, _idSeller) VALUES (?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("sssssi", $code, $name, $details, $dateStart, $dateEnd, $idSeller);
+            $stmt = $conn->prepare("INSERT INTO route (codeRoute, routeName, details, _idSeller) VALUES (?, ?, ?, ?)");
+            $stmt->bind_param("sssi", $code, $name, $details, $idSeller);
             $stmt->execute();
             $id_registro = $stmt->insert_id;
             if ($id_registro > 0) {
@@ -54,12 +49,7 @@ if ($_POST['ruta'] == 'editar') {
     $code = $_POST['codeR'];
     $name = $_POST['nameR'];
     $details = $_POST['detailsR'];
-    $Start = $_POST['dateStart'];
-    $End = $_POST['dateEnd'];
     $idSeller = $_POST['sellerR'];
-
-    $dateStart = date('Y-m-d', strtotime($Start));
-    $dateEnd = date('Y-m-d', strtotime($End));
 
     try {
         if ($code == '') {
@@ -67,8 +57,8 @@ if ($_POST['ruta'] == 'editar') {
                 'respuesta' => 'vacio',
             );
         } else {
-            $stmt = $conn->prepare("UPDATE route SET codeRoute = ?, routeName = ?, details = ?, dateStart = ?,dateEnd = ?, _idSeller = ? WHERE idRoute = ?");
-            $stmt->bind_param("sssssii", $code, $name, $details, $dateStart, $dateEnd, $idSeller, $idRoute);
+            $stmt = $conn->prepare("UPDATE route SET codeRoute = ?, routeName = ?, details = ?, _idSeller = ? WHERE idRoute = ?");
+            $stmt->bind_param("sssii", $code, $name, $details, $idSeller, $idRoute);
             $stmt->execute();
             if ($stmt->affected_rows) {
                 $respuesta = array(
