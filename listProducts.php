@@ -81,8 +81,7 @@
                         <td>
                           <?php echo $product['unity']; ?>
                         </td>
-                        <td>Q
-                          <?php echo $product['cost']; ?>
+                        <td>Q.<?php echo $product['cost']; ?>
                         </td>
                         <td class="text-center">
                           <?php echo $product['minStock']; ?>

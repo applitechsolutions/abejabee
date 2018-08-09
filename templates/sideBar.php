@@ -49,8 +49,21 @@
         </li>
         <li class="treeview">
           <a href="#">
+          <i class="fa fa-users" aria-hidden="true"></i>
+            <span>Clientes</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="listCustomers.php"><i class="fa fa-list-ul" aria-hidden="true"></i> Ver Todos</a></li>
+            <li><a href="newCostumer.php"><i class="fa fa-plus-circle" aria-hidden="true"></i> Nuevo Cliente</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
           <i class="fa fa-truck" aria-hidden="true"></i> 
-          <span>Ruta</span>
+          <span>Rutas</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -71,19 +84,6 @@
           <ul class="treeview-menu">
             <li><a href="listProducts.php"><i class="fa fa-list-ul" aria-hidden="true"></i> Ver Todos</a></li>
             <li><a href="newProduct.php"><i class="fa fa-plus-circle" aria-hidden="true"></i> Nuevo Producto</a></li>
-          </ul>
-        </li>
-        <li class="treeview">
-          <a href="#">
-          <i class="fa fa-users" aria-hidden="true"></i>
-            <span>Clientes</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="listCustomers.php"><i class="fa fa-list-ul" aria-hidden="true"></i> Ver Todos</a></li>
-            <li><a href="newCostumer.php"><i class="fa fa-plus-circle" aria-hidden="true"></i> Nuevo Cliente</a></li>
           </ul>
         </li>
         <li class="treeview">

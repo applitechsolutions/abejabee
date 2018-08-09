@@ -14,7 +14,7 @@ if (!filter_var($id, FILTER_VALIDATE_INT)) {
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-      <i class="fa fa-users"></i>
+        <i class="fa fa-users"></i>
         Clientes
         <small>Aquí puedes editar a un cliente</small>
       </h1>
@@ -29,279 +29,291 @@ if (!filter_var($id, FILTER_VALIDATE_INT)) {
         </div>
         <!-- /.box-header -->
         <div class="box-body">
-        <?php
+          <?php
           $sql = "SELECT * FROM `customer` WHERE `idCustomer` = $id ";
           $resultado = $conn->query($sql);
           $customer = $resultado->fetch_assoc();
         ?>
 
-          <!-- MODAL departamento -->
-          <div class="modal fade" id="modal-departamento">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                  <h4 class="modal-title">Nuevo Departamento</h4>
+            <!-- MODAL departamento -->
+            <div class="modal fade" id="modal-departamento">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Nuevo Departamento</h4>
+                  </div>
+                  <div class="modal-body">
+                    <form role="form" id="form-departamento" name="form-departamento" method="post" action="BLL/department.php">
+                      <div class="form-group">
+                        <span class="text-danger text-uppercase">*</span>
+                        <label for="nombre">Nombre</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Escriba un nombre" autofocus>
+                      </div>
+                      <div class="modal-footer">
+                        <input type="hidden" name="departamento" value="nuevo">
+                        <button type="submit" class="btn btn-info" id="crear-departamento">
+                          <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+                        <span class="text-warning w3-small w3-padding">*Debe llenar los campos obligatorios</span>
+                        <button id="depClose" type="button" class="btn btn-danger w3-round-medium pull-right" data-dismiss="modal">Cerrar</button>
+                      </div>
+                  </div>
+                  </form>
                 </div>
-                <div class="modal-body">
-                  <form role="form" id="form-departamento" name="form-departamento" method="post" action="BLL/department.php">
+              </div>
+              <!-- /.modal-content -->
+            </div>
+
+            <!-- MODAL municipio -->
+            <div class="modal fade" id="modal-muni">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Nuevo Municipio</h4>
+                  </div>
+                  <div class="modal-body">
+                    <form role="form" id="form-muni" name="form-muni" method="post" action="BLL/town.php">
+                      <div class="form-group">
+                        <span class="text-danger text-uppercase">*</span>
+                        <label for="nombre">Nombre</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Escriba el nombre del municipio" autofocus>
+                      </div>
+                      <div class="modal-footer">
+                        <input type="hidden" name="muni" value="nuevo">
+                        <button type="submit" class="btn btn-info" id="crear-muni">
+                          <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+                        <span class="text-warning w3-small w3-padding-small">*Debe llenar los campos obligatorios</span>
+                        <button id="muniClose" type="button" class="btn btn-danger w3-round-medium pull-right" data-dismiss="modal">Cerrar</button>
+                      </div>
+                  </div>
+                  </form>
+                </div>
+              </div>
+              <!-- /.modal-content -->
+            </div>
+
+            <!-- MODAL aldea -->
+            <div class="modal fade" id="modal-aldea">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Nueva aldea</h4>
+                  </div>
+                  <div class="modal-body">
+                    <form role="form" id="form-aldea" name="form-aldea" method="post" action="BLL/village.php">
+                      <div class="form-group">
+                        <span class="text-danger text-uppercase">*</span>
+                        <label for="nombre">Nombre</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Escriba el nombre de la aldea" autofocus>
+                      </div>
+                      <div class="modal-footer">
+                        <input type="hidden" name="aldea" value="nuevo">
+                        <button type="submit" class="btn btn-info" id="crear-aldea">
+                          <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+                        <span class="text-warning w3-small w3-padding-small">*Debe llenar los campos obligatorios</span>
+                        <button id="aldClose" type="button" class="btn btn-danger w3-round-medium pull-right" data-dismiss="modal">Cerrar</button>
+                      </div>
+                  </div>
+                  </form>
+                </div>
+              </div>
+              <!-- /.modal-content -->
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <form role="form" id="form-cliente" name="form-cliente" method="post" action="BLL/customer.php" enctype="multipart/form-data">
+                  <div class="box-body">
+                    <div class="form-group">
+                      <span class="text-danger text-uppercase">*</span>
+                      <label for="codigo">Código</label>
+                      <input type="text" class="form-control" id="code" name="code" placeholder="Escriba un código" value="<?php echo $customer['customerCode']?>">
+                    </div>
                     <div class="form-group">
                       <span class="text-danger text-uppercase">*</span>
                       <label for="nombre">Nombre</label>
-                      <input type="text" class="form-control" id="name" name="name" placeholder="Escriba un nombre" autofocus>
+                      <input type="text" class="form-control" id="name" name="name" placeholder="Escriba un nombre" autofocus value="<?php echo $customer['customerName']?>">
                     </div>
-                    <div class="modal-footer">
-                      <input type="hidden" name="departamento" value="nuevo">
-                      <button type="submit" class="btn btn-info" id="crear-departamento"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
-                      <span class="text-warning w3-small w3-padding">*Debe llenar los campos obligatorios</span>
-                      <button id="depClose" type="button" class="btn btn-danger w3-round-medium pull-right" data-dismiss="modal">Cerrar</button>
-                    </div>
-                </div>
-                </form>
-              </div>
-            </div>
-            <!-- /.modal-content -->
-          </div>
-
-          <!-- MODAL municipio -->
-          <div class="modal fade" id="modal-muni">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                  <h4 class="modal-title">Nuevo Municipio</h4>
-                </div>
-                <div class="modal-body">
-                  <form role="form" id="form-muni" name="form-muni" method="post" action="BLL/town.php">
                     <div class="form-group">
-                      <span class="text-danger text-uppercase">*</span>
-                      <label for="nombre">Nombre</label>
-                      <input type="text" class="form-control" id="name" name="name" placeholder="Escriba el nombre del municipio" autofocus>
+                      <label for="tel">Teléfono</label>
+                      <input type="text" class="form-control" id="tel" name="tel" placeholder="Escriba el número de teléfono" value="<?php echo $customer['customerTel']?>">
                     </div>
-                    <div class="modal-footer">
-                      <input type="hidden" name="muni" value="nuevo">
-                      <button type="submit" class="btn btn-info" id="crear-muni"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
-                      <span class="text-warning w3-small w3-padding-small">*Debe llenar los campos obligatorios</span>
-                      <button id="muniClose" type="button" class="btn btn-danger w3-round-medium pull-right" data-dismiss="modal">Cerrar</button>
-                    </div>
-                </div>
-                </form>
-              </div>
-            </div>
-            <!-- /.modal-content -->
-          </div>
-
-          <!-- MODAL aldea -->
-          <div class="modal fade" id="modal-aldea">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                  <h4 class="modal-title">Nueva aldea</h4>
-                </div>
-                <div class="modal-body">
-                  <form role="form" id="form-aldea" name="form-aldea" method="post" action="BLL/village.php">
                     <div class="form-group">
+                      <label for="nit">Nit</label>
+                      <input type="text" class="form-control" id="nit" name="nit" placeholder="Escriba el número de Nit" value="<?php echo $customer['customerNit']?>">
+                    </div>
+                    <div class="form-group">
+                      <label for="owner">Dueño</label>
+                      <input type="text" class="form-control" id="owner" name="owner" placeholder="Escriba el nombre del dueño" value="<?php echo $customer['owner']?>">
+                    </div>
+                    <div class="form-group">
+                      <label for="incharge">Encargado</label>
+                      <input type="text" class="form-control" id="incharge" name="incharge" placeholder="Escriba el nombre del encargado" value="<?php echo $customer['inCharge']?>">
+                    </div>
+                  </div>
+              </div>
+              <!-- /.form-group -->
+              <!-- /.col -->
+              <div class="col-md-6">
+                <div class="box-body">
+                  <div class="form-group">
+                    <span class="text-danger text-uppercase">*</span>
+                    <label>Ruta</label>
+                    <select id="ruta" name="ruta" class="form-control select2" style="width: 100%;">
+                      <option value="" selected>Seleccione una ruta</option>
+                      <?php
+                          try {
+                            $ruta_actual =  $customer['_idRoute'];
+                            $sql = "SELECT * FROM route";
+                            $resultado = $conn->query($sql);
+                            while ($ruta_customer = $resultado->fetch_assoc()) {
+                              if ($ruta_customer['idRoute'] == $ruta_actual) {?>
+                        <option value="<?php echo $ruta_customer['idRoute']; ?>" selected>
+                          <?php echo $ruta_customer['routeName']; ?>
+                        </option>
+                        <?php 
+                              }else{?>
+                        <option value="<?php echo $ruta_customer['idRoute']; ?>">
+                          <?php echo $ruta_customer['routeName']; ?>
+                        </option>
+                        <?php
+                              }
+                            }
+                          }catch (Exception $e) {
+                            echo "Error: " . $e->getMessage();
+                          }
+                        ?>
+                    </select>
+                  </div>
+                  <div class="panel box box-primary">
+                    <div class="box-header with-border">
                       <span class="text-danger text-uppercase">*</span>
-                      <label for="nombre">Nombre</label>
-                      <input type="text" class="form-control" id="name" name="name" placeholder="Escriba el nombre de la aldea" autofocus>
+                      <h4 class="box-title">Dirección del Cliente</h4>
                     </div>
-                    <div class="modal-footer">
-                      <input type="hidden" name="aldea" value="nuevo">
-                      <button type="submit" class="btn btn-info" id="crear-aldea"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
-                      <span class="text-warning w3-small w3-padding-small">*Debe llenar los campos obligatorios</span>
-                      <button id="aldClose" type="button" class="btn btn-danger w3-round-medium pull-right" data-dismiss="modal">Cerrar</button>
-                    </div>
-                </div>
-                </form>
-              </div>
-            </div>
-            <!-- /.modal-content -->
-          </div>
-
-          <div class="row">
-            <div class="col-md-6">
-            <form role="form" id="form-cliente" name="form-cliente" method="post" action="BLL/customer.php"
-            enctype="multipart/form-data">
-              <div class="box-body">
-                <div class="form-group">
-                  <span class="text-danger text-uppercase">*</span>
-                  <label for="nombre">Nombre</label>
-                  <input type="text" class="form-control" id="name" name="name" placeholder="Escriba un nombre" autofocus value="<?php echo $customer['customerName']?>">
-                </div>
-                <div class="form-group">
-                  <span class="text-danger text-uppercase">*</span>
-                  <label for="codigo">Código</label>
-                  <input type="text" class="form-control" id="code" name="code" placeholder="Escriba un código" value="<?php echo $customer['customerCode']?>">
-                </div>
-                <div class="form-group">
-                  <label for="tel">Teléfono</label>
-                  <input type="text" class="form-control" id="tel" name="tel" placeholder="Escriba el número de teléfono" value="<?php echo $customer['customerTel']?>">
-                </div>
-                <div class="form-group">
-                  <label for="nit">Nit</label>
-                  <input type="text" class="form-control" id="nit" name="nit" placeholder="Escriba el número de Nit" value="<?php echo $customer['customerNit']?>">
-                </div>
-                <div class="form-group">
-                  <span class="text-danger text-uppercase">*</span>
-                  <label for="dir">Dirección</label>
-                  <input type="text" class="form-control" id="dir" name="dir" placeholder="Escriba la dirección del cliente" value="<?php echo $customer['customerAddress']?>">
-                </div>
-                <div class="form-group">
-                  <label for="owner">Dueño</label>
-                  <input type="text" class="form-control" id="owner" name="owner" placeholder="Escriba el nombre del dueño" value="<?php echo $customer['owner']?>">
-                </div>
-              </div>
-            </div>
-            <!-- /.form-group -->
-            <!-- /.col -->
-            <div class="col-md-6">
-              <div class="box-body">
-                <div class="form-group">
-                  <span class="text-danger text-uppercase">*</span>
-                  <label>Departamento</label>
-                  <button type="button" class="btn btn-Normal bg-teal-active btn-xs pull-right" data-toggle="modal" data-target="#modal-departamento">+ Crear Nuevo</button>
-                  <select id="departamento" name="departamento" class="form-control select2" style="width: 100%;">
-                    <option value="" selected>Seleccione un departamento</option>
-                    <?php
+                    <div class="box-body">
+                      <div class="row">
+                        <div class="form-group">
+                          <span class="text-danger text-uppercase">*</span>
+                          <label for="dir">Dirección</label>
+                          <input type="text" class="form-control" id="dir" name="dir" placeholder="Escriba la dirección del cliente" value="<?php echo $customer['customerAddress']?>">
+                        </div>
+                        <div class="form-group">
+                          <span class="text-danger text-uppercase">*</span>
+                          <label>Departamento</label>
+                          <button type="button" class="btn btn-Normal bg-teal-active btn-xs pull-right" data-toggle="modal" data-target="#modal-departamento">+ Crear Nuevo</button>
+                          <select id="departamento" name="departamento" class="form-control select2" style="width: 100%;">
+                            <option value="" selected>Seleccione un departamento</option>
+                            <?php
                       try {
                         $depa_actual =  $customer['_idDeparment'];
                         $sql = "SELECT * FROM deparment";
                         $resultado = $conn->query($sql);
                         while ($depa_customer = $resultado->fetch_assoc()) {
                           if ($depa_customer['idDeparment'] == $depa_actual) {?>
-                          <option value="<?php echo $depa_customer['idDeparment']; ?>" selected>
-                            <?php echo $depa_customer['name']; ?>
-                          </option>
-                          <?php 
+                              <option value="<?php echo $depa_customer['idDeparment']; ?>" selected>
+                                <?php echo $depa_customer['name']; ?>
+                              </option>
+                              <?php 
                           }else{?>
-                          <option value="<?php echo $depa_customer['idDeparment']; ?>">
-                            <?php echo $depa_customer['name']; ?>
-                          </option>
-                          <?php
+                              <option value="<?php echo $depa_customer['idDeparment']; ?>">
+                                <?php echo $depa_customer['name']; ?>
+                              </option>
+                              <?php
                           }
                         }
                       }catch (Exception $e) {
                         echo "Error: " . $e->getMessage();
                       }
                     ?>
-                  </select>
-                </div>
-                <br>
-                <div class="form-group">
-                  <span class="text-danger text-uppercase">*</span>
-                  <label>Municipio</label>
-                  <button type="button" class="btn btn-Normal bg-teal-active btn-xs pull-right" data-toggle="modal" data-target="#modal-muni">+ Crear Nuevo</button>
-                  <select id="muni" name="muni" class="form-control select2" style="width: 100%;">
-                    <option value="" selected>Seleccione un municipio</option>
-                    <?php
+                          </select>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                          <span class="text-danger text-uppercase">*</span>
+                          <label>Municipio</label>
+                          <button type="button" class="btn btn-Normal bg-teal-active btn-xs pull-right" data-toggle="modal" data-target="#modal-muni">+ Crear Nuevo</button>
+                          <select id="muni" name="muni" class="form-control select2" style="width: 100%;">
+                            <option value="" selected>Seleccione un municipio</option>
+                            <?php
                       try {
                         $town_actual =  $customer['_idTown'];
                         $sql = "SELECT * FROM town";
                         $resultado = $conn->query($sql);
                         while ($town_customer = $resultado->fetch_assoc()) {
                           if ($town_customer['idTown'] == $town_actual) {?>
-                          <option value="<?php echo $town_customer['idTown']; ?>" selected>
-                            <?php echo $town_customer['name']; ?>
-                          </option>
-                          <?php 
+                              <option value="<?php echo $town_customer['idTown']; ?>" selected>
+                                <?php echo $town_customer['name']; ?>
+                              </option>
+                              <?php 
                           }else{?>
-                          <option value="<?php echo $town_customer['idTown']; ?>">
-                            <?php echo $town_customer['name']; ?>
-                          </option>
-                          <?php
+                              <option value="<?php echo $town_customer['idTown']; ?>">
+                                <?php echo $town_customer['name']; ?>
+                              </option>
+                              <?php
                           }
                         }
                       }catch (Exception $e) {
                         echo "Error: " . $e->getMessage();
                       }
                     ?>
-                  </select>
-                </div>
-                <br>
-                <div class="form-group">
-                  <span class="text-danger text-uppercase">*</span>
-                  <label>Aldea</label>
-                  <button type="button" class="btn btn-Normal bg-teal-active btn-xs pull-right" data-toggle="modal" data-target="#modal-aldea">+ Crear Nueva</button>
-                  <select id="aldea" name="aldea" class="form-control select2" style="width: 100%;">
-                    <option value="" selected>Seleccione una aldea</option>
-                    <?php
+                          </select>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                          <span class="text-danger text-uppercase">*</span>
+                          <label>Aldea</label>
+                          <button type="button" class="btn btn-Normal bg-teal-active btn-xs pull-right" data-toggle="modal" data-target="#modal-aldea">+ Crear Nueva</button>
+                          <select id="aldea" name="aldea" class="form-control select2" style="width: 100%;">
+                            <option value="" selected>Seleccione una aldea</option>
+                            <?php
                       try {
                         $villa_actual =  $customer['_idVillage'];
                         $sql = "SELECT * FROM village";
                         $resultado = $conn->query($sql);
                         while ($villa_customer = $resultado->fetch_assoc()) {
                           if ($villa_customer['idVillage'] == $villa_actual) {?>
-                          <option value="<?php echo $villa_customer['idVillage']; ?>" selected>
-                            <?php echo $villa_customer['name']; ?>
-                          </option>
-                          <?php 
+                              <option value="<?php echo $villa_customer['idVillage']; ?>" selected>
+                                <?php echo $villa_customer['name']; ?>
+                              </option>
+                              <?php 
                           }else{?>
-                          <option value="<?php echo $villa_customer['idVillage']; ?>">
-                            <?php echo $villa_customer['name']; ?>
-                          </option>
-                          <?php
+                              <option value="<?php echo $villa_customer['idVillage']; ?>">
+                                <?php echo $villa_customer['name']; ?>
+                              </option>
+                              <?php
                           }
                         }
                       }catch (Exception $e) {
                         echo "Error: " . $e->getMessage();
                       }
                     ?>
-                  </select>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <br>
-                <div class="form-group">
-                  <span class="text-danger text-uppercase">*</span>
-                  <label>Ruta</label>
-                  <select id="ruta" name="ruta" class="form-control select2" style="width: 100%;">
-                    <option value="" selected>Seleccione una ruta</option>
-                    <?php
-                      try {
-                        $ruta_actual =  $customer['_idRoute'];
-                        $sql = "SELECT * FROM route";
-                        $resultado = $conn->query($sql);
-                        while ($ruta_customer = $resultado->fetch_assoc()) {
-                          if ($ruta_customer['idRoute'] == $ruta_actual) {?>
-                          <option value="<?php echo $ruta_customer['idRoute']; ?>" selected>
-                            <?php echo $ruta_customer['routeName']; ?>
-                          </option>
-                          <?php 
-                          }else{?>
-                          <option value="<?php echo $ruta_customer['idRoute']; ?>">
-                            <?php echo $ruta_customer['routeName']; ?>
-                          </option>
-                          <?php
-                          }
-                        }
-                      }catch (Exception $e) {
-                        echo "Error: " . $e->getMessage();
-                      }
-                    ?>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="incharge">Encargado</label>
-                  <input type="text" class="form-control" id="incharge" name="incharge" placeholder="Escriba el nombre del encargado" value="<?php echo $customer['inCharge']?>">
+                <!-- /.box-body -->
+                <div class="box-footer">
+                  <input type="hidden" name="customer" value="actualizar">
+                  <input type="hidden" name="id_customer" value="<?php echo $id; ?>">
+                  <button type="submit" class="btn btn-primary" id="editar-customer">
+                    <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+                  <span class="w3-text-orange w3-padding">*Debe llenar los campos obligatorios</span>
                 </div>
               </div>
-              <!-- /.box-body -->
-              <div class="box-footer">
-                <input type="hidden" name="customer" value="actualizar">
-                <input type="hidden" name="id_customer" value="<?php echo $id; ?>">
-                <button type="submit" class="btn btn-primary" id="editar-customer"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
-                <span class="w3-text-orange w3-padding">*Debe llenar los campos obligatorios</span>
-              </div>
+              </form>
+              <!-- /.form-group -->
             </div>
-            </form>
-            <!-- /.form-group -->
-          </div>
-          <!-- /.col -->
+            <!-- /.col -->
         </div>
         <!-- /.row -->
       </div>
