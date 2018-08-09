@@ -14,10 +14,10 @@ if ($_POST['producto'] == 'nuevo') {
     $pharma = $_POST['pharma'];
     $business = $_POST['business'];
     $bonus = $_POST['bonus'];
-    
+
     $respuesta = array(
         'post' => $_POST,
-        'file' => $_FILES
+        'file' => $_FILES,
     );
 
     //die(json_encode($respuesta));
@@ -75,10 +75,15 @@ if ($_POST['producto'] == 'actualizar') {
     $name = $_POST['name'];
     $code = $_POST['code'];
     $cost = $_POST['cost'];
+    $minStock = $_POST['minStock'];
     $description = $_POST['description'];
     $make = $_POST['make'];
     $category = $_POST['category'];
     $unity = $_POST['unity'];
+    $public = $_POST['public'];
+    $pharma = $_POST['pharma'];
+    $business = $_POST['business'];
+    $bonus = $_POST['bonus'];
     // $respuesta = array(
     //     'post' => $_POST,
     //     'file' => $_FILES
@@ -99,33 +104,42 @@ if ($_POST['producto'] == 'actualizar') {
     }
 
     try {
-        if ($_FILES['file']['size'] > 0) {
-            //con imagen
-            $stmt = $conn->prepare("UPDATE product SET productName = ?, productCode = ?, cost = ?, description = ?, picture = ?, _idUnity = ?, _idCategory = ?, _idMake = ? WHERE idProduct = ?");
-            $stmt->bind_param("ssdssiiii", $name, $code, $cost, $description, $picture_url, $unity, $category, $make, $id_product);
+        if ($name == "" || $code == '' || $cost == '' || $make == '' || $category == '' || $unity == '' || $minStock == '' || $public == '' || $pharma == '' || $business == '' || $bonus == '') {
+            $respuesta = array(
+                'respuesta' => 'vacio',
+            );
         } else {
-            //sin imagen
-            $stmt = $conn->prepare("UPDATE product SET productName = ?, productCode = ?, cost = ?, description = ?, _idUnity = ?, _idCategory = ?, _idMake = ? WHERE idProduct = ?");
-            $stmt->bind_param("ssdsiiii", $name, $code, $cost, $description, $unity, $category, $make, $id_product);
-        }
-        $estado = $stmt->execute();
+            if ($_FILES['file']['size'] > 0) {
+                //con imagen
+                $stmt = $conn->prepare("UPDATE product SET productName = ?, productCode = ?, cost = ?, minStock = ?, description = ?, picture = ?, _idUnity = ?, _idCategory = ?, _idMake = ? WHERE idProduct = ?");
+                $stmt->bind_param("ssdissiiii", $name, $code, $cost, $minStock, $description, $picture_url, $unity, $category, $make, $id_product);
+            } else {
+                //sin imagen
+                $stmt = $conn->prepare("UPDATE product SET productName = ?, productCode = ?, cost = ?, minStock = ?, description = ?, _idUnity = ?, _idCategory = ?, _idMake = ? WHERE idProduct = ?");
+                $stmt->bind_param("ssdisiiii", $name, $code, $cost, $minStock, $description, $unity, $category, $make, $id_product);
+            }
+            $estado = $stmt->execute();
 
-        if ($estado ==  true) {
-            $respuesta = array(
-                'respuesta' => 'exito',
-                'idProduct' => $id_product,
-                'mensaje' => 'Producto actualizado correctamente!',
-                'proceso' => 'editado',
-            );
-        } else {
-            $respuesta = array(
-                'respuesta' => 'error',
-                'idProduct' => $id_product,
-            );
+            if ($estado == true) {
+                $respuesta = array(
+                    'respuesta' => 'exito',
+                    'idProduct' => $id_product,
+                    'public' => $public,
+                    'pharma' => $pharma,
+                    'business' => $business,
+                    'bonus' => $bonus,
+                    'mensaje' => 'Producto actualizado correctamente!',
+                    'proceso' => 'editado',
+                );
+            } else {
+                $respuesta = array(
+                    'respuesta' => 'error',
+                    'idProduct' => $id_product,
+                );
+            }
+            $stmt->close();
+            $conn->close();
         }
-        $stmt->close();
-        $conn->close();
-        
     } catch (Exception $e) {
         echo 'Error: ' . $e . getMessage();
     }
@@ -142,18 +156,18 @@ if ($_POST['producto'] == 'eliminar') {
         if ($stmt->affected_rows) {
             $respuesta = array(
                 'respuesta' => 'exito',
-                'id_eliminado' => $id_eliminar
+                'id_eliminado' => $id_eliminar,
             );
-        }else {
+        } else {
             $respuesta = array(
-                'respuesta' => 'error'
+                'respuesta' => 'error',
             );
         }
         $stmt->close();
         $conn->close();
-    }catch(Exception $e) {
+    } catch (Exception $e) {
         $respuesta = array(
-            'respuesta' => $e->getMessage()
+            'respuesta' => $e->getMessage(),
         );
     }
     die(json_encode($respuesta));
@@ -170,15 +184,12 @@ if ($_POST['producto'] == 'agregar') {
         (select unityName from unity where idUnity = P._idUnity and state = 0) as unity
         FROM product P WHERE idProduct = $id_agregar");
         $outp = array();
-        $outp = $result->fetch_all(MYSQLI_ASSOC);  
-       
-    }catch(Exception $e) {
+        $outp = $result->fetch_all(MYSQLI_ASSOC);
+
+    } catch (Exception $e) {
         $outp = array(
-            'respuesta' => $e->getMessage()
+            'respuesta' => $e->getMessage(),
         );
     }
     echo json_encode($outp);
 }
-
-?>
-

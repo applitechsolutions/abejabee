@@ -236,6 +236,7 @@ try {
             <!-- /.col -->
             <div class="col-md-6">
               <div class="box-body">
+              <br>
                 <div class="form-group">
                   <label for="picture">Imagen</label>
                   <input type="file" id="picture" name="file">

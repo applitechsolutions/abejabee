@@ -33,6 +33,16 @@ $(document).ready(function () {
                             location.reload();
                         }, 1500);
                     } else if (resultado.proceso == 'editado') {
+                        swal({                            
+                            title: 'Exito!',
+                            text: '¡' + resultado.mensaje,
+                            timer: 2000,
+                            type: 'success'
+                          }).then(
+                            priceSale_edit(resultado.idProduct, 1, resultado.public),
+                            priceSale_edit(resultado.idProduct, 11, resultado.pharma),
+                            priceSale_edit(resultado.idProduct, 21, resultado.business),
+                            priceSale_edit(resultado.idProduct, 31, resultado.bonus))
                         setTimeout(function () {
                             window.location.href = 'listProducts.php';
                         }, 1500);
@@ -244,6 +254,33 @@ function priceSale(idProduct, idPrice, price) {
         type: 'POST',
         data: {
             'priceSale': 'nuevo',
+            'id_product': idProduct,
+            'id_price' : idPrice,
+            'price' : price
+        },
+        url: 'BLL/priceSale.php',
+        dataType: 'json',
+        success: function (data) {
+            console.log(data);
+            var resultado = data;
+            if (resultado.respuesta == 'exito') {
+            } else if (resultado.respuesta == 'error') {
+                swal({
+                    type: 'error',
+                    title: 'Error',
+                    text: 'No se pudo guardar en la base de datos',
+                })
+            }
+        }
+    })
+}
+
+function priceSale_edit(idProduct, idPrice, price) {
+
+    $.ajax({
+        type: 'POST',
+        data: {
+            'priceSale': 'editar',
             'id_product': idProduct,
             'id_price' : idPrice,
             'price' : price
