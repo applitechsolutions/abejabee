@@ -19,33 +19,34 @@ $(document).ready(function () {
                 var resultado = data;
                 if (resultado.respuesta == 'exito') {
                     if (resultado.proceso == 'nuevo') {
-                        swal({                            
-                            title: 'Exito!',
-                            text: '¡' + resultado.mensaje,
-                            timer: 2000,
-                            type: 'success'
-                          }).then(
-                            priceSale(resultado.idProduct, 1, resultado.public),
+                        priceSale(resultado.idProduct, 1, resultado.public),
                             priceSale(resultado.idProduct, 11, resultado.pharma),
                             priceSale(resultado.idProduct, 21, resultado.business),
-                            priceSale(resultado.idProduct, 31, resultado.bonus))
-                        setTimeout(function () {
-                            location.reload();
-                        }, 1500);
-                    } else if (resultado.proceso == 'editado') {
+                            priceSale(resultado.idProduct, 31, resultado.bonus)
                         swal({                            
                             title: 'Exito!',
                             text: '¡' + resultado.mensaje,
                             timer: 2000,
                             type: 'success'
                           }).then(
-                            priceSale_edit(resultado.idProduct, 1, resultado.public),
-                            priceSale_edit(resultado.idProduct, 11, resultado.pharma),
-                            priceSale_edit(resultado.idProduct, 21, resultado.business),
-                            priceSale_edit(resultado.idProduct, 31, resultado.bonus))
-                        setTimeout(function () {
-                            window.location.href = 'listProducts.php';
-                        }, 1500);
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1500))
+                       
+                    } else if (resultado.proceso == 'editado') {
+                        priceSale_edit(resultado.idProduct, 1, resultado.public),
+                        priceSale_edit(resultado.idProduct, 11, resultado.pharma),
+                        priceSale_edit(resultado.idProduct, 21, resultado.business),
+                        priceSale_edit(resultado.idProduct, 31, resultado.bonus)
+                        swal({                            
+                            title: 'Exito!',
+                            text: '¡' + resultado.mensaje,
+                            timer: 2000,
+                            type: 'success'
+                          }).then(
+                            setTimeout(function () {
+                                window.location.href = 'listProducts.php';
+                            }, 1500))                       
                     }
                 } else if (resultado.respuesta == 'vacio') {
                     swal({

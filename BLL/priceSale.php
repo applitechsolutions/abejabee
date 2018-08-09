@@ -35,7 +35,7 @@ if ($_POST['priceSale'] == 'editar') {
     $id_Product = $_POST['id_product'];
     $id_price = $_POST['id_price'];
     $price = $_POST['price'];
-
+    
     try {
         $stmt = $conn->prepare('UPDATE priceSale SET price = ? WHERE _idProduct = ? AND _idPrice = ?');
         $stmt->bind_param("dii", $price, $id_Product, $id_price);
