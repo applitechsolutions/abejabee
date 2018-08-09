@@ -20,9 +20,9 @@ $(document).ready(function () {
                 if (resultado.respuesta == 'exito') {
                     if (resultado.proceso == 'nuevo') {
                         priceSale(resultado.idProduct, 1, resultado.public),
-                            priceSale(resultado.idProduct, 11, resultado.pharma),
-                            priceSale(resultado.idProduct, 21, resultado.business),
-                            priceSale(resultado.idProduct, 31, resultado.bonus)
+                        priceSale(resultado.idProduct, 11, resultado.pharma),
+                        priceSale(resultado.idProduct, 21, resultado.business),
+                        priceSale(resultado.idProduct, 31, resultado.bonus)
                         swal({                            
                             title: 'Exito!',
                             text: '¡' + resultado.mensaje,
@@ -45,7 +45,7 @@ $(document).ready(function () {
                             type: 'success'
                           }).then(
                             setTimeout(function () {
-                                window.location.href = 'listProducts.php';
+                                //window.location.href = 'listProducts.php';
                             }, 1500))                       
                     }
                 } else if (resultado.respuesta == 'vacio') {

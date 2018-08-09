@@ -88,6 +88,46 @@ $(document).ready(function () {
             }                
         })
     });
+
+    $('.detalle_purchase').on('click', function (e){
+        e.preventDefault();
+        $("#detalles").find('tbody').html("");
+        var id = $(this).attr('data-id');
+        var tipo = $(this).attr('data-tipo');
+        $('#modal-detail').modal('show');
+
+        $.ajax({
+            type: 'POST',
+            data: {
+                'id': id
+            },
+            url: 'BLL/' + tipo + '.php',
+            success(data) {
+                console.log(data);
+                var nuevaFila = "<tr>";
+                $.each(data, function (key, registro) {
+                    var sub = registro.quantity * registro.costP;
+                    nuevaFila += "<td><img src='img/products/" + registro.imagen + "'width='80' onerror='ImgError(this);'></td>";
+                    nuevaFila += "<td>" + registro.nombre + "</td>";
+                    nuevaFila += "<td>" + registro.codigo + "</td>";
+                    nuevaFila += "<td>" + registro.quantity + "</td>";
+                    nuevaFila += "<td>" + registro.costP + "</td>";
+                    nuevaFila += "<td>" + sub + "</td>";
+                });
+                nuevaFila += "</tr>";
+                $("#detalles").append(nuevaFila);
+            },
+            error: function (data) {
+                swal({
+                    type: 'error',
+                    title: 'Error',
+                    text: 'No se puede agregar al carrito',
+                })
+            }
+        });
+
+
+    });
 });
 
 
