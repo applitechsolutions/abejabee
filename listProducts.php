@@ -91,21 +91,20 @@
                           <?php echo $product['description']; ?>
                         </td>
                         <td>
-                          <ul class="list-group text-center">
-                            <small><li class="list-group-unbordered">Público: 
-                              <span class="badge">Q.<?php echo $product['public']; ?></span>
-                            </li>
-                            <li class="list-group-unbordered">Farmacia: 
-                              <span class="badge">Q.<?php echo $product['pharma']; ?></span>
-                            </li>
-                            <li class="list-group-unbordered">Negocio: 
-                              <span class="badge">Q.<?php echo $product['business']; ?></span>
-                            </li>
-                            <li class="list-group-unbordered">Bono:
-                              <span class="badge">Q.<?php echo $product['bonus']; ?></span>
-                            </li>
-                            </small>
-                          </ul>                         
+                        <ul>
+                          <li>
+                            <small>Público:</small><span class="label label-default">Q.<?php echo $product['public']; ?></span>
+                          </li>
+                          <li>
+                            <small> Farmacia:</small><span class="label label-default">Q.<?php echo $product['pharma']; ?></span>
+                          </li>
+                          <li>
+                            <small>Negocio:</small><span class="label label-default">Q.<?php echo $product['business']; ?></span>
+                          </li>
+                          <li>
+                            <small>Bono:</small><span class="label label-primary">Q.<?php echo $product['bonus']; ?></span>
+                          </li>
+                        </ul>                           
                         </td>
                         <td>
                           <img src="img/products/<?php echo $product['picture']; ?>" width="100" onerror="this.src='img/products/notfound.jpg';">
