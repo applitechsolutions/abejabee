@@ -100,16 +100,16 @@ include_once 'funciones/bd_conexion.php';
                                 </div>
                               </td>
                               <td>
-                                <input class="form-control margin new_costo" type="number" id="new_<?php echo $product['idProduct']; ?>_costo" name="cost" min="0.01" step="0.01" value="<?php echo $product['cost']?>"
-                                  style="width: 100%;">
+                                <input class="form-control margin new_costo" type="number" id="new_<?php echo $product['idProduct']; ?>_costo" name="cost"
+                                  min="0.01" step="0.01" value="<?php echo $product['cost']?>" style="width: 100%;">
                               </td>
                               <td>
-                                <input class="form-control margin" type="number" id="new_<?php echo $product['idProduct']; ?>_cantidad" name="cantidad" min="1" step="1" value="1" style="width: 60%;">
+                                <input class="form-control margin" type="number" id="new_<?php echo $product['idProduct']; ?>_cantidad" name="cantidad" min="1"
+                                  step="1" value="1" style="width: 60%;">
                               </td>
                               <td>
                                 <input class="id_producto_agregar" type="hidden" value="<?php echo $product['idProduct']; ?>">
-                                <a id="boton" href="#" cost="" data-id="<?php echo $product['idProduct']; ?>" data-tipo="product"
-                                  class="btn bg-green btn-lg margin agregar_producto">
+                                <a id="boton" href="#" cost="" data-id="<?php echo $product['idProduct']; ?>" data-tipo="product" class="btn bg-green btn-lg margin agregar_producto">
                                   <i class="fa fa-shopping-cart"></i>
                                 </a>
                               </td>
@@ -237,12 +237,14 @@ include_once 'funciones/bd_conexion.php';
                   </div>
                   <div class="box-footer">
                     <div class="row">
-                      <div class="form-group col-lg-3 pull-right">
+                      <div class="form-group col-lg-12 pull-right">
                         <div class="input-group">
                           <span class="input-group-addon">
                             <span class="text-danger text-uppercase">*</span>
-                            <label for="totalPurchase" class="control-label">Total: Q </label>
-                            <h5 id="totalPurchase" class="description-text">Q 0.00</h5>
+                            <label for="totalPurchase" class="control-label">Total:</label>
+                            <span>
+                              <h5 id="totalPurchase" class="text-bold">Q.0.00</h5>
+                            </span>
                           </span>
                         </div>
                       </div>

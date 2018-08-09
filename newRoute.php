@@ -62,30 +62,6 @@
                     <label for="detailsR">Detalles: </label>
                     <textarea class="form-control" rows="2" id="detailsR" name="detailsR" placeholder="Escriba todos los detalles sobre esta ruta... "></textarea>
                   </div>
-                  <div class="row">
-                    <div class="col-lg-6">
-                      <div class="form-group">
-                        <label>Fecha de Inicio</label>
-                        <div class="input-group date">
-                          <div class="input-group-addon">
-                            <i class="fa fa-calendar"></i>
-                          </div>
-                          <input type="text" class="form-control pull-right datepicker" id="datepicker" name="dateStart">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-lg-6">
-                      <div class="form-group">
-                        <label>Fecha final</label>
-                        <div class="input-group date">
-                          <div class="input-group-addon">
-                            <i class="fa fa-calendar"></i>
-                          </div>
-                          <input type="text" class="form-control pull-right datepicker" id="datepicker2" name="dateEnd">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                   <!-- /.box-body -->
                   <div class="box-footer">
                     <input type="hidden" name="ruta" value="nueva">
