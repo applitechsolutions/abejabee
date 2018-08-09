@@ -36,7 +36,7 @@
                   <th>DPI</th>
                   <th>Fecha de Nacimiento</th>
                   <th>Género</th>
-                  <th>Acciones</th>
+                  <th><span class="fa fa-cogs"></span></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -81,7 +81,7 @@
                   <th>DPI</th>
                   <th>Fecha de Nacimiento</th>
                   <th>Género</th>
-                  <th>Acciones</th>
+                  <th><span class="fa fa-cogs"></span></th>
                 </tr>
                 </tfoot>
               </table>

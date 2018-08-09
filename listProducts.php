@@ -42,7 +42,7 @@
                       <th>Descripción</th>
                       <th>Precios</th>
                       <th>Imagen</th>
-                      <th>Acciones</th>
+                      <th><span class="fa fa-cogs"></span></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -134,7 +134,7 @@
                       <th>Descripción</th>
                       <th>Precios</th>
                       <th>Imagen</th>
-                      <th>Acciones</th>
+                      <th><span class="fa fa-cogs"></span></th>
                     </tr>
                   </tfoot>
                 </table>

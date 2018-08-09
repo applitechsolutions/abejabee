@@ -33,7 +33,7 @@
                   <th>Apellido</th>
                   <th>Nombre de Usuario</th>
                   <th>Rol</th>
-                  <th>Acciones</th>
+                  <th><span class="fa fa-cogs"></span></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -71,7 +71,7 @@
                   <th>Apellido</th>
                   <th>Nombre de Usuario</th>
                   <th>Rol</th>
-                  <th>Acciones</th>
+                  <th><span class="fa fa-cogs"></span></th>
                 </tr>
                 </tfoot>
               </table>

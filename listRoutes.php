@@ -35,7 +35,7 @@
                   <th>Detalles</th>
                   <th>Fecha de Inicio</th>
                   <th>Fecha Final</th>
-                  <th>Acciones</th>
+                  <th><span class="fa fa-cogs"></span></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -76,7 +76,7 @@
                   <th>Detalles</th>
                   <th>Fecha de Inicio</th>
                   <th>Fecha Final</th>
-                  <th>Acciones</th>
+                  <th><span class="fa fa-cogs"></span></th>
                 </tr>
                 </tfoot>
               </table>

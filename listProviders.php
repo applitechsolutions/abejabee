@@ -34,7 +34,7 @@
                   <th>Teléfono</th>
                   <th>Móvil</th>
                   <th>Correo Electrónico</th>
-                  <th>Acciones</th>
+                  <th><span class="fa fa-cogs"></span></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -70,7 +70,7 @@
                   <th>Teléfono</th>
                   <th>Móvil</th>
                   <th>Correo Electrónico</th>
-                  <th>Acciones</th>
+                  <th><span class="fa fa-cogs"></span></th>
                 </tr>
                 </tfoot>
               </table>

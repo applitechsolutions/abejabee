@@ -40,7 +40,7 @@
                   <th>Ruta</th>
                   <th>Dueño</th>
                   <th>Encargado</th>
-                  <th>Acciones</th>
+                  <th><span class="fa fa-cogs"></span></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -93,7 +93,7 @@
                   <th>Ruta</th>
                   <th>Dueño</th>
                   <th>Encargado</th>
-                  <th>Acciones</th>
+                  <th><span class="fa fa-cogs"></span></th>
                 </tr>
                 </tfoot>
               </table>
