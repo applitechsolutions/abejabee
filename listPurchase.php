@@ -50,9 +50,14 @@
                   }
                   
                   while ($purchase = $resultado->fetch_assoc()) {
+                    $fecha = date_create($purchase['datePurchase']);
+                    setlocale(LC_ALL,"es_ES");
+                    $fec = date_format($fecha, 'd/m/Y');
+                    $date = DateTime::createFromFormat("d/m/Y", $fec);
+                    //echo strftime("%d %b %g",$date->getTimestamp());
                 ?>
                     <tr>
-                      <td><?php echo $purchase['datePurchase']; ?></td>
+                      <td><?php echo strftime("%d/ %B/ %g",$date->getTimestamp()); ?></td>
                       <td><?php echo $purchase['proveedor']; ?></td>
                       <td><?php echo $purchase['noBill']; ?></td>
                       <td><?php echo $purchase['serie']; ?></td>

@@ -104,8 +104,8 @@ $(document).ready(function () {
             url: 'BLL/' + tipo + '.php',
             success(data) {
                 console.log(data);
-                var nuevaFila = "<tr>";
                 $.each(data, function (key, registro) {
+                    var nuevaFila = "<tr>";
                     var sub = registro.quantity * registro.costP;
                     nuevaFila += "<td><img src='img/products/" + registro.imagen + "'width='80' onerror='ImgError(this);'></td>";
                     nuevaFila += "<td>" + registro.nombre + "</td>";
@@ -113,9 +113,10 @@ $(document).ready(function () {
                     nuevaFila += "<td>" + registro.quantity + "</td>";
                     nuevaFila += "<td>" + registro.costP + "</td>";
                     nuevaFila += "<td>" + sub + "</td>";
+                    nuevaFila += "</tr>";
+                    $("#detalles").append(nuevaFila);
                 });
-                nuevaFila += "</tr>";
-                $("#detalles").append(nuevaFila);
+                
             },
             error: function (data) {
                 swal({
