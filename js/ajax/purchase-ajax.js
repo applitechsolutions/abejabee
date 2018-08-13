@@ -5,9 +5,6 @@ $(document).ready(function () {
 
         var id = $(this).attr('data-id');
         var tipo = $(this).attr('data-tipo');
-
-
-
         $(this).attr('hidden', true);
 
         $.ajax({
@@ -34,7 +31,7 @@ $(document).ready(function () {
                     nuevaFila += "<td><input class='costo_class' type='hidden' value='" + costo + "'>Q." + costo + "</td>";
                     nuevaFila += "<td><input class='cantidad_class' type='hidden' value='" + cantidad + "'>" + cantidad + "</td>";
                     nuevaFila += "<td>Q." + subtotal.toFixed(2) + "</td>";
-                    nuevaFila += "<td><a id='quitar' onclick='eliminar("+registro.idProduct+");' data-id-detalle='" + registro.idProduct + "' class='btn bg-maroon btn-flat margin quitar_product'><i class='fa fa-remove'></i></a></td>";
+                    nuevaFila += "<td><a id='quitar' onclick='eliminar(" + registro.idProduct + ");' data-id-detalle='" + registro.idProduct + "' class='btn bg-maroon btn-flat margin quitar_product'><i class='fa fa-remove'></i></a></td>";
                     updateTotal(cantidad, costo, 0);
                 });
                 nuevaFila += "</tr>";
@@ -85,17 +82,20 @@ $(document).ready(function () {
                         text: 'No se pudo guardar en la base de datos',
                     })
                 }
-            }                
+            }
         })
     });
 
-    $('.detalle_purchase').on('click', function (e){
+    $('.detalle_purchase').on('click', function (e) {
         e.preventDefault();
         $("#detalles").find('tbody').html("");
         var id = $(this).attr('data-id');
         var tipo = $(this).attr('data-tipo');
-        $('#modal-detail').modal('show');
 
+        swal({
+            title: 'Cargando detalle de compra...'
+       });
+       swal.showLoading();
         $.ajax({
             type: 'POST',
             data: {
@@ -111,12 +111,13 @@ $(document).ready(function () {
                     nuevaFila += "<td>" + registro.nombre + "</td>";
                     nuevaFila += "<td>" + registro.codigo + "</td>";
                     nuevaFila += "<td>" + registro.quantity + "</td>";
-                    nuevaFila += "<td>" + registro.costP + "</td>";
-                    nuevaFila += "<td>" + sub + "</td>";
+                    nuevaFila += "<td>Q." + registro.costP + "</td>";
+                    nuevaFila += "<td>Q." + sub + "</td>";
                     nuevaFila += "</tr>";
                     $("#detalles").append(nuevaFila);
                 });
-                
+                swal.close();
+                $('#modal-detail').modal('show');
             },
             error: function (data) {
                 swal({
@@ -126,11 +127,8 @@ $(document).ready(function () {
                 })
             }
         });
-
-
     });
 });
-
 
 function ImgError(source) {
     source.src = "img/products/notfound.jpg";
@@ -143,7 +141,7 @@ function eliminar(idp) {
     $('#registros_length select').val('-1').trigger("change");
     jQuery('[data-id="' + idp + '"]').attr('hidden', false);
     $('#registros_length select').val('10').trigger("change");
-    
+
     var idproduct = document.getElementsByClassName("idproducto_class");
     var ncosto = document.getElementsByClassName("costo_class");
     var ncantidad = document.getElementsByClassName("cantidad_class");
@@ -194,9 +192,9 @@ function saveDetail(idEnc) {
                 if (resultado.respuesta == 'exito') {
                     saveStock(resultado.idProducto, resultado.cantidad);
                 }
-            }                
+            }
         })
-    }    
+    }
 }
 
 function saveStock(id_product, cantidad_detalle) {
@@ -219,7 +217,7 @@ function saveStock(id_product, cantidad_detalle) {
                     'success'
                 )
             }
-        }                
+        }
     })
 }
 
@@ -228,7 +226,7 @@ function updateTotal(cant, cost, proc) {
     var Total = $("#total").val();
 
     var subTotal = 0;
-    
+
 
     subTotal = cant * cost;
 
@@ -238,7 +236,7 @@ function updateTotal(cant, cost, proc) {
         Total = parseFloat(Total) - parseFloat(subTotal);
     }
 
-    $("#totalPurchase").text('Q. '+Total.toFixed(2));
+    $("#totalPurchase").text('Q. ' + Total.toFixed(2));
     $("#total").val(parseFloat(Total));
 
 
