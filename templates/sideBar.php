@@ -4,6 +4,9 @@
     <section class="sidebar">
       <!-- Sidebar user panel -->
       <div class="user-panel">
+      <div class="pull-left image">
+          <img src="img/user.png" class="img-circle" alt="User Image">
+        </div>
         <div class="pull-left info">
           <p><?php echo $_SESSION['nombre']; ?></p>
           <a href="#"><i class="fa fa-circle text-success"></i> Enlinea</a>
@@ -94,7 +97,7 @@
         </li>
         <li class="treeview">
           <a href="#">
-          <i class="fa fa-truck" aria-hidden="true"></i> 
+          <i class="fa fa-truck" aria-hidden="true"></i>
           <span>Rutas</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
@@ -104,7 +107,7 @@
             <li><a href="listRoutes.php"><i class="fa fa-list-ul" aria-hidden="true"></i> Ver Todas</a></li>
             <li><a href="newRoute.php"><i class="fa fa-plus-circle" aria-hidden="true"></i> Nueva Ruta</a></li>
           </ul>
-        </li> 
+        </li>
         <li class="treeview">
           <a href="#">
           <i class="fa fa-th" aria-hidden="true"></i>
@@ -146,7 +149,7 @@
         </li>
         <li class="treeview">
           <a href="#">
-          <i class="fa fa-briefcase" aria-hidden="true"></i> 
+          <i class="fa fa-briefcase" aria-hidden="true"></i>
             <span>Vendedores</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>

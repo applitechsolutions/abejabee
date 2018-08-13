@@ -10,9 +10,9 @@ include_once 'funciones/bd_conexion.php';
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        <i class="fa fa-shopping-cart"></i>
-        Compras
-        <small>Llene el formulario para realizar una nueva compra a los proveedores</small>
+        <i class="glyphicon glyphicon-tags"></i>
+        Ventas
+        <small>Llene el formulario para realizar una nueva venta</small>
       </h1>
     </section>
 
@@ -21,7 +21,7 @@ include_once 'funciones/bd_conexion.php';
       <!-- Default box -->
       <div class="box box-default">
         <div class="box-header with-border">
-          <h3 class="box-title">Nueva compra</h3>
+          <h3 class="box-title">Nueva Venta</h3>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
@@ -143,14 +143,14 @@ include_once 'funciones/bd_conexion.php';
 
           <div class="row">
             <div class="col-md-12">
-              <form role="form" id="form-purchase" name="form-purchase" method="post" action="BLL/purchase.php">
+              <form role="form" id="form-sale" name="form-sale" method="post" action="BLL/sale.php">
                 <div class="box-body">
                   <div class="row">
 
                     <div class="col-lg-3">
                       <div class="form-group">
                         <span class="text-danger text-uppercase">*</span>
-                        <label>Fecha</label>
+                        <label>Fecha de inicio</label>
                         <div class="input-group date">
                           <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
@@ -158,6 +158,16 @@ include_once 'funciones/bd_conexion.php';
                           <input type="text" class="form-control pull-right datepicker" id="datepicker" name="date">
                         </div>
                       </div>
+                      <div class="form-group">
+                          <span class="text-danger text-uppercase">*</span>
+                          <label>Fecha de final</label>
+                          <div class="input-group date">
+                            <div class="input-group-addon">
+                              <i class="fa fa-calendar"></i>
+                            </div>
+                            <input type="text" class="form-control pull-right datepicker" id="datepicker" name="date">
+                          </div>
+                        </div>
                     </div>
 
                     <div class="col-lg-6">

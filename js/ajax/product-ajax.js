@@ -5,6 +5,10 @@ $(document).ready(function () {
 
         var datos = new FormData(this);
 
+        swal({
+            title: 'Guardando el producto...'
+        });
+        swal.showLoading();
         $.ajax({
             type: $(this).attr('method'),
             data: datos,
@@ -19,34 +23,16 @@ $(document).ready(function () {
                 var resultado = data;
                 if (resultado.respuesta == 'exito') {
                     if (resultado.proceso == 'nuevo') {
-                        priceSale(resultado.idProduct, 1, resultado.public),
-                        priceSale(resultado.idProduct, 11, resultado.pharma),
-                        priceSale(resultado.idProduct, 21, resultado.business),
-                        priceSale(resultado.idProduct, 31, resultado.bonus)
-                        swal({                            
-                            title: 'Exito!',
-                            text: '¡' + resultado.mensaje,
-                            timer: 2000,
-                            type: 'success'
-                          }).then(
-                            setTimeout(function () {
-                                location.reload();
-                            }, 1500))
-                       
+                        priceSale(resultado.idProduct, 1, resultado.public);
+                        priceSale(resultado.idProduct, 11, resultado.pharma);
+                        priceSale(resultado.idProduct, 21, resultado.business);
+                        priceSale(resultado.idProduct, 31, resultado.bonus);
+
                     } else if (resultado.proceso == 'editado') {
-                        priceSale_edit(resultado.idProduct, 1, resultado.public),
-                        priceSale_edit(resultado.idProduct, 11, resultado.pharma),
-                        priceSale_edit(resultado.idProduct, 21, resultado.business),
-                        priceSale_edit(resultado.idProduct, 31, resultado.bonus)
-                        swal({                            
-                            title: 'Exito!',
-                            text: '¡' + resultado.mensaje,
-                            timer: 2000,
-                            type: 'success'
-                          }).then(
-                            setTimeout(function () {
-                                //window.location.href = 'listProducts.php';
-                            }, 1500))                       
+                        priceSale_edit(resultado.idProduct, 1, resultado.public);
+                        priceSale_edit(resultado.idProduct, 11, resultado.pharma);
+                        priceSale_edit(resultado.idProduct, 21, resultado.business);
+                        priceSale_edit(resultado.idProduct, 31, resultado.bonus);
                     }
                 } else if (resultado.respuesta == 'vacio') {
                     swal({
@@ -65,7 +51,7 @@ $(document).ready(function () {
         })
     });
 
-    $('.borrar_product').on('click', function(e) {
+    $('.borrar_product').on('click', function (e) {
         e.preventDefault();
 
         var id = $(this).attr('data-id');
@@ -80,31 +66,30 @@ $(document).ready(function () {
             cancelButtonColor: '#d33',
             confirmButtonText: 'Sí, Eliminar!',
             cancelButtonText: 'Cancelar'
-          }).then(() => {
-                  $.ajax({
-                      type: 'POST',
-                      data: {
-                          'id': id,
-                          'producto': 'eliminar'
-                      },
-                      url: 'BLL/' + tipo + '.php',
-                      success(data) {
-                          console.log(data);
-                          var resultado = JSON.parse(data);
-                          if (resultado.respuesta == 'exito') {
-                              swal('Eliminado!', 'El producto ha sido borrado con exito.', 'success');
-                              jQuery('[data-id="' + resultado.id_eliminado + '"]').parents('tr').remove();
-                          }
-                          else {
-                              swal({
-                                  type: 'error',
-                                  title: 'Error!',
-                                  text: 'No se pudo eliminar el producto.'
-                              });
-                          }
-                      }
-                  });
-              });
+        }).then(() => {
+            $.ajax({
+                type: 'POST',
+                data: {
+                    'id': id,
+                    'producto': 'eliminar'
+                },
+                url: 'BLL/' + tipo + '.php',
+                success(data) {
+                    console.log(data);
+                    var resultado = JSON.parse(data);
+                    if (resultado.respuesta == 'exito') {
+                        swal('Eliminado!', 'El producto ha sido borrado con exito.', 'success');
+                        jQuery('[data-id="' + resultado.id_eliminado + '"]').parents('tr').remove();
+                    } else {
+                        swal({
+                            type: 'error',
+                            title: 'Error!',
+                            text: 'No se pudo eliminar el producto.'
+                        });
+                    }
+                }
+            });
+        });
     });
 
     $('#form-category').on('submit', function (e) {
@@ -250,14 +235,13 @@ $(document).ready(function () {
 });
 
 function priceSale(idProduct, idPrice, price) {
-
     $.ajax({
         type: 'POST',
         data: {
             'priceSale': 'nuevo',
             'id_product': idProduct,
-            'id_price' : idPrice,
-            'price' : price
+            'id_price': idPrice,
+            'price': price
         },
         url: 'BLL/priceSale.php',
         dataType: 'json',
@@ -265,7 +249,20 @@ function priceSale(idProduct, idPrice, price) {
             console.log(data);
             var resultado = data;
             if (resultado.respuesta == 'exito') {
+                if (idPrice == 31) {
+                    swal.close();
+                    swal({
+                        title: 'Exito!',
+                        text: '¡' + resultado.mensaje,
+                        timer: 2000,
+                        type: 'success'
+                    }).then(
+                        setTimeout(function () {
+                            location.reload();
+                        }, 1500))
+                }
             } else if (resultado.respuesta == 'error') {
+                swal.close();
                 swal({
                     type: 'error',
                     title: 'Error',
@@ -283,8 +280,8 @@ function priceSale_edit(idProduct, idPrice, price) {
         data: {
             'priceSale': 'editar',
             'id_product': idProduct,
-            'id_price' : idPrice,
-            'price' : price
+            'id_price': idPrice,
+            'price': price
         },
         url: 'BLL/priceSale.php',
         dataType: 'json',
@@ -292,7 +289,20 @@ function priceSale_edit(idProduct, idPrice, price) {
             console.log(data);
             var resultado = data;
             if (resultado.respuesta == 'exito') {
+                if (idPrice == 31) {
+                    swal.close();
+                    swal({
+                        title: 'Exito!',
+                        text: '¡' + resultado.mensaje,
+                        timer: 2000,
+                        type: 'success'
+                    }).then(
+                        setTimeout(function () {
+                           window.location.href = 'listProducts.php';
+                        }, 1500))
+                }
             } else if (resultado.respuesta == 'error') {
+                swal.close();
                 swal({
                     type: 'error',
                     title: 'Error',

@@ -14,7 +14,8 @@ if ($_POST['priceSale'] == 'nuevo') {
         $id_registro = $stmt->insert_id;
         if ($id_registro > 0) {
             $respuesta = array(
-                'respuesta' => 'exito'            
+                'respuesta' => 'exito',
+                'mensaje' => 'Producto creado correctamente!'           
             );
         } else {
             $respuesta = array(
@@ -42,7 +43,8 @@ if ($_POST['priceSale'] == 'editar') {
         $stmt->execute();
         if ($stmt->affected_rows) {
             $respuesta = array(
-                'respuesta' => 'exito'            
+                'respuesta' => 'exito',
+                'mensaje' => 'Producto actualizado correctamente!'   
             );
         } else {
             $respuesta = array(
