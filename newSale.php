@@ -61,20 +61,20 @@ include_once 'funciones/bd_conexion.php';
                         </thead>
                         <tbody>
                           <?php
-                              try{
-                                $sql = "SELECT idProduct, productName, productCode, cost, description, picture,
+try {
+    $sql = "SELECT idProduct, productName, productCode, cost, description, picture,
                                 (select makeName from make where idMake = P._idMake and state = 0) as make,
                                 (select catName from category where idCategory = P._idCategory and state = 0) as category,
                                 (select unityName from unity where idUnity = P._idUnity and state = 0) as unity
                                 FROM product P WHERE state = 0";
-                                $resultado = $conn->query($sql);
-                              } catch (Exception $e){
-                                $error= $e->getMessage();
-                                echo $error;
-                              }
-                              
-                              while ($product = $resultado->fetch_assoc()) {
-                            ?>
+    $resultado = $conn->query($sql);
+} catch (Exception $e) {
+    $error = $e->getMessage();
+    echo $error;
+}
+
+while ($product = $resultado->fetch_assoc()) {
+    ?>
                             <tr id="catalogo">
                               <td>
                                 <img src="img/products/<?php echo $product['picture']; ?>" width="80" onerror="this.src='img/products/notfound.jpg';">
@@ -101,7 +101,7 @@ include_once 'funciones/bd_conexion.php';
                               </td>
                               <td>
                                 <input class="form-control margin new_costo" type="number" id="new_<?php echo $product['idProduct']; ?>_costo" name="cost"
-                                  min="0.01" step="0.01" value="<?php echo $product['cost']?>" style="width: 100%;">
+                                  min="0.01" step="0.01" value="<?php echo $product['cost'] ?>" style="width: 100%;">
                               </td>
                               <td>
                                 <input class="form-control margin" type="number" id="new_<?php echo $product['idProduct']; ?>_cantidad" name="cantidad" min="1"
@@ -115,7 +115,7 @@ include_once 'funciones/bd_conexion.php';
                               </td>
                             </tr>
                             <?php }
-                            ?>
+?>
                         </tbody>
                         <tfoot>
                           <tr>
@@ -147,10 +147,10 @@ include_once 'funciones/bd_conexion.php';
                 <div class="box-body">
                   <div class="row">
 
-                    <div class="col-lg-3">
+                    <div class="col-lg-2">
                       <div class="form-group">
                         <span class="text-danger text-uppercase">*</span>
-                        <label>Fecha de inicio</label>
+                        <label>Fecha</label>
                         <div class="input-group date">
                           <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
@@ -158,58 +158,65 @@ include_once 'funciones/bd_conexion.php';
                           <input type="text" class="form-control pull-right datepicker" id="datepicker" name="date">
                         </div>
                       </div>
-                      <div class="form-group">
-                          <span class="text-danger text-uppercase">*</span>
-                          <label>Fecha de final</label>
-                          <div class="input-group date">
-                            <div class="input-group-addon">
-                              <i class="fa fa-calendar"></i>
-                            </div>
-                            <input type="text" class="form-control pull-right datepicker" id="datepicker" name="date">
-                          </div>
-                        </div>
                     </div>
 
-                    <div class="col-lg-6">
+                    <div class="col-lg-3">
                       <div class="form-group">
                         <span class="text-danger text-uppercase">*</span>
-                        <label>Proveedor</label>
-                        <select id="provider" name="provider" class="form-control select2" style="width: 100%;" value="0">
-                          <option value="" selected>Seleccione un proveedor</option>
-                          <?php
-                                try {
-                                  $sql = "SELECT * FROM provider";
-                                  $resultado = $conn->query($sql);
-                                  while ($pro_purchase = $resultado->fetch_assoc()) {?>
-                            <option value="<?php echo $pro_purchase['idProvider']; ?>">
-                              <?php echo $pro_purchase['providerName']; ?>
-                            </option>
-                            <?php 
-                                  }
-                                } catch (Exception $e) {
-                                    echo "Error: " . $e->getMessage();
-                                }
-                              ?>
-                        </select>
+                        <label>Fecha de vencimiento</label>
+                        <div class="input-group date">
+                          <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                          </div>
+                          <input type="text" class="form-control pull-right datepicker" id="datepicker" name="date">
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group col-lg-1">
+                      <label for="serie">Serie</label>
+                      <input type="text" class="form-control" id="serie" name="serie">
+                    </div>
+
+                    <div class="form-group col-lg-3">
+                      <label for="noBill">No. de factura</label>
+                      <div class="input-group">
+                        <input type="text" class="form-control" id="noBill" name="noBill">
+                        <div class="input-group-btn">
+                          <button type="button" class="btn bg-teal-active" data-toggle="modal" data-target="#modal-products">
+                            <i class="glyphicon glyphicon-print" aria-hidden="true"></i>
+                            Correlativo
+                          </button>
+                        </div>
+                        <!-- /btn-group -->
                       </div>
                     </div>
                   </div>
 
                   <div class="row">
 
-                    <div class="form-group col-lg-3">
-                      <label for="noBill">No. de factura</label>
-                      <input type="text" class="form-control" id="noBill" name="noBill" placeholder="Escriba un número de factura">
-                    </div>
-
-                    <div class="form-group col-lg-2">
-                      <label for="serie">Serie</label>
-                      <input type="text" class="form-control" id="serie" name="serie" placeholder="Escriba una serie">
-                    </div>
-
-                    <div class="form-group col-lg-4">
-                      <label for="noDocument">No. de documento</label>
-                      <input type="text" class="form-control" id="noDocument" name="noDocument" placeholder="Escriba un número de documento">
+                    <div class="col-lg-5">
+                      <div class="form-group">
+                        <span class="text-danger text-uppercase">*</span>
+                        <label>Cliente</label>
+                        <select id="provider" name="provider" class="form-control select2" style="width: 100%;" value="0">
+                          <option value="" selected>Seleccione un cliente</option>
+                          <?php
+try {
+    $sql = "SELECT idCustomer, customerName, customerCode FROM customer WHERE state = 0";
+    $resultado = $conn->query($sql);
+    while ($client_sale = $resultado->fetch_assoc()) {?>
+                            <option value="<?php echo $client_sale['idCustomer']; ?>">
+                              <?php echo $client_sale['customerCode'] . " " . $client_sale['customerName']; ?>
+                            </option>
+                            <?php
+}
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+}
+?>
+                        </select>
+                      </div>
                     </div>
 
                     <div class="form-group col-lg-3">
@@ -220,7 +227,7 @@ include_once 'funciones/bd_conexion.php';
                   </div>
                   <div class="box box-primary">
                     <div class="box-header">
-                      <h3 class="box-title">Detalle de compra</h3>
+                      <h3 class="box-title">Detalle de venta</h3>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body table-responsive no-padding">
@@ -247,7 +254,8 @@ include_once 'funciones/bd_conexion.php';
                   </div>
                   <div class="box-footer">
                     <div class="row">
-                      <div class="form-group col-lg-12 pull-right">
+
+                      <div class="form-group col-lg-6 pull-right">
                         <div class="input-group">
                           <span class="input-group-addon">
                             <span class="text-danger text-uppercase">*</span>
@@ -256,6 +264,22 @@ include_once 'funciones/bd_conexion.php';
                               <h5 id="totalPurchase" class="text-bold">Q.0.00</h5>
                             </span>
                           </span>
+                        </div>
+                      </div>
+                      <div class="form-group col-lg-3">
+                        <label for="noBill">Método de pago</label>
+                        <div class="input-group">
+                          <input type="text" class="form-control" id="noBill" name="noBill">
+                        </div>
+                      </div>
+                      <div class="form-group col-lg-3">
+                        <span class="text-danger text-uppercase">*</span>
+                        <label for="costo">Anticipo</label>
+                        <div class="input-group">
+                          <span class="input-group-addon">
+                            <i class="fa fa-money"></i>
+                          </span>
+                          <input type="number" id="cost" name="cost" placeholder="0.00" min="0.00" step="0.01" class="form-control">
                         </div>
                       </div>
                     </div>
