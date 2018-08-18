@@ -31,24 +31,24 @@
                     <tr>
                       <th>Código</th>
                       <th>Nombre</th>
+                      <th>Minimo</th>
                       <th>Marca</th>
                       <th>Categoría</th>
                       <th>Unidad</th>
                       <th>Costo</th>
-                      <th>Imagen</th>
                       <th>Existencia</th>
+                      <th>Imagen</th>
                       <th><span class="fa fa-cogs"></span></th>
                     </tr>
                   </thead>
                   <tbody>
                     <?php
                   try{
-                    $sql = "SELECT idProduct, productName, productCode, cost, minStock, description, picture,
+                    $sql = "SELECT P.idProduct, P.productName, P.productCode, P.cost, P.minStock, P.picture, S.stock,
                     (select makeName from make where idMake = P._idMake and state = 0) as make,
                     (select catName from category where idCategory = P._idCategory and state = 0) as category,
-                    (select unityName from unity where idUnity = P._idUnity and state = 0) as unity,
-                    (select stock from storage where _idProducto = P.idProduct) as stock
-                    FROM product P WHERE state = 0";
+                    (select unityName from unity where idUnity = P._idUnity and state = 0) as unity
+                    FROM storage S INNER JOIN product P ON P.idProduct = S._idProduct WHERE P.state = 0";
                     $resultado = $conn->query($sql);
                   } catch (Exception $e){
                     $error= $e->getMessage();
@@ -64,6 +64,15 @@
                         <td>
                           <?php echo $product['productName']; ?>
                         </td>
+                        <td class="text-center">
+                        <?php
+                        if ($product['minStock'] == $product['stock']) {?>
+                          <span class="label label-warning"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span><?php
+                        }else if ($product['minStock'] > $product['stock']) {?>
+                          <span class="label label-danger"><i class="fa fa-exclamation" aria-hidden="true"></i></span><?php
+                        }?>
+                        <?php echo $product['minStock']; ?>
+                        </td>
                         <td>
                           <?php echo $product['make']; ?>
                         </td>
@@ -73,39 +82,18 @@
                         <td>
                           <?php echo $product['unity']; ?>
                         </td>
-                        <td>Q.<?php echo $product['cost']; ?>
-                        </td>
-                        <td class="text-center">
-                          <?php echo $product['minStock']; ?>
+                        <td>
+                          Q.<?php echo $product['cost']; ?>
                         </td>
                         <td>
-                          <?php echo $product['description']; ?>
-                        </td>
-                        <td>
-                        <ul>
-                          <li>
-                            <small>Público:</small><span class="label label-default">Q.<?php echo $product['public']; ?></span>
-                          </li>
-                          <li>
-                            <small> Farmacia:</small><span class="label label-default">Q.<?php echo $product['pharma']; ?></span>
-                          </li>
-                          <li>
-                            <small>Negocio:</small><span class="label label-default">Q.<?php echo $product['business']; ?></span>
-                          </li>
-                          <li>
-                            <small>Bono:</small><span class="label label-primary">Q.<?php echo $product['bonus']; ?></span>
-                          </li>
-                        </ul>                           
+                          <?php echo $product['stock']; ?>
                         </td>
                         <td>
                           <img src="img/products/<?php echo $product['picture']; ?>" width="100" onerror="this.src='img/products/notfound.jpg';">
                         </td>
                         <td>
-                          <a class="btn bg-green btn-flat margin" href="editProduct.php?id=<?php echo $product['idProduct'] ?>">
-                            <i class="fa fa-pencil"></i>
-                          </a>
-                          <a href="#" data-id="<?php echo $product['idProduct']; ?>" data-tipo="product" class="btn bg-maroon btn-flat margin borrar_product">
-                            <i class="fa fa-trash"></i>
+                          <a class="btn bg-green btn-flat margin" href="newPurchase.php">
+                            <i class="fa fa-shopping-cart"></i>
                           </a>
                         </td>
                       </tr>
@@ -116,13 +104,12 @@
                     <tr>
                       <th>Código</th>
                       <th>Nombre</th>
+                      <th>Minimo</th>
                       <th>Marca</th>
                       <th>Categoría</th>
                       <th>Unidad</th>
                       <th>Costo</th>
-                      <th>Exist. min.</th>
-                      <th>Descripción</th>
-                      <th>Precios</th>
+                      <th>Existencia</th>
                       <th>Imagen</th>
                       <th><span class="fa fa-cogs"></span></th>
                     </tr>
