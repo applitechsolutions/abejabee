@@ -219,6 +219,30 @@ try {
                       </div>
                     </div>
 
+                    <div class="col-lg-4">
+                      <div class="form-group">
+                        <span class="text-danger text-uppercase">*</span>
+                        <label>Vendedor</label>
+                        <select id="provider" name="provider" class="form-control select2" style="width: 100%;" value="0">
+                          <option value="" selected>Seleccione un vendedor</option>
+                          <?php
+try {
+    $sql = "SELECT idSeller, sellerFirstName, sellerLastName FROM seller WHERE state = 0";
+    $resultado = $conn->query($sql);
+    while ($seller_sale = $resultado->fetch_assoc()) {?>
+                            <option value="<?php echo $seller_sale['idSeller']; ?>">
+                              <?php echo $seller_sale['sellerFirstName'] . " " . $seller_sale['sellerLastName']; ?>
+                            </option>
+                            <?php
+}
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+}
+?>
+                        </select>
+                      </div>
+                    </div>
+
                     <div class="form-group col-lg-3">
                       <label for="addProducts">Productos</label>
                       <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-products">
@@ -267,13 +291,13 @@ try {
                         </div>
                       </div>
                       <div class="form-group col-lg-3">
+                      <span class="text-danger text-uppercase">*</span>
                         <label for="noBill">Método de pago</label>
                         <div class="input-group">
                           <input type="text" class="form-control" id="noBill" name="noBill">
                         </div>
                       </div>
                       <div class="form-group col-lg-3">
-                        <span class="text-danger text-uppercase">*</span>
                         <label for="costo">Anticipo</label>
                         <div class="input-group">
                           <span class="input-group-addon">
