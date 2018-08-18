@@ -87,7 +87,8 @@ $(document).ready(function() {
               });
     });
 
-    $('#form-departamento').on('submit', function (e) {
+    $('#form-departament').on('submit', function (e) {
+
         e.preventDefault();
 
         var datos = $(this).serializeArray();
@@ -109,8 +110,8 @@ $(document).ready(function() {
                         timer: 1000
                       })
                     
-                    document.getElementById("form-departamento").reset();
-                    $("#depClose").click();
+                    document.getElementById("form-departament").reset();
+                    $("#depaClose").click();
                     getDepartment();
                 } else if (resultado.respuesta == 'vacio') {
                     swal({

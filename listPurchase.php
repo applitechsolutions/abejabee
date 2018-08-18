@@ -10,7 +10,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        <i class="fa fa-th"></i>
+        <i class="fa fa-shopping-cart"></i>
         Compras
         <small>Listado de Compras</small>
       </h1>

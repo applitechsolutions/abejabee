@@ -37,7 +37,7 @@ include_once 'funciones/bd_conexion.php';
                   <h4 class="modal-title">Nuevo Departamento</h4>
                 </div>
                 <div class="modal-body">
-                  <form role="form" id="form-departamento" name="form-departamento" method="post" action="BLL/department.php">
+                  <form role="form" id="form-departament" name="form-departamento" method="post" action="BLL/department.php">
                     <div class="form-group">
                       <span class="text-danger text-uppercase">*</span>
                       <label for="nombre">Nombre</label>
@@ -48,7 +48,7 @@ include_once 'funciones/bd_conexion.php';
                       <button type="submit" class="btn btn-info" id="crear-departamento">
                         <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
                       <span class="text-warning w3-small w3-padding">*Debe llenar los campos obligatorios</span>
-                      <button id="depClose" type="button" class="btn btn-danger w3-round-medium pull-right" data-dismiss="modal">Cerrar</button>
+                      <button id="depaClose" type="button" class="btn btn-danger w3-round-medium pull-right" data-dismiss="modal">Cerrar</button>
                     </div>
                 </div>
                 </form>
