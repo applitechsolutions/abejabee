@@ -45,9 +45,9 @@ include_once 'funciones/bd_conexion.php';
                     </div>
                     <div class="modal-footer">
                       <input type="hidden" name="departamento" value="nuevo">
-                      <button type="submit" class="btn btn-info" id="crear-departamento">
+                      <button type="submit" class="btn btn-info pull-left" id="crear-departamento">
                         <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
-                      <span class="text-warning w3-small w3-padding">*Debe llenar los campos obligatorios</span>
+                      <span class="text-warning w3-small w3-padding-small pull-left">*Debe llenar los campos obligatorios</span>
                       <button id="depaClose" type="button" class="btn btn-danger w3-round-medium pull-right" data-dismiss="modal">Cerrar</button>
                     </div>
                 </div>
