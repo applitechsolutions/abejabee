@@ -109,6 +109,7 @@ $(document).ready(function() {
                         showConfirmButton: false,
                         timer: 1000
                       })
+                      
                     
                     document.getElementById("form-departament").reset();
                     $("#depaClose").click();

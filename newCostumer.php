@@ -76,9 +76,9 @@ include_once 'funciones/bd_conexion.php';
                     </div>
                     <div class="modal-footer">
                       <input type="hidden" name="muni" value="nuevo">
-                      <button type="submit" class="btn btn-info" id="crear-muni">
+                      <button type="submit" class="btn btn-info pull-left" id="crear-muni">
                         <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
-                      <span class="text-warning w3-small w3-padding-small">*Debe llenar los campos obligatorios</span>
+                      <span class="text-warning w3-small w3-padding-small pull-left">*Debe llenar los campos obligatorios</span>
                       <button id="muniClose" type="button" class="btn btn-danger w3-round-medium pull-right" data-dismiss="modal">Cerrar</button>
                     </div>
                 </div>
@@ -107,9 +107,9 @@ include_once 'funciones/bd_conexion.php';
                     </div>
                     <div class="modal-footer">
                       <input type="hidden" name="aldea" value="nuevo">
-                      <button type="submit" class="btn btn-info" id="crear-aldea">
+                      <button type="submit" class="btn btn-info pull-left" id="crear-aldea">
                         <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
-                      <span class="text-warning w3-small w3-padding-small">*Debe llenar los campos obligatorios</span>
+                      <span class="text-warning w3-small w3-padding-small pull-left ">*Debe llenar los campos obligatorios</span>
                       <button id="aldClose" type="button" class="btn btn-danger w3-round-medium pull-right" data-dismiss="modal">Cerrar</button>
                     </div>
                 </div>
