@@ -34,28 +34,40 @@ include_once 'funciones/bd_conexion.php';
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
-                  <h4 class="modal-title"><i class="glyphicon glyphicon-print" aria-hidden="true"></i> Correlativo de facturación</h4>
+                  <h4 class="modal-title">
+                    <i class="glyphicon glyphicon-print" aria-hidden="true"></i> Correlativo de facturación</h4>
                 </div>
                 <div class="modal-body">
-                  <form role="form" id="form-sale" name="form-sale" method="post" action="BLL/sale.php">
+                  <form role="form" id="form-correlative" name="form-correlative" method="post" action="BLL/correlative.php">
                     <div class="row">
-                      <div class="form-group col-lg-6">
-                        <span class="text-danger text-uppercase">*</span>
-                        <label for="noBill">Serie</label>
-                        <input type="text" class="form-control" id="noBill" name="noBill">
-                      </div>
-                      <div class="form-group col-lg-6">
-                        <span class="text-danger text-uppercase">*</span>
-                        <label for="noBill">No. de factura</label>
-                        <input type="text" class="form-control" id="noBill" name="noBill">
-                      </div>
+                      <?php
+try {
+    $sql = "SELECT * FROM correlative WHERE idCorrelative = 1";
+    $resultado = $conn->query($sql);
+    while ($correlative = $resultado->fetch_assoc()) {?>
+                        <div class="form-group col-lg-6">
+                          <span class="text-danger text-uppercase">*</span>
+                          <label for="serieC">Serie</label>
+                          <input type="text" class="form-control" id="serieC" name="serieC" value="<?php echo $correlative['serie']; ?>">
+                        </div>
+                        <div class="form-group col-lg-6">
+                          <span class="text-danger text-uppercase">*</span>
+                          <label for="last">Última factura ingresada</label>
+                          <input type="text" class="form-control" id="last" name="last" value="<?php echo $correlative['last']; ?>">
+                        </div>
+                        <?php
+}
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+}
+?>
                     </div>
                     <div class="modal-footer">
-                      <input type="hidden" name="muni" value="nuevo">
-                      <button type="submit" class="btn btn-info pull-left" id="crear-muni">
+                      <input type="hidden" name="correlative" value="editar">
+                      <button type="submit" class="btn btn-info pull-left" id="crear-correlativo">
                         <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
                       <span class="text-warning w3-small w3-padding-small pull-left">*Debe llenar los campos obligatorios</span>
-                      <button id="muniClose" type="button" class="btn btn-danger w3-round-medium pull-right" data-dismiss="modal">Cerrar</button>
+                      <button id="correlativeClose" type="button" class="btn btn-danger w3-round-medium pull-right" data-dismiss="modal">Cerrar</button>
                     </div>
                 </div>
                 </form>
@@ -74,7 +86,7 @@ include_once 'funciones/bd_conexion.php';
                       <i class="glyphicon glyphicon-shopping-cart"></i> Agregar</a>
                   </li>
                   <li>
-                    <a href="#tab_2" data-toggle="tab">
+                    <a id="a" href="#tab_2" data-toggle="tab">
                       <i class="glyphicon glyphicon-list-alt"></i> Detalles</a>
                   </li>
                   <li>
@@ -134,33 +146,41 @@ include_once 'funciones/bd_conexion.php';
                                 <div class="input-group-addon">
                                   <i class="fa fa-calendar"></i>
                                 </div>
-                                <input type="text" class="form-control pull-right datepicker" id="datepicker" name="date">
+                                <input type="text" class="form-control pull-right datepicker" id="datepicker2" name="date">
                               </div>
                             </div>
                           </div>
-
-                          <div class="form-group col-lg-1">
-                            <label for="serie">Serie</label>
-                            <input type="text" class="form-control" id="serie" name="serie">
-                          </div>
-
-                          <div class="form-group col-lg-3">
-                            <label for="noBill">No. de factura</label>
-                            <div class="input-group">
-                              <input type="text" class="form-control" id="noBill" name="noBill">
-                              <div class="input-group-btn">
-                                <button type="button" class="btn bg-info" data-toggle="modal" data-target="#modal-correlative">
-                                  <i class="glyphicon glyphicon-print" aria-hidden="true"></i>
-                                  Correlativo
-                                </button>
-                              </div>
-                              <!-- /btn-group -->
+                          <?php
+try { $sql = "SELECT * FROM correlative WHERE idCorrelative = 1";
+    $resultado = $conn->query($sql);
+    while ($correlative = $resultado->fetch_assoc()) {?>
+                            <div class="form-group col-lg-1">
+                              <label for="serie">Serie</label>
+                              <input type="text" class="form-control" id="serie" name="serie" value="<?php echo $correlative['serie']; ?>" disabled>
                             </div>
-                          </div>
+
+                            <div class="form-group col-lg-3">
+                              <label for="noBill">No. de factura</label>
+                              <div class="input-group">
+                                <input type="text" class="form-control" id="noBill" name="noBill" value="<?php echo $correlative['last'] + 1; ?>" disabled>
+                                <div class="input-group-btn">
+                                  <button type="button" class="btn bg-info" data-toggle="modal" data-target="#modal-correlative">
+                                    <i class="glyphicon glyphicon-print" aria-hidden="true"></i>
+                                    Correlativo
+                                  </button>
+                                </div>
+                                <!-- /btn-group -->
+                              </div>
+                            </div>
+                            <?php
+}
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+}
+?>
                         </div>
 
                         <div class="row">
-
                           <div class="col-lg-5">
                             <div class="form-group">
                               <span class="text-danger text-uppercase">*</span>
@@ -185,7 +205,7 @@ try {
                             </div>
                           </div>
 
-                          <div class="col-lg-4">
+                          <div class="col-lg-5">
                             <div class="form-group">
                               <span class="text-danger text-uppercase">*</span>
                               <label>Vendedor</label>
@@ -208,53 +228,52 @@ try {
                               </select>
                             </div>
                           </div>
-
-                          <div class="form-group col-lg-3">
-                            <label for="addProducts">Productos</label>
-                            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-products">
-                              <i class="fa fa-search" aria-hidden="true"></i> Buscar Productos</button>
-                          </div>
                         </div>
+                        <br>
 
-                        <div class="box-footer">
-                          <div class="box box-success collapsed-box">
-                            <div class="box-header with-border">
+                        <div class="box box-success" id="box">
+                          <div class="box-header with-border">
 
-                              <h3 class="box-title">Productos en Existencia</h3>
+                            <h3 class="box-title">
+                              <i class="glyphicon glyphicon-shopping-cart"></i> Productos en inventario</h3>
 
-                              <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                                  <i class="fa fa-minus"></i>
-                                </button>
-                              </div>
+                            <div class="box-tools pull-right">
+                              <button type="button" class="btn btn-info" data-widget="collapse">
+                                <i class="fa fa-plus"></i> Buscar Productos
+                              </button>
                             </div>
-                            <!-- /.box-header -->
-                            <div class="box-body table-responsive no-padding">
-                              <table id="registros" class="table table-bordered table-striped product-add">
-                                <thead>
-                                  <tr>
-                                    <th>Imagen</th>
-                                    <th>Nombre</th>
-                                    <th>Código</th>
-                                    <th>Marca</th>
-                                    <th>Unidad</th>
-                                    <th>
-                                      <span class="pull-right">Costo/u</span>
-                                    </th>
-                                    <th>
-                                      <span class="pull-right">Cant.</span>
-                                    </th>
-                                    <th>Agregar</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  <?php
+                          </div>
+                          <!-- /.box-header -->
+                          <br>
+                          <div class="box-body table-responsive no-padding">
+                            <table id="registros" class="table table-bordered table-striped product-add">
+                              <thead>
+                                <tr>
+                                  <th>Imagen</th>
+                                  <th>Nombre</th>
+                                  <th>Código</th>
+                                  <th>Marca</th>
+                                  <th>Unidad</th>
+                                  <th>Costo Aprox.</th>
+                                  <th>Precios de venta</th>
+                                  <th>
+                                    <span class="pull-right">Cant.</span>
+                                  </th>
+                                  <th>Agregar</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <?php
 try {
     $sql = "SELECT idProduct, productName, productCode, cost, description, picture,
-                                            (select makeName from make where idMake = P._idMake and state = 0) as make,
-                                            (select catName from category where idCategory = P._idCategory and state = 0) as category,
-                                            (select unityName from unity where idUnity = P._idUnity and state = 0) as unity
-                                            FROM product P WHERE state = 0";
+            (select makeName from make where idMake = P._idMake and state = 0) as make,
+            (select catName from category where idCategory = P._idCategory and state = 0) as category,
+            (select unityName from unity where idUnity = P._idUnity and state = 0) as unity,
+            (select price from priceSale where _idProduct = P.idProduct and _idPrice = 1) as public,
+            (select price from priceSale where _idProduct = P.idProduct and _idPrice = 11) as pharma,
+            (select price from priceSale where _idProduct = P.idProduct and _idPrice = 21) as business,
+            (select price from priceSale where _idProduct = P.idProduct and _idPrice = 31) as bonus
+            FROM product P WHERE state = 0";
     $resultado = $conn->query($sql);
 } catch (Exception $e) {
     $error = $e->getMessage();
@@ -263,66 +282,85 @@ try {
 
 while ($product = $resultado->fetch_assoc()) {
     ?>
-                                    <tr id="catalogo">
-                                      <td>
-                                        <img src="img/products/<?php echo $product['picture']; ?>" width="80" onerror="this.src='img/products/notfound.jpg';">
-                                      </td>
-                                      <td>
-                                        <div class="margin">
-                                          <?php echo $product['productName']; ?>
-                                        </div>
-                                      </td>
-                                      <td>
-                                        <div class="margin">
-                                          <?php echo $product['productCode']; ?>
-                                        </div>
-                                      </td>
-                                      <td>
-                                        <div class="margin">
-                                          <?php echo $product['make']; ?>
-                                        </div>
-                                      </td>
-                                      <td>
-                                        <div class="margin">
-                                          <?php echo $product['unity']; ?>
-                                        </div>
-                                      </td>
-                                      <td>
-                                        <input class="form-control margin new_costo" type="number" id="new_<?php echo $product['idProduct']; ?>_costo" name="cost"
-                                          min="0.01" step="0.01" value="<?php echo $product['cost'] ?>" style="width: 100%;">
-                                      </td>
-                                      <td>
-                                        <input class="form-control margin" type="number" id="new_<?php echo $product['idProduct']; ?>_cantidad" name="cantidad" min="1"
-                                          step="1" value="1" style="width: 60%;">
-                                      </td>
-                                      <td>
-                                        <input class="id_producto_agregar" type="hidden" value="<?php echo $product['idProduct']; ?>">
-                                        <a id="boton" href="#" cost="" data-id="<?php echo $product['idProduct']; ?>" data-tipo="product" class="btn bg-green btn-lg margin agregar_producto">
-                                          <i class="fa fa-shopping-cart"></i>
-                                        </a>
-                                      </td>
-                                    </tr>
-                                    <?php }
-?>
-                                </tbody>
-                                <tfoot>
-                                  <tr>
-                                    <th>Imagen</th>
-                                    <th>Nombre</th>
-                                    <th>Código</th>
-                                    <th>Marca</th>
-                                    <th>Unidad</th>
-                                    <th>Costo/u</th>
-                                    <th>Cantidad</th>
-                                    <th>Agregar</th>
+                                  <tr id="catalogo">
+                                    <td>
+                                      <img src="img/products/<?php echo $product['picture']; ?>" width="80" onerror="this.src='img/products/notfound.jpg';">
+                                    </td>
+                                    <td>
+                                      <div class="margin">
+                                        <?php echo $product['productName']; ?>
+                                      </div>
+                                    </td>
+                                    <td>
+                                      <div class="margin">
+                                        <?php echo $product['productCode']; ?>
+                                      </div>
+                                    </td>
+                                    <td>
+                                      <div class="margin">
+                                        <?php echo $product['make']; ?>
+                                      </div>
+                                    </td>
+                                    <td>
+                                      <div class="margin">
+                                        <?php echo $product['unity']; ?>
+                                      </div>
+                                    </td>
+                                    <td>
+                                      <div class="margin">
+                                        Q.<?php echo $product['cost'] ?>
+                                      </div>
+                                    </td>
+                                    <td>                                    
+                                      <div class="form-group margin">
+                                        <select id="SelectPrice" class="form-control select2" style="width: 100%;" data-live-search="false">
+                                          <option selected="selected">Público: <strong>Q.<?php echo $product['public']; ?></strong>
+                                          </option>
+                                          <option>Farmacia: Q.<?php echo $product['public']; ?>
+                                          </option>
+                                          <option>Negocio: Q.<?php echo $product['public']; ?>
+                                          </option>
+                                          <option disabled="disabled">Bono: Q.<?php echo $product['public']; ?>
+                                          </option>
+                                        </select>
+                                      </div>
+                                    </td>
+                                    <td>
+                                      <input class="form-control margin" type="number" id="new_<?php echo $product['idProduct']; ?>_cantidad" name="cantidad" min="1"
+                                        step="1" value="1" style="width: 60%;">
+                                    </td>
+                                    <td>
+                                      <input class="id_producto_agregar" type="hidden" value="<?php echo $product['idProduct']; ?>">
+                                      <a id="boton" href="#" cost="" data-id="<?php echo $product['idProduct']; ?>" data-tipo="product" class="btn bg-green btn-lg margin agregar_producto">
+                                        <i class="fa fa-shopping-cart"></i>
+                                      </a>
+                                    </td>
                                   </tr>
-                                </tfoot>
-                              </table>
-                            </div>
+                                  <?php }
+?>
+                              </tbody>
+                              <tfoot>
+                                <tr>
+                                  <th>Imagen</th>
+                                  <th>Nombre</th>
+                                  <th>Código</th>
+                                  <th>Marca</th>
+                                  <th>Unidad</th>
+                                  <th>Costo Aprox.</th>
+                                  <th>Precios de venta</th>
+                                  <th>Cantidad</th>
+                                  <th>Agregar</th>
+                                </tr>
+                              </tfoot>
+                            </table>
                             <!-- /.box-body -->
                           </div>
 
                         </div>
+                      </div>
+                      <div class="box-footer">
+                        <a onclick="tab2()" data-toggle="tab" class="btn btn-flat pull-right text-bold">
+                          <i class="glyphicon glyphicon-forward"></i> Continuar con la venta...</a>
                       </div>
                   </div>
 
