@@ -4,8 +4,17 @@ $(document).ready(function () {
         e.preventDefault();
 
         var id = $(this).attr('data-id');
+        var costo = $('#new_' +id + '_costo').val();
+        var cantidad = $('#new_' + id + '_cantidad').val();
+        if (isNaN(cantidad) || cantidad < 1 || isNaN(costo) || costo < 1) {
+            swal({
+                type: 'error',
+                title: 'Error',
+                text: 'No se puede agregar al carrito',
+            })
+        } else {        
         var tipo = $(this).attr('data-tipo');
-        $(this).attr('hidden', true);
+        $(this).attr('hidden', true);   
 
         $.ajax({
             type: 'POST',
@@ -45,6 +54,7 @@ $(document).ready(function () {
                 })
             }
         });
+        }        
     });
 
     $('#form-purchase').on('submit', function (e) {

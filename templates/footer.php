@@ -37,17 +37,6 @@
 <script src="js/bootstrap-datepicker.min.js"></script>
 <script src="js/icheck.min.js"></script>
 <script src="js/select2.full.min.js"></script>
-<!-- AJAX FOR SCHLENKER PHARMA -->
-<script src="js/ajax/sale-ajax.js"></script>
-<script src="js/ajax/customer-ajax.js"></script>
-<script src="js/ajax/purchase-ajax.js"></script>
-<script src="js/ajax/route-ajax.js"></script>
-<script src="js/ajax/product-ajax.js"></script>
-<script src="js/ajax/seller-ajax.js"></script>
-<script src="js/ajax/provider-ajax.js"></script>
-<script src="js/ajax/user-ajax.js"></script>
-<script src="js/ajax/login.js"></script>
-
 
 <script>
   $(document).ready(function () {
@@ -55,9 +44,17 @@
 
     $('.select2').select2()
 
-    $("#SelectPrice").select2({
-        minimumResultsForSearch: -1
+    $(".SelectPrice").select2({
+        minimumResultsForSearch: -1,
+        templateResult: formatState,
+        templateSelection: formatState
     });
+
+    function formatState (state) {
+      if (!state.id) { return state.text; }
+      var $state = $('<span ><i class="fa fa-'+ state.id +'"> ' + ' '+state.text + '</span>');
+      return $state;
+    }
 
     $('#datepicker').datepicker({
       autoclose: true

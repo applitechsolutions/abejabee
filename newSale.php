@@ -231,7 +231,9 @@ try {
                         </div>
                         <br>
 
-                        <div class="box box-success" id="box">
+
+                      </div>
+                      <div class="box box-success collapsed-box" id="box">
                           <div class="box-header with-border">
 
                             <h3 class="box-title">
@@ -265,15 +267,16 @@ try {
                               <tbody>
                                 <?php
 try {
-    $sql = "SELECT idProduct, productName, productCode, cost, description, picture,
-            (select makeName from make where idMake = P._idMake and state = 0) as make,
-            (select catName from category where idCategory = P._idCategory and state = 0) as category,
-            (select unityName from unity where idUnity = P._idUnity and state = 0) as unity,
-            (select price from priceSale where _idProduct = P.idProduct and _idPrice = 1) as public,
-            (select price from priceSale where _idProduct = P.idProduct and _idPrice = 11) as pharma,
-            (select price from priceSale where _idProduct = P.idProduct and _idPrice = 21) as business,
-            (select price from priceSale where _idProduct = P.idProduct and _idPrice = 31) as bonus
-            FROM product P WHERE state = 0";
+    $sql = "SELECT idProduct, productName, productCode, cost, description, picture, S.stock,
+    (select makeName from make where idMake = P._idMake and state = 0) as make,
+    (select catName from category where idCategory = P._idCategory and state = 0) as category,
+    (select unityName from unity where idUnity = P._idUnity and state = 0) as unity,
+    (select price from priceSale where _idProduct = P.idProduct and _idPrice = 1) as public,
+    (select price from priceSale where _idProduct = P.idProduct and _idPrice = 11) as pharma,
+    (select price from priceSale where _idProduct = P.idProduct and _idPrice = 21) as business,
+    (select price from priceSale where _idProduct = P.idProduct and _idPrice = 31) as bonus
+    FROM product P INNER JOIN storage S ON S._idProduct = P.idProduct
+    WHERE state = 0 AND S.stock > 0";
     $resultado = $conn->query($sql);
 } catch (Exception $e) {
     $error = $e->getMessage();
@@ -311,23 +314,24 @@ while ($product = $resultado->fetch_assoc()) {
                                         Q.<?php echo $product['cost'] ?>
                                       </div>
                                     </td>
-                                    <td>                                    
+                                    <td>
                                       <div class="form-group margin">
-                                        <select id="SelectPrice" class="form-control select2" style="width: 100%;" data-live-search="false">
-                                          <option selected="selected">Público: <strong>Q.<?php echo $product['public']; ?></strong>
+                                        <select class="form-control select2 SelectPrice" style="width: 100%;">
+                                          <option value="users" selected="selected"> Público: Q.<?php echo $product['public']; ?>
                                           </option>
-                                          <option>Farmacia: Q.<?php echo $product['public']; ?>
+                                          <option value="plus-square">Farmacia: Q.<?php echo $product['public']; ?>
                                           </option>
-                                          <option>Negocio: Q.<?php echo $product['public']; ?>
+                                          <option value="briefcase">Negocio: Q.<?php echo $product['public']; ?>
                                           </option>
-                                          <option disabled="disabled">Bono: Q.<?php echo $product['public']; ?>
+                                          <option value="money" disabled="disabled">Bono: Q.<?php echo $product['public']; ?>
                                           </option>
                                         </select>
                                       </div>
                                     </td>
                                     <td>
-                                      <input class="form-control margin" type="number" id="new_<?php echo $product['idProduct']; ?>_cantidad" name="cantidad" min="1"
-                                        step="1" value="1" style="width: 60%;">
+                                      <input class="form-control input-sm" type="number" id="new_<?php echo $product['idProduct']; ?>_cantidad" name="cantidad" min="1"
+                                        step="1" value="1" max="<?php echo $product['stock']; ?>" style="width: 65%;">
+                                        <p class="text-green">Disp. <?php echo $product['stock']; ?></p>
                                     </td>
                                     <td>
                                       <input class="id_producto_agregar" type="hidden" value="<?php echo $product['idProduct']; ?>">
@@ -357,18 +361,17 @@ while ($product = $resultado->fetch_assoc()) {
                           </div>
 
                         </div>
-                      </div>
                       <div class="box-footer">
                         <a onclick="tab2()" data-toggle="tab" class="btn btn-flat pull-right text-bold">
                           <i class="glyphicon glyphicon-forward"></i> Continuar con la venta...</a>
                       </div>
                   </div>
-
                   <!-- /.tab-pane -->
                   <div class="tab-pane" id="tab_2">
-                    <div class="box box-primary">
-                      <div class="box-header">
-                        <h3 class="box-title">Detalle de venta</h3>
+                    <br>
+                    <div class="box box-success">
+                      <div class="box-header with-border">
+                        <h3 class="box-title"><i class="glyphicon glyphicon-list-alt"></i> Detalle de venta</h3>
                       </div>
                       <!-- /.box-header -->
                       <div class="box-body table-responsive no-padding">
