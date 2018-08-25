@@ -45,10 +45,10 @@ include_once 'funciones/bd_conexion.php';
                     </div>
                     <div class="modal-footer">
                       <input type="hidden" name="categoria" value="nueva">
-                      <button id="catClose" type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
-                      <span class="text-warning"> Debe llenar los campos obligatorios *</span>
-                      <button type="submit" class="btn btn-info" id="crear-categoria">
-                        <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+                      <button type="submit" class="btn btn-info pull-left" id="crear-categoria">
+                      <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+                      <span class="text-warning w3-small w3-padding-small pull-left">*Debe llenar los campos obligatorios</span>
+                      <button id="catClose" type="button" class="btn btn-danger w3-round-medium pull-right"data-dismiss="modal">Cerrar</button> 
                     </div>
                 </div>
                 </form>
@@ -76,10 +76,10 @@ include_once 'funciones/bd_conexion.php';
                     </div>
                     <div class="modal-footer">
                       <input type="hidden" name="unidad" value="nueva">
-                      <button id="uniClose" type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
-                      <span class="text-warning"> Debe llenar los campos obligatorios *</span>
-                      <button type="submit" class="btn btn-info" id="crear-unidad">
-                        <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+                      <button type="submit" class="btn btn-info pull-left" id="crear-unidad">
+                      <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+                      <span class="text-warning w3-small w3-padding-small pull-left">*Debe llenar los campos obligatorios</span>
+                        <button id="uniClose" type="button" class="btn btn-danger w3-round-medium pull-right" data-dismiss="modal">Cerrar</button>
                     </div>
                 </div>
                 </form>
@@ -107,10 +107,10 @@ include_once 'funciones/bd_conexion.php';
                     </div>
                     <div class="modal-footer">
                       <input type="hidden" name="marca" value="nueva">
-                      <button id="makeClose" type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
-                      <span class="text-warning"> Debe llenar los campos obligatorios *</span>
-                      <button type="submit" class="btn btn-info" id="crear-marca">
-                        <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+                      <button type="submit" class="btn btn-info pull-left" id="crear-marca">
+                      <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+                      <span class="text-warning w3-small w3-padding-small pull-left">*Debe llenar los campos obligatorios</span>
+                      <button id="makeClose" type="button" class="btn btn-danger w3-round-medium pull-right"data-dismiss="modal">Cerrar</button>
                     </div>
                 </div>
                 </form>
@@ -312,7 +312,7 @@ try {
                 <input type="hidden" name="producto" value="nuevo">
                 <button type="submit" class="btn btn-primary" id="crear-producto">
                   <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
-                <span class="text-warning"> Debe llenar los campos obligatorios *</span>
+                <span class="text-warning"> *Debe llenar los campos obligatorios </span>
               </div>
             </div>
             </form>

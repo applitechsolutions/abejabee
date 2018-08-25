@@ -45,9 +45,9 @@ include_once 'funciones/bd_conexion.php';
                     </div>
                     <div class="modal-footer">
                       <input type="hidden" name="departamento" value="nuevo">
-                      <button type="submit" class="btn btn-info" id="crear-departamento">
+                      <button type="submit" class="btn btn-info pull-left" id="crear-departamento">
                         <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
-                      <span class="text-warning w3-small w3-padding">*Debe llenar los campos obligatorios</span>
+                      <span class="text-warning w3-small w3-padding-small pull-left">*Debe llenar los campos obligatorios</span>
                       <button id="depaClose" type="button" class="btn btn-danger w3-round-medium pull-right" data-dismiss="modal">Cerrar</button>
                     </div>
                 </div>
@@ -76,9 +76,9 @@ include_once 'funciones/bd_conexion.php';
                     </div>
                     <div class="modal-footer">
                       <input type="hidden" name="muni" value="nuevo">
-                      <button type="submit" class="btn btn-info" id="crear-muni">
+                      <button type="submit" class="btn btn-info pull-left" id="crear-muni">
                         <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
-                      <span class="text-warning w3-small w3-padding-small">*Debe llenar los campos obligatorios</span>
+                      <span class="text-warning w3-small w3-padding-small pull-left">*Debe llenar los campos obligatorios</span>
                       <button id="muniClose" type="button" class="btn btn-danger w3-round-medium pull-right" data-dismiss="modal">Cerrar</button>
                     </div>
                 </div>
@@ -107,9 +107,9 @@ include_once 'funciones/bd_conexion.php';
                     </div>
                     <div class="modal-footer">
                       <input type="hidden" name="aldea" value="nuevo">
-                      <button type="submit" class="btn btn-info" id="crear-aldea">
+                      <button type="submit" class="btn btn-info pull-left" id="crear-aldea">
                         <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
-                      <span class="text-warning w3-small w3-padding-small">*Debe llenar los campos obligatorios</span>
+                      <span class="text-warning w3-small w3-padding-small pull-left ">*Debe llenar los campos obligatorios</span>
                       <button id="aldClose" type="button" class="btn btn-danger w3-round-medium pull-right" data-dismiss="modal">Cerrar</button>
                     </div>
                 </div>
@@ -153,6 +153,7 @@ include_once 'funciones/bd_conexion.php';
             </div>
             <!-- /.form-group -->
             <!-- /.col -->
+            <br>
             <div class="col-md-6">
               <div class="box-body">
                 <div class="form-group">
@@ -178,13 +179,11 @@ include_once 'funciones/bd_conexion.php';
                 </div>
                 <br>
                 <div class="panel box box-primary">
-                  <div class="box-header with-border">
-                    <span class="text-danger text-uppercase">*</span>
-                    <h4 class="box-title">Dirección del Cliente</h4>
-                  </div>
                   <div class="box-body">
                     <div class="row">
                       <div class="form-group">
+                      <span class="text-danger text-uppercase">*</span>
+                          <label for="dir">Dirección</label>
                         <input type="text" class="form-control" id="dir" name="dir" placeholder="Escriba la dirección del cliente">
                       </div>
                       <div class="form-group">

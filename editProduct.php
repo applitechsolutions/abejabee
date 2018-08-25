@@ -59,7 +59,7 @@ $product = $resultado->fetch_assoc();
                       <div class="modal-footer">
                         <input type="hidden" name="categoria" value="nueva">
                         <button id="catClose" type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
-                        <span class="text-warning"> Debe llenar los campos obligatorios *</span>
+                        <span class="text-warning">  *Debe llenar los campos obligatorios</span>
                         <button type="submit" class="btn btn-info" id="crear-categoria">
                           <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
                       </div>

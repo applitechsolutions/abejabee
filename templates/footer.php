@@ -32,19 +32,29 @@
 <script src="js/ajax/provider-ajax.js"></script>
 <script src="js/ajax/user-ajax.js"></script>
 <script src="js/ajax/login.js"></script>
-
 <script src="js/jquery.dataTables.min.js"></script>
 <script src="js/dataTables.bootstrap.min.js"></script>
 <script src="js/bootstrap-datepicker.min.js"></script>
 <script src="js/icheck.min.js"></script>
 <script src="js/select2.full.min.js"></script>
 
-
 <script>
   $(document).ready(function () {
     $('.sidebar-menu').tree()
 
     $('.select2').select2()
+
+    $(".SelectPrice").select2({
+        minimumResultsForSearch: -1,
+        templateResult: formatState,
+        templateSelection: formatState
+    });
+
+    function formatState (state) {
+      if (!state.id) { return state.text; }
+      var $state = $('<span ><i class="fa fa-'+ state.id +'"> ' + ' '+state.text + '</span>');
+      return $state;
+    }
 
     $('#datepicker').datepicker({
       autoclose: true
@@ -86,7 +96,7 @@
           first:    'Primero',
           last:     'Último'
         },
-        info: 'Mostrando _START_ a _END_ de _TOTAL_ registros',
+        info: 'Mostrando _START_-_END_ de _TOTAL_ registros',
         empyTable:  'No hay registros',
         infoEmpty:  '0 registros',
         lengthChange: 'Mostrar ',
@@ -98,33 +108,6 @@
         zeroRecords: "Sin resultados encontrados"
       }
     });
-
-    /*$('#reg-modal').DataTable({
-      'paging'      : false,
-      'lengthChange': false,
-      'searching'   : true,
-      'ordering'    : true,
-      'info'        : true,
-      'autoWidth'   : true,
-      'language'    : {
-        paginate: {
-          next:     'Siguiente',
-          previous: 'Anterior',
-          first:    'Primero',
-          last:     'Último'
-        },
-        info: 'Mostrando _START_ a _END_ de _TOTAL_ registros',
-        empyTable:  'No hay registros',
-        infoEmpty:  '0 registros',
-        lengthChange: 'Mostrar ',
-        infoFiltered: "(Filtrado de _MAX_ total de registros)",
-        lengthMenu: "Mostrar _MENU_ registros",
-        loadingRecords: "Cargando...",
-        processing: "Procesando...",
-        search: "Buscar:",
-        zeroRecords: "Sin resultados encontrados"
-      }
-    });*/
   })
 </script>
 </body>
