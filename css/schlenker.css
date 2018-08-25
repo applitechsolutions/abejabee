@@ -28,3 +28,8 @@
 .example-modal .modal {
     background: transparent !important;
 }
+
+div.tabla > {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
