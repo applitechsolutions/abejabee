@@ -37,7 +37,7 @@ $(document).ready(function () {
                     nuevaFila += "<td>" + registro.make + "</td>";
                     nuevaFila += "<td>" + registro.category + "</td>";
                     nuevaFila += "<td>" + registro.unity + "</td>";
-                    nuevaFila += "<td><input class='costo_class' type='hidden' value='" + costo + "'>Q." + costo + "</td>";
+                    nuevaFila += "<td><input class='costo_class' type='hidden' value='" + costo + "'>Q." + parseFloat(Math.round(costo * 100) / 100).toFixed(2) + "</td>";
                     nuevaFila += "<td><input class='cantidad_class' type='hidden' value='" + cantidad + "'>" + cantidad + "</td>";
                     nuevaFila += "<td>Q." + subtotal.toFixed(2) + "</td>";
                     nuevaFila += "<td><a id='quitar' onclick='eliminar(" + registro.idProduct + ");' data-id-detalle='" + registro.idProduct + "' class='btn bg-maroon btn-flat margin quitar_product'><i class='fa fa-remove'></i></a></td>";
