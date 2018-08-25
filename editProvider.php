@@ -98,7 +98,7 @@ if (!filter_var($id, FILTER_VALIDATE_INT)) {
                 <input type="hidden" name="id_registro" value="<?php echo $id; ?>">
                 <button type="submit" class="btn btn-info">
                   <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
-                <span class="text-warning"> Debe llenar los campos obligatorios *</span>
+                <span class="text-warning"> *Debe llenar los campos obligatorios </span>
               </div>
             </div>
             </form>

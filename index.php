@@ -31,7 +31,7 @@
                     <tr>
                       <th>Código</th>
                       <th>Nombre</th>
-                      <th>Minimo</th>
+                      <th>Mínimo</th>
                       <th>Marca</th>
                       <th>Categoría</th>
                       <th>Unidad</th>
@@ -104,7 +104,7 @@
                     <tr>
                       <th>Código</th>
                       <th>Nombre</th>
-                      <th>Minimo</th>
+                      <th>Mínimo</th>
                       <th>Marca</th>
                       <th>Categoría</th>
                       <th>Unidad</th>

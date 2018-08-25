@@ -312,7 +312,7 @@ try {
                 <input type="hidden" name="producto" value="nuevo">
                 <button type="submit" class="btn btn-primary" id="crear-producto">
                   <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
-                <span class="text-warning"> Debe llenar los campos obligatorios *</span>
+                <span class="text-warning"> *Debe llenar los campos obligatorios </span>
               </div>
             </div>
             </form>
