@@ -251,12 +251,12 @@ include_once 'funciones/bd_conexion.php';
                     </div>
 
                     <div class="row">
-                      <div class="form-group col-lg-6 pull-right">
+                      <div class="form-group col-lg-6 pull-left">
                         <input type="hidden" name="compra" value="nueva">
                         <input type="hidden" id="total" name="total" value="0">
-                        <span class="text-warning">Debe llenar los campos obligatorios *</span>
-                        <button type="submit" class="btn btn-primary pull-right" id="crear-compra">
+                        <button type="submit" class="btn btn-primary pull-left" id="crear-compra">
                           <i class="fa fa-floppy-o" aria-hidden="true"></i> Confirmar compra</button>
+                        <span class="text-warning"> *Debe llenar los campos obligatorios</span> 
                       </div>
                     </div>
 

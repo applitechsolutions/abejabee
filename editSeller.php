@@ -84,7 +84,7 @@
                 <div class="box-footer">
                   <input type="hidden" name="reg-vendedor" value="actualizar">
                   <input type="hidden" name="id-reg-vendedor" value="<?php echo $id; ?>">
-                  <button type="submit" class="btn btn-info" id="crear-vendedor"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button><span class="text-warning"> Debe llenar los campos obligatorios *</span>
+                  <button type="submit" class="btn btn-info" id="crear-vendedor"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button><span class="text-warning"> *Debe llenar los campos obligatorios </span>
                 </div>
               </form>
             </div>

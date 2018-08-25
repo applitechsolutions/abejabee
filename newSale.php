@@ -430,7 +430,7 @@ while ($product = $resultado->fetch_assoc()) {
                           <div class="form-group col-lg-6 pull-right">
                             <input type="hidden" name="compra" value="nueva">
                             <input type="hidden" id="total" name="total" value="0">
-                            <span class="text-warning">Debe llenar los campos obligatorios *</span>
+                            <span class="text-warning">*Debe llenar los campos obligatorios </span>
                             <button type="submit" class="btn btn-primary pull-right" id="crear-compra">
                               <i class="fa fa-floppy-o" aria-hidden="true"></i> Confirmar compra</button>
                           </div>

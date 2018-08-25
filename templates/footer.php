@@ -99,7 +99,7 @@
           first:    'Primero',
           last:     'Último'
         },
-        info: 'Mostrando _START_ a _END_ de _TOTAL_ registros',
+        info: 'Mostrando _START_-_END_ de _TOTAL_ registros',
         empyTable:  'No hay registros',
         infoEmpty:  '0 registros',
         lengthChange: 'Mostrar ',

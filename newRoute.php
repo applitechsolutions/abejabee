@@ -67,7 +67,7 @@
                     <input type="hidden" name="ruta" value="nueva">
                     <button type="submit" class="btn btn-info" id="crear-ruta">
                       <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
-                    <span class="text-warning"> Debe llenar los campos obligatorios *</span>
+                    <span class="text-warning"> *Debe llenar los campos obligatorios </span>
                   </div>
               </form>
               </div>

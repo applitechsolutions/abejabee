@@ -38,7 +38,7 @@
                       <th>Categoría</th>
                       <th>Unidad</th>
                       <th>Costo</th>
-                      <th>Exist. min.</th>
+                      <th>Exist. mín.</th>
                       <th>Descripción</th>
                       <th>Precios</th>
                       <th>Imagen</th>
@@ -128,7 +128,7 @@
                       <th>Categoría</th>
                       <th>Unidad</th>
                       <th>Costo</th>
-                      <th>Exist. min.</th>
+                      <th>Exist. mín.</th>
                       <th>Descripción</th>
                       <th>Precios</th>
                       <th>Imagen</th>

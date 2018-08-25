@@ -162,6 +162,7 @@ if (!filter_var($id, FILTER_VALIDATE_INT)) {
               </div>
               <!-- /.form-group -->
               <!-- /.col -->
+              <br>
               <div class="col-md-6">
                 <div class="box-body">
                   <div class="form-group">
@@ -193,11 +194,8 @@ if (!filter_var($id, FILTER_VALIDATE_INT)) {
                         ?>
                     </select>
                   </div>
+                  <br>
                   <div class="panel box box-primary">
-                    <div class="box-header with-border">
-                      <span class="text-danger text-uppercase">*</span>
-                      <h4 class="box-title">Dirección del Cliente</h4>
-                    </div>
                     <div class="box-body">
                       <div class="row">
                         <div class="form-group">
