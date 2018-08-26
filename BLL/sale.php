@@ -1,0 +1,52 @@
+<?php
+include_once '../funciones/bd_conexion.php';
+if ($_POST['venta'] == 'nueva') {
+    $fecha_venta = $_POST['dateSale'];
+    $fecha_venc = $_POST['dateSaleEnd'];
+    $cliente = $_POST['customerS'];
+    $vendedor = $_POST['sellerS'];
+    $facturaV = $_POST['noBillS'];
+    $serieV = $_POST['serieS'];
+    $pago = $_POST['payment'];
+    $adelanto = $_POST['advance'];
+    $total = $_POST['totalS'];
+
+    $fc = date('Y-m-d', strtotime($fecha_venta));
+    $fv = date('Y-m-d', strtotime($fecha_venc));
+
+    try {
+        if ($fecha_venta == "" || $fecha_venc == "" || $cliente == "" || $total == "0" || $vendedor == "" || $facturaV == "" || $serieV == "" || $pago = "") {
+            $respuesta = array(
+                'respuesta' => 'vacio'
+            );
+        } else {
+            $stmt = $conn->prepare("INSERT INTO sale (_idSeller, _idCustomer, noBill, serie, totalSale, advance, dateStart, dateEnd, paymentMethod) VALUES (?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("iissddss", $vendedor, $vendedor, $cliente, $facturaV, $serieV, $total, $adelanto, $pago);
+            $stmt->execute();
+            $id_registro = $stmt->insert_id;
+            if ($id_registro > 0) {
+                $respuesta = array(
+                    'respuesta' => 'exito',
+                    'idVenta' => $id_registro,
+                    'proceso' => 'nuevo'
+                );
+                
+            }else {
+                $respuesta = array(
+                    'respuesta' => 'error',
+                    'idCompra' => $id_registro
+                );
+            }
+            $stmt->close();
+            $conn->close();
+        }
+
+    } catch(Exception $e){
+        echo 'Error: '. $e.getMessage();
+    }
+
+    die(json_encode($respuesta));
+}
+
+
+?>

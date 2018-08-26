@@ -193,3 +193,29 @@ if ($_POST['producto'] == 'agregar') {
     }
     echo json_encode($outp);
 }
+
+
+if ($_POST['producto'] == 'agregarS') {
+    header("Content-Type: application/json; charset=UTF-8");
+    $id_agregar = $_POST['id'];
+
+    try {
+        $result = $conn->query("SELECT idProduct, productName, productCode, cost, picture,
+        (select makeName from make where idMake = P._idMake and state = 0) as make,
+        (select catName from category where idCategory = P._idCategory and state = 0) as category,
+        (select unityName from unity where idUnity = P._idUnity and state = 0) as unity,
+        (select price from priceSale where _idProduct = P.idProduct and _idPrice = 1) as public,
+        (select price from priceSale where _idProduct = P.idProduct and _idPrice = 11) as pharma,
+        (select price from priceSale where _idProduct = P.idProduct and _idPrice = 21) as business,
+        (select price from priceSale where _idProduct = P.idProduct and _idPrice = 31) as bonus
+        FROM product P WHERE idProduct = $id_agregar");
+        $outp = array();
+        $outp = $result->fetch_all(MYSQLI_ASSOC);
+
+    } catch (Exception $e) {
+        $outp = array(
+            'respuesta' => $e->getMessage(),
+        );
+    }
+    echo json_encode($outp);
+}

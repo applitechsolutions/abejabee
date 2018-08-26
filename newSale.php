@@ -133,7 +133,7 @@ try {
                                 <div class="input-group-addon">
                                   <i class="fa fa-calendar"></i>
                                 </div>
-                                <input type="text" class="form-control pull-right datepicker" id="datepicker" name="date">
+                                <input type="text" class="form-control pull-right datepicker" id="datepicker" name="dateSale">
                               </div>
                             </div>
                           </div>
@@ -146,7 +146,7 @@ try {
                                 <div class="input-group-addon">
                                   <i class="fa fa-calendar"></i>
                                 </div>
-                                <input type="text" class="form-control pull-right datepicker" id="datepicker2" name="date">
+                                <input type="text" class="form-control pull-right datepicker" id="datepicker2" name="dateSaleEnd">
                               </div>
                             </div>
                           </div>
@@ -156,13 +156,16 @@ try { $sql = "SELECT * FROM correlative WHERE idCorrelative = 1";
     while ($correlative = $resultado->fetch_assoc()) {?>
                             <div class="form-group col-lg-1">
                               <label for="serie">Serie</label>
-                              <input type="text" class="form-control" id="serie" name="serie" value="<?php echo $correlative['serie']; ?>" disabled>
+                              <input type="text" class="form-control" id="serieS1" name="serieS" value="<?php echo $correlative['serie']; ?>" hidden>
+                              <input type="text" class="form-control" id="serieS" name="serie" value="<?php echo $correlative['serie']; ?>" disabled>
                             </div>
 
                             <div class="form-group col-lg-3">
                               <label for="noBill">No. de factura</label>
                               <div class="input-group">
-                                <input type="text" class="form-control" id="noBill" name="noBill" value="<?php echo $correlative['last'] + 1; ?>" disabled>
+                                
+                                <input type="text" class="form-control" id="noBillS" name="noBill" value="<?php echo $correlative['last'] + 1; ?>" disabled>
+                                <input type="hidden" class="form-control" id="noBillS1" name="noBillS" value="<?php echo $correlative['last'] + 1; ?>" >
                                 <div class="input-group-btn">
                                   <button type="button" class="btn bg-info" data-toggle="modal" data-target="#modal-correlative">
                                     <i class="glyphicon glyphicon-print" aria-hidden="true"></i>
@@ -185,7 +188,7 @@ try { $sql = "SELECT * FROM correlative WHERE idCorrelative = 1";
                             <div class="form-group">
                               <span class="text-danger text-uppercase">*</span>
                               <label>Cliente</label>
-                              <select id="provider" name="provider" class="form-control select2" style="width: 100%;" value="0">
+                              <select id="customerS" name="customerS" class="form-control select2" style="width: 100%;" value="0">
                                 <option value="" selected>Seleccione un cliente</option>
                                 <?php
 try {
@@ -209,7 +212,7 @@ try {
                             <div class="form-group">
                               <span class="text-danger text-uppercase">*</span>
                               <label>Vendedor</label>
-                              <select id="provider" name="provider" class="form-control select2" style="width: 100%;" value="0">
+                              <select id="sellerS" name="sellerS" class="form-control select2" style="width: 100%;" value="0">
                                 <option value="" selected>Seleccione un vendedor</option>
                                 <?php
 try {
@@ -316,26 +319,26 @@ while ($product = $resultado->fetch_assoc()) {
                                     </td>
                                     <td>
                                       <div class="form-group margin">
-                                        <select class="form-control select2 SelectPrice" style="width: 100%;">
+                                        <select id="SelectPrice<?php echo $product['idProduct']; ?>" class="form-control select2 SelectPrice" style="width: 100%;">
                                           <option value="users" selected="selected"> Público: Q.<?php echo $product['public']; ?>
                                           </option>
-                                          <option value="plus-square">Farmacia: Q.<?php echo $product['public']; ?>
+                                          <option value="plus-square">Farmacia: Q.<?php echo $product['pharma']; ?>
                                           </option>
-                                          <option value="briefcase">Negocio: Q.<?php echo $product['public']; ?>
+                                          <option value="briefcase">Negocio: Q.<?php echo $product['business']; ?>
                                           </option>
-                                          <option value="money" disabled="disabled">Bono: Q.<?php echo $product['public']; ?>
+                                          <option value="money" disabled="disabled">Bono: Q.<?php echo $product['bonus']; ?>
                                           </option>
                                         </select>
                                       </div>
                                     </td>
                                     <td>
-                                      <input class="form-control input-sm" type="number" id="new_<?php echo $product['idProduct']; ?>_cantidad" name="cantidad" min="1"
+                                      <input class="form-control input-sm" type="number" id="new_<?php echo $product['idProduct']; ?>_cantidadS" name="cantidad" min="1"
                                         step="1" value="1" max="<?php echo $product['stock']; ?>" style="width: 65%;">
                                         <p class="text-green">Disp. <?php echo $product['stock']; ?></p>
                                     </td>
                                     <td>
                                       <input class="id_producto_agregar" type="hidden" value="<?php echo $product['idProduct']; ?>">
-                                      <a id="boton" href="#" cost="" data-id="<?php echo $product['idProduct']; ?>" data-tipo="product" class="btn bg-green btn-lg margin agregar_producto">
+                                      <a id="boton" href="#" cost="" data-id="<?php echo $product['idProduct']; ?>" data-tipo="product" class="btn bg-green btn-lg margin agregar_productoS">
                                         <i class="fa fa-shopping-cart"></i>
                                       </a>
                                     </td>
@@ -375,7 +378,7 @@ while ($product = $resultado->fetch_assoc()) {
                       </div>
                       <!-- /.box-header -->
                       <div class="box-body table-responsive no-padding">
-                        <table id="agregados" class="table table-bordered table-striped">
+                        <table id="agregadosS" class="table table-bordered table-striped">
                           <thead>
                             <tr>
                               <th>Imagen</th>
@@ -385,6 +388,7 @@ while ($product = $resultado->fetch_assoc()) {
                               <th>Categoría</th>
                               <th>Unidad</th>
                               <th>Costo/u</th>
+                              <th>Precio</th>
                               <th>Cantidad</th>
                               <th>Subtotal</th>
                               <th>Quitar</th>
@@ -401,9 +405,9 @@ while ($product = $resultado->fetch_assoc()) {
                             <div class="input-group">
                               <span class="input-group-addon">
                                 <span class="text-danger text-uppercase">*</span>
-                                <label for="totalPurchase" class="control-label">Total:</label>
+                                <label for="totalSale" class="control-label">Total:</label>
                                 <span>
-                                  <h5 id="totalPurchase" class="text-bold">Q.0.00</h5>
+                                  <h5 id="totalSale" class="text-bold">Q.0.00</h5>
                                 </span>
                               </span>
                             </div>
@@ -415,7 +419,7 @@ while ($product = $resultado->fetch_assoc()) {
                               <span class="input-group-addon">
                                 <i class="glyphicon glyphicon-credit-card"></i>
                               </span>
-                              <input type="text" class="form-control" id="noBill" name="noBill">
+                              <input type="text" class="form-control" id="payment" name="payment">
                             </div>
                           </div>
                           <div class="form-group col-lg-3">
@@ -424,15 +428,15 @@ while ($product = $resultado->fetch_assoc()) {
                               <span class="input-group-addon">
                                 <i class="fa fa-money"></i>
                               </span>
-                              <input type="number" id="cost" name="cost" placeholder="0.00" min="0.00" step="0.01" class="form-control">
+                              <input type="number" id="advance" name="advance" placeholder="0.00" min="0.00" step="0.01" class="form-control">
                             </div>
                           </div>
                         </div>
 
                         <div class="row">
                           <div class="form-group col-lg-6 pull-right">
-                            <input type="hidden" name="compra" value="nueva">
-                            <input type="hidden" id="total" name="total" value="0">
+                            <input type="hidden" name="venta" value="nueva">
+                            <input type="hidden" id="totalS" name="totalS" value="0">
                             <span class="text-warning">*Debe llenar los campos obligatorios </span>
                             <button type="submit" class="btn btn-primary pull-right" id="crear-compra">
                               <i class="fa fa-floppy-o" aria-hidden="true"></i> Confirmar compra</button>

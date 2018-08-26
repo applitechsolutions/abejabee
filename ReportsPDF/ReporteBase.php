@@ -35,8 +35,8 @@ table#space > tr#direccion {
 				<th style="text-align:left;">Direccion:</th>
 				<td>Ejemplo</td>
 			</tr>
-			<tr id="direccion">
-				<th style="text-align:left; border-collapse: separate; border-spacing: 10px 10px;">Telefono:</th>
+			<tr>
+				<th style="text-align:left;">Telefono:</th>
 				<td>Ejemplo</td>
 			</tr>
 		</table>
