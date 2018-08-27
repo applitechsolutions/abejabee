@@ -95,7 +95,6 @@ $(document).ready(function () {
                 var resultado = JSON.parse(data);
                 if (resultado.respuesta == 'exito') {
                     saveBalanceS(resultado.idVenta, resultado.adelanto, resultado.total, resultado.fecha, resultado.factura, resultado.serie, resultado.nofactura);
-                    document.getElementById("idVenta").value = resultado.idVenta;
                 } else if (resultado.respuesta == 'vacio') {
                     swal({
                         type: 'warning',
@@ -131,7 +130,7 @@ $(document).ready(function () {
                 console.log(data);
                 var resultado = JSON.parse(data);
                 if (resultado.respuesta == 'exito') {
-                    changeReportE('guia.php?idSale='+resultado.id_sale);
+                    changeReportE('guia.php?idSale='+resultado.idSale);
                     swal.close();
                     swal({
                         position: 'top-end',
@@ -384,6 +383,7 @@ function saveDetailS(idEnc, factura, serie, nofactura) {
         changeReport('remision.php?idSale='+idEnc);
         updateCorrelativo('guia', 'A', nofactura);
     }
+    $("#idSale").val(idEnc);
     swal.close();
     swal({
         title: 'Exito!',

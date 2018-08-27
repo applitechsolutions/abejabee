@@ -68,7 +68,7 @@ if ($_POST['envio'] == 'nuevo') {
     $noShipment = $_POST['noShipment'];
     $noDeliver = $_POST['noDeliver'];
     $idSale = $_POST['idSale'];
-
+    
     try {
         $stmt = $conn->prepare("UPDATE sale set transport = ?, noShipment = ?, noDeliver = ? WHERE idSale = ?");
             $stmt->bind_param("sssi",$transport, $noShipment, $noDeliver, $idSale);
