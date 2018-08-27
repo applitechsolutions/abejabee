@@ -42,20 +42,20 @@ while ($sale = $resultado->fetch_assoc()) {
 
     $pdf->SetXY(20, 36);
 //primera linea de factura
-$cMuni = iconv('UTF-8', 'windows-1252', convertir($sale['municipio']));
+$cMuni = iconv('UTF-8', 'windows-1252', $sale['municipio']);
     $pdf->Cell(50, 3, $cMuni, 0, 0, 'L');
     $pdf->Cell(15);
-$cSeller = iconv('UTF-8', 'windows-1252', convertir($sale['sellercode']));
+$cSeller = iconv('UTF-8', 'windows-1252',$sale['sellercode']);
     $pdf->Cell(9, 3,$cSeller , 0, 0, 'L');
     $pdf->Cell(12);
- $cCode = iconv('UTF-8', 'windows-1252', convertir($sale['customerCode']));   
+ $cCode = iconv('UTF-8', 'windows-1252', $sale['customerCode']);   
     $pdf->Cell(10, 3,  $cCode , 0, 0, 'L');
     $pdf->Cell(22);
     $pdf->Cell(17, 3, strftime("%d %b %g", $date->getTimestamp()), 0, 1, 'L');
 
     $pdf->SetXY(23, 42);
 //Nombre
-$cName = iconv('UTF-8', 'windows-1252', convertir($sale['customerName']));
+$cName = iconv('UTF-8', 'windows-1252', $sale['customerName']);
     $pdf->Cell(120, 3,$cName , 0, 0, 'L');
 
     $pdf->SetXY(17, 48);
@@ -64,7 +64,7 @@ $cName = iconv('UTF-8', 'windows-1252', convertir($sale['customerName']));
 
     $pdf->SetXY(25, 54);
 //Direccion
-$cAddress = iconv('UTF-8', 'windows-1252', convertir($sale['customerAddress']));
+$cAddress = iconv('UTF-8', 'windows-1252', $sale['customerAddress']);
     $pdf->MultiCell(120, 3, $cAddress . ' ' . $sale['aldea'] . ' ' . $sale['municipio'] . ' ' . $sale['departamento'], 0, 'L', 0);
 
     $pdf->SetXY(23, 70);
