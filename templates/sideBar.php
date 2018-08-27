@@ -79,7 +79,11 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="listSalesC.php"><i class="fa fa-list-ul" aria-hidden="true"></i> Ver Todas</a></li>
-            <li><a href="newSale.php"><i class="fa fa-plus-circle" aria-hidden="true"></i> Nueva Venta</a></li>
+            <?php 
+            if ($_SESSION['rol'] == 1) {?>
+            <li><a href="newSale.php"><i class="fa fa-plus-circle" aria-hidden="true"></i> Nueva Venta</a></li><?php
+            }
+            ?>
           </ul>
         </li>
         <li class="treeview">
@@ -92,7 +96,11 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="listCustomers.php"><i class="fa fa-list-ul" aria-hidden="true"></i> Ver Todos</a></li>
-            <li><a href="newCostumer.php"><i class="fa fa-plus-circle" aria-hidden="true"></i> Nuevo Cliente</a></li>
+            <?php 
+            if ($_SESSION['rol'] == 1) {?>
+            <li><a href="newCostumer.php"><i class="fa fa-plus-circle" aria-hidden="true"></i> Nuevo Cliente</a></li><?php
+            }
+            ?>
           </ul>
         </li>
         <li class="treeview">
@@ -105,7 +113,11 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="listRoutes.php"><i class="fa fa-list-ul" aria-hidden="true"></i> Ver Todas</a></li>
-            <li><a href="newRoute.php"><i class="fa fa-plus-circle" aria-hidden="true"></i> Nueva Ruta</a></li>
+            <?php 
+            if ($_SESSION['rol'] == 1) {?>
+            <li><a href="newRoute.php"><i class="fa fa-plus-circle" aria-hidden="true"></i> Nueva Ruta</a></li><?php
+            }
+            ?>
           </ul>
         </li>
         <li class="treeview">
@@ -118,7 +130,11 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="listProducts.php"><i class="fa fa-list-ul" aria-hidden="true"></i> Ver Todos</a></li>
-            <li><a href="newProduct.php"><i class="fa fa-plus-circle" aria-hidden="true"></i> Nuevo Producto</a></li>
+            <?php 
+            if ($_SESSION['rol'] == 1) {?>
+            <li><a href="newProduct.php"><i class="fa fa-plus-circle" aria-hidden="true"></i> Nuevo Producto</a></li><?php
+            }
+            ?>
           </ul>
         </li>
         <li class="treeview">
@@ -131,7 +147,11 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="listProviders.php"><i class="fa fa-list-ul" aria-hidden="true"></i> Ver Todos</a></li>
-            <li><a href="newProvider.php"><i class="fa fa-plus-circle" aria-hidden="true"></i> Nuevo Proveedor</a></li>
+            <?php 
+            if ($_SESSION['rol'] == 1) {?>
+            <li><a href="newProvider.php"><i class="fa fa-plus-circle" aria-hidden="true"></i> Nuevo Proveedor</a></li><?php
+            }
+            ?>
           </ul>
         </li>
         <li class="treeview">
@@ -144,7 +164,11 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="listPurchase.php"><i class="fa fa-list-ul" aria-hidden="true"></i> Ver Todas</a></li>
-            <li><a href="newPurchase.php"><i class="fa fa-plus-circle" aria-hidden="true"></i> Nueva Compra</a></li>
+            <?php 
+            if ($_SESSION['rol'] == 1) {?>
+            <li><a href="newPurchase.php"><i class="fa fa-plus-circle" aria-hidden="true"></i> Nueva Compra</a></li><?php
+            }
+            ?>
           </ul>
         </li>
         <li class="treeview">
@@ -157,7 +181,11 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="listSellers.php"><i class="fa fa-list-ul" aria-hidden="true"></i> Ver Todos</a></li>
-            <li><a href="newSeller.php"><i class="fa fa-plus-circle" aria-hidden="true"></i> Nuevo Vendedor</a></li>
+            <?php 
+            if ($_SESSION['rol'] == 1) {?>
+            <li><a href="newSeller.php"><i class="fa fa-plus-circle" aria-hidden="true"></i> Nuevo Vendedor</a></li><?php
+            }
+            ?>
           </ul>
         </li>
         <li class="treeview">
@@ -170,7 +198,11 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="listUsers.php"><i class="fa fa-list-ul" aria-hidden="true"></i> Ver Todos</a></li>
-            <li><a href="newUser.php"><i class="fa fa-plus-circle" aria-hidden="true"></i> Nuevo Usuario</a></li>
+            <?php 
+            if ($_SESSION['rol'] == 1) {?>
+            <li><a href="newUser.php"><i class="fa fa-plus-circle" aria-hidden="true"></i> Nuevo Usuario</a></li><?php
+            }
+            ?>
           </ul>
         </li>
       </ul>

@@ -40,6 +40,7 @@
 
 <script>
   $(document).ready(function () {
+
     $('.sidebar-menu').tree()
 
     $('.select2').select2()
@@ -109,6 +110,15 @@
       }
     });
   })
+  function valListados() {
+    swal({
+      position: 'top-end',
+      type: 'warning',
+      title: 'No estas autorizado a realizar esta operación :(',
+      showConfirmButton: false,
+      timer: 1500
+    })
+  }
 </script>
 </body>
 </html>
