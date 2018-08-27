@@ -78,7 +78,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="listSales.php"><i class="fa fa-list-ul" aria-hidden="true"></i> Ver Todas</a></li>
+            <li><a href="listSalesC.php"><i class="fa fa-list-ul" aria-hidden="true"></i> Ver Todas</a></li>
             <li><a href="newSale.php"><i class="fa fa-plus-circle" aria-hidden="true"></i> Nueva Venta</a></li>
           </ul>
         </li>

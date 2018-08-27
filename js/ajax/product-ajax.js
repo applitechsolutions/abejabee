@@ -4,6 +4,7 @@ $(document).ready(function () {
         e.preventDefault();
 
         var datos = new FormData(this);
+        
 
         swal({
             title: 'Guardando el producto...'

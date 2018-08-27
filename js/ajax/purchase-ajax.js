@@ -62,6 +62,10 @@ $(document).ready(function () {
 
         var datos = $(this).serializeArray();
 
+        swal({
+            title: 'Generando la compra...'
+        });
+        swal.showLoading();
         $.ajax({
             type: $(this).attr('method'),
             data: datos,
@@ -71,14 +75,7 @@ $(document).ready(function () {
                 console.log(data);
                 var resultado = JSON.parse(data);
                 if (resultado.respuesta == 'exito') {
-
                     saveDetail(resultado.idCompra);
-                    /*if (resultado.proceso == 'nuevo') {
-                        setTimeout(function () {
-                            location.reload();
-                        }, 1500);
-                    }*/
-
                 } else if (resultado.respuesta == 'vacio') {
                     swal({
                         type: 'warning',
@@ -208,10 +205,10 @@ function saveDetail(idEnc) {
 }
 
 function saveStock(id_product, cantidad_detalle) {
-
     $.ajax({
         type: 'POST',
         data: {
+            'tipo': 'compra',
             'cantidad': cantidad_detalle,
             'id_product': id_product
         },
@@ -221,11 +218,16 @@ function saveStock(id_product, cantidad_detalle) {
             console.log(data);
             resultado = JSON.parse(data);
             if (resultado.respuesta == 'exito') {
-                swal(
-                    'Exito!',
-                    '¡' + resultado.mensaje,
-                    'success'
-                )
+                swal.close();
+                swal({
+                    title: 'Exito!',
+                    text: '¡' + resultado.mensaje,
+                    timer: 2000,
+                    type: 'success'
+                }).then(
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1500))
             }
         }
     })

@@ -11,7 +11,7 @@
       <section class="content-header">
         <h1>
           <i class="fa fa-archive"></i>
-          Productos
+          Inventario de Productos
           <small>Existencia de los productos en la bodega principal</small>
         </h1>
       </section>
@@ -65,12 +65,6 @@
                           <?php echo $product['productName']; ?>
                         </td>
                         <td class="text-center">
-                        <?php
-                        if ($product['minStock'] == $product['stock']) {?>
-                          <span class="label label-warning"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span><?php
-                        }else if ($product['minStock'] > $product['stock']) {?>
-                          <span class="label label-danger"><i class="fa fa-exclamation" aria-hidden="true"></i></span><?php
-                        }?>
                         <?php echo $product['minStock']; ?>
                         </td>
                         <td>
@@ -85,7 +79,13 @@
                         <td>
                           Q.<?php echo $product['cost']; ?>
                         </td>
-                        <td>
+                        <td class="text-center">
+                          <?php
+                          if ($product['minStock'] == $product['stock']) {?>
+                            <span class="label label-warning"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span><?php
+                          }else if ($product['minStock'] > $product['stock']) {?>
+                            <span class="label label-danger"><i class="fa fa-exclamation" aria-hidden="true"></i></span><?php
+                          }?>
                           <?php echo $product['stock']; ?>
                         </td>
                         <td>

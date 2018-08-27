@@ -1,5 +1,4 @@
 <!-- MENU DE HAMBURGUESA SIDEBAR-COLLAPSE-->
-
 <body class="hold-transition skin-blue sidebar-collapse sidebar-mini">
   <?php
   include_once 'funciones/sesiones.php';
