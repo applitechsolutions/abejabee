@@ -94,11 +94,7 @@ $(document).ready(function () {
                 console.log(data);
                 var resultado = JSON.parse(data);
                 if (resultado.respuesta == 'exito') {
-                    saveBalanceS(resultado.idVenta, resultado.adelanto, resultado.total, resultado.fecha);
-                    if (resultado.factura == 'si') {
-                        changeReport('factura.php?idSale='+idEnc);
-                        //UPDATECORRELATIVE
-                    }
+                    saveBalanceS(resultado.idVenta, resultado.adelanto, resultado.total, resultado.fecha, resultad.factura, resultado.serie, resultado.nofactura);
                 } else if (resultado.respuesta == 'vacio') {
                     swal({
                         type: 'warning',
@@ -173,9 +169,111 @@ $(document).ready(function () {
         })
 
     });
+
+    $('#form-correlative-guia').on('submit', function (e) {
+        e.preventDefault();
+
+        var datos = $(this).serializeArray();
+
+        $.ajax({
+            type: $(this).attr('method'),
+            data: datos,
+            url: $(this).attr('action'),
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+                var resultado = data;
+                if (resultado.respuesta == 'exito') {
+                    swal({
+                        position: 'top-end',
+                        type: 'success',
+                        title: '¡' + resultado.mensaje,
+                        showConfirmButton: false,
+                        timer: 1000
+                    })
+
+                    $("#correlativeCloseGuia").click();
+                    $("#noRemi").val(resultado.noBill);
+                    $("#noRemi1").val(resultado.noBill);
+                } else if (resultado.respuesta == 'vacio') {
+                    swal({
+                        position: 'top-end',
+                        type: 'warning',
+                        title: 'Debes llenar los campos obligatorios :/',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                } else if (resultado.respuesta == 'error') {
+                    swal({
+                        position: 'top-end',
+                        type: 'error',
+                        title: 'Algo salió mal, intenta de nuevo',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            },
+            error: function (data) {
+                swal({
+                    position: 'top-end',
+                    type: 'error',
+                    title: 'Algo salió mal, intenta de nuevo',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+        })
+
+    });
 });
 
-function saveBalanceS(idEnc, adelanto, total, fecha) {
+function updateCorrelativo(correlative, serie, last) {
+
+    $.ajax({
+        type: 'POST',
+        data: {
+            'correlative': correlative,
+            'serieC': serie,
+            'last': last
+        },
+        url: 'BLL/correlative.php',
+        dataType: 'json',
+        success: function (data) {
+            console.log(data);
+            var resultado = data;
+            if (resultado.respuesta == 'exito') {
+              
+            } else if (resultado.respuesta == 'vacio') {
+                swal({
+                    position: 'top-end',
+                    type: 'warning',
+                    title: 'Debes llenar los campos obligatorios :/',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            } else if (resultado.respuesta == 'error') {
+                swal({
+                    position: 'top-end',
+                    type: 'error',
+                    title: 'Algo salió mal, intenta de nuevo',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+        },
+        error: function (data) {
+            swal({
+                position: 'top-end',
+                type: 'error',
+                title: 'Algo salió mal, intenta de nuevo',
+                showConfirmButton: false,
+                timer: 1500
+            })
+        }
+    })    
+}
+
+function saveBalanceS(idEnc, adelanto, total, fecha, factura, serie, nofactura) {
     var monto = parseFloat(total) - parseFloat(adelanto);
 
     $.ajax({
@@ -192,13 +290,13 @@ function saveBalanceS(idEnc, adelanto, total, fecha) {
             console.log(data);
             resultado = JSON.parse(data);
             if (resultado.respuesta == 'exito') {
-                saveDetailS(resultado.idVenta);
+                saveDetailS(resultado.idVenta, factura, serie, nofactura);
             }
         }
     })
 }
 
-function saveDetailS(idEnc) {
+function saveDetailS(idEnc, factura, serie, nofactura) {
 
     var id_product = document.getElementsByClassName("idproducto_class");
     var precio_detalle = document.getElementsByClassName("precio_class");
@@ -232,6 +330,13 @@ function saveDetailS(idEnc) {
                 }
             }
         })
+    }
+    if (factura == 'si') {
+        changeReport('factura.php?idSale='+idEnc);
+        updateCorrelativo('factura', serie, nofactura);
+    }else if (factura == 'no') {
+        changeReport('remision.php?idSale='+idEnc);
+        updateCorrelativo('guia', 'A', nofactura);
     }
 }
 

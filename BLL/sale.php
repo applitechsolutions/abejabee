@@ -16,8 +16,8 @@ if ($_POST['venta'] == 'nueva') {
     $fv = date('Y-m-d', strtotime($fecha_venc));
 
     if ($total < 700.00) {
-        $facturaV = "GUIA/REMISION";
-        $serieV = "";
+        $facturaV =  $_POST['noRemi'];
+        $serieV = "GUIA/REMISION";
         $factura = "no";
     }
 
@@ -39,7 +39,9 @@ if ($_POST['venta'] == 'nueva') {
                     'factura' => $factura,
                     'adelanto' => $adelanto,
                     'total' => $total,
-                    'fecha' => $fecha_venta
+                    'fecha' => $fecha_venta,
+                    'serie' => $serieV,
+                    'nofactura' => $facturaV
                 );
                 
             }else {

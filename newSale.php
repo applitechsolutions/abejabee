@@ -66,11 +66,56 @@ try {
 ?>
                       </div>
                       <div class="modal-footer">
-                        <input type="hidden" name="correlative" value="editar">
+                        <input type="hidden" name="correlative" value="factura">
                         <button type="submit" class="btn btn-info pull-left" id="crear-correlativo">
                           <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
                         <span class="text-warning w3-small w3-padding-small pull-left">*Debe llenar los campos obligatorios</span>
                         <button id="correlativeClose" type="button" class="btn btn-danger w3-round-medium pull-right" data-dismiss="modal">Cerrar</button>
+                      </div>
+                  </div>
+                  </form>
+                </div>
+              </div>
+              <!-- /.modal-dialog -->
+            </div>
+
+            <!-- /.modal-REMISION -->
+            <div class="modal fade" id="modal-remi">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">
+                      <i class="glyphicon glyphicon-print" aria-hidden="true"></i> Correlativo de guías de remision</h4>
+                  </div>
+                  <div class="modal-body">
+                    <form role="form" id="form-correlative-guia" name="form-correlative-guia" method="post" action="BLL/correlative.php">
+                      <div class="row">
+                        <?php
+try {
+    $sql = "SELECT * FROM correlative WHERE idCorrelative = 11";
+    $resultado = $conn->query($sql);
+    while ($correlative = $resultado->fetch_assoc()) {?>
+                          <div class="form-group col-lg-8">
+                            <span class="text-danger text-uppercase">*</span>
+                            <label for="last">Última guía de remision ingresada</label>
+                            <input type="text" class="form-control" id="last" name="last" value="<?php echo $correlative['last']; ?>">
+                          </div>
+                          <?php
+}
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+}
+?>
+                      </div>
+                      <div class="modal-footer">
+                        <input type="hidden" name="correlative" value="guia">
+                        <button type="submit" class="btn btn-info pull-left" id="crear-correlativo">
+                          <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+                        <span class="text-warning w3-small w3-padding-small pull-left">*Debe llenar los campos obligatorios</span>
+                        <button id="correlativeCloseGuia" type="button" class="btn btn-danger w3-round-medium pull-right" data-dismiss="modal">Cerrar</button>
                       </div>
                   </div>
                   </form>
@@ -154,6 +199,31 @@ try { $sql = "SELECT * FROM correlative WHERE idCorrelative = 1";
                                 </div>
                               </div>
                               <?php
+}
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+}
+?>
+
+<?php
+try { $sql = "SELECT * FROM correlative WHERE idCorrelative = 11";
+    $resultado = $conn->query($sql);
+    while ($correlative = $resultado->fetch_assoc()) {?>
+<div class="form-group col-lg-3">
+  <label for="noRemi">No. de Guia de remision</label>
+  <div class="input-group">
+    <input type="text" class="form-control" id="noRemi" name="noRemi" value="<?php echo $correlative['last'] + 1; ?>" disabled>
+    <input type="hidden" class="form-control" id="noRemi1" name="noRemi1" value="<?php echo $correlative['last'] + 1; ?>">
+    <div class="input-group-btn">
+      <button type="button" class="btn bg-info" data-toggle="modal" data-target="#modal-remi">
+        <i class="glyphicon glyphicon-print" aria-hidden="true"></i>
+        Correlativo
+      </button>
+    </div>
+    <!-- /btn-group -->
+  </div>
+</div>
+<?php
 }
 } catch (Exception $e) {
     echo "Error: " . $e->getMessage();

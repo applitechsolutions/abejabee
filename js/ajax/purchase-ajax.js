@@ -202,6 +202,16 @@ function saveDetail(idEnc) {
             }
         })
     }
+    swal.close();
+    swal({
+        title: 'Exito!',
+        text: '¡' + resultado.mensaje,
+        timer: 2000,
+        type: 'success'
+    }).then(
+        setTimeout(function () {
+            location.reload();
+        }, 1500))
 }
 
 function saveStock(id_product, cantidad_detalle) {
@@ -218,16 +228,6 @@ function saveStock(id_product, cantidad_detalle) {
             console.log(data);
             resultado = JSON.parse(data);
             if (resultado.respuesta == 'exito') {
-                swal.close();
-                swal({
-                    title: 'Exito!',
-                    text: '¡' + resultado.mensaje,
-                    timer: 2000,
-                    type: 'success'
-                }).then(
-                    setTimeout(function () {
-                        location.reload();
-                    }, 1500))
             }
         }
     })
