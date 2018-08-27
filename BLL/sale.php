@@ -22,7 +22,7 @@ if ($_POST['venta'] == 'nueva') {
     }
 
     try {
-        if ($fecha_venta == "" || $fecha_venc == "" || $cliente == "" || $total == "0" || $vendedor == "" || $facturaV == "" || $serieV == "" || $pago = "") {
+        if ($fecha_venta == "" || $fecha_venc == "" || $cliente == "" || $total == "0" || $vendedor == "" || $facturaV == "" || $serieV == "" || $pago == "") {
             $respuesta = array(
                 'respuesta' => 'vacio'
             );

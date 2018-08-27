@@ -130,7 +130,7 @@
                       <td>
                         <?php echo $sale['dateEnd']; ?>
                       </td>
-                      <td>Q
+                      <td>
                         <?php echo $sale['paymentMethod']; ?>
                       </td>
                       <td>
