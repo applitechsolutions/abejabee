@@ -10,7 +10,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        <i class="fa fa-shopping-cart"></i>
+        <i class="glyphicon glyphicon-tags"></i>
         ventas
         <small>Listado de ventas</small>
       </h1>

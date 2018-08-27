@@ -65,7 +65,7 @@
                   <!-- /.box-body -->
                   <div class="box-footer">
                     <input type="hidden" name="ruta" value="nueva">
-                    <button type="submit" class="btn btn-info" id="crear-ruta">
+                    <button type="submit" class="btn btn-primary pull-left" id="crear-ruta">
                       <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
                     <span class="text-warning"> *Debe llenar los campos obligatorios </span>
                   </div>

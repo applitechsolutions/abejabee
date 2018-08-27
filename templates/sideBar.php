@@ -55,6 +55,7 @@
             <!-- /.modal-content -->
           </div>
 
+
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">Menú de Administración</li>
@@ -66,7 +67,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="index.php"><i class="fa fa-circle-o"></i> Dashboard</a></li>
+            <li><a href="index.php"><i class="fa fa-archive"></i> Inventario</a></li>
           </ul>
         </li>
         <li class="treeview">

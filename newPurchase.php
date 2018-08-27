@@ -250,6 +250,7 @@ include_once 'funciones/bd_conexion.php';
                       </div>
                     </div>
 
+
                     <div class="row">
                       <div class="form-group col-lg-6 pull-left">
                         <input type="hidden" name="compra" value="nueva">

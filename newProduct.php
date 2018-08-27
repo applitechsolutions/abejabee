@@ -45,7 +45,7 @@ include_once 'funciones/bd_conexion.php';
                     </div>
                     <div class="modal-footer">
                       <input type="hidden" name="categoria" value="nueva">
-                      <button type="submit" class="btn btn-info pull-left" id="crear-categoria">
+                      <button type="submit" class="btn btn-primary pull-left" id="crear-categoria">
                       <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
                       <span class="text-warning w3-small w3-padding-small pull-left">*Debe llenar los campos obligatorios</span>
                       <button id="catClose" type="button" class="btn btn-danger w3-round-medium pull-right"data-dismiss="modal">Cerrar</button> 
