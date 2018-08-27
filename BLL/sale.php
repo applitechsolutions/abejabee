@@ -62,7 +62,7 @@ if ($_POST['venta'] == 'nueva') {
     die(json_encode($respuesta));
 }
 
-if ($_POST['envio'] == 'nuevo') {
+if ($_POST['venta'] == 'envio') {
 
     $transport = $_POST['transport'];
     $noShipment = $_POST['noShipment'];
@@ -92,6 +92,5 @@ if ($_POST['envio'] == 'nuevo') {
     } catch (Exception $e) {
         echo 'Error: ' . $e . getMessage();
     }
-
     die(json_encode($respuesta));
 }

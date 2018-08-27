@@ -419,7 +419,7 @@ function changeReport(report) {
 }
 
 function changeReportE(report) {
-    $('#divreporteE').html('<iframe src="reportsFPDF/' + report + '" style="width: 100%; min-width: 300px; height: 810px"></iframe>');
+    $('#divreporteE').html('<iframe src="reportsFPDF/' + report + '" style="width: 100%; min-width: 300px; height: 500px"></iframe>');
 }
 
 function eliminarS(idp) {
