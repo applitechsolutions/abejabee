@@ -205,7 +205,7 @@ function saveDetail(idEnc) {
     swal.close();
     swal({
         title: 'Exito!',
-        text: '¡' + resultado.mensaje,
+        text: '¡Compra realizada correctamente!',
         timer: 2000,
         type: 'success'
     }).then(
