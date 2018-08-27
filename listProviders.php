@@ -56,8 +56,15 @@
                       <td><?php echo $provider['providerMobile']; ?></td>
                       <td><?php echo $provider['providerEmail']; ?></td>
                       <td>
+                      <?php 
+                      if ($_SESSION['rol'] == 1) {?>
                         <a class="btn bg-green btn-flat margin" href="editProvider.php?id=<?php echo $provider['idProvider'] ?>"><i class="fa fa-pencil"></i></a>
-                        <a href="#" data-id="<?php echo $provider['idProvider']; ?>" data-tipo="provider" class="btn bg-maroon btn-flat margin borrar_usuario"><i class="fa fa-trash"></i></a>
+                        <a href="#" data-id="<?php echo $provider['idProvider']; ?>" data-tipo="provider" class="btn bg-maroon btn-flat margin borrar_proveedor"><i class="fa fa-trash"></i></a><?php
+                      }else if ($_SESSION['rol'] == 2) {?>
+                        <a class="btn bg-green btn-flat margin" onclick="valListados()"><i class="fa fa-pencil"></i></a>
+                        <a href="#" class="btn bg-maroon btn-flat margin" onclick="valListados()"><i class="fa fa-trash"></i></a><?php
+                      }
+                      ?>
                       </td>
                     </tr>
                 <?php }
