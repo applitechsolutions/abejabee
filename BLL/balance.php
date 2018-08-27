@@ -15,7 +15,7 @@ if ($_POST['tipo'] == 'saldo') {
                 'respuesta' => 'vacio'
             );
         } else {
-            $stmt = $conn->prepare("INSERT INTO balance(_idSele, date, bal/pay, amount, balance) VALUES (?, ?, ?, ?, ?)");
+            $stmt = $conn->prepare("INSERT INTO balance(_idSale, date, balpay, amount, balance) VALUES (?, ?, ?, ?, ?)");
             $stmt->bind_param("isidd", $id_sale, $fc, $bal, $monto, $monto);
             $stmt->execute();
             $id_registro = $stmt->insert_id;

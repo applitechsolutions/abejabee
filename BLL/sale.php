@@ -17,7 +17,7 @@ if ($_POST['venta'] == 'nueva') {
 
     if ($total < 700.00) {
         $facturaV = "GUIA/REMISION";
-        $serieV = "GUIA/REMISION";
+        $serieV = "";
         $factura = "no";
     }
 
@@ -27,8 +27,8 @@ if ($_POST['venta'] == 'nueva') {
                 'respuesta' => 'vacio'
             );
         } else {
-            $stmt = $conn->prepare("INSERT INTO sale(_idSeller, _idCustomer, noBill, serie, totalSale, advance, dateStart, dateEnd, paymentMethod) VALUES (?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("iissddss", $vendedor, $vendedor, $cliente, $facturaV, $serieV, $total, $adelanto, $pago);
+            $stmt = $conn->prepare("INSERT INTO sale(_idSeller, _idCustomer, noBill, serie, totalSale, advance, dateStart, dateEnd, paymentMethod) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("iissddsss", $vendedor, $cliente, $facturaV, $serieV, $total, $adelanto, $fc, $fv, $pago);
             $stmt->execute();
             $id_registro = $stmt->insert_id;
             if ($id_registro > 0) {
