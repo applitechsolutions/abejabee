@@ -58,7 +58,7 @@ while ($sale = $resultado->fetch_assoc()) {
     $Ccode = iconv('UTF-8', 'windows-1252', $sale['customerCode']);
     $pdf->Cell(10, 4,$Ccode , 0, 1, 'L');
     $pdf->Cell(18);
-    $CName = iconv('UTF-8', 'windows-1252', $sale['cusromerName']);
+    $CName = iconv('UTF-8', 'windows-1252', $sale['customerName']);
     $pdf->Cell(120, 4,$CName , 0, 1, 'L');
     $pdf->Cell(18);
     $CAddress = iconv('UTF-8', 'windows-1252',$sale['customerAddress'] . ' ' . $sale['aldea'] . ' ' . $sale['municipio'] . ' ' . $sale['departamento']);
