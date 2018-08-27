@@ -95,6 +95,7 @@ $(document).ready(function () {
                 var resultado = JSON.parse(data);
                 if (resultado.respuesta == 'exito') {
                     saveBalanceS(resultado.idVenta, resultado.adelanto, resultado.total, resultado.fecha, resultado.factura, resultado.serie, resultado.nofactura);
+                    document.getElementById("idVenta").value = resultado.idVenta;
                 } else if (resultado.respuesta == 'vacio') {
                     swal({
                         type: 'warning',
@@ -111,6 +112,51 @@ $(document).ready(function () {
             }
         })
     });
+
+    $('#form-envio').on('submit', function (e) {
+        e.preventDefault();
+
+        var datos = $(this).serializeArray();
+
+        swal({
+            title: 'Generando el envío...'
+        });
+        swal.showLoading();
+        $.ajax({
+            type: $(this).attr('method'),
+            data: datos,
+            url: $(this).attr('action'),
+            datatype: 'json',
+            success: function (data) {
+                console.log(data);
+                var resultado = JSON.parse(data);
+                if (resultado.respuesta == 'exito') {
+                    changeReportE('guia.php?idSale='+resultado.id_sale);
+                    swal.close();
+                    swal({
+                        position: 'top-end',
+                        type: 'success',
+                        title: '¡' + resultado.mensaje,
+                        showConfirmButton: false,
+                        timer: 1000
+                    })
+                } else if (resultado.respuesta == 'vacio') {
+                    swal({
+                        type: 'warning',
+                        title: 'Oops...',
+                        text: 'Debe llenar todos los campos',
+                    })
+                } else if (resultado.respuesta == 'error') {
+                    swal({
+                        type: 'error',
+                        title: 'Error',
+                        text: 'No se pudo guardar en la base de datos',
+                    })
+                }
+            }
+        })
+    });
+
 
     $('#form-correlative').on('submit', function (e) {
         e.preventDefault();
@@ -338,6 +384,14 @@ function saveDetailS(idEnc, factura, serie, nofactura) {
         changeReport('remision.php?idSale='+idEnc);
         updateCorrelativo('guia', 'A', nofactura);
     }
+    swal.close();
+    swal({
+        title: 'Exito!',
+        text: '¡Venta creada exitosamente!',
+        timer: 2000,
+        type: 'success'
+    })
+    tab3();
 }
 
 function saveStockS(id_product, cantidad_detalle) {
@@ -355,14 +409,6 @@ function saveStockS(id_product, cantidad_detalle) {
             console.log(data);
             resultado = JSON.parse(data);
             if (resultado.respuesta == 'exito') {
-                swal.close();
-                swal({
-                    title: 'Exito!',
-                    text: '¡Venta creada exitosamente!',
-                    timer: 2000,
-                    type: 'success'
-                })
-                tab3();
             }
         }
     })
@@ -370,6 +416,10 @@ function saveStockS(id_product, cantidad_detalle) {
 
 function changeReport(report) {
     $('#divreporte').html('<iframe src="reportsFPDF/' + report + '" style="width: 100%; min-width: 300px; height: 810px"></iframe>');
+}
+
+function changeReportE(report) {
+    $('#divreporteE').html('<iframe src="reportsFPDF/' + report + '" style="width: 100%; min-width: 300px; height: 810px"></iframe>');
 }
 
 function eliminarS(idp) {

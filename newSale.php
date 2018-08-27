@@ -555,7 +555,7 @@ while ($product = $resultado->fetch_assoc()) {
                                   <!-- /.box-body -->
                                   <div class="box-footer">
                                     <input type="hidden" name="envio" value="nuevo">
-                                    <input type="hidden" id="idSale"  value="nuevo">
+                                    <input type="hidden" id="idSale" name="idSale">
                                     <button type="submit" class="btn btn-primary pull-left" id="crear-envio">
                                       <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
                                     <span class="text-warning"> *Debe llenar los campos obligatorios </span>

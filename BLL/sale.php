@@ -1,5 +1,6 @@
 <?php
 include_once '../funciones/bd_conexion.php';
+
 if ($_POST['venta'] == 'nueva') {
     $fecha_venta = $_POST['dateSale'];
     $fecha_venc = $_POST['dateSaleEnd'];
@@ -16,7 +17,7 @@ if ($_POST['venta'] == 'nueva') {
     $fv = date('Y-m-d', strtotime($fecha_venc));
 
     if ($total < 700.00) {
-        $facturaV =  $_POST['noRemi'];
+        $facturaV = $_POST['noRemi'];
         $serieV = "GUIA/REMISION";
         $factura = "no";
     }
@@ -24,7 +25,7 @@ if ($_POST['venta'] == 'nueva') {
     try {
         if ($fecha_venta == "" || $fecha_venc == "" || $cliente == "" || $total == "0" || $vendedor == "" || $facturaV == "" || $serieV == "" || $pago == "") {
             $respuesta = array(
-                'respuesta' => 'vacio'
+                'respuesta' => 'vacio',
             );
         } else {
             $stmt = $conn->prepare("INSERT INTO sale(_idSeller, _idCustomer, noBill, serie, totalSale, advance, dateStart, dateEnd, paymentMethod) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
@@ -41,23 +42,56 @@ if ($_POST['venta'] == 'nueva') {
                     'total' => $total,
                     'fecha' => $fecha_venta,
                     'serie' => $serieV,
-                    'nofactura' => $facturaV
+                    'nofactura' => $facturaV,
                 );
-                
-            }else {
+
+            } else {
                 $respuesta = array(
                     'respuesta' => 'error',
-                    'idVenta' => $id_registro
+                    'idVenta' => $id_registro,
                 );
             }
             $stmt->close();
             $conn->close();
         }
 
-    } catch(Exception $e){
-        echo 'Error: '. $e.getMessage();
+    } catch (Exception $e) {
+        echo 'Error: ' . $e . getMessage();
     }
 
     die(json_encode($respuesta));
 }
-?>
+
+if ($_POST['envio'] == 'nuevo') {
+
+    $transport = $_POST['transport'];
+    $noShipment = $_POST['noShipment'];
+    $noDeliver = $_POST['noDeliver'];
+    $idSale = $_POST['idSale'];
+
+    try {
+        $stmt = $conn->prepare("UPDATE sale set transport = ?, noShipment = ?, noDeliver = ? WHERE idSale = ?");
+            $stmt->bind_param("sssi",$transport, $noShipment, $noDeliver, $idSale);
+            $stmt->execute();
+            $id_registro = $stmt->insert_id;
+            if ($stmt->affected_rows) {
+                $respuesta = array(
+                    'respuesta' => 'exito',
+                    'idSale' => $id_registro,
+                    'mensaje' => 'Envio generado correctamente!',
+                    'idSale' => $idSale
+                );                
+            }else {
+                $respuesta = array(
+                    'respuesta' => 'error',
+                    'idSale' => $id_registro
+                );
+            }
+            $stmt->close();
+            $conn->close();
+    } catch (Exception $e) {
+        echo 'Error: ' . $e . getMessage();
+    }
+
+    die(json_encode($respuesta));
+}
