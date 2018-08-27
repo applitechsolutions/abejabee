@@ -55,11 +55,14 @@ while ($sale = $resultado->fetch_assoc()) {
     $pdf->SetXY(18, 44);
     $pdf->Cell(15, 4, 'Cliente:', 0, 0, 'L');
     $pdf->SetFont('Arial', '', 10);
-    $pdf->Cell(10, 4, $sale['customerCode'], 0, 1, 'L');
+    $Ccode = iconv('UTF-8', 'windows-1252', $sale['customerCode']);
+    $pdf->Cell(10, 4,$Ccode , 0, 1, 'L');
     $pdf->Cell(18);
-    $pdf->Cell(120, 4, $sale['customerName'], 0, 1, 'L');
+    $CName = iconv('UTF-8', 'windows-1252', $sale['cusromerName']);
+    $pdf->Cell(120, 4,$CName , 0, 1, 'L');
     $pdf->Cell(18);
-    $pdf->MultiCell(90, 4, $sale['customerAddress'] . ' ' . $sale['aldea'] . ' ' . $sale['municipio'] . ' ' . $sale['departamento'], 0, 'L', 0);
+    $CAddress = iconv('UTF-8', 'windows-1252',$sale['customerAddress'] . ' ' . $sale['aldea'] . ' ' . $sale['municipio'] . ' ' . $sale['departamento']);
+    $pdf->MultiCell(90, 4,$CAddress , 0, 'L', 0);
     $pdf->Cell(18);
     $pdf->Cell(30, 4, $sale['customerTel'], 0, 1, 'L');
     $pdf->Cell(18);
