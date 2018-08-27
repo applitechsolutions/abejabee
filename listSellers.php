@@ -29,6 +29,7 @@
               <table id="registros" class="table table-bordered table-striped">
                 <thead>
                 <tr>
+                  <th>Código</th>
                   <th>Nombre</th>
                   <th>Apellido</th>
                   <th>Dirección</th>
@@ -42,7 +43,7 @@
                 <tbody>
                 <?php
                   try{
-                    $sql = "SELECT idSeller, sellerFirstName, sellerLastName, sellerAddress, sellerMobile, DPI, birthDate, gender FROM seller WHERE state = 0";
+                    $sql = "SELECT idSeller, sellerCode, sellerFirstName, sellerLastName, sellerAddress, sellerMobile, DPI, birthDate, gender FROM seller WHERE state = 0";
                     $resultado = $conn->query($sql);
                   } catch (Exception $e){
                     $error= $e->getMessage();
@@ -53,6 +54,7 @@
                     $date = date_create($seller['birthDate']);
                 ?>
                     <tr>
+                      <td><?php echo $seller['sellerCode']; ?></td>
                       <td><?php echo $seller['sellerFirstName']; ?></td>
                       <td><?php echo $seller['sellerLastName']; ?></td>
                       <td><?php echo $seller['sellerAddress']; ?></td>
@@ -65,8 +67,15 @@
                         ?><td>Femenino</td><?php
                       }   ?>
                       <td>
+                      <?php
+                      if ($_SESSION['rol'] == 1) {?>
                         <a class="btn bg-green btn-flat margin" href="editSeller.php?id=<?php echo $seller['idSeller'] ?>"><i class="fa fa-pencil"></i></a>
-                        <a href="#" data-id="<?php echo $seller['idSeller']; ?>" data-tipo="seller" class="btn bg-maroon btn-flat margin borrar_vendedor"><i class="fa fa-trash"></i></a>
+                        <a href="#" data-id="<?php echo $seller['idSeller']; ?>" data-tipo="seller" class="btn bg-maroon btn-flat margin borrar_vendedor"><i class="fa fa-trash"></i></a><?php
+                      }else if ($_SESSION['rol'] == 2) {?>
+                        <a class="btn bg-green btn-flat margin" onclick="valListados()"><i class="fa fa-pencil"></i></a>
+                        <a href="#" class="btn bg-maroon btn-flat margin" onclick="valListados()"><i class="fa fa-trash"></i></a><?php
+                      }
+                      ?>
                       </td>
                     </tr>
                 <?php }
@@ -74,6 +83,7 @@
                 </tbody>
                 <tfoot>
                 <tr>
+                  <th>Código</th>
                   <th>Nombre</th>
                   <th>Apellido</th>
                   <th>Dirección</th>

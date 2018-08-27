@@ -119,7 +119,7 @@
                         <?php echo $sale['dateStart']; ?>
                       </td>
                       <td>
-                        <?php echo $sale['serie']; $sale['noBill']; ?>
+                        <?php echo $sale['serie'].' '.$sale['noBill']; ?>
                       </td>
                       <td>
                         <?php echo $sale['seller']; ?>
@@ -130,7 +130,7 @@
                       <td>
                         <?php echo $sale['dateEnd']; ?>
                       </td>
-                      <td>Q
+                      <td>
                         <?php echo $sale['paymentMethod']; ?>
                       </td>
                       <td>

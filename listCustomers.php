@@ -97,12 +97,19 @@
                         <?php echo $customer['inCharge']; ?>
                       </td>
                       <td>
+                      <?php 
+                      if ($_SESSION['rol'] == 1) {?>
                         <a class="btn bg-green btn-flat margin" href="editCustomer.php?id=<?php echo $customer['idCustomer'] ?>">
                           <i class="fa fa-pencil"></i>
                         </a>
                         <a href="#" data-id="<?php echo $customer['idCustomer']; ?>" data-tipo="customer" class="btn bg-maroon btn-flat margin borrar_customer">
                           <i class="fa fa-trash"></i>
-                        </a>
+                        </a><?php
+                      }else if ($_SESSION['rol'] == 2) {?>
+                        <a class="btn bg-green btn-flat margin" onclick="valListados()"><i class="fa fa-pencil"></i></a>
+                        <a href="#" onclick="valListados()" class="btn bg-maroon btn-flat margin"><i class="fa fa-trash"></i></a><?php
+                      }
+                      ?>
                       </td>
                     </tr>
                     <?php }

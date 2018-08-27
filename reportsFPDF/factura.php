@@ -1,4 +1,5 @@
 <?php
+$idSale = $_GET['idSale'];
 require('Libreria/fpdf.php');
  
 class PDF extends FPDF
@@ -33,7 +34,7 @@ $pdf->Cell(120,3,'Luis Pedro Chaves Calderon',1,0,'L');
 
 $pdf->SetXY(17, 51);
 //NIT
-$pdf->Cell(30,3,'730613-K',1,0,'L');
+$pdf->Cell(30,3,$idSale,1,0,'L');
 
 $pdf->SetXY(25, 57);
 //Direccion

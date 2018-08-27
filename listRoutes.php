@@ -55,8 +55,15 @@
                       <td><?php echo $route['Seller']; ?></td>
                       <td><?php echo $route['details']; ?></td>
                       <td>
+                      <?php
+                      if ($_SESSION['rol'] == 1) {?>
                         <a class="btn bg-green btn-flat margin" href="editRoute.php?id=<?php echo $route['idRoute'] ?>"><i class="fa fa-pencil"></i></a>
-                        <a href="#" data-id="<?php echo $route['idRoute'];?>" data-tipo="route" class="btn bg-maroon btn-flat margin borrar_ruta"><i class="fa fa-trash"></i></a>
+                        <a href="#" data-id="<?php echo $route['idRoute'];?>" data-tipo="route" class="btn bg-maroon btn-flat margin borrar_ruta"><i class="fa fa-trash"></i></a><?php
+                      }elseif ($_SESSION['rol'] == 2) {?>
+                        <a class="btn bg-green btn-flat margin" onclick="valListados()"><i class="fa fa-pencil"></i></a>
+                        <a href="#" class="btn bg-maroon btn-flat margin" onclick="valListados()"><i class="fa fa-trash"></i></a><?php
+                      }
+                      ?>
                       </td>
                     </tr>
                 <?php }

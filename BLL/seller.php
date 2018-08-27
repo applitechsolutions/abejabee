@@ -4,6 +4,7 @@ include_once '../funciones/bd_conexion.php';
 if ($_POST['reg-vendedor'] == 'nuevo') {
 
     //die(json_encode($_POST));
+    $codigo = $_POST['codigo-vendedor'];
     $nombre = $_POST['nombre-vendedor'];
     $apellido = $_POST['apel-vendedor'];
     $direccion = $_POST['direc-vendedor'];
@@ -16,13 +17,13 @@ if ($_POST['reg-vendedor'] == 'nuevo') {
    // die(json_encode($fecha_formateada));
     
     try{
-        if ($nombre == '' || $apellido == '' || $telefono == '' || $dpi == '' || $genero == '') {
+        if ($codigo == '' || $nombre == '' || $apellido == '' || $telefono == '' || $dpi == '' || $genero == '') {
             $respuesta = array(
                 'respuesta' => 'vacio'
             );
         }else {
-            $stmt = $conn->prepare("INSERT INTO seller (sellerFirstName, sellerLastName, sellerAddress, sellerMobile, DPI, birthDate, gender) VALUES (?, ?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("ssssssi", $nombre, $apellido, $direccion, $telefono, $dpi, $fecha_formateada, $genero);
+            $stmt = $conn->prepare("INSERT INTO seller (sellerCode, sellerFirstName, sellerLastName, sellerAddress, sellerMobile, DPI, birthDate, gender) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("sssssssi", $codigo, $nombre, $apellido, $direccion, $telefono, $dpi, $fecha_formateada, $genero);
             $stmt->execute();
             $id_registro = $stmt->insert_id;
             if ($id_registro > 0) {
@@ -52,6 +53,7 @@ if ($_POST['reg-vendedor'] == 'nuevo') {
 if ($_POST['reg-vendedor'] == 'actualizar') {
 
     $id_seller = $_POST['id-reg-vendedor'];
+    $codigo = $_POST['codigo-vendedor'];
     $nombre = $_POST['nombre-vendedor'];
     $apellido = $_POST['apel-vendedor'];
     $direccion = $_POST['direc-vendedor'];
@@ -63,8 +65,8 @@ if ($_POST['reg-vendedor'] == 'actualizar') {
     $genero = $_POST['gen-vendedor'];
 
     try {
-        $stmt = $conn->prepare("UPDATE seller SET sellerFirstName = ?, sellerLastName = ?, sellerAddress = ?, sellerMobile = ?, DPI = ?, birthDate = ?, gender = ? WHERE idSeller = ?");
-        $stmt->bind_param("ssssssii", $nombre, $apellido, $direccion, $telefono, $dpi, $fecha_formateada, $genero, $id_seller);
+        $stmt = $conn->prepare("UPDATE seller SET sellerCode = ?, sellerFirstName = ?, sellerLastName = ?, sellerAddress = ?, sellerMobile = ?, DPI = ?, birthDate = ?, gender = ? WHERE idSeller = ?");
+        $stmt->bind_param("sssssssii", $codigo, $nombre, $apellido, $direccion, $telefono, $dpi, $fecha_formateada, $genero, $id_seller);
         $stmt->execute();
         if ($stmt->affected_rows) {
             $respuesta = array(
