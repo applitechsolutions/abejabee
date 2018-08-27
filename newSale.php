@@ -156,7 +156,7 @@ try { $sql = "SELECT * FROM correlative WHERE idCorrelative = 1";
     while ($correlative = $resultado->fetch_assoc()) {?>
                             <div class="form-group col-lg-1">
                               <label for="serie">Serie</label>
-                              <input type="text" class="form-control" id="serieS1" name="serieS" value="<?php echo $correlative['serie']; ?>" hidden>
+                              <input type="hidden" class="form-control" id="serieS1" name="serieS" value="<?php echo $correlative['serie']; ?>">
                               <input type="text" class="form-control" id="serieS" name="serie" value="<?php echo $correlative['serie']; ?>" disabled>
                             </div>
 
@@ -261,6 +261,7 @@ try {
                                   <th>Unidad</th>
                                   <th>Costo Aprox.</th>
                                   <th>Precios de venta</th>
+                                  <th>Descuento</th>
                                   <th>
                                     <span class="pull-right">Cant.</span>
                                   </th>
@@ -328,13 +329,17 @@ while ($product = $resultado->fetch_assoc()) {
                                           </option>
                                           <option value="money" disabled="disabled">Bono: Q.<?php echo $product['bonus']; ?>
                                           </option>
-                                        </select>
+                                        </select>                                        
                                       </div>
+                                    </td>
+                                    <td>
+                                        <input class="form-control input-sm" type="number" id="new_<?php echo $product['idProduct']; ?>_descuentoS" name="descuento" min="0.00" step="0.01" value="0.00" style="width: 50%;">
                                     </td>
                                     <td>
                                       <input class="form-control input-sm" type="number" id="new_<?php echo $product['idProduct']; ?>_cantidadS" name="cantidad" min="1"
                                         step="1" value="1" max="<?php echo $product['stock']; ?>" style="width: 65%;">
                                         <p class="text-green">Disp. <?php echo $product['stock']; ?></p>
+                                        <input class="max_<?php echo $product['idProduct']; ?>_stock" type="hidden" value="<?php echo $product['stock']; ?>">
                                     </td>
                                     <td>
                                       <input class="id_producto_agregar" type="hidden" value="<?php echo $product['idProduct']; ?>">
@@ -355,6 +360,7 @@ while ($product = $resultado->fetch_assoc()) {
                                   <th>Unidad</th>
                                   <th>Costo Aprox.</th>
                                   <th>Precios de venta</th>
+                                  <th>Descuento</th>
                                   <th>Cantidad</th>
                                   <th>Agregar</th>
                                 </tr>
@@ -390,6 +396,7 @@ while ($product = $resultado->fetch_assoc()) {
                               <th>Costo/u</th>
                               <th>Precio</th>
                               <th>Cantidad</th>
+                              <th>Descuento</th>
                               <th>Subtotal</th>
                               <th>Quitar</th>
                             </tr>
@@ -428,18 +435,18 @@ while ($product = $resultado->fetch_assoc()) {
                               <span class="input-group-addon">
                                 <i class="fa fa-money"></i>
                               </span>
-                              <input type="number" id="advance" name="advance" placeholder="0.00" min="0.00" step="0.01" class="form-control">
+                              <input type="number" id="advance" name="advance" placeholder="0.00" min="0.00" step="0.01" class="form-control" value="0.00">
                             </div>
                           </div>
                         </div>
 
                         <div class="row">
-                          <div class="form-group col-lg-6 pull-right">
+                          <div class="form-group col-lg-6 pull-left">
                             <input type="hidden" name="venta" value="nueva">
                             <input type="hidden" id="totalS" name="totalS" value="0">
+                            <button type="submit" class="btn btn-primary pull-left" id="crear-venta">
+                              <i class="fa fa-floppy-o" aria-hidden="true"></i> Confirmar venta</button>
                             <span class="text-warning">*Debe llenar los campos obligatorios </span>
-                            <button type="submit" class="btn btn-primary pull-right" id="crear-compra">
-                              <i class="fa fa-floppy-o" aria-hidden="true"></i> Confirmar compra</button>
                           </div>
                         </div>
                       </div>

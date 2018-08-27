@@ -4,12 +4,17 @@ include_once '../funciones/bd_conexion.php';
     $id_cellar = 1;
     $id_product = $_POST['id_product'];
     $cantidad = $_POST['cantidad'];
+    $tipo = $_POST['tipo'];
 
     $sql = "SELECT * FROM storage WHERE _idProduct = $id_product AND _idCellar = 1";
     $resultado = $conn->query($sql);
     $rows = mysqli_num_rows($resultado);
     while ($storage = $resultado->fetch_assoc()) {
-        $stock = $cantidad + $storage['stock'];
+        if ($tipo == 'compra') {
+            $stock = $storage['stock'] + $cantidad;
+        }elseif ($tipo == 'venta') {
+            $stock = $storage['stock'] - $cantidad;
+        }        
         $id_storage = $storage['idStorage'];
     }
 

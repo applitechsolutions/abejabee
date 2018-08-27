@@ -10,9 +10,16 @@ if ($_POST['venta'] == 'nueva') {
     $pago = $_POST['payment'];
     $adelanto = $_POST['advance'];
     $total = $_POST['totalS'];
+    $factura = "si";
 
     $fc = date('Y-m-d', strtotime($fecha_venta));
     $fv = date('Y-m-d', strtotime($fecha_venc));
+
+    if ($total < 700.00) {
+        $facturaV = "GUIA/REMISION";
+        $serieV = "GUIA/REMISION";
+        $factura = "no";
+    }
 
     try {
         if ($fecha_venta == "" || $fecha_venc == "" || $cliente == "" || $total == "0" || $vendedor == "" || $facturaV == "" || $serieV == "" || $pago = "") {
@@ -20,7 +27,7 @@ if ($_POST['venta'] == 'nueva') {
                 'respuesta' => 'vacio'
             );
         } else {
-            $stmt = $conn->prepare("INSERT INTO sale (_idSeller, _idCustomer, noBill, serie, totalSale, advance, dateStart, dateEnd, paymentMethod) VALUES (?, ?, ?, ?, ?, ?)");
+            $stmt = $conn->prepare("INSERT INTO sale(_idSeller, _idCustomer, noBill, serie, totalSale, advance, dateStart, dateEnd, paymentMethod) VALUES (?, ?, ?, ?, ?, ?)");
             $stmt->bind_param("iissddss", $vendedor, $vendedor, $cliente, $facturaV, $serieV, $total, $adelanto, $pago);
             $stmt->execute();
             $id_registro = $stmt->insert_id;
@@ -28,13 +35,17 @@ if ($_POST['venta'] == 'nueva') {
                 $respuesta = array(
                     'respuesta' => 'exito',
                     'idVenta' => $id_registro,
-                    'proceso' => 'nuevo'
+                    'proceso' => 'nuevo',
+                    'factura' => $factura,
+                    'adelanto' => $adelanto,
+                    'total' => $total,
+                    'fecha' => $fecha_venta
                 );
                 
             }else {
                 $respuesta = array(
                     'respuesta' => 'error',
-                    'idCompra' => $id_registro
+                    'idVenta' => $id_registro
                 );
             }
             $stmt->close();
@@ -47,6 +58,4 @@ if ($_POST['venta'] == 'nueva') {
 
     die(json_encode($respuesta));
 }
-
-
 ?>
