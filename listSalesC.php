@@ -11,8 +11,8 @@
     <section class="content-header">
       <h1>
         <i class="fa fa-shopping-cart"></i>
-        Compras
-        <small>Listado de Compras</small>
+        ventas
+        <small>Listado de ventas</small>
       </h1>
     </section>
 
@@ -22,7 +22,7 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Listado de compras</h3>
+              <h3 class="box-title">Listado de ventas</h3>
             </div>
 
             <!-- MODAL PRODUCTS -->
@@ -81,56 +81,72 @@
               <table id="registros" class="table table-bordered table-striped">
                 <thead>
                   <tr>
-                    <th>Fecha</th>
-                    <th>Proveedor</th>
-                    <th>Factura</th>
-                    <th>Serie</th>
-                    <th>Documento de Pago</th>
+                    <th>Fecha de inicio</th>
+                    <th>No. de factura</th>
+                    <th>Vendedor</th>
+                    <th>Cliente</th>
+                    <th>Fecha de vencimiento</th>
+                    <th>Método de pago</th>
+                    <th>Transporte</th>
+                    <th>No. de envio</th>
+                    <th>No. de entrega</th>
+                    <th>Anticipo</th>
                     <th>Total</th>
-                    <th>Detalle</th>
                   </tr>
                 </thead>
                 <tbody>
                   <?php
                   try{
-                    $sql = "SELECT idPurchase, datePurchase, noBill, serie, noDocument, totalPurchase,
-                    (SELECT providerName FROM provider WHERE idProvider = P._idProvider and state = 0) as proveedor FROM purchase P";
+                    $sql = "SELECT S.*,
+                    (select concat(sellerFirstName, ' ', sellerLastName) from seller where idSeller = S._idSeller) as seller,
+                    (select concat(customerCode, ' ', customerName) from customer where idCustomer = S._idCustomer) as customer
+                    FROM sale S WHERE S.cancel = 0";
                     $resultado = $conn->query($sql);
                   } catch (Exception $e){
                     $error= $e->getMessage();
                     echo $error;
                   }
                   
-                  while ($purchase = $resultado->fetch_assoc()) {
-                    $fecha = date_create($purchase['datePurchase']);
-                    setlocale(LC_ALL,"es_ES");
-                    $fec = date_format($fecha, 'd/m/Y');
-                    $date = DateTime::createFromFormat("d/m/Y", $fec);
+                  while ($sale = $resultado->fetch_assoc()) {
+                    // $fecha = date_create($purchase['datePurchase']);
+                    // setlocale(LC_ALL,"es_ES");
+                    // $fec = date_format($fecha, 'd/m/Y');
+                    // $date = DateTime::createFromFormat("d/m/Y", $fec);
                     //echo strftime("%d %b %g",$date->getTimestamp());
                 ?>
                     <tr>
                       <td>
-                        <?php echo strftime("%d/ %B/ %g",$date->getTimestamp()); ?>
+                        <?php echo $sale['dateStart']; ?>
                       </td>
                       <td>
-                        <?php echo $purchase['proveedor']; ?>
+                        <?php echo $sale['serie']; $sale['noBill']; ?>
                       </td>
                       <td>
-                        <?php echo $purchase['noBill']; ?>
+                        <?php echo $sale['seller']; ?>
                       </td>
                       <td>
-                        <?php echo $purchase['serie']; ?>
+                        <?php echo $sale['customer']; ?>
                       </td>
                       <td>
-                        <?php echo $purchase['noDocument']; ?>
+                        <?php echo $sale['dateEnd']; ?>
                       </td>
-                      <td>Q.
-                        <?php echo $purchase['totalPurchase']; ?>
+                      <td>Q
+                        <?php echo $sale['paymentMethod']; ?>
                       </td>
                       <td>
-                        <a href="#" data-id="<?php echo $purchase['idPurchase']; ?>" data-tipo="listDetailP" class="btn bg-orange btn-flat margin detalle_purchase">
-                          <i class="fa fa-info"></i>
-                        </a>
+                        <?php echo $sale['transport']; ?>
+                      </td>
+                      <td>
+                        <?php echo $sale['noShipment']; ?>
+                      </td>
+                      <td>
+                        <?php echo $sale['noDeliver']; ?>
+                      </td>
+                      <td>Q
+                        <?php echo $sale['advance']; ?>
+                      </td>
+                      <td>Q
+                        <?php echo $sale['totalSale']; ?>
                       </td>
                     </tr>
                     <?php }
@@ -138,13 +154,17 @@
                 </tbody>
                 <tfoot>
                   <tr>
-                    <th>Fecha</th>
-                    <th>Proveedor</th>
-                    <th>Factura</th>
-                    <th>Serie</th>
-                    <th>Documento de Pago</th>
+                  <th>Fecha de inicio</th>
+                    <th>No. de factura</th>
+                    <th>Vendedor</th>
+                    <th>Cliente</th>
+                    <th>Fecha de vencimiento</th>
+                    <th>Método de pago</th>
+                    <th>Transporte</th>
+                    <th>No. de envio</th>
+                    <th>No. de entrega</th>
+                    <th>Anticipo</th>
                     <th>Total</th>
-                    <th>Detalle</th>
                   </tr>
                 </tfoot>
               </table>
