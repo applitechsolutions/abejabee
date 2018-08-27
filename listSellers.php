@@ -29,6 +29,7 @@
               <table id="registros" class="table table-bordered table-striped">
                 <thead>
                 <tr>
+                  <th>Código</th>
                   <th>Nombre</th>
                   <th>Apellido</th>
                   <th>Dirección</th>
@@ -42,7 +43,7 @@
                 <tbody>
                 <?php
                   try{
-                    $sql = "SELECT idSeller, sellerFirstName, sellerLastName, sellerAddress, sellerMobile, DPI, birthDate, gender FROM seller WHERE state = 0";
+                    $sql = "SELECT idSeller, sellerCode, sellerFirstName, sellerLastName, sellerAddress, sellerMobile, DPI, birthDate, gender FROM seller WHERE state = 0";
                     $resultado = $conn->query($sql);
                   } catch (Exception $e){
                     $error= $e->getMessage();
@@ -53,6 +54,7 @@
                     $date = date_create($seller['birthDate']);
                 ?>
                     <tr>
+                      <td><?php echo $seller['sellerCode']; ?></td>
                       <td><?php echo $seller['sellerFirstName']; ?></td>
                       <td><?php echo $seller['sellerLastName']; ?></td>
                       <td><?php echo $seller['sellerAddress']; ?></td>
@@ -74,6 +76,7 @@
                 </tbody>
                 <tfoot>
                 <tr>
+                  <th>Código</th>
                   <th>Nombre</th>
                   <th>Apellido</th>
                   <th>Dirección</th>

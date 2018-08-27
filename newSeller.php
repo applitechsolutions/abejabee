@@ -17,7 +17,7 @@
     </section>
 
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-8">
         <!-- Main content -->
         <section class="content">
           <!-- Default box -->
@@ -28,6 +28,10 @@
             <div class="box-body">
               <form role="form" id="form-vendedor" name="form-vendedor" method="post" action="BLL/seller.php">
                 <div class="box-body">
+                  <div class="form-group">
+                    <span class="text-danger text-uppercase">*</span><label for="codigo">Código de Vendedor</label>
+                    <input type="text" class="form-control" id="codigo-vendedor" name="codigo-vendedor" placeholder="Escribe el código del vendedor" autofocus>
+                  </div>
                   <div class="form-group">
                     <span class="text-danger text-uppercase">*</span><label for="nombre">Nombre</label>
                     <input type="text" class="form-control" id="nombre-vendedor" name="nombre-vendedor" placeholder="Escribe el nombre del vendedor" autofocus>
