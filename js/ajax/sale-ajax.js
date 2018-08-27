@@ -94,7 +94,7 @@ $(document).ready(function () {
                 console.log(data);
                 var resultado = JSON.parse(data);
                 if (resultado.respuesta == 'exito') {
-                    saveBalanceS(resultado.idVenta, resultado.adelanto, resultado.total, resultado.fecha, resultad.factura, resultado.serie, resultado.nofactura);
+                    saveBalanceS(resultado.idVenta, resultado.adelanto, resultado.total, resultado.fecha, resultado.factura, resultado.serie, resultado.nofactura);
                 } else if (resultado.respuesta == 'vacio') {
                     swal({
                         type: 'warning',
