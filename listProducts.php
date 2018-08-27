@@ -108,12 +108,19 @@
                           <img src="img/products/<?php echo $product['picture']; ?>" width="100" onerror="this.src='img/products/notfound.jpg';">
                         </td>
                         <td>
+                        <?php 
+                        if ($_SESSION['rol'] == 1) {?>
                           <a class="btn bg-green btn-flat margin" href="editProduct.php?id=<?php echo $product['idProduct'] ?>">
                             <i class="fa fa-pencil"></i>
                           </a>
                           <a href="#" data-id="<?php echo $product['idProduct']; ?>" data-tipo="product" class="btn bg-maroon btn-flat margin borrar_product">
                             <i class="fa fa-trash"></i>
-                          </a>
+                          </a><?php
+                        }else if ($_SESSION['rol'] == 2) {?>
+                          <a class="btn bg-green btn-flat margin" onclick="valListados()"><i class="fa fa-pencil"></i></a>
+                          <a href="#" class="btn bg-maroon btn-flat margin" onclick="valListados()"><i class="fa fa-trash"></i></a><?php
+                        }
+                        ?>
                         </td>
                       </tr>
                       <?php }
