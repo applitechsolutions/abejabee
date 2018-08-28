@@ -84,7 +84,8 @@ while ($sale = $resultado->fetch_assoc()) {
     $pdf->Cell(15, 4, 'Vendedor:' , 0, 0, 'L');
     $pdf->SetFont('Arial', '', 10);
     $pdf->Cell(5);
-    $pdf->Cell(15, 4, $sale['sellercode'] , 0, 0, 'L');
+    $sellerC = iconv('UTF-8', 'windows-1252', $sale['sellercode']);
+    $pdf->Cell(15, 4, $sellerC , 0, 0, 'L');
     $pdf->Rect(111, 65, 50, 9);
     $pdf->SetFont('Arial', 'B', 10);
     $pdf->SetXY(111, 67);
@@ -94,8 +95,9 @@ while ($sale = $resultado->fetch_assoc()) {
     $pdf->SetXY(161, 58);
     $pdf->Cell(15, 4, 'Condiciones:' , 0, 0, 'L');
     $pdf->SetFont('Arial', '', 10);
+    $payment = iconv('UTF-8', 'windows-1252', $sale['paymentMethod']);
     $pdf->Cell(9);
-    $pdf->Cell(15, 4, $sale['paymentMethod'] , 0, 0, 'L');
+    $pdf->Cell(15, 4, $payment , 0, 0, 'L');
     $pdf->Rect(161, 65, 49, 9);
     $pdf->SetFont('Arial', 'B', 10);
     $envio = iconv('UTF-8', 'windows-1252', 'Envío:');
@@ -149,7 +151,7 @@ while ($sale = $resultado->fetch_assoc()) {
     $pdf->Cell(40, 5, 'TOTAL Q__'.$sale['totalSale'], 1, 0, 'C');
 
     //TOTAL-LETRAS
-    $pdf->SetXY(26,  $Contador+ 15);
+    $pdf->SetXY(26,  $Contador+ 20);
     $pdf->MultiCell(85, 5, 'SE ENTREGA LA OTRA VISITA', 0,'L',0);
 }
 $pdf->Output(); //Salida al navegador

@@ -81,7 +81,7 @@
               <table id="registros" class="table table-bordered table-striped">
                 <thead>
                   <tr>
-                    <th>Fecha de inicio</th>
+                    <th>Fecha</th>
                     <th>No. de factura</th>
                     <th>Vendedor</th>
                     <th>Cliente</th>
