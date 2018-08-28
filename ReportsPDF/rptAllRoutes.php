@@ -2,6 +2,16 @@
 include ('pdfclass/mpdf.php');//Se importa la librería de PDF
 include_once '../funciones/bd_conexion.php';
 //Se indica lo que se va a imprimir en formato HTML
+
+try{
+    $sql = "SELECT idRoute, codeRoute, routeName,
+    (select concat(sellerFirstName, ' ', sellerLastName) from seller where idSeller = _idSeller) as Seller, details FROM route WHERE state = 0";
+    $resultado = $conn->query($sql);
+} catch (Exception $e){
+    $error= $e->getMessage();
+    echo $error;
+}
+
 $pagina='
     <!DOCTYPE html>
     <html>
@@ -31,15 +41,6 @@ $pagina='
                     </tr>
                 </thead>
                 <tbody>';
-                try{
-                    $sql = "SELECT idRoute, codeRoute, routeName,
-                    (select concat(sellerFirstName, ' ', sellerLastName) from seller where idSeller = _idSeller) as Seller, details FROM route WHERE state = 0";
-                    $resultado = $conn->query($sql);
-                } catch (Exception $e){
-                    $error= $e->getMessage();
-                    echo $error;
-                }
-                
                 while ($route = $resultado->fetch_assoc()) {
             $pagina.='
                     <tr>
