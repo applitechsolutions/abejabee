@@ -5,11 +5,11 @@ $(document).ready(function () {
 
         var id = $(this).attr('data-id');
         var cantidad = $('#new_' + id + '_cantidadS').val();
-        var max_stock = $('#max_' + id + '_stock').val();
+        var max_stock = $('.max_' + id + '_stock').val();
         var descuento = $('#new_' + id + '_descuentoS').val();
         var prec = $('#SelectPrice' + id).val();
 
-        console.log(descuento);
+        console.log(max_stock);
         if (isNaN(cantidad) || cantidad < 1 || cantidad > max_stock || isNaN(descuento) || descuento < 0) {
             swal({
                 type: 'error',
