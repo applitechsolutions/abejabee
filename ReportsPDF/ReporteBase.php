@@ -6,67 +6,39 @@ $pagina='
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<style>
-table#space > tr#direccion {
-	border-collapse: separate;
-	border-spacing: 10px 10px;
-  }
-</style>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/3/w3.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 <body>
 <div class="row">
-	<div class="col-xs-4">
-		<table id="space" style="width:100%">
-			<tr>
-				<th style="text-align:left">Lugar:</th>
-				<td>Ejemplo</td>
-			</tr>
-			<tr>
-				<th style="text-align:left">Nombre:</th>
-				<td>Ejemplo</td>
-			</tr>
-			<tr>
-				<th style="text-align:left">Nit:</th>
-				<td>Ejemplo</td>
-			</tr>
-			<tr>
-				<th style="text-align:left;">Direccion:</th>
-				<td>Ejemplo</td>
-			</tr>
-			<tr>
-				<th style="text-align:left;">Telefono:</th>
-				<td>Ejemplo</td>
-			</tr>
-		</table>
+	<div class="col-xs-12">
+		<h3 class="page-header">
+		<i class="fa fa-globe"></i> Schlenker, Pharma.
+		<small class="pull-right">Fecha: '.date("d/m/Y").'</small>
+		</h3>
 	</div>
-	<div class="col-xs-2">
-		<table style="width:100%">
-			<tr>
-				<th>Cod Vendedor:</th>
-				<td>Ejemplo</td>
-			</tr>
-		</table>
-	</div>
-	<div class="col-xs-2">
-		<table style="width:100%">
-			<tr>
-				<th>Cod Cliente:</th>
-				<td>Ejemplo</td>
-			</tr>
-		</table>
-	</div>
-	<div class="col-xs-2">
-		<table style="width:100%">
-			<tr>
-				<th>Fecha de Vencimiento:</th>
-				<td>Ejemplo</td>
-			</tr>
+<!-- /.col -->
+</div>
+<div class="row">
+	<div class="col-xs-12 table-responsive">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Qty</th>
+					<th>Product</th>
+					<th>Serial #</th>
+					<th>Description</th>
+					<th>Subtotal</th>
+				</tr>
+			</thead>
+			<tbody>
+			
+			</tbody>
 		</table>
 	</div>
 	<!-- /.col -->
 </div>
+<!-- /.row -->
 
 </body>
 </html>';
@@ -76,7 +48,7 @@ table#space > tr#direccion {
 	
 	$file = "NombreReporte.pdf"; //Se nombra el archivo
 
-	$mpdf = new mPDF('utf-8', 'LETTER', 5, '', 10, 10, 35, 10, 0, 0);//se define el tamaño de pagina y los margenes
+	$mpdf = new mPDF('utf-8', 'LETTER', 0, '', 10, 10, 10, 10, 0, 0);//se define el tamaño de pagina y los margenes
 	$mpdf->WriteHTML($pagina); //se escribe la variable pagina
 	
 	$mpdf->Output($file, 'I'); //Se crea el documento pdf y se muestra en el navegador

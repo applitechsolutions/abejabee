@@ -11,8 +11,8 @@ include_once 'funciones/bd_conexion.php';
         <section class="content-header">
             <h1>
                 <i class="glyphicon glyphicon-tags"></i>
-                Ventas
-                <small>Llene el formulario para realizar una nueva venta</small>
+                Reportes
+                <small>Aquí puede generar los reportes</small>
             </h1>
         </section>
 
@@ -21,7 +21,7 @@ include_once 'funciones/bd_conexion.php';
             <!-- Default box -->
             <div class="box box-default">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Nueva Venta</h3>
+                    <h3 class="box-title">No sé</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
@@ -38,16 +38,6 @@ include_once 'funciones/bd_conexion.php';
                                         <ul class="dropdown-menu">
                                             <li role="presentation">
                                                 <a href="#tab_1" data-toggle="tab">Ejemplo de reporte</a>
-                                            </li>
-                                            <li role="presentation">
-                                                <a role="menuitem" tabindex="-1" href="#">Another action</a>
-                                            </li>
-                                            <li role="presentation">
-                                                <a role="menuitem" tabindex="-1" href="#">Something else here</a>
-                                            </li>
-                                            <li role="presentation" class="divider"></li>
-                                            <li role="presentation">
-                                                <a role="menuitem" tabindex="-1" href="#">Separated link</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -78,39 +68,25 @@ include_once 'funciones/bd_conexion.php';
                                                     <input type="date" class="w3-input w3-light-gray w3-round w3-border-light-gray" name="rptP1fecha2">
                                                 </div>
                                                 
-                                                <a onclick="getProduccionesPorFecha()" class="w3-btn w3-blue w3-round w3-right  w3-small">
+                                                <a onclick="listAllRoutes()" class="w3-btn w3-blue w3-round w3-right  w3-small">
                                                     Ver reporte <i class="fa fa-arrow-circle-right"></i> 
                                                 </a>
                                             </div>
                                         </div>
-                                        <br>
-                                        <div id="divreporte" class="w3-rest">
-                                            <iframe src="ReportsPDF/ReporteBase.php" style="width: 100%; height: 810px; min-width: 300px;"></iframe>
-                                        </div>
                                     </div>
                                     <!-- /.tab-pane -->
                                     <div class="tab-pane" id="tab_2">
-                                        The European languages are members of the same family. Their separate existence is a myth. For science, music, sport, etc,
-                                        Europe uses the same vocabulary. The languages only differ in their grammar, their
-                                        pronunciation and their most common words. Everyone realizes why a new common language
-                                        would be desirable: one could refuse to pay expensive translators. To achieve this,
-                                        it would be necessary to have uniform grammar, pronunciation and more common words.
-                                        If several languages coalesce, the grammar of the resulting language is more simple
-                                        and regular than that of the individual languages.
                                     </div>
                                     <!-- /.tab-pane -->
                                     <div class="tab-pane" id="tab_3">
-                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
-                                        text ever since the 1500s, when an unknown printer took a galley of type and scrambled
-                                        it to make a type specimen book. It has survived not only five centuries, but also
-                                        the leap into electronic typesetting, remaining essentially unchanged. It was popularised
-                                        in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
-                                        and more recently with desktop publishing software like Aldus PageMaker including
-                                        versions of Lorem Ipsum.
                                     </div>
                                     <!-- /.tab-pane -->
                                 </div>
+
                                 <!-- /.tab-content -->
+                            </div>
+                            <div id="divreporte" class="w3-rest">
+                                <iframe src="ReportsPDF/ReporteBase.php" style="width: 100%; height: 810px; min-width: 300px;"></iframe>
                             </div>
                             <!-- nav-tabs-custom -->
                         </div>

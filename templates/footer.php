@@ -23,6 +23,7 @@
 <script src="js/demo.js"></script>
 <script src="js/sweetalert2.min.js"></script>
 <!-- AJAX FOR SCHLENKER PHARMA -->
+<script src="js/ajax/reports-ajax.js"></script>
 <script src="js/ajax/sale-ajax.js"></script>
 <script src="js/ajax/customer-ajax.js"></script>
 <script src="js/ajax/purchase-ajax.js"></script>
@@ -118,6 +119,10 @@
       showConfirmButton: false,
       timer: 1500
     })
+  }
+
+  function changeReport(report){
+    $('#divreporte').html('<iframe src="ReportsPDF/'+report+'" style="width: 100%; min-width: 300px; height: 810px"></iframe>');
   }
 </script>
 </body>
