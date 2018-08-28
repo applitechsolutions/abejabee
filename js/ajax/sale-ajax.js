@@ -143,7 +143,7 @@ $(document).ready(function () {
                     swal({
                         type: 'warning',
                         title: 'Oops...',
-                        text: 'Debe llenar todos los campos',
+                        text: 'No se ha generado ninguna venta',
                     })
                 } else if (resultado.respuesta == 'error') {
                     swal({
@@ -155,7 +155,6 @@ $(document).ready(function () {
             }
         })
     });
-
 
     $('#form-correlative').on('submit', function (e) {
         e.preventDefault();
@@ -240,6 +239,62 @@ $(document).ready(function () {
                     $("#correlativeCloseGuia").click();
                     $("#noRemi").val(resultado.noBill);
                     $("#noRemi1").val(resultado.noBill);
+                } else if (resultado.respuesta == 'vacio') {
+                    swal({
+                        position: 'top-end',
+                        type: 'warning',
+                        title: 'Debes llenar los campos obligatorios :/',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                } else if (resultado.respuesta == 'error') {
+                    swal({
+                        position: 'top-end',
+                        type: 'error',
+                        title: 'Algo salió mal, intenta de nuevo',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            },
+            error: function (data) {
+                swal({
+                    position: 'top-end',
+                    type: 'error',
+                    title: 'Algo salió mal, intenta de nuevo',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+        })
+
+    });
+
+    $('#form-correlative-envio').on('submit', function (e) {
+        e.preventDefault();
+
+        var datos = $(this).serializeArray();
+
+        $.ajax({
+            type: $(this).attr('method'),
+            data: datos,
+            url: $(this).attr('action'),
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+                var resultado = data;
+                if (resultado.respuesta == 'exito') {
+                    swal({
+                        position: 'top-end',
+                        type: 'success',
+                        title: '¡' + resultado.mensaje,
+                        showConfirmButton: false,
+                        timer: 1000
+                    })
+
+                    $("#correlativeCloseEnvio").click();
+                    $("#noShipment").val(resultado.noBill);
+                    $("#noShipment1").val(resultado.noBill);
                 } else if (resultado.respuesta == 'vacio') {
                     swal({
                         position: 'top-end',
@@ -377,10 +432,10 @@ function saveDetailS(idEnc, factura, serie, nofactura) {
         })
     }
     if (factura == 'si') {
-        changeReport('factura.php?idSale='+idEnc);
+        changeReportF('factura.php?idSale='+idEnc);
         updateCorrelativo('factura', serie, nofactura);
     }else if (factura == 'no') {
-        changeReport('remision.php?idSale='+idEnc);
+        changeReportF('remision.php?idSale='+idEnc);
         updateCorrelativo('guia', 'A', nofactura);
     }
     $("#idSale").val(idEnc);
@@ -414,12 +469,12 @@ function saveStockS(id_product, cantidad_detalle) {
     })
 }
 
-function changeReport(report) {
-    $('#divreporte').html('<iframe src="reportsFPDF/' + report + '" style="width: 100%; min-width: 300px; height: 700px"></iframe>');
+function changeReportF(report) {
+    $('#divreporteF').html('<iframe src="reportsFPDF/' + report + '" style="width: 100%; min-width: 300px; height: 700px"></iframe>');
 }
 
 function changeReportE(report) {
-    $('#divreporteE').html('<iframe src="reportsFPDF/' + report + '" style="width: 100%; min-width: 300px; height: 380px"></iframe>');
+    $('#divreporteE').html('<iframe src="reportsFPDF/' + report + '" style="width: 100%; min-width: 300px; height: 390px"></iframe>');
 }
 
 function eliminarS(idp) {

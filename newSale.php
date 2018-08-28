@@ -569,7 +569,7 @@ while ($product = $resultado->fetch_assoc()) {
                                 <i class="fa fa-print"></i> Factura y Guía de remision</h3>
                             </div>
                             <div class="box-body">
-                              <div id="divreporte" class="w3-rest">
+                              <div id="divreporteF" class="w3-rest">
                                 <iframe src="" style="width: 100%; height: 700px; min-width: 300px;"></iframe>
                               </div>
                             </div>
@@ -587,7 +587,7 @@ while ($product = $resultado->fetch_assoc()) {
                               <form role="form" id="form-envio" name="form-envio" method="post" action="BLL/sale.php">
                                 <div class="form-group">
                                   <label for="transport">Transporte</label>
-                                  <input type="text" class="form-control" id="transport" name="transport" placeholder="Escriba un transporte" autofocus>
+                                  <input type="text" class="form-control" id="transport" name="transport" placeholder="Escriba un transporte" value="GuatEx" autofocus>
                                 </div>
                                 <?php
                                   try { $sql = "SELECT * FROM correlative WHERE idCorrelative = 21";
@@ -621,7 +621,7 @@ while ($product = $resultado->fetch_assoc()) {
                                     <!-- /.box-body -->
                                     <div class="box-footer">
                                       <input type="hidden" name="venta" value="envio">
-                                      <input type="hidden" id="idSale" name="idSale" value="0">
+                                      <input type="hidden" id="idSale" name="idSale" value="">
                                       <button type="submit" class="btn btn-primary pull-left" id="crear-envio">
                                         <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
                                       <span class="text-warning"> *Debe llenar los campos obligatorios </span>
@@ -629,7 +629,7 @@ while ($product = $resultado->fetch_assoc()) {
                               </form>
                             </div>
                             <div id="divreporteE" class="w3-rest">
-                              <iframe src="" style="width: 100%; height: 380px; min-width: 300px;"></iframe>
+                              <iframe src="" style="width: 100%; height: 390px; min-width: 300px;"></iframe>
                             </div>
                           </div>
                           <!-- /.box-body -->
