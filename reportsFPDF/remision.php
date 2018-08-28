@@ -25,14 +25,7 @@ try {
 
 while ($sale = $resultado->fetch_assoc()) {
     $fechaS = date_create($sale['dateStart']);
-    setlocale(LC_ALL, "es_ES");
-    $fecS = date_format($fechaS, 'd/m/Y');
-    $dateS = DateTime::createFromFormat("d/m/Y", $fecS);
-
     $fecha = date_create($sale['dateEnd']);
-    setlocale(LC_ALL, "es_ES");
-    $fec = date_format($fecha, 'd/m/Y');
-    $date = DateTime::createFromFormat("d/m/Y", $fec);
 
     $pdf = new PDF('P', 'mm', 'Letter');
 #Establecemos los márgenes izquierda, arriba y derecha:
@@ -77,14 +70,14 @@ while ($sale = $resultado->fetch_assoc()) {
     $pdf->Cell(15, 4,$strL , 0, 1, 'L');
     $pdf->SetXY(111, 50);
     $pdf->SetFont('Arial', '', 10);
-    $pdf->Cell(15, 4,  strftime("%d %b %g", $dateS->getTimestamp()), 0, 1, 'L');
+    $pdf->Cell(15, 4,  date_format($fechaS, 'd/m/Y'), 0, 1, 'L');
     $pdf->Rect(161, 42, 49, 14);
     $pdf->SetFont('Arial', 'B', 10);
     $pdf->SetXY(161, 44);
     $pdf->Cell(15, 4, 'Vencimiento:' , 0, 1, 'L');
     $pdf->SetXY(161, 50);
     $pdf->SetFont('Arial', '', 10);
-    $pdf->Cell(15, 4, strftime("%d %b %g", $dateS->getTimestamp()) , 0, 1, 'L');
+    $pdf->Cell(15, 4, date_format($fecha, 'd/m/Y') , 0, 1, 'L');
     $pdf->Rect(111, 56, 50, 9);
     $pdf->SetFont('Arial', 'B', 10);
     $pdf->SetXY(111, 58);

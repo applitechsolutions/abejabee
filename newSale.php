@@ -124,6 +124,51 @@ try {
               <!-- /.modal-dialog -->
             </div>
 
+            <!-- /.modal-noShipment -->
+            <div class="modal fade" id="modal-noShipment">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">
+                      <i class="glyphicon glyphicon-print" aria-hidden="true"></i> Correlativo de guías GuateEx</h4>
+                  </div>
+                  <div class="modal-body">
+                    <form role="form" id="form-correlative-envio" name="form-correlative-envio" method="post" action="BLL/correlative.php">
+                      <div class="row">
+                        <?php
+  try {
+      $sql = "SELECT * FROM correlative WHERE idCorrelative = 21";
+      $resultado = $conn->query($sql);
+      while ($correlative = $resultado->fetch_assoc()) {?>
+                          <div class="form-group col-lg-8">
+                            <span class="text-danger text-uppercase">*</span>
+                            <label for="last">Última guía de GuateEx generada</label>
+                            <input type="text" class="form-control" id="last" name="last" value="<?php echo $correlative['last']; ?>">
+                          </div>
+                          <?php
+  }
+  } catch (Exception $e) {
+      echo "Error: " . $e->getMessage();
+  }
+  ?>
+                      </div>
+                      <div class="modal-footer">
+                        <input type="hidden" name="correlative" value="envio">
+                        <button type="submit" class="btn btn-info pull-left" id="crear-correlativo">
+                          <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+                        <span class="text-warning w3-small w3-padding-small pull-left">*Debe llenar los campos obligatorios</span>
+                        <button id="correlativeCloseEnvio" type="button" class="btn btn-danger w3-round-medium pull-right" data-dismiss="modal">Cerrar</button>
+                      </div>
+                  </div>
+                  </form>
+                </div>
+              </div>
+              <!-- /.modal-dialog -->
+            </div>
+
             <div class="row">
               <div class="col-md-12">
                 <!-- Custom Tabs -->
@@ -210,7 +255,7 @@ try { $sql = "SELECT * FROM correlative WHERE idCorrelative = 11";
     $resultado = $conn->query($sql);
     while ($correlative = $resultado->fetch_assoc()) {?>
                                   <div class="form-group col-lg-3">
-                                    <label for="noRemi">No. de Guia de remision</label>
+                                    <label for="noRemi">No. de Guía de remision</label>
                                     <div class="input-group">
                                       <input type="text" class="form-control" id="noRemi1" name="noRemi1" value="<?php echo $correlative['last'] + 1; ?>" disabled>
                                       <input type="hidden" class="form-control" id="noRemi" name="noRemi" value="<?php echo $correlative['last'] + 1; ?>">
@@ -520,11 +565,12 @@ while ($product = $resultado->fetch_assoc()) {
 
                           <div class="box box-warning">
                             <div class="box-header">
-                              <h3 class="box-title">Factura y Guia de remision</h3>
+                              <h3 class="box-title">
+                                <i class="fa fa-print"></i> Factura y Guía de remision</h3>
                             </div>
                             <div class="box-body">
                               <div id="divreporte" class="w3-rest">
-                                <iframe src="" style="width: 100%; height: 810px; min-width: 300px;"></iframe>
+                                <iframe src="" style="width: 100%; height: 700px; min-width: 300px;"></iframe>
                               </div>
                             </div>
                             <!-- /.box-body -->
@@ -534,56 +580,76 @@ while ($product = $resultado->fetch_assoc()) {
 
                           <div class="box box-warning">
                             <div class="box-header">
-                              <h3 class="box-title">Envío</h3>
+                              <h3 class="box-title">
+                                <i class="fa fa-truck"></i> Envío</h3>
                             </div>
                             <div class="box-body">
                               <form role="form" id="form-envio" name="form-envio" method="post" action="BLL/sale.php">
-                                <div class="box-body">
-                                  <div class="form-group">
-                                    <label for="transport">Transporte</label>
-                                    <input type="text" class="form-control" id="transport" name="transport" placeholder="Escriba un transporte" autofocus>
-                                  </div>
+                                <div class="form-group">
+                                  <label for="transport">Transporte</label>
+                                  <input type="text" class="form-control" id="transport" name="transport" placeholder="Escriba un transporte" autofocus>
+                                </div>
+                                <?php
+                                  try { $sql = "SELECT * FROM correlative WHERE idCorrelative = 21";
+                                      $resultado = $conn->query($sql);
+                                      while ($correlative = $resultado->fetch_assoc()) {?>
                                   <div class="form-group">
                                     <label for="noShipment">No. de envío</label>
-                                    <input type="text" class="form-control" id="noShipment" name="noShipment" placeholder="Escriba un número de envio">
+                                    <div class="input-group">
+                                      <input type="text" class="form-control" id="noShipment1" name="noShipment1" value="<?php echo $correlative['last'] + 1; ?>"
+                                        disabled>
+                                      <input type="hidden" class="form-control" id="noShipment" name="noShipment" value="<?php echo $correlative['last'] + 1; ?>">
+                                      <div class="input-group-btn">
+                                        <button type="button" class="btn bg-info" data-toggle="modal" data-target="#modal-noShipment">
+                                          <i class="glyphicon glyphicon-print" aria-hidden="true"></i>
+                                          Correlativo
+                                        </button>
+                                      </div>
+                                      <!-- /btn-group -->
+                                    </div>
                                   </div>
-                                  <div class="form-group">
+                                  <?php
+                                  }
+                                  } catch (Exception $e) {
+                                      echo "Error: " . $e->getMessage();
+                                  }
+                                  ?>
+                                    <div class="form-group">
                                       <label for="noDeliver">No. de entrega</label>
                                       <input type="text" class="form-control" id="noDeliver" name="noDeliver" placeholder="Escriba un número de entrega">
                                     </div>
-                                 
-                                  <!-- /.box-body -->
-                                  <div class="box-footer">
-                                    <input type="hidden" name="venta" value="envio">
-                                    <input type="hidden" id="idSale" name="idSale" value="0">
-                                    <button type="submit" class="btn btn-primary pull-left" id="crear-envio">
-                                      <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
-                                    <span class="text-warning"> *Debe llenar los campos obligatorios </span>
-                                  </div>
+                                    <!-- /.box-body -->
+                                    <div class="box-footer">
+                                      <input type="hidden" name="venta" value="envio">
+                                      <input type="hidden" id="idSale" name="idSale" value="0">
+                                      <button type="submit" class="btn btn-primary pull-left" id="crear-envio">
+                                        <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+                                      <span class="text-warning"> *Debe llenar los campos obligatorios </span>
+                                    </div>
                               </form>
-                              </div>
-                              <div id="divreporteE" class="w3-rest">
-                                <iframe src="" style="width: 100%; height: 500px; min-width: 300px;"></iframe>
-                              </div>
                             </div>
-                            <!-- /.box-body -->
+                            <div id="divreporteE" class="w3-rest">
+                              <iframe src="" style="width: 100%; height: 380px; min-width: 300px;"></iframe>
+                            </div>
                           </div>
+                          <!-- /.box-body -->
                         </div>
                       </div>
                     </div>
-                    <!-- /.tab-pane -->
                   </div>
-                  <!-- /.tab-content -->
+                  <!-- /.tab-pane -->
                 </div>
-                <!-- nav-tabs-custom -->
+                <!-- /.tab-content -->
               </div>
+              <!-- nav-tabs-custom -->
             </div>
           </div>
+        </div>
       </section>
       <!-- /.content -->
-      </div>
-      <!-- /.content-wrapper -->
+    </div>
+    <!-- /.content-wrapper -->
 
-      <?php
+    <?php
 include_once 'templates/footer.php';
 ?>

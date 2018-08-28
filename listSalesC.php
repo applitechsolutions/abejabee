@@ -108,15 +108,12 @@
                   }
                   
                   while ($sale = $resultado->fetch_assoc()) {
-                    // $fecha = date_create($purchase['datePurchase']);
-                    // setlocale(LC_ALL,"es_ES");
-                    // $fec = date_format($fecha, 'd/m/Y');
-                    // $date = DateTime::createFromFormat("d/m/Y", $fec);
-                    //echo strftime("%d %b %g",$date->getTimestamp());
+                    $dateStar = date_create($sale['dateStart']);
+                    $dateEnd = date_create($sale['dateEnd']);
                 ?>
                     <tr>
                       <td>
-                        <?php echo $sale['dateStart']; ?>
+                        <?php echo date_format($dateStar, 'd/m/y'); ?>
                       </td>
                       <td>
                         <?php echo $sale['serie'].' '.$sale['noBill']; ?>
@@ -128,7 +125,7 @@
                         <?php echo $sale['customer']; ?>
                       </td>
                       <td>
-                        <?php echo $sale['dateEnd']; ?>
+                      <?php echo date_format($dateEnd, 'd/m/y'); ?>
                       </td>
                       <td>
                         <?php echo $sale['paymentMethod']; ?>

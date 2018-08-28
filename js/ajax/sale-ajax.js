@@ -415,11 +415,11 @@ function saveStockS(id_product, cantidad_detalle) {
 }
 
 function changeReport(report) {
-    $('#divreporte').html('<iframe src="reportsFPDF/' + report + '" style="width: 100%; min-width: 300px; height: 810px"></iframe>');
+    $('#divreporte').html('<iframe src="reportsFPDF/' + report + '" style="width: 100%; min-width: 300px; height: 700px"></iframe>');
 }
 
 function changeReportE(report) {
-    $('#divreporteE').html('<iframe src="reportsFPDF/' + report + '" style="width: 100%; min-width: 300px; height: 500px"></iframe>');
+    $('#divreporteE').html('<iframe src="reportsFPDF/' + report + '" style="width: 100%; min-width: 300px; height: 380px"></iframe>');
 }
 
 function eliminarS(idp) {
