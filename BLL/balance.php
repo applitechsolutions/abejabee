@@ -54,8 +54,6 @@ if ($_POST['tipo'] == 'pago') {
     $bal = 1;  
     $new_totalB = $totalB - $amount;
     $fc = date('Y-m-d', strtotime($dateB));
-
-    die(json_encode($_POST));
     
     try {
         if ($id_sale == '' || $amount == '' || $dateB == '' || $new_totalB < 0) {
