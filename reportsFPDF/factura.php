@@ -69,7 +69,7 @@ $cAddress = iconv('UTF-8', 'windows-1252', $sale['customerAddress']);
     $pdf->Cell(30, 3, $sale['customerTel'], 0, 0, 'L');
 
 //DETALLE DE FACTURA
-    $pdf->SetXY(0, 82);
+    $pdf->SetXY(0, 84);
     $pdf->SetFont('Arial', '', 10);
     try {
         $sql = "SELECT D.quantity, TRUNCATE((D.priceS - D.discount) ,2) as precio,
@@ -95,11 +95,11 @@ $cAddress = iconv('UTF-8', 'windows-1252', $sale['customerAddress']);
 
 //TOTAL-LETRAS
     $pdf->SetXY(26, 188);
-    $pdf->MultiCell(85, 5, $str, 1,'L',0);
+    $pdf->MultiCell(85, 5, $str, 0,'L',0);
 
 //TOTAL
     $pdf->SetXY(130, 192);
-    $pdf->SetFont('Arial', 'B', 8);
+    $pdf->SetFont('Arial', 'B', 10);
     $pdf->Cell(28, 5, $sale['totalSale'], 0, 0, 'L');
 }
 
