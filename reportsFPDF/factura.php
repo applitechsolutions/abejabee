@@ -70,6 +70,7 @@ $cAddress = iconv('UTF-8', 'windows-1252', $sale['customerAddress']);
 
 //DETALLE DE FACTURA
     $pdf->SetXY(0, 82);
+    $pdf->SetFont('Arial', '', 10);
     try {
         $sql = "SELECT D.quantity, TRUNCATE((D.priceS - D.discount) ,2) as precio,
     TRUNCATE((TRUNCATE((D.priceS - D.discount) ,2) * D.quantity) ,2) as total,
