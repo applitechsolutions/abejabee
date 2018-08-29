@@ -191,7 +191,7 @@ $(document).ready(function () {
                     swal({
                         type: 'warning',
                         title: 'Oops...',
-                        text: 'No se ha generado ninguna venta',
+                        text: 'No se han podido procesar los datos',
                     })
                 } else if (resultado.respuesta == 'error') {
                     swal({
