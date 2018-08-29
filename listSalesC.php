@@ -92,59 +92,59 @@
                     <h4 class="modal-title"><i class="fa fa-balance-scale"></i> Balance de Saldos</h4>
                   </div>
                   <div class="modal-body">
-                      <div class="row">
-                        <form role="form" id="form-pay" name="form-pay" method="post" action="BLL/balance.php">
-                          <div class="col-md-4">
-                            <div class="form-group">
-                              <label for="noDocument">No. de documento</label>
-                              <input type="text" class="form-control" id="noDocument" name="noDocument" placeholder="Escriba un número de documento"
-                                autofocus>
-                            </div>
+                    <div class="row">
+                      <div class="col-md-4 pull-right">
+                        <div class="info-box bg-aqua">
+                          <span class="info-box-icon"><i class="fa fa-money"></i></span>
+                          <div class="info-box-content">
+                            <span class="info-box-text">Saldo actual:</span>
+                            <span class="info-box-number"><label for="totalB" id="totalBal"></label></span>
                           </div>
-                          <div class="col-md-4">
-                            <div class="form-group">
-                              <span class="text-danger text-uppercase">*</span>
-                              <label>Fecha</label>
-                              <div class="input-group date">
-                                <div class="input-group-addon">
-                                  <i class="fa fa-calendar"></i>
-                                </div>
-                                <input type="text" class="form-control pull-right datepicker" id="datepicker" name="dateB">
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-4 pull-right">
-                              <div class="info-box bg-aqua">
-                                <span class="info-box-icon"><i class="fa fa-money"></i></span>
-                                <div class="info-box-content">
-                                  <span class="info-box-text">Saldo actual:</span>
-                                  <span class="info-box-number"><label for="totalB" id="totalBal"></label></span>
-                                </div>
-                                <!-- /.info-box-content -->
-                              </div>
-                            </div>
+                          <!-- /.info-box-content -->
+                        </div>
                       </div>
-                      <div class="row">
-                        <div class="col-md-4">
+                      <form role="form" id="form-pay" name="form-pay" method="post" action="BLL/balance.php">
+                        <div class="col-md-4 pull-right">
+                          <div class="form-group">
+                            <label for="noDocument">No. de documento</label>
+                            <input type="text" class="form-control" id="noDocument" name="noDocument" placeholder="Escriba un número de documento"
+                              autofocus>
+                          </div>
+                        </div>
+                        <div class="col-md-4 pull-right">
                           <div class="form-group">
                             <span class="text-danger text-uppercase">*</span>
-                            <label for="amount">Monto</label>
-                            <div class="input-group">
-                              <span class="input-group-addon">
-                                Q.
-                              </span>
-                              <input type="number" id="amount" name="amount" placeholder="0.00" min="0.00" step="0.01"
-                                class="form-control">
+                            <label>Fecha</label>
+                            <div class="input-group date">
+                              <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                              </div>
+                              <input type="text" class="form-control pull-right datepicker" id="dateB" name="dateB">
                             </div>
                           </div>
                         </div>
-                        <div class="col-md-4">
-                          <div class="form-group">
-                            <label for="noReceipt">No. de recibo</label>
-                            <input type="text" class="form-control" id="noReceipt" name="noReceipt" placeholder="Escriba un número de recibo">
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4 pull-right">
+                        <div class="form-group">
+                          <span class="text-danger text-uppercase">*</span>
+                          <label for="amount">Monto</label>
+                          <div class="input-group">
+                            <span class="input-group-addon">
+                              Q.
+                            </span>
+                            <input type="number" id="amount" name="amount" placeholder="0.00" min="0.00" step="0.01"
+                              class="form-control">
                           </div>
                         </div>
                       </div>
+                      <div class="col-md-4 pull-right">
+                        <div class="form-group">
+                          <label for="noReceipt">No. de recibo</label>
+                          <input type="text" class="form-control" id="noReceipt" name="noReceipt" placeholder="Escriba un número de recibo">
+                        </div>
+                      </div>
+                    </div>
 
                     <!-- /.box-body -->
                     <div class="modal-footer">
@@ -153,15 +153,15 @@
                       <input type="hidden" id="totalB" name="totalB" value="0">
                       <?php
                       if ($_SESSION['rol'] == 1) {?>
-                      <button type="submit" class="btn btn-primary pull-left" id="crear-pago">
+                      <button type="submit" class="btn btn-primary pull-right" id="crear-pago">
                         <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
-                        <span class="text-warning pull-left"> *Debe llenar los campos obligatorios </span>
+                      <span class="text-warning pull-right"> *Debe llenar los campos obligatorios </span>
                       <?php
-                      }elseif ($_SESSION['rol'] == 2) {?>   
-                        <span class="text-warning pull-left"> *No tiene permisos para ingresar pagos </span>                   
+                      }elseif ($_SESSION['rol'] == 2) {?>
+                      <span class="text-warning pull-right"> *No tiene permisos para ingresar pagos </span>
                       <?php
                     }
-                    ?>                   
+                    ?>
                     </div>
                     <div class="box box-primary">
                       <div class="box-header">
