@@ -25,9 +25,6 @@ try {
 
 while ($sale = $resultado->fetch_assoc()) {
     $fecha = date_create($sale['dateEnd']);
-    setlocale(LC_ALL, "es_ES");
-    $fec = date_format($fecha, 'd/m/Y');
-    $date = DateTime::createFromFormat("d/m/Y", $fec);
 
     $pdf = new PDF('P', 'mm', array(163, 212));
 #Establecemos los márgenes izquierda, arriba y derecha:
@@ -51,7 +48,7 @@ $cSeller = iconv('UTF-8', 'windows-1252',$sale['sellercode']);
  $cCode = iconv('UTF-8', 'windows-1252', $sale['customerCode']);   
     $pdf->Cell(10, 3,  $cCode , 0, 0, 'L');
     $pdf->Cell(22);
-    $pdf->Cell(17, 3, strftime("%d %b %g", $date->getTimestamp()), 0, 1, 'L');
+    $pdf->Cell(17, 3, date_format($fecha, 'd/m/Y'), 0, 1, 'L');
 
     $pdf->SetXY(23, 42);
 //Nombre

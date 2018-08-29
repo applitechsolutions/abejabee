@@ -68,10 +68,15 @@ if ($_POST['venta'] == 'envio') {
     $noShipment = $_POST['noShipment'];
     $noDeliver = $_POST['noDeliver'];
     $idSale = $_POST['idSale'];
-    
+
     try {
-        $stmt = $conn->prepare("UPDATE sale set transport = ?, noShipment = ?, noDeliver = ? WHERE idSale = ?");
-            $stmt->bind_param("sssi",$transport, $noShipment, $noDeliver, $idSale);
+        if ($idSale == "") {
+            $respuesta = array(
+                'respuesta' => 'vacio',
+            );
+        } else {
+            $stmt = $conn->prepare("UPDATE sale set transport = ?, noShipment = ?, noDeliver = ? WHERE idSale = ?");
+            $stmt->bind_param("sssi", $transport, $noShipment, $noDeliver, $idSale);
             $stmt->execute();
             $id_registro = $stmt->insert_id;
             if ($stmt->affected_rows) {
@@ -79,16 +84,17 @@ if ($_POST['venta'] == 'envio') {
                     'respuesta' => 'exito',
                     'idSale' => $id_registro,
                     'mensaje' => 'Envio generado correctamente!',
-                    'idSale' => $idSale
-                );                
-            }else {
+                    'idSale' => $idSale,
+                );
+            } else {
                 $respuesta = array(
                     'respuesta' => 'error',
-                    'idSale' => $id_registro
+                    'idSale' => $id_registro,
                 );
             }
             $stmt->close();
             $conn->close();
+        }
     } catch (Exception $e) {
         echo 'Error: ' . $e . getMessage();
     }

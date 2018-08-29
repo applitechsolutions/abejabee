@@ -25,14 +25,7 @@ try {
 
 while ($sale = $resultado->fetch_assoc()) {
     $fechaS = date_create($sale['dateStart']);
-    setlocale(LC_ALL, "es_ES");
-    $fecS = date_format($fechaS, 'd/m/Y');
-    $dateS = DateTime::createFromFormat("d/m/Y", $fecS);
-
     $fecha = date_create($sale['dateEnd']);
-    setlocale(LC_ALL, "es_ES");
-    $fec = date_format($fecha, 'd/m/Y');
-    $date = DateTime::createFromFormat("d/m/Y", $fec);
 
     $pdf = new PDF('P', 'mm', 'Letter');
 #Establecemos los márgenes izquierda, arriba y derecha:
@@ -77,21 +70,22 @@ while ($sale = $resultado->fetch_assoc()) {
     $pdf->Cell(15, 4,$strL , 0, 1, 'L');
     $pdf->SetXY(111, 50);
     $pdf->SetFont('Arial', '', 10);
-    $pdf->Cell(15, 4,  strftime("%d %b %g", $dateS->getTimestamp()), 0, 1, 'L');
+    $pdf->Cell(15, 4,  date_format($fechaS, 'd/m/Y'), 0, 1, 'L');
     $pdf->Rect(161, 42, 49, 14);
     $pdf->SetFont('Arial', 'B', 10);
     $pdf->SetXY(161, 44);
     $pdf->Cell(15, 4, 'Vencimiento:' , 0, 1, 'L');
     $pdf->SetXY(161, 50);
     $pdf->SetFont('Arial', '', 10);
-    $pdf->Cell(15, 4, strftime("%d %b %g", $dateS->getTimestamp()) , 0, 1, 'L');
+    $pdf->Cell(15, 4, date_format($fecha, 'd/m/Y') , 0, 1, 'L');
     $pdf->Rect(111, 56, 50, 9);
     $pdf->SetFont('Arial', 'B', 10);
     $pdf->SetXY(111, 58);
     $pdf->Cell(15, 4, 'Vendedor:' , 0, 0, 'L');
     $pdf->SetFont('Arial', '', 10);
     $pdf->Cell(5);
-    $pdf->Cell(15, 4, $sale['sellercode'] , 0, 0, 'L');
+    $sellerC = iconv('UTF-8', 'windows-1252', $sale['sellercode']);
+    $pdf->Cell(15, 4, $sellerC , 0, 0, 'L');
     $pdf->Rect(111, 65, 50, 9);
     $pdf->SetFont('Arial', 'B', 10);
     $pdf->SetXY(111, 67);
@@ -101,8 +95,9 @@ while ($sale = $resultado->fetch_assoc()) {
     $pdf->SetXY(161, 58);
     $pdf->Cell(15, 4, 'Condiciones:' , 0, 0, 'L');
     $pdf->SetFont('Arial', '', 10);
+    $payment = iconv('UTF-8', 'windows-1252', $sale['paymentMethod']);
     $pdf->Cell(9);
-    $pdf->Cell(15, 4, $sale['paymentMethod'] , 0, 0, 'L');
+    $pdf->Cell(15, 4, $payment , 0, 0, 'L');
     $pdf->Rect(161, 65, 49, 9);
     $pdf->SetFont('Arial', 'B', 10);
     $envio = iconv('UTF-8', 'windows-1252', 'Envío:');
@@ -156,7 +151,7 @@ while ($sale = $resultado->fetch_assoc()) {
     $pdf->Cell(40, 5, 'TOTAL Q__'.$sale['totalSale'], 1, 0, 'C');
 
     //TOTAL-LETRAS
-    $pdf->SetXY(26,  $Contador+ 15);
+    $pdf->SetXY(26,  $Contador+ 20);
     $pdf->MultiCell(85, 5, 'SE ENTREGA LA OTRA VISITA', 0,'L',0);
 }
 $pdf->Output(); //Salida al navegador
