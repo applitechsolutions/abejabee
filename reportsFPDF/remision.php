@@ -141,17 +141,17 @@ while ($sale = $resultado->fetch_assoc()) {
         $pdf->Cell(40, 4, $detailS['total'], 0, 1, 'R');
     }
 
-    //TOTAL-LETRAS
-    $pdf->SetXY(26, $Contador+ 10);
-    $pdf->MultiCell(120, 5, $str, 0,'L',0);
+       //TOTAL
+       $pdf->SetXY(171, $Contador+ 10);  
+       $pdf->Cell(40, 5, 'TOTAL Q__'.$sale['totalSale'], 1, 0, 'C');
 
-    //TOTAL
-    $pdf->SetXY(171, $Contador+ 10);
+    //TOTAL-LETRAS
     $pdf->SetFont('Arial', 'B', 8);
-    $pdf->Cell(40, 5, 'TOTAL Q__'.$sale['totalSale'], 1, 0, 'C');
+    $pdf->SetXY(10, $Contador+ 10);
+    $pdf->MultiCell(150, 5, $str, 0,'L',0); 
 
     //TOTAL-LETRAS
-    $pdf->SetXY(26,  $Contador+ 20);
+    $pdf->SetXY(10,  $Contador+ 20);
     $pdf->MultiCell(85, 5, 'SE ENTREGA LA OTRA VISITA', 0,'L',0);
 }
 $pdf->Output(); //Salida al navegador
