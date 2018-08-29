@@ -93,7 +93,7 @@
                   </div>
                   <div class="modal-body">
                     <div class="row">
-                      <div class="col-md-4 pull-right">
+                      <div class="col-md-4 pull-left">
                         <div class="info-box bg-aqua">
                           <span class="info-box-icon"><i class="fa fa-money"></i></span>
                           <div class="info-box-content">
@@ -119,7 +119,7 @@
                               <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                               </div>
-                              <input type="text" class="form-control pull-right datepicker" id="dateB" name="dateB">
+                              <input type="text" class="form-control pull-right datepicker" id="datepicker" name="dateB">
                             </div>
                           </div>
                         </div>
