@@ -1,7 +1,7 @@
 <?php
 $idSale = $_GET['idSale'];
 require 'Libreria/fpdf.php';
-require "conversor.php";
+require "NumeroALetras.php";
 include_once '../funciones/bd_conexion.php';
 
 class PDF extends FPDF
@@ -33,7 +33,7 @@ while ($sale = $resultado->fetch_assoc()) {
 
 #Establecemos el margen inferior:
     $pdf->SetAutoPageBreak(true, 0);
-    $str = iconv('UTF-8', 'windows-1252', convertir($sale['totalSale']));
+    $str = iconv('UTF-8', 'windows-1252', NumeroALetras::convertir($sale['totalSale'], 'QUETZALES', 'CENTAVOS'));
 
     $pdf->AddPage();
     $pdf->SetFont('Arial', 'B', 12);
