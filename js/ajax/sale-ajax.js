@@ -488,7 +488,7 @@ function cancelSale(idSale) {
         url: 'BLL/sale.php',
         success(data) {
             console.log(data);
-            var resultado = data;
+            var resultado = JSON.parse(data);
             if (resultado.respuesta == 'exito') {
                 setTimeout(function () {
                     location.reload();
