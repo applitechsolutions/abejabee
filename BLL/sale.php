@@ -100,3 +100,32 @@ if ($_POST['venta'] == 'envio') {
     }
     die(json_encode($respuesta));
 }
+
+if ($_POST['venta'] == 'cancel') {
+    $idSale = $_POST['idSale'];
+
+    try {
+        $stmt = $conn->prepare('UPDATE sale SET cancel = 1 WHERE idSale = ?');
+        $stmt->bind_param("i", $idSale);
+        $stmt->execute();
+        if ($stmt->affected_rows) {
+            $respuesta = array(
+                'respuesta' => 'exito',
+                'id_eliminado' => $idSale
+            );
+        }else {
+            $respuesta = array(
+                'respuesta' => 'error'
+            );
+        }
+        $stmt->close();
+        $conn->close();
+    }catch(Exception $e) {
+        $respuesta = array(
+            'respuesta' => $e->getMessage()
+        );
+    }
+    die(json_encode($respuesta));
+}
+
+?>

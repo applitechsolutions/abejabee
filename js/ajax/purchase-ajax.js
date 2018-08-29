@@ -113,13 +113,13 @@ $(document).ready(function () {
                 console.log(data);
                 $.each(data, function (key, registro) {
                     var nuevaFila = "<tr>";
-                    var sub = registro.quantity * registro.costP;
+                    var sub = registro.quantity * parseFloat(Math.round(registro.costP * 100) / 100).toFixed(2);
                     nuevaFila += "<td><img src='img/products/" + registro.imagen + "'width='80' onerror='ImgError(this);'></td>";
                     nuevaFila += "<td>" + registro.nombre + "</td>";
                     nuevaFila += "<td>" + registro.codigo + "</td>";
                     nuevaFila += "<td>" + registro.quantity + "</td>";
                     nuevaFila += "<td>Q." + registro.costP + "</td>";
-                    nuevaFila += "<td>Q." + sub + "</td>";
+                    nuevaFila += "<td>Q." + sub.toFixed(2) + "</td>";
                     nuevaFila += "</tr>";
                     $("#detalles").append(nuevaFila);
                 });

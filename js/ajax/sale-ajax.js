@@ -130,7 +130,7 @@ $(document).ready(function () {
                 console.log(data);
                 var resultado = JSON.parse(data);
                 if (resultado.respuesta == 'exito') {
-                    changeReportE('guia.php?idSale='+resultado.idSale);
+                    changeReportE('guia.php?idSale=' + resultado.idSale);
                     swal.close();
                     swal({
                         position: 'top-end',
@@ -139,6 +139,54 @@ $(document).ready(function () {
                         showConfirmButton: false,
                         timer: 1000
                     })
+                } else if (resultado.respuesta == 'vacio') {
+                    swal({
+                        type: 'warning',
+                        title: 'Oops...',
+                        text: 'No se ha generado ninguna venta',
+                    })
+                } else if (resultado.respuesta == 'error') {
+                    swal({
+                        type: 'error',
+                        title: 'Error',
+                        text: 'No se pudo guardar en la base de datos',
+                    })
+                }
+            }
+        })
+    });
+
+    $('#form-pay').on('submit', function (e) {
+        e.preventDefault();
+
+        var datos = $(this).serializeArray();
+
+        swal({
+            title: 'Ingresando pago...'
+        });
+        swal.showLoading();
+        $.ajax({
+            type: $(this).attr('method'),
+            data: datos,
+            url: $(this).attr('action'),
+            datatype: 'json',
+            success: function (data) {
+                console.log(data);
+                var resultado = JSON.parse(data);
+                if (resultado.respuesta == 'exito') {
+                    if (resultado.new_totalB == '0') {
+                        cancelSale(resultado.idSale);
+                    }
+                    document.getElementById("form-pay").reset();
+                    $("#correlativeCloseB").click();
+                    swal.close();
+                    swal({
+                        position: 'top-end',
+                        type: 'success',
+                        title: '¡' + resultado.mensaje,
+                        showConfirmButton: false,
+                        timer: 1000
+                    })                 
                 } else if (resultado.respuesta == 'vacio') {
                     swal({
                         type: 'warning',
@@ -325,7 +373,163 @@ $(document).ready(function () {
         })
 
     });
+
+    $('.detalle_sale').on('click', function (e) {
+        e.preventDefault();
+        $("#detalles").find('tbody').html("");
+        var id = $(this).attr('data-id');
+        var tipo = $(this).attr('data-tipo');
+
+        swal({
+            title: 'Cargando detalle de Venta...'
+        });
+        swal.showLoading();
+        $.ajax({
+            type: 'POST',
+            data: {
+                'id': id
+            },
+            url: 'BLL/' + tipo + '.php',
+            success(data) {
+                console.log(data);
+                $.each(data, function (key, registro) {
+                    var nuevaFila = "<tr>";
+                    var sub = registro.quantity * (parseFloat(Math.round(registro.priceS * 100) / 100).toFixed(2) - parseFloat(Math.round(registro.discount * 100) / 100).toFixed(2));
+                    nuevaFila += "<td><img src='img/products/" + registro.imagen + "'width='80' onerror='ImgError(this);'></td>";
+                    nuevaFila += "<td>" + registro.nombre + "</td>";
+                    nuevaFila += "<td>" + registro.codigo + "</td>";
+                    nuevaFila += "<td>" + registro.quantity + "</td>";
+                    nuevaFila += "<td>Q." + registro.priceS + "</td>";
+                    nuevaFila += "<td>Q." + registro.discount + "</td>";
+                    nuevaFila += "<td>Q." + sub.toFixed(2) + "</td>";
+                    nuevaFila += "</tr>";
+                    $("#detalles").append(nuevaFila);
+                });
+                swal.close();
+                $('#modal-detailS').modal('show');
+            },
+            error: function (data) {
+                swal({
+                    type: 'error',
+                    title: 'Error',
+                    text: 'No se puede agregar al carrito',
+                })
+            }
+        });
+    });
+
+    $('.detalle_balance').on('click', function (e) {
+        e.preventDefault();
+        $("#detallesB").find('tbody').html("");
+        var id = $(this).attr('data-id');
+        var tipo = $(this).attr('data-tipo');
+
+        swal({
+            title: 'Cargando balance de saldos...'
+        });
+        swal.showLoading();
+        $.ajax({
+            type: 'POST',
+            data: {
+                'id': id
+            },
+            url: 'BLL/' + tipo + '.php',
+            success(data) {
+                console.log(data);
+                $.each(data, function (key, registro) {
+                    var nuevaFila = "<tr>";
+                    var tipo = registro.balpay;
+                    if (tipo == 0) {
+                        nuevaFila += "<td><small>-</small></td>";
+                    } else if (tipo == 1) {
+                        nuevaFila += "<td>" + registro.noDocument + "</td>";
+                    }
+                    nuevaFila += "<td>" + convertDate(registro.date); + "</td>";
+                    if (tipo == 0) {
+                        nuevaFila += "<td><small class='label label-danger'><i class='fa fa-database'></i> Saldo</small></td>";
+                    } else if (tipo == 1) {
+                        nuevaFila += "<td><small class='label label-primary'><i class='fa fa-credit-card'></i> Pago</small></td>";
+                    }
+                    nuevaFila += "<td>Q." + registro.amount + "</td>";
+                    if (tipo == 0) {
+                        nuevaFila += "<td><small>-</small></td>";
+                    } else if (tipo == 1) {
+                        nuevaFila += "<td>" + registro.noReceipt + "</td>";
+                    }
+                    nuevaFila += "<td>Q." + registro.balance + "</td>";
+                    nuevaFila += "</tr>";
+                    $("#detallesB").append(nuevaFila);
+                });
+                balance(id);
+            },
+            error: function (data) {
+                swal({
+                    type: 'error',
+                    title: 'Error',
+                    text: 'No se puede agregar al carrito',
+                })
+            }
+        });
+    });
 });
+
+function convertDate(dateString) {
+    var p = dateString.split(/\D/g)
+    return [p[2], p[1], p[0]].join("/")
+}
+
+function cancelSale(idSale) {
+    $.ajax({
+        type: 'POST',
+        data: {
+            'venta': 'cancel',
+            'idSale': idSale
+        },
+        url: 'BLL/sale.php',
+        success(data) {
+            console.log(data);
+            var resultado = data;
+            if (resultado.respuesta == 'exito') {
+                setTimeout(function () {
+                    location.reload();
+                }, 1500);
+            } else {
+                swal({
+                    type: 'error',
+                    title: 'Error!',
+                    text: 'No se pudo eliminar la ruta.'
+                })
+            }
+        }
+    });
+}
+
+function balance(idSale) {
+    $.ajax({
+        type: 'POST',
+        data: {
+            'id': idSale
+        },
+        url: 'BLL/listBalanceT.php',
+        success(data) {
+            console.log(data);
+            $.each(data, function (key, registro) {
+                $("#totalBal").text('Q. ' + registro.balance);
+                $("#totalB").val(parseFloat(registro.balance));
+                $("#idSale").val(idSale);
+            });
+            swal.close();
+            $('#modal-balance').modal('show');
+        },
+        error: function (data) {
+            swal({
+                type: 'error',
+                title: 'Error',
+                text: 'No se puede mostrar balance de saldos',
+            })
+        }
+    });
+}
 
 function updateCorrelativo(correlative, serie, last) {
 
@@ -342,7 +546,7 @@ function updateCorrelativo(correlative, serie, last) {
             console.log(data);
             var resultado = data;
             if (resultado.respuesta == 'exito') {
-              
+
             } else if (resultado.respuesta == 'vacio') {
                 swal({
                     position: 'top-end',
@@ -370,7 +574,7 @@ function updateCorrelativo(correlative, serie, last) {
                 timer: 1500
             })
         }
-    })    
+    })
 }
 
 function saveBalanceS(idEnc, adelanto, total, fecha, factura, serie, nofactura) {
@@ -432,10 +636,10 @@ function saveDetailS(idEnc, factura, serie, nofactura) {
         })
     }
     if (factura == 'si') {
-        changeReportF('factura.php?idSale='+idEnc);
+        changeReportF('factura.php?idSale=' + idEnc);
         updateCorrelativo('factura', serie, nofactura);
-    }else if (factura == 'no') {
-        changeReportF('remision.php?idSale='+idEnc);
+    } else if (factura == 'no') {
+        changeReportF('remision.php?idSale=' + idEnc);
         updateCorrelativo('guia', 'A', nofactura);
     }
     $("#idSale").val(idEnc);
@@ -463,8 +667,7 @@ function saveStockS(id_product, cantidad_detalle) {
         success: function (data) {
             console.log(data);
             resultado = JSON.parse(data);
-            if (resultado.respuesta == 'exito') {
-            }
+            if (resultado.respuesta == 'exito') {}
         }
     })
 }
