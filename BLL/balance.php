@@ -52,7 +52,7 @@ if ($_POST['tipo'] == 'pago') {
     $noReceipt = $_POST['noReceipt'];
     $totalB = $_POST['totalB'];
     $bal = 1;  
-    $new_totalB = number_format($totalB, 2) - number_format($amount, 2);
+    $new_totalB = $totalB - $amount;
     $fc = date('Y-m-d', strtotime($dateB));
     
     try {
