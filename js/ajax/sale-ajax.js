@@ -4,8 +4,8 @@ $(document).ready(function () {
         e.preventDefault();
 
         var id = $(this).attr('data-id');
-        var cantidad = $('#new_' + id + '_cantidadS').val();
-        var max_stock = $('.max_' + id + '_stock').val();
+        var cantidad = parseInt($('#new_' + id + '_cantidadS').val());
+        var max_stock = parseInt($('.max_' + id + '_stock').val());
         var descuento = $('#new_' + id + '_descuentoS').val();
         var prec = $('#SelectPrice' + id).val();
 
