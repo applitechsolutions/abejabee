@@ -160,6 +160,7 @@ $(document).ready(function () {
         e.preventDefault();
 
         var datos = $(this).serializeArray();
+        console.log(datos);
 
         swal({
             title: 'Ingresando pago...'

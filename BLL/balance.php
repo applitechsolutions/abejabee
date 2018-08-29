@@ -10,7 +10,7 @@ if ($_POST['tipo'] == 'saldo') {
     $fc = date('Y-m-d', strtotime($fecha));
 
     try {
-        if ($id_sale == "" || $monto == "" || $fecha == "") {
+        if ($id_sale == '' || $monto == '' || $fecha == '') {
             $respuesta = array(
                 'respuesta' => 'vacio'
             );
@@ -58,7 +58,7 @@ if ($_POST['tipo'] == 'pago') {
     die(json_encode($_POST));
     
     try {
-        if ($id_sale == "" || $amount == "" || $dateB == "" || $new_totalB < 0) {
+        if ($id_sale == '' || $amount == '' || $dateB == '' || $new_totalB < 0) {
             $respuesta = array(
                 'respuesta' => 'vacio'
             );
