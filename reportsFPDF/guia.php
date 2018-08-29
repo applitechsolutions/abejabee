@@ -1,7 +1,7 @@
 <?php
 $idSale = $_GET['idSale'];
 require 'Libreria/fpdf.php';
-require "conversor.php";
+require "NumeroALetras.php";
 include_once '../funciones/bd_conexion.php';
 
 class PDF extends FPDF
