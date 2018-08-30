@@ -153,9 +153,9 @@
                       <input type="hidden" id="totalB" name="totalB" value="0">
                       <?php
                       if ($_SESSION['rol'] == 1) {?>
+                       <span class="text-warning pull-right"> *Debe llenar los campos obligatorios </span>
                       <button type="submit" class="btn btn-primary pull-right" id="crear-pago">
-                        <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
-                      <span class="text-warning pull-right"> *Debe llenar los campos obligatorios </span>
+                        <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>                     
                       <?php
                       }elseif ($_SESSION['rol'] == 2) {?>
                       <span class="text-warning pull-right"> *No tiene permisos para ingresar pagos </span>
