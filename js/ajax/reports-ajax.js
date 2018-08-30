@@ -7,34 +7,6 @@ $(document).ready(function () {
         var tabla = '<div class="box-body table-responsive no-padding"><table id="registros" class="table table-bordered table-striped"><thead><tr><th>Fecha</th><th>Factura No°</th><th>Cliente</th><th>Fecha de vencimiento</th><th>Método de pago</th><th>Envío No°</th><th>Entrega No°</th><th>Anticipo</th><th>Total</th><th><i class="fa fa-cogs"></i> Acciones</th></tr></thead><tbody class="contenidoRPT"></tbody><tfoot><tr><th>Fecha</th><th>Factura No°</th><th>Cliente</th><th>Fecha de vencimiento</th><th>Método de pago</th><th>Envío No°</th><th>Entrega No°</th><th>Anticipo</th><th>Total</th><th><span class="fa fa-cogs"></span></th></tr></tfoot></table></div>';
 
         $("#listadoReporte").append(tabla);
-
-        $('#registros').DataTable({
-            'paging'      : true,
-            'lengthChange': true,
-            "aLengthMenu" : [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
-            'searching'   : true,
-            'ordering'    : true,
-            'info'        : true,
-            'autoWidth'   : true,
-            'language'    : {
-              paginate: {
-                next:     'Siguiente',
-                previous: 'Anterior',
-                first:    'Primero',
-                last:     'Último'
-              },
-              info: 'Mostrando _START_-_END_ de _TOTAL_ registros',
-              empyTable:  'No hay registros',
-              infoEmpty:  '0 registros',
-              lengthChange: 'Mostrar ',
-              infoFiltered: "(Filtrado de _MAX_ total de registros)",
-              lengthMenu: "Mostrar _MENU_ registros",
-              loadingRecords: "Cargando...",
-              processing: "Procesando...",
-              search: "Buscar:",
-              zeroRecords: "Sin resultados encontrados"
-            }
-        });
         
         var datos = $(this).serializeArray();
 
@@ -67,6 +39,7 @@ $(document).ready(function () {
                     $(".contenidoRPT").append(contenido);
                 });
                 swal.close();
+                funciones();
             },
             error: function (data) {
                 swal({
@@ -75,13 +48,42 @@ $(document).ready(function () {
                     text: 'No se puede agregar al carrito',
                 })
             }
+
         });
     });
-
-    
 });
 
 function listAllRoutes() {
 
     changeReport('rptAllRoutes.php');
+}
+
+function funciones() {
+    $('#registros').DataTable({
+        'paging'      : true,
+        'lengthChange': true,
+        "aLengthMenu" : [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
+        'searching'   : true,
+        'ordering'    : true,
+        'info'        : true,
+        'autoWidth'   : true,
+        'language'    : {
+          paginate: {
+            next:     'Siguiente',
+            previous: 'Anterior',
+            first:    'Primero',
+            last:     'Último'
+          },
+          info: 'Mostrando _START_-_END_ de _TOTAL_ registros',
+          empyTable:  'No hay registros',
+          infoEmpty:  '0 registros',
+          lengthChange: 'Mostrar ',
+          infoFiltered: "(Filtrado de _MAX_ total de registros)",
+          lengthMenu: "Mostrar _MENU_ registros",
+          loadingRecords: "Cargando...",
+          processing: "Procesando...",
+          search: "Buscar:",
+          zeroRecords: "Sin resultados encontrados"
+        }
+    });
 }
