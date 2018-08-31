@@ -32,18 +32,16 @@ $(document).ready(function () {
 
                     var nuevaFila = "<tr id='detalleS'>";
                     $.each(data, function (key, registro) {
-                        if (cantidad >= 20) {
-                            if (prec == 'users') {
-                                var subtotal = (registro.public - descuento) * cantidad;
-                                var precio = registro.public;
-                            } else if (prec == 'plus-square') {
-                                var subtotal = (registro.pharma - descuento) * cantidad;
-                                var precio = registro.pharma;
-                            } else if (prec == 'briefcase') {
-                                var subtotal = (registro.business - descuento) * cantidad;
-                                var precio = registro.business;
-                            }
-                        } else {
+                        if (prec == 'users') {
+                            var subtotal = (registro.public - descuento) * cantidad;
+                            var precio = registro.public;
+                        } else if (prec == 'plus-square') {
+                            var subtotal = (registro.pharma - descuento) * cantidad;
+                            var precio = registro.pharma;
+                        } else if (prec == 'briefcase') {
+                            var subtotal = (registro.business - descuento) * cantidad;
+                            var precio = registro.business;
+                        } else if (prec == 'money') {
                             var subtotal = (registro.bonus - descuento) * cantidad;
                             var precio = registro.bonus;
                         }
@@ -94,7 +92,7 @@ $(document).ready(function () {
                 console.log(data);
                 var resultado = JSON.parse(data);
                 if (resultado.respuesta == 'exito') {
-                    saveBalanceS(resultado.idVenta, resultado.adelanto, resultado.total, resultado.fecha, resultado.factura, resultado.serie, resultado.nofactura);
+                    saveBalanceS(resultado.idVenta, resultado.adelanto, resultado.total, resultado.fecha);
                 } else if (resultado.respuesta == 'vacio') {
                     swal({
                         type: 'warning',
@@ -187,7 +185,7 @@ $(document).ready(function () {
                         title: '¡' + resultado.mensaje,
                         showConfirmButton: false,
                         timer: 1000
-                    })                 
+                    })
                 } else if (resultado.respuesta == 'vacio') {
                     swal({
                         type: 'warning',
@@ -474,6 +472,114 @@ $(document).ready(function () {
     });
 });
 
+function recargarPagina() {
+    location.reload();
+}
+function generarFactura() {
+    var serie = $("#serieS").val();
+    var last = parseInt($("#noBillS").val()) + parseInt(1);
+    var idSale = $("#idSale").val();
+
+    updateCorrelativo('factura', serie, last);
+    $.ajax({
+        type: "POST",
+        data: {
+            'venta': 'editarCorrelativo',
+            'idSale': idSale,
+            'serie': serie,
+            'last': last
+        },
+        url: 'BLL/sale.php',
+        datatype: 'json',
+        success: function (data) {
+            console.log(data);
+            var resultado = JSON.parse(data);
+            if (resultado.respuesta == 'exito') {
+                changeReportF('factura.php?idSale=' + idSale);
+            } else if (resultado.respuesta == 'vacio') {} else if (resultado.respuesta == 'error') {}
+        }
+    })
+}
+
+function imprimir(tipo, idSale) {
+    changeReportL(tipo + '.php?idSale=' + idSale);
+
+    if (tipo == 'factura') {
+        $.ajax({
+            type: "GET",
+            url: 'BLL/correlativeFactura.php',
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                $.each(data, function (key, registro) {
+                    var serie = registro.serie;
+                    var last = parseInt(registro.last) + parseInt(1);
+
+                    updateCorrelativo('factura', serie, last);
+                    $.ajax({
+                        type: "POST",
+                        data: {
+                            'venta': 'editarCorrelativo',
+                            'idSale': idSale,
+                            'serie': serie,
+                            'last': last
+                        },
+                        url: 'BLL/sale.php',
+                        datatype: 'json',
+                        success: function (data) {
+                            console.log(data);
+                            var resultado = JSON.parse(data);
+                            if (resultado.respuesta == 'exito') {                                
+                            } else if (resultado.respuesta == 'vacio') {
+                            } else if (resultado.respuesta == 'error') {
+                            }
+                        }
+                    })
+                });
+            },
+            error: function (data) {
+                alert('error');
+            }
+        });
+    } else if (tipo == 'guia') {
+        $.ajax({
+            type: "GET",
+            url: 'BLL/correlativeGuia.php',
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                $.each(data, function (key, registro) {
+                    var last = parseInt(registro.last) + parseInt(1);
+                    updateCorrelativo('envio', 'A', last);
+                    $.ajax({
+                        type: "POST",
+                        data: {
+                            'venta': 'editarShipment',
+                            'idSale': idSale,
+                            'last': last
+                        },
+                        url: 'BLL/sale.php',
+                        datatype: 'json',
+                        success: function (data) {
+                            console.log(data);
+                            var resultado = JSON.parse(data);
+                            if (resultado.respuesta == 'exito') {                                
+                            } else if (resultado.respuesta == 'vacio') {
+                            } else if (resultado.respuesta == 'error') {
+                            }
+                        }
+                    })
+                });
+            },
+            error: function (data) {
+                alert('error');
+            }
+        });
+    }
+
+    $('#modal-printS').modal('show');
+}
+
 function convertDate(dateString) {
     var p = dateString.split(/\D/g)
     return [p[2], p[1], p[0]].join("/")
@@ -578,7 +684,7 @@ function updateCorrelativo(correlative, serie, last) {
     })
 }
 
-function saveBalanceS(idEnc, adelanto, total, fecha, factura, serie, nofactura) {
+function saveBalanceS(idEnc, adelanto, total, fecha) {
     var monto = parseFloat(total) - parseFloat(adelanto);
 
     $.ajax({
@@ -595,13 +701,13 @@ function saveBalanceS(idEnc, adelanto, total, fecha, factura, serie, nofactura) 
             console.log(data);
             resultado = JSON.parse(data);
             if (resultado.respuesta == 'exito') {
-                saveDetailS(resultado.idVenta, factura, serie, nofactura);
+                saveDetailS(resultado.idVenta);
             }
         }
     })
 }
 
-function saveDetailS(idEnc, factura, serie, nofactura) {
+function saveDetailS(idEnc) {
 
     var id_product = document.getElementsByClassName("idproducto_class");
     var precio_detalle = document.getElementsByClassName("precio_class");
@@ -636,13 +742,8 @@ function saveDetailS(idEnc, factura, serie, nofactura) {
             }
         })
     }
-    if (factura == 'si') {
-        changeReportF('factura.php?idSale=' + idEnc);
-        updateCorrelativo('factura', serie, nofactura);
-    } else if (factura == 'no') {
-        changeReportF('remision.php?idSale=' + idEnc);
-        updateCorrelativo('guia', 'A', nofactura);
-    }
+    changeReportF('remision.php?idSale=' + idEnc);
+    updateCorrelativo('guia', 'A', nofactura);
     $("#idSale").val(idEnc);
     swal.close();
     swal({
@@ -674,11 +775,15 @@ function saveStockS(id_product, cantidad_detalle) {
 }
 
 function changeReportF(report) {
-    $('#divreporteF').html('<iframe src="reportsFPDF/' + report + '" style="width: 100%; min-width: 300px; height: 700px"></iframe>');
+    $('#divreporteF').html('<iframe src="reportsFPDF/' + report + '" style="width: 100%; min-width: 300px; height: 640px"></iframe>');
 }
 
 function changeReportE(report) {
     $('#divreporteE').html('<iframe src="reportsFPDF/' + report + '" style="width: 100%; min-width: 300px; height: 390px"></iframe>');
+}
+
+function changeReportL(report) {
+    $('#divreporteL').html('<iframe src="reportsFPDF/' + report + '" style="width: 100%; min-width: 300px; height: 500px"></iframe>');
 }
 
 function eliminarS(idp) {

@@ -38,75 +38,75 @@ while ($sale = $resultado->fetch_assoc()) {
     $pdf->AddPage();
     $pdf->SetFont('Arial', 'B', 12);
 
-    $pdf->SetXY(150, 20);
+    $pdf->SetXY(140, 20);
     $pdf->Cell(60, 10, 'GUIA DE REMISION', 1, 1, 'C');
-    $pdf->SetXY(150, 30);
+    $pdf->SetXY(140, 30);
     $pdf->Cell(60, 10, $sale['noBill'], 1, 1, 'C');
 
     $pdf->SetFont('Arial', 'B', 10);
-    $pdf->Rect(15, 42, 95, 32);
-    $pdf->SetXY(18, 44);
+    $pdf->Rect(10, 42, 90, 32);
+    $pdf->SetXY(13, 44);
     $pdf->Cell(15, 4, 'Cliente:', 0, 0, 'L');
     $pdf->SetFont('Arial', '', 10);
     $Ccode = iconv('UTF-8', 'windows-1252', $sale['customerCode']);
     $pdf->Cell(10, 4,$Ccode , 0, 1, 'L');
-    $pdf->Cell(18);
+    $pdf->Cell(13);
     $CName = iconv('UTF-8', 'windows-1252', $sale['customerName']);
     $pdf->Cell(120, 4,$CName , 0, 1, 'L');
-    $pdf->Cell(18);
+    $pdf->Cell(13);
     $CAddress = iconv('UTF-8', 'windows-1252',$sale['customerAddress'] . ' ' . $sale['aldea'] . ' ' . $sale['municipio'] . ' ' . $sale['departamento']);
     $pdf->MultiCell(90, 4,$CAddress , 0, 'L', 0);
-    $pdf->Cell(18);
+    $pdf->Cell(13);
     $pdf->Cell(30, 4, $sale['customerTel'], 0, 1, 'L');
-    $pdf->Cell(18);
+    $pdf->Cell(13);
     $pdf->Cell(30, 4, $sale['customerNit'], 0, 0, 'L');
     
 
-    $pdf->Rect(111, 42, 99, 32);
-    $pdf->Rect(111, 42, 50, 14);
+    $pdf->Rect(101, 42, 99, 32);
+    $pdf->Rect(101, 42, 50, 14);
     $pdf->SetFont('Arial', 'B', 10);
-    $pdf->SetXY(111, 44);
+    $pdf->SetXY(101, 44);
     $strL = iconv('UTF-8', 'windows-1252', 'Lugar, fecha de expedición:');
     $pdf->Cell(15, 4,$strL , 0, 1, 'L');
-    $pdf->SetXY(111, 50);
+    $pdf->SetXY(101, 50);
     $pdf->SetFont('Arial', '', 10);
     $pdf->Cell(15, 4,  date_format($fechaS, 'd/m/Y'), 0, 1, 'L');
-    $pdf->Rect(161, 42, 49, 14);
+    $pdf->Rect(151, 42, 49, 14);
     $pdf->SetFont('Arial', 'B', 10);
-    $pdf->SetXY(161, 44);
+    $pdf->SetXY(151, 44);
     $pdf->Cell(15, 4, 'Vencimiento:' , 0, 1, 'L');
-    $pdf->SetXY(161, 50);
+    $pdf->SetXY(151, 50);
     $pdf->SetFont('Arial', '', 10);
     $pdf->Cell(15, 4, date_format($fecha, 'd/m/Y') , 0, 1, 'L');
-    $pdf->Rect(111, 56, 50, 9);
+    $pdf->Rect(101, 56, 50, 9);
     $pdf->SetFont('Arial', 'B', 10);
-    $pdf->SetXY(111, 58);
+    $pdf->SetXY(101, 58);
     $pdf->Cell(15, 4, 'Vendedor:' , 0, 0, 'L');
     $pdf->SetFont('Arial', '', 10);
     $pdf->Cell(5);
     $sellerC = iconv('UTF-8', 'windows-1252', $sale['sellercode']);
     $pdf->Cell(15, 4, $sellerC , 0, 0, 'L');
-    $pdf->Rect(111, 65, 50, 9);
+    $pdf->Rect(101, 65, 50, 9);
     $pdf->SetFont('Arial', 'B', 10);
-    $pdf->SetXY(111, 67);
+    $pdf->SetXY(101, 67);
     $pdf->Cell(15, 4, 'Refer.:' , 0, 0, 'L');
-    $pdf->Rect(161, 56, 49, 9);
+    $pdf->Rect(151, 56, 49, 9);
     $pdf->SetFont('Arial', 'B', 10);
-    $pdf->SetXY(161, 58);
+    $pdf->SetXY(151, 58);
     $pdf->Cell(15, 4, 'Condiciones:' , 0, 0, 'L');
     $pdf->SetFont('Arial', '', 10);
     $payment = iconv('UTF-8', 'windows-1252', $sale['paymentMethod']);
     $pdf->Cell(9);
     $pdf->Cell(15, 4, $payment , 0, 0, 'L');
-    $pdf->Rect(161, 65, 49, 9);
+    $pdf->Rect(151, 65, 49, 9);
     $pdf->SetFont('Arial', 'B', 10);
     $envio = iconv('UTF-8', 'windows-1252', 'Envío:');
-    $pdf->SetXY(161, 67);
+    $pdf->SetXY(151, 67);
     $pdf->Cell(15, 4, $envio , 0, 0, 'L');
 
 
 //DETALLE DE FACTURA
-    $pdf->SetXY(15, 75);
+    $pdf->SetXY(10, 77);
     $pdf->SetFont('Arial', 'B', 10);
     $codigo = iconv('UTF-8', 'windows-1252', 'Código Producto');
     $descrip = iconv('UTF-8', 'windows-1252', 'Descripción del producto');
@@ -114,7 +114,7 @@ while ($sale = $resultado->fetch_assoc()) {
     $pdf->Cell(75, 5, $descrip , 1, 0, 'C');
     $pdf->Cell(18, 5, 'Cantidad' , 1, 0, 'L');
     $pdf->Cell(33, 5, 'Precio Unit.' , 1, 0, 'R');
-    $pdf->Cell(40, 5, 'Subtotal Q.' , 1, 0, 'R');
+    $pdf->Cell(34, 5, 'Subtotal Q.' , 1, 0, 'R');
     try {
         $sql = "SELECT D.quantity, TRUNCATE((D.priceS - D.discount) ,2) as precio,
     TRUNCATE((TRUNCATE((D.priceS - D.discount) ,2) * D.quantity) ,2) as total,
@@ -126,23 +126,23 @@ while ($sale = $resultado->fetch_assoc()) {
         $error = $e->getMessage();
         echo $error;
     }
-    $pdf->SetXY(0, 82);
+    $pdf->SetXY(0, 84);
     $pdf->SetFont('Arial', '', 10);
     $Contador = 82;
     while ($detailS = $resultado->fetch_assoc()) {
         $COD = iconv('UTF-8', 'windows-1252', $detailS['codigo']);
         $NOMBRE = iconv('UTF-8', 'windows-1252', $detailS['nombre']);
         $Contador = $Contador + 4;
-        $pdf->Cell(15);
+        $pdf->Cell(10);
         $pdf->Cell(30, 4, $COD , 0, 0, 'L');
         $pdf->Cell(75, 4, $NOMBRE, 0, 0, 'L');
         $pdf->Cell(18, 4, $detailS['quantity'], 0, 0, 'R');
         $pdf->Cell(33, 4, 'Q.'.$detailS['precio'], 0, 0, 'R');
-        $pdf->Cell(40, 4, $detailS['total'], 0, 1, 'R');
+        $pdf->Cell(34, 4, $detailS['total'], 0, 1, 'R');
     }
 
        //TOTAL
-       $pdf->SetXY(171, $Contador+ 10);  
+       $pdf->SetXY(161, $Contador+ 10);  
        $pdf->Cell(40, 5, 'TOTAL Q__'.$sale['totalSale'], 1, 0, 'C');
 
     //TOTAL-LETRAS
@@ -152,6 +152,6 @@ while ($sale = $resultado->fetch_assoc()) {
 
     //TOTAL-LETRAS
     $pdf->SetXY(10,  $Contador+ 20);
-    $pdf->MultiCell(85, 5, 'SE ENTREGA LA OTRA VISITA', 0,'L',0);
+    $pdf->MultiCell(85, 5, '', 1,'L',0);
 }
 $pdf->Output(); //Salida al navegador

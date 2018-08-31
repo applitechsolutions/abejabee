@@ -424,7 +424,7 @@ while ($product = $resultado->fetch_assoc()) {
                                           <option value="briefcase">Negocio: Q.
                                             <?php echo $product['business']; ?>
                                           </option>
-                                          <option value="money" disabled="disabled">Bono: Q.
+                                          <option value="money">Bono: Q.
                                             <?php echo $product['bonus']; ?>
                                           </option>
                                         </select>
@@ -567,11 +567,14 @@ while ($product = $resultado->fetch_assoc()) {
                             <div class="box-header">
                               <h3 class="box-title">
                                 <i class="fa fa-print"></i> Factura y Guía de remision</h3>
+                                <a class="btn btn-app pull-right" href="#" onclick="generarFactura();">
+                                <i class="glyphicon glyphicon-save-file"></i> Generar Factura
+                              </a>
                             </div>
                             <div class="box-body">
                               <div id="divreporteF" class="w3-rest">
-                                <iframe src="" style="width: 100%; height: 700px; min-width: 300px;"></iframe>
-                              </div>
+                                <iframe src="" style="width: 100%; height: 640px; min-width: 300px;"></iframe>
+                              </div>                              
                             </div>
                             <!-- /.box-body -->
                           </div>
@@ -585,7 +588,8 @@ while ($product = $resultado->fetch_assoc()) {
                             </div>
                             <div class="box-body">
                               <form role="form" id="form-envio" name="form-envio" method="post" action="BLL/sale.php">
-                                <div class="form-group">
+                              <div class="row">
+                                <div class="form-group col-md-6">
                                   <label for="transport">Transporte</label>
                                   <input type="text" class="form-control" id="transport" name="transport" placeholder="Escriba un transporte" value="GuatEx" autofocus>
                                 </div>
@@ -593,7 +597,7 @@ while ($product = $resultado->fetch_assoc()) {
                                   try { $sql = "SELECT * FROM correlative WHERE idCorrelative = 21";
                                       $resultado = $conn->query($sql);
                                       while ($correlative = $resultado->fetch_assoc()) {?>
-                                  <div class="form-group">
+                                  <div class="form-group col-md-6">
                                     <label for="noShipment">No. de envío</label>
                                     <div class="input-group">
                                       <input type="text" class="form-control" id="noShipment1" name="noShipment1" value="<?php echo $correlative['last'] + 1; ?>"
@@ -614,9 +618,16 @@ while ($product = $resultado->fetch_assoc()) {
                                       echo "Error: " . $e->getMessage();
                                   }
                                   ?>
-                                    <div class="form-group">
+                                    <div class="form-group col-md-6">
                                       <label for="noDeliver">No. de entrega</label>
                                       <input type="text" class="form-control" id="noDeliver" name="noDeliver" placeholder="Escriba un número de entrega">
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                      <label for="">Tipo de envío:</label>
+                                      <br>
+                                      <span class="text-warning"><small>*Si no ingresa un número de entrega se almacenará el número de envio</small></span>
+                                    </div>
                                     </div>
                                     <!-- /.box-body -->
                                     <div class="box-footer">
@@ -629,7 +640,7 @@ while ($product = $resultado->fetch_assoc()) {
                               </form>
                             </div>
                             <div id="divreporteE" class="w3-rest">
-                              <iframe src="" style="width: 100%; height: 390px; min-width: 300px;"></iframe>
+                              <iframe src="" style="width: 100%; height: 470px; min-width: 300px;"></iframe>
                             </div>
                           </div>
                           <!-- /.box-body -->
