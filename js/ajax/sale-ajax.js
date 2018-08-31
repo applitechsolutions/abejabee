@@ -743,7 +743,7 @@ function saveDetailS(idEnc) {
         })
     }
     changeReportF('remision.php?idSale=' + idEnc);
-    updateCorrelativo('guia', 'A', nofactura);
+    updateCorrelativo('guia', 'A', $("#noRemi1").val());
     $("#idSale").val(idEnc);
     swal.close();
     swal({
