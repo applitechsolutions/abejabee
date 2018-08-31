@@ -19,7 +19,7 @@ if ($_POST['venta'] == 'nueva') {
                 'respuesta' => 'vacio',
             );
         } else {
-            $stmt = $conn->prepare("INSERT INTO sale(_idSeller, _idCustomer, totalSale, advance, dateStart, dateEnd, paymentMethod, noDeliver) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt = $conn->prepare("INSERT INTO sale(_idSeller, _idCustomer, totalSale, advance, dateStart, dateEnd, paymentMethod, noDeliver) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
             $stmt->bind_param("iiddssss", $vendedor, $cliente, $total, $adelanto, $fc, $fv, $pago, $remision);
             $stmt->execute();
             $id_registro = $stmt->insert_id;
