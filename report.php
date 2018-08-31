@@ -95,6 +95,7 @@ include_once 'funciones/bd_conexion.php';
                                     </div>
                                 <!-- TABLA DEL LISTADO DE REPORTES -->
                                     <div id="listadoReporte" class="modal-body">
+                                        
                                     </div>
                                 <!-- TABLA DEL LISTADO DE REPORTES -->
                                 </div>
