@@ -4,7 +4,7 @@ $(document).ready(function () {
         e.preventDefault();
         $("#listadoReporte").html("");
         
-        var tabla = '<div class="box-body table-responsive no-padding"><table id="registros" class="table table-bordered table-striped"><thead><tr><th>Fecha</th><th>Factura No°</th><th>Cliente</th><th>Fecha de vencimiento</th><th>Método de pago</th><th>Envío No°</th><th>Entrega No°</th><th>Anticipo</th><th>Total</th><th><i class="fa fa-cogs"></i> Acciones</th></tr></thead><tbody class="contenidoRPT"></tbody><tfoot><tr><th>Fecha</th><th>Factura No°</th><th>Cliente</th><th>Fecha de vencimiento</th><th>Método de pago</th><th>Envío No°</th><th>Entrega No°</th><th>Anticipo</th><th>Total</th><th><span class="fa fa-cogs"></span></th></tr></tfoot></table></div>';
+        var tabla = '<div class="box-body table-responsive no-padding"><table id="registros" class="table table-bordered table-striped"><thead><tr><th>Fecha</th><th>Factura No°</th><th>Cliente</th><th>Fecha de vencimiento</th><th>Método de pago</th><th>Envío No°</th><th>Entrega No°</th><th>Anticipo</th><th>Total</th><th><i class="fa fa-cogs"></i> Acciones</th></tr></thead><tbody class="contenidoRPT"></tbody><tfoot><tr><th>Fecha</th><th>Factura No°</th><th>Cliente</th><th>Fecha de vencimiento</th><th>Método de pago</th><th>Envío No°</th><th>Entrega No°</th><th>Anticipo</th><th>Total</th><th><span class="fa fa-cogs"></span></th></tr></tfoot></table></div><button type="button" onclick="printReport2()" class="btn bg-teal-active btn-sm"><i class="fa fa-print"></i> Imprimir</button>';
 
         $("#listadoReporte").append(tabla);
         
@@ -25,7 +25,7 @@ $(document).ready(function () {
                 console.log(data);
                 $.each(data, function (key, registro) {
                     var contenido = "<tr>";
-                    contenido += "<td>" + registro.dateStart + "</td>";
+                    contenido += "<td><input class='idVen' type='hidden' value='" + registro._idSeller + "'>" + registro.dateStart + "</td>";
                     contenido += "<td>" + registro.noBill + "</td>";
                     contenido += "<td>" + registro.customer + "</td>";
                     contenido += "<td>" + registro.dateEnd + "</td>";
@@ -34,7 +34,7 @@ $(document).ready(function () {
                     contenido += "<td>" + registro.noDeliver + "</td>";
                     contenido += "<td>" + registro.advance + "</td>";
                     contenido += "<td>" + registro.totalSale + "</td>";
-                    contenido += '<td><div class="btn-group-vertical"><button type="button" class="btn btn-success btn-sm detalle_sale" data-id="'+ registro.idSale +'" data-tipo="listDetailS"><i class="fa fa-info"></i> Detalles</button><button type="button" class="btn btn-primary btn-sm detalle_balance" data-id="'+ registro.idSale +'" data-tipo="listBalance"><i class="fa fa-balance-scale"></i> Balance</button></div></td>';
+                    contenido += '<td><div class="btn-group-vertical"><a href="#tab_2" data-toggle="tab" class="btn bg-maroon btn-flat margin quitar_product"><i class="fa fa-remove"></i></a><button type="button" class="btn btn-success btn-sm detalle_rpt1" data-id="'+ registro.idSale +'" data-tipo="listDetailS"><i class="fa fa-info"></i> Detalles</button></div></td>';
                     contenido += '</tr>';
                     $(".contenidoRPT").append(contenido);
                 });
@@ -56,6 +56,13 @@ $(document).ready(function () {
 function listAllRoutes() {
 
     changeReport('rptAllRoutes.php');
+}
+
+function printReport2() {
+    
+    var idSeller = $('.idVen').val();
+    changeReport('salesBySeller.php?idVendedor='+idSeller);
+    $('#modal-reporte').modal('show');
 }
 
 function funciones() {

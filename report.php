@@ -26,6 +26,28 @@ include_once 'funciones/bd_conexion.php';
             <!-- /.box-header -->
             <div class="box-body">
                 <div class="row">
+                    <div class="modal fade" id="modal-reporte">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title"><li class="glyphicon glyphicon-print"></li> Imprimir</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="box box-info">
+                                    <div class="box-header">
+                                    </div>
+                                    <!-- /.box-header -->
+                                    <div id="divreporte" class="w3-rest">
+                                        <iframe src="" style="width: 100%; height: 700px; min-width: 300px;"></iframe>
+                                    </div>
+                                    <!-- /.box-body -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <!-- /.modal-content -->
+                    </div>
                     <div class="col-md-12">
                         <!-- Custom Tabs (Pulled to the right) -->
                         <div class="nav-tabs-custom">
@@ -80,7 +102,7 @@ include_once 'funciones/bd_conexion.php';
                                                                 </div>
                                                                 <!-- /.box-body -->
                                                                 <div class="box-footer">
-                                                                    <button type="submit" class="btn btn-primary pull-right" id="rpt2">
+                                                                    <button type="submit" class="btn btn-primary pull-right" id="rpt1">
                                                                     <i class="fa fa-list-alt" aria-hidden="true"></i> Generar Listado</button>
                                                                 </div>
                                                             </div>
