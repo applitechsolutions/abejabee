@@ -92,7 +92,7 @@ $(document).ready(function () {
                 console.log(data);
                 var resultado = JSON.parse(data);
                 if (resultado.respuesta == 'exito') {
-                    saveBalanceS(resultado.idVenta, resultado.adelanto, resultado.total, resultado.fecha);
+                    saveBalanceS(resultado.idVenta, resultado.adelanto, resultado.total, resultado.fecha, resultado.remision);
                 } else if (resultado.respuesta == 'vacio') {
                     swal({
                         type: 'warning',
@@ -684,7 +684,7 @@ function updateCorrelativo(correlative, serie, last) {
     })
 }
 
-function saveBalanceS(idEnc, adelanto, total, fecha) {
+function saveBalanceS(idEnc, adelanto, total, fecha, remision) {
     var monto = parseFloat(total) - parseFloat(adelanto);
 
     $.ajax({
@@ -701,13 +701,13 @@ function saveBalanceS(idEnc, adelanto, total, fecha) {
             console.log(data);
             resultado = JSON.parse(data);
             if (resultado.respuesta == 'exito') {
-                saveDetailS(resultado.idVenta);
+                saveDetailS(resultado.idVenta, remision);
             }
         }
     })
 }
 
-function saveDetailS(idEnc) {
+function saveDetailS(idEnc, remision) {
 
     var id_product = document.getElementsByClassName("idproducto_class");
     var precio_detalle = document.getElementsByClassName("precio_class");
@@ -743,8 +743,7 @@ function saveDetailS(idEnc) {
         })
     }
     changeReportF('remision.php?idSale=' + idEnc);
-    var last = parseInt($("#noRemi").val());
-    updateCorrelativo('guia', 'A', last);
+    updateCorrelativo('guia', 'A', remision);
     $("#idSale").val(idEnc);
     swal.close();
     swal({

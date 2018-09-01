@@ -10,7 +10,7 @@ class PDF extends FPDF
 } // FIN Class PDF
 
 try {
-    $sql = "SELECT dateStart, dateEnd, totalSale, noBill, paymentMethod,
+    $sql = "SELECT dateStart, dateEnd, totalSale, noDeliver, paymentMethod,
                     (select sellerCode from seller where idSeller = S._idSeller) as sellercode,
                     (select name from town where idTown = C._idTown) as municipio,
                     (select name from village where idVillage = C._idVillage) as aldea,
@@ -41,7 +41,7 @@ while ($sale = $resultado->fetch_assoc()) {
     $pdf->SetXY(140, 20);
     $pdf->Cell(60, 10, 'GUIA DE REMISION', 1, 1, 'C');
     $pdf->SetXY(140, 30);
-    $pdf->Cell(60, 10, $sale['noBill'], 1, 1, 'C');
+    $pdf->Cell(60, 10, $sale['noDeliver'], 1, 1, 'C');
 
     $pdf->SetFont('Arial', 'B', 10);
     $pdf->Rect(10, 42, 90, 32);

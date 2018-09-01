@@ -30,9 +30,9 @@ if ($_POST['venta'] == 'nueva') {
                     'proceso' => 'nuevo',
                     'adelanto' => $adelanto,
                     'total' => $total,
-                    'fecha' => $fecha_venta
+                    'fecha' => $fecha_venta,
+                    'remision' => $remision
                 );
-
             } else {
                 $respuesta = array(
                     'respuesta' => 'error',
