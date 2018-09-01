@@ -14,7 +14,7 @@ include_once 'funciones/bd_conexion.php';
     <section class="content-header">
       <h1>
         <i class="glyphicon glyphicon-tags"></i> Ventas
-        <small>Listado de ventas</small>
+        <small>Listado de ventas activas con saldo pendiente de cancelar</small>
       </h1>
     </section>
 
@@ -24,7 +24,7 @@ include_once 'funciones/bd_conexion.php';
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Listado de ventas</h3>
+              <h3 class="box-title">Listado de ventas activas</h3>
             </div>
 
             <!-- MODAL DETALLES -->
