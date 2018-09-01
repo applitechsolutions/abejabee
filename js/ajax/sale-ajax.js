@@ -477,7 +477,7 @@ function recargarPagina() {
 }
 function generarFactura() {
     var serie = $("#serieS").val();
-    var last = parseInt($("#noBillS").val()) + parseInt(1);
+    var last = parseInt($("#noBillS").val());
     var idSale = $("#idSale").val();
 
     updateCorrelativo('factura', serie, last);
@@ -743,7 +743,8 @@ function saveDetailS(idEnc) {
         })
     }
     changeReportF('remision.php?idSale=' + idEnc);
-    updateCorrelativo('guia', 'A', nofactura);
+    var last = parseInt($("#noRemi").val());
+    updateCorrelativo('guia', 'A', last);
     $("#idSale").val(idEnc);
     swal.close();
     swal({
