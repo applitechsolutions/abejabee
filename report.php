@@ -68,6 +68,8 @@ include_once 'funciones/bd_conexion.php';
                             <div class="tab-content">
                                 <div class="tab-pane" id="tab_1">
                                     <div class="row">
+                                    <div class="col-md-2">
+                                    </div>
                                         <div class="col-md-8">
                                             <!-- Main content -->
                                             <section class="content">
@@ -100,6 +102,26 @@ include_once 'funciones/bd_conexion.php';
                                                                     ?>
                                                                     </select>
                                                                 </div>
+                                                                <div class="form-group">
+                                                                    <span class="text-danger text-uppercase">*</span>
+                                                                    <label>Fecha Inicial</label>
+                                                                    <div class="input-group date">
+                                                                    <div class="input-group-addon">
+                                                                        <i class="fa fa-calendar"></i>
+                                                                    </div>
+                                                                    <input type="text" class="form-control pull-right datepicker" id="datepicker" name="dateSrpt2">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <span class="text-danger text-uppercase">*</span>
+                                                                    <label>Fecha Final</label>
+                                                                    <div class="input-group date">
+                                                                    <div class="input-group-addon">
+                                                                        <i class="fa fa-calendar"></i>
+                                                                    </div>
+                                                                    <input type="text" class="form-control pull-right datepicker" id="datepicker2" name="dateErpt2">
+                                                                    </div>
+                                                                </div>
                                                                 <!-- /.box-body -->
                                                                 <div class="box-footer">
                                                                     <button type="submit" class="btn btn-primary pull-right" id="rpt1">
@@ -116,13 +138,16 @@ include_once 'funciones/bd_conexion.php';
                                         </div>
                                     </div>
                                 <!-- TABLA DEL LISTADO DE REPORTES -->
-                                    <div id="listadoReporte" class="modal-body">
+                                    <div id="listadoReporte2" class="modal-body">
                                         
                                     </div>
                                 <!-- TABLA DEL LISTADO DE REPORTES -->
                                 </div>
                                 <!-- /.tab-pane -->
                                 <div class="tab-pane" id="tab_2">
+                                    <div id="listadoDetalle2" class="modal-body">
+                                        
+                                    </div>
                                 </div>
                                 <!-- /.tab-pane -->
                                 <div class="tab-pane" id="tab_3">
