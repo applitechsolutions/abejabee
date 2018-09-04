@@ -4,7 +4,7 @@ $(document).ready(function () {
         e.preventDefault();
         $("#listadoReporte2").html("");
         
-        var tabla = '<div class="box-body table-responsive no-padding"><table id="registros" class="table table-bordered table-striped"><thead><tr><th>Fecha</th><th>Factura No°</th><th>Cliente</th><th>Fecha de vencimiento</th><th>Método de pago</th><th>Envío No°</th><th>Anticipo</th><th>Total</th><th><i class="fa fa-cogs"></i> Acciones</th></tr></thead><tbody class="contenidoRPT"></tbody><tfoot><tr><th>Fecha</th><th>Factura No°</th><th>Cliente</th><th>Fecha de vencimiento</th><th>Método de pago</th><th>Envío No°</th><th>Entrega No°</th><th>Anticipo</th><th>Total</th><th><span class="fa fa-cogs"></span></th></tr></tfoot></table></div><button type="button" onclick="printReport2()" class="btn bg-teal-active btn-sm"><i class="fa fa-print"></i> Imprimir</button>';
+        var tabla = '<div class="box-body table-responsive no-padding"><table id="registros" class="table table-bordered table-striped"><thead><tr><th>Fecha</th><th>Factura No°</th><th>Cliente</th><th>Fecha de vencimiento</th><th>Método de pago</th><th>Envío No°</th><th>Anticipo</th><th>Total</th><th><i class="fa fa-cogs"></i> Acciones</th></tr></thead><tbody class="contenidoRPT"></tbody><tfoot><tr><th>Fecha</th><th>Factura No°</th><th>Cliente</th><th>Fecha de vencimiento</th><th>Método de pago</th><th>Envío No°</th><th>Entrega No°</th><th>Anticipo</th><th>Total</th><th><span class="fa fa-cogs"></span></th></tr></tfoot></table></div><button type="button" onclick="printReport2()" class="btn bg-teal-active btn-sm"><i class="fa fa-print"></i> Imprimir</button><a id="btn_avanzar" href="#tab_2" data-toggle="tab" class="btn btn-flat pull-right text-bold btn_avanzar" hidden><i class="glyphicon glyphicon-forward"></i> Avanzar a la venta seleccionada...</a>';
 
         $("#listadoReporte2").append(tabla);
         
@@ -25,9 +25,6 @@ $(document).ready(function () {
                 console.log(data);
                 $.each(data, function (key, registro) {
                     var contenido = "<tr>";
-                    var fecha1 = registro.dateEnd.toString();
-                    var fecha2 = new Date('2018-10-31');
-                    console.log(fecha1);
                     contenido += "<td><input class='idVen' type='hidden' value='" + registro._idSeller + "'>" + registro.dateStart + "</td>";
                     contenido += '<td><small class="text-orange text-muted">Factura No°</small><br><small>'+ registro.serie +' '+ registro.noBill +'</small><br><small class="text-olive text-muted">Remision No°</small><br><small>'+ registro.noDeliver +'</small></td>';
                     contenido += "<td><input class='fp"+ registro.idSale +"' type='hidden' value='" + registro.fechapago + "'>" + registro.customer + "</td>";
@@ -42,6 +39,7 @@ $(document).ready(function () {
                 });
                 swal.close();
                 funciones();
+                
             },
             error: function (data) {
                 swal({
@@ -61,9 +59,10 @@ function Comisiones() {
 }
 
 function listarDetallerpt2(idv) {
+    jQuery('.btn_avanzar').attr('hidden', false);
     $("#listadoDetalle2").html("");
     
-    var tabla = '<div class="box-body table-responsive no-padding"><table id="registros" class="table table-bordered table-striped"><thead><tr><th>Codigo de Product</th><th>Nombre</th><th>Marca</th><th>Cantidad</th><th>Precio</th><th>Descuento</th><th>SubTotal</th><th>Comisión</th></tr></thead><tbody class="contenidorptDetalle2"></tbody><tfoot><tr><th>Codigo de Product</th><th>Nombre</th><th>Marca</th><th>Cantidad</th><th>Precio</th><th>Descuento</th><th>SubTotal</th><th>Comisión</th></tr></tfoot></table></div><button type="button" onclick="printReport2()" class="btn bg-teal-active btn-sm"><i class="fa fa-print"></i> Imprimir</button>';
+    var tabla = '<div class="box-body table-responsive no-padding"><table id="registros2" class="table table-bordered table-striped"><thead><tr><th>Codigo de Product</th><th>Nombre</th><th>Marca</th><th>Cantidad</th><th>Precio</th><th>Descuento</th><th>SubTotal</th><th>Comisión</th></tr></thead><tbody class="contenidorptDetalle2"></tbody><tfoot><tr><th>Codigo de Product</th><th>Nombre</th><th>Marca</th><th>Cantidad</th><th>Precio</th><th>Descuento</th><th>SubTotal</th><th>Comisión</th></tr></tfoot></table></div><button type="button" onclick="printReport2()" class="btn bg-teal-active btn-sm"><i class="fa fa-print"></i> Imprimir</button>';
 
     $("#listadoDetalle2").append(tabla);
     
@@ -78,6 +77,12 @@ function listarDetallerpt2(idv) {
     var timeDiff = Math.abs(date2.getTime() - date1.getTime());
     var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
     console.log(diffDays);
+
+    swal({
+        title: 'Generando el reporte...'
+    });
+
+    swal.showLoading();
 
     $.ajax({
         type: 'POST',
@@ -101,6 +106,8 @@ function listarDetallerpt2(idv) {
                 contenido += '</tr>';
                 $(".contenidorptDetalle2").append(contenido);
             });
+            swal.close();
+            funciones2();
         },
         error: function (data) {
             swal({
@@ -113,6 +120,16 @@ function listarDetallerpt2(idv) {
 }
 
 function printReport2() {
+    
+    var idSeller = $('.idVen').val();
+    var f1 = $("[name='dateSrpt2']").val();
+    var f2 = $("[name='dateErpt2']").val();
+    console.log(f2);
+    changeReport('salesBySeller.php?idVendedor='+idSeller+'&fecha1='+f1+'&fecha2='+f2);
+    $('#modal-reporte').modal('show');
+}
+
+function printrptDetail2() {
     
     var idSeller = $('.idVen').val();
     changeReport('salesBySeller.php?idVendedor='+idSeller);
@@ -151,6 +168,36 @@ function comision(dif, marca, subtotal) {
 
 function funciones() {
     $('#registros').DataTable({
+        'paging'      : true,
+        'lengthChange': true,
+        "aLengthMenu" : [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
+        'searching'   : true,
+        'ordering'    : true,
+        'info'        : true,
+        'autoWidth'   : true,
+        'language'    : {
+          paginate: {
+            next:     'Siguiente',
+            previous: 'Anterior',
+            first:    'Primero',
+            last:     'Último'
+          },
+          info: 'Mostrando _START_-_END_ de _TOTAL_ registros',
+          empyTable:  'No hay registros',
+          infoEmpty:  '0 registros',
+          lengthChange: 'Mostrar ',
+          infoFiltered: "(Filtrado de _MAX_ total de registros)",
+          lengthMenu: "Mostrar _MENU_ registros",
+          loadingRecords: "Cargando...",
+          processing: "Procesando...",
+          search: "Buscar:",
+          zeroRecords: "Sin resultados encontrados"
+        }
+    });
+}
+
+function funciones2() {
+    $('#registros2').DataTable({
         'paging'      : true,
         'lengthChange': true,
         "aLengthMenu" : [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
