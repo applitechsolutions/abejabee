@@ -56,6 +56,10 @@ $(document).ready(function () {
 
 });
 
+function Comisiones() {
+    $('#comisiones').click();
+}
+
 function listarDetallerpt2(idv) {
     $("#listadoDetalle2").html("");
     
