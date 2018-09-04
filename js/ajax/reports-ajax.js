@@ -25,19 +25,18 @@ $(document).ready(function () {
                 console.log(data);
                 $.each(data, function (key, registro) {
                     var contenido = "<tr>";
-                    var fecha1 = new Date(registro.dateEnd);
-                    var fecha2 = new Date(registro.fechapago);
+                    var fecha1 = registro.dateEnd.toString();
+                    var fecha2 = new Date('2018-10-31');
                     console.log(fecha1);
-                    console.log(fecha2);
                     contenido += "<td><input class='idVen' type='hidden' value='" + registro._idSeller + "'>" + registro.dateStart + "</td>";
                     contenido += '<td><small class="text-orange text-muted">Factura No°</small><br><small>'+ registro.serie +' '+ registro.noBill +'</small><br><small class="text-olive text-muted">Remision No°</small><br><small>'+ registro.noDeliver +'</small></td>';
-                    contenido += "<td>" + registro.customer + "</td>";
-                    contenido += "<td>" + registro.dateEnd + "</td>";
+                    contenido += "<td><input class='fp"+ registro.idSale +"' type='hidden' value='" + registro.fechapago + "'>" + registro.customer + "</td>";
+                    contenido += "<td><input class='fv"+ registro.idSale +"' type='hidden' value='" + registro.dateEnd + "'>" + registro.dateEnd + "</td>";
                     contenido += "<td>" + registro.paymentMethod + "</td>";
                     contenido += "<td>" + registro.noShipment + "</td>";
                     contenido += "<td>" + registro.advance + "</td>";
                     contenido += "<td>" + registro.totalSale + "</td>";
-                    contenido += '<td><div class="btn-group-vertical"><a href="#tab_2" onclick="listarDetallerpt2('+ registro.idSale +', '+ convertDate(registro.fechapago) +', '+ convertDate(registro.dateEnd) +')" data-toggle="tab" class="btn bg-teal btn-flat margin detalle_rpt2"><i class="fa fa-info"></i></a></div></td>';
+                    contenido += '<td><div class="btn-group-vertical"><a href="#tab_2" onclick="listarDetallerpt2('+ registro.idSale +')" data-toggle="tab" class="btn bg-teal btn-flat margin detalle_rpt2"><i class="fa fa-info"></i></a></div></td>';
                     contenido += '</tr>';
                     $(".contenidoRPT").append(contenido);
                 });
@@ -57,16 +56,20 @@ $(document).ready(function () {
 
 });
 
-function listarDetallerpt2(idv, fecp, fecv) {
+function listarDetallerpt2(idv) {
     $("#listadoDetalle2").html("");
     
     var tabla = '<div class="box-body table-responsive no-padding"><table id="registros" class="table table-bordered table-striped"><thead><tr><th>Codigo de Product</th><th>Nombre</th><th>Marca</th><th>Cantidad</th><th>Precio</th><th>Descuento</th><th>SubTotal</th><th>Comisión</th></tr></thead><tbody class="contenidorptDetalle2"></tbody><tfoot><tr><th>Codigo de Product</th><th>Nombre</th><th>Marca</th><th>Cantidad</th><th>Precio</th><th>Descuento</th><th>SubTotal</th><th>Comisión</th></tr></tfoot></table></div><button type="button" onclick="printReport2()" class="btn bg-teal-active btn-sm"><i class="fa fa-print"></i> Imprimir</button>';
 
     $("#listadoDetalle2").append(tabla);
-    console.log(fecv);
-    console.log(fecp);
-    var date1 = new Date(fecv);
-    var date2 = new Date(fecp);
+    
+    
+    var fecha1 = $('.fp'+idv).val();
+    var fecha2 = $('.fv'+idv).val();
+    var date1 = new Date(fecha1);
+    var date2 = new Date(fecha2);
+    console.log(date1);
+    console.log(date2);
 
     var timeDiff = Math.abs(date2.getTime() - date1.getTime());
     var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
@@ -114,7 +117,7 @@ function printReport2() {
 
 function convertDate(dateString) {
     var p = dateString.split(/\D/g)
-    return [p[2], p[1], p[0]].join("/")
+    return [p[2], p[1], p[0]].join("-")
 }
 
 function comision(dif, marca, subtotal) {
