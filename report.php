@@ -62,12 +62,6 @@ include_once 'funciones/bd_conexion.php';
                                 <li>
                                     <a href="#tab_3" data-toggle="tab">Tab 3</a>
                                 </li>
-
-                                <li class="pull-right">
-                                    <a href="#" class="text-muted">
-                                        <i class="fa fa-gear"></i>
-                                    </a>
-                                </li>
                             </ul>
                             <div class="tab-content">
                                 <div class="tab-pane" id="tab_1">
