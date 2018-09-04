@@ -150,8 +150,8 @@ include_once 'funciones/bd_conexion.php';
                                 <!-- /.tab-pane -->
                                 <div class="tab-pane" id="tab_2">
                                     <div class="row">
-                                            <a onclick="Comisiones()" data-toggle="tab" class="btn btn-flat pull-right text-bold">
-                                                    <i class="glyphicon glyphicon-forward"></i> Regresar al listado anterior...</a>
+                                            <a href="#tab_1" data-toggle="tab" class="btn btn-flat pull-right text-bold">
+                                                    <i class="glyphicon glyphicon-backward"></i> Regresar al listado anterior...</a>
                                     </div>                                    
                                     <div id="listadoDetalle2" class="modal-body">
 
