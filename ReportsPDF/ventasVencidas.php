@@ -100,7 +100,7 @@ $pagina='
 
 $file = "VentasporVendedor.pdf"; //Se nombra el archivo
 
-$mpdf = new mPDF('utf-8', 'LETTER', 0, '', 10, 10, 10, 10, 0, 0);//se define el tamaño de pagina y los margenes
+$mpdf = new mPDF('utf-8', 'A4-L', 0, '', 10, 10, 10, 10, 0, 0);//se define el tamaño de pagina y los margenes
 $mpdf->WriteHTML($pagina); //se escribe la variable pagina
 
 $mpdf->Output($file, 'I'); //Se crea el documento pdf y se muestra en el navegador
