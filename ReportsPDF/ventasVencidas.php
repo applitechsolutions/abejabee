@@ -57,28 +57,38 @@ $pagina='
                 <table class="w3-table-all">
                     <thead style="background-color: black;">
                         <tr>
-                            <th style="background-color: #1d2128; color: white">Fecha</th>
-                            <th style="background-color: #1d2128; color: white">Factura No°</th>
+                            <th style="background-color: #1d2128; color: white">Ruta</th>
+                            <th style="background-color: #1d2128; color: white">Vendedor</th>
                             <th style="background-color: #1d2128; color: white">Cliente</th>
-                            <th style="background-color: #1d2128; color: white">Fecha de vencimiento</th>
-                            <th style="background-color: #1d2128; color: white">Método de pago</th>
-                            <th style="background-color: #1d2128; color: white">Envío No°</th>
-                            <th style="background-color: #1d2128; color: white">Anticipo</th>
+                            <th style="background-color: #1d2128; color: white">Factura No°</th>
+                            <th style="background-color: #1d2128; color: white">Adelanto</th>
                             <th style="background-color: #1d2128; color: white">Total</th>
+                            <th style="background-color: #1d2128; color: white">Fecha de Venta</th>
+                            <th style="background-color: #1d2128; color: white">Fecha de Vencimiento</th>
+                            <th style="background-color: #1d2128; color: white">Envío No°</th>
+                            <th style="background-color: #1d2128; color: white">Días</th>
+                            <th style="background-color: #1d2128; color: white">30 días</th>
+                            <th style="background-color: #1d2128; color: white">60 días</th>
+                            <th style="background-color: #1d2128; color: white">90 días</th>
                         </tr>
                     </thead>
                     <tbody class="w3-white">';
             while ($sale = $resultado->fetch_assoc()) {
                 $pagina.='
                         <tr>
-                            <td>'.$sale['dateStart'].'</td>
-                            <td><small class="w3-deep-orange">Factura No°</small><br><small>'.$sale['serie'].' '.$sale['noBill'].'</small><br><small class="w3-indigo">Remision No°</small><br><small>'.$sale['noDeliver'].'</small></td>
+                            <td>'.$sale['route'].'</td>
+                            <td>'.$sale['seller'].'</td>
                             <td>'.$sale['customer'].'</td>
-                            <td>'.$sale['dateEnd'].'</td>
-                            <td>'.$sale['paymentMethod'].'</td>
-                            <td>'.$sale['noShipment'].'</td>
+                            <td><small class="w3-deep-orange">Factura No°</small><br><small>'.$sale['serie'].' '.$sale['noBill'].'</small><br><small class="w3-indigo">Remision No°</small><br><small>'.$sale['noDeliver'].'</small></td>
                             <td>'.$sale['advance'].'</td>
                             <td>'.$sale['totalSale'].'</td>
+                            <td>'.$sale['dateStart'].'</td>
+                            <td>'.$sale['dateEnd'].'</td>
+                            <td>'.$sale['noShipment'].'</td>
+                            <td>'.$sale['days'].'</th>
+                            <td>'.$sale['mora30'].'</td>
+                            <td>'.$sale['mora60'].'</td>
+                            <td>'.$sale['mora90'].'</td>
                         </tr>';
                     }
         $pagina .= '</tbody>

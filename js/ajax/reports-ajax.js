@@ -112,10 +112,6 @@ $(document).ready(function () {
 
 });
 
-function Comisiones() {
-    $('#comisiones').click();
-}
-
 function listarDetallerpt2(idv) {
     jQuery('.btn_avanzar').attr('hidden', false);
     $("#listadoDetalle2").html("");
@@ -182,8 +178,13 @@ function printReport2() {
     var idSeller = $('.idVen').val();
     var f1 = $("[name='dateSrpt2']").val();
     var f2 = $("[name='dateErpt2']").val();
-    console.log(f2);
     changeReport('salesBySeller.php?idVendedor='+idSeller+'&fecha1='+f1+'&fecha2='+f2);
+    $('#modal-reporte').modal('show');
+}
+
+function printReport1() {
+    
+    changeReport('ventasVencidas.php');
     $('#modal-reporte').modal('show');
 }
 
