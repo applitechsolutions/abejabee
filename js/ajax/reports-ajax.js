@@ -2,6 +2,7 @@ $(document).ready(function () {
 
     $('#form-SalesBySeller').on('submit', function (e) {
         e.preventDefault();
+        $("#listadoReporte1").html("");
         $("#listadoReporte2").html("");
         
         var tabla = '<div class="box-body table-responsive no-padding"><table id="registros" class="table table-bordered table-striped"><thead><tr><th>Fecha</th><th>Factura No°</th><th>Cliente</th><th>Fecha de vencimiento</th><th>Método de pago</th><th>Envío No°</th><th>Anticipo</th><th>Total</th><th><i class="fa fa-cogs"></i> Acciones</th></tr></thead><tbody class="contenidoRPT"></tbody><tfoot><tr><th>Fecha</th><th>Factura No°</th><th>Cliente</th><th>Fecha de vencimiento</th><th>Método de pago</th><th>Envío No°</th><th>Entrega No°</th><th>Anticipo</th><th>Total</th><th><span class="fa fa-cogs"></span></th></tr></tfoot></table></div><button type="button" onclick="printReport2()" class="btn bg-teal-active btn-sm"><i class="fa fa-print"></i> Imprimir</button><a id="btn_avanzar" href="#tab_2" data-toggle="tab" class="btn btn-flat pull-right text-bold btn_avanzar" hidden><i class="glyphicon glyphicon-forward"></i> Avanzar a la venta seleccionada...</a>';
@@ -51,6 +52,57 @@ $(document).ready(function () {
 
         });
     });
+
+    $('#form-rpt1').on('submit', function (e) {
+        e.preventDefault();
+
+        $("#listadoReporte1").html("");
+        $("#listadoReporte2").html("");
+
+        var datos = $(this).serializeArray();
+
+        swal({
+            title: 'Generando el reporte...'
+        });
+
+        swal.showLoading();
+
+        var tabla = '<div class="box-body table-responsive no-padding"><table id="registros" class="table table-bordered table-striped"><thead><tr><th>Ruta</th><th>Vendedor</th><th>Cliente</th><th>Dias</th><th>30 días</th><th>60 días</th><th>90 días</th></tr></thead><tbody class="contenidoRPT1"></tbody><tfoot><tr><th>Ruta</th><th>Vendedor</th><th>Cliente</th><th>Dias</th><th>30 días</th><th>60 días</th><th>90 días</th></tr></tfoot></table></div><button type="button" onclick="printReport1()" class="btn bg-teal-active btn-sm"><i class="fa fa-print"></i> Imprimir</button>';
+
+        $("#listadoReporte1").append(tabla);
+
+        $.ajax({
+            type: $(this).attr('method'),
+            data: datos,
+            url: $(this).attr('action'),
+            datatype: 'json',
+            success: function (data) {
+                console.log(data);
+                $.each(data, function (key, registro) {
+                    var contenido = "<tr>";
+                    contenido += "<td>" + registro.route + "</td>";
+                    contenido += "<td>" + registro.seller + "</td>";
+                    contenido += "<td>" + registro.customer + "</td>";
+                    contenido += "<td>" + registro.days + "</td>";
+                    contenido += "<td>" + registro.mora30 + "</td>";
+                    contenido += "<td>" + registro.mora60 + "</td>";
+                    contenido += "<td>" + registro.mora90 + "</td>";
+                    contenido += '</tr>';
+                    $(".contenidoRPT1").append(contenido);
+                });
+                
+                swal.close();
+                funciones();
+            },
+            error: function (data) {
+                swal({
+                    type: 'error',
+                    title: 'Error',
+                    text: 'Algo ha salido mal, intentalo más tarde',
+                })
+            }
+        });
+    })
 
 });
 

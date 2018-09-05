@@ -60,7 +60,7 @@ include_once 'funciones/bd_conexion.php';
                                     <a id="comisiones" href="#tab_1" data-toggle="tab"><i class="fa fa-user-plus"></i> Comisiones por vendedor</a>
                                 </li>
                                 <li>
-                                    <a href="#tab_3" data-toggle="tab">Tab 3</a>
+                                    <a href="#tab_3" data-toggle="tab"><i class="fa fa-paper-plane"></i> Ventas vencidas o atrasadas</a>
                                 </li>
                             </ul>
                             <div class="tab-content">
@@ -159,6 +159,31 @@ include_once 'funciones/bd_conexion.php';
                                 </div>
                                 <!-- /.tab-pane -->
                                 <div class="tab-pane" id="tab_3">
+                                    <div class="row">
+                                        <!-- Main content -->
+                                        <section class="content">
+                                            <!-- Default box -->
+                                            <h5 class="box-title">Listado de ventas sin terminar y su respectiva mora</h5>
+                                            <div class="box-body">
+                                                <form role="form" id="form-rpt1" name="form-rpt1"
+                                                    method="post" action="BLL/rptVentasVencidas.php">
+                                                    <!-- /.box-body -->
+                                                    <div class="box-footer">
+                                                        <button type="submit" class="btn btn-primary pull-left" id="rpt1">
+                                                            <i class="fa fa-list-alt" aria-hidden="true"></i>
+                                                            Generar Listado</button>
+                                                    </div>
+                                                    <!-- TABLA DEL LISTADO DE REPORTES -->
+                                                    <div id="listadoReporte1" class="modal-body">
+                                                    </div>
+                                                    <!-- TABLA DEL LISTADO DE REPORTES -->
+                                                </form>
+                                            </div>
+                                            <!-- /.box-body -->
+                                            <!-- /.box -->
+                                        </section>
+                                        <!-- /.content -->
+                                    </div>
                                 </div>
                                 <!-- /.tab-pane -->
                             </div>
