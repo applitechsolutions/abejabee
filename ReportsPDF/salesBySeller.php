@@ -1,6 +1,7 @@
 <?php
 include ('pdfclass/mpdf.php');//Se importa la librería de PDF
 include_once '../funciones/bd_conexion.php';
+
 //Se indica lo que se va a imprimir en formato HTML
 
 $idVendedor = $_GET['idVendedor'];
@@ -10,11 +11,14 @@ $fecha2 = $_GET['fecha2'];
 $fi = date('Y-m-d', strtotime($fecha1));
 $ff = date('Y-m-d', strtotime($fecha2));
 
+echo $fecha1;
+
 try{
     $sql = "SELECT S.*,
+    (select concat(sellerFirstName, ' ', sellerLastName) from seller where idSeller = S._idSeller) as seller,
     (SELECT date FROM balance WHERE _idSale = S.idSale ORDER BY idBalance DESC LIMIT 1) as fechapago,
     (select concat(customerCode, ' ', customerName) from customer where idCustomer = S._idCustomer) as customer
-    FROM sale S WHERE S.cancel = 1 AND S._idSeller = $idSeller AND (SELECT date FROM balance WHERE _idSale = S.idSale ORDER BY idBalance DESC LIMIT 1) BETWEEN '$fi' AND '$ff'";
+    FROM sale S WHERE S.cancel = 1 AND S._idSeller = $idVendedor AND (SELECT date FROM balance WHERE _idSale = S.idSale ORDER BY idBalance DESC LIMIT 1) BETWEEN '$fi' AND '$ff'";
 
     $resultado = $conn->query($sql);
     $res = $conn->query($sql);
@@ -27,9 +31,6 @@ while ($nombre = $res->fetch_assoc()) {
     $vendedor = $nombre['seller'];
 }
 
-if ($year1 == $year2) {
-    $mensaje = 'Del '.$dia1.' de '.mes($mes1).' al '.$dia2.' de '.mes($mes2).' del '.$year1;
-} else $mensaje = 'Del '.$dia1.' de '.mes($mes1).' del '.$year1.' al '.$dia2.' de '.mes($mes2).' del '.$year2;
 
 $dia1 = strftime("%d", strtotime($fecha1));
 $mes1 = strftime("%B", strtotime($fecha1));
@@ -68,6 +69,10 @@ function mes($mes){
     return $mes;
 }
 
+if ($year1 == $year2) {
+    $mensaje = 'Del '.$dia1.' de '.mes($mes1).' al '.$dia2.' de '.mes($mes2).' del '.$year1;
+} else $mensaje = 'Del '.$dia1.' de '.mes($mes1).' del '.$year1.' al '.$dia2.' de '.mes($mes2).' del '.$year2;
+
 
 $pagina='
 <!DOCTYPE html>
@@ -90,7 +95,7 @@ $pagina='
                     <div class="col-xs-12">
                     <h2 class="page-header">
                         <i class="fa fa-globe"></i> Schlenker, Pharma.
-                        <small class="pull-right w3-display-right">Fecha: '.date("d/m/Y").'</small>
+                        <small class="pull-right w3-right">Fecha: '.date("d/m/Y").'</small>
                     </h2>
                     </div>
                     <!-- /.col -->
@@ -119,7 +124,7 @@ $pagina='
                 $pagina.='
                         <tr>
                             <td>'.$sale['dateStart'].'</td>
-                            <td><small class="text-orange text-muted">Factura No°</small><br><small>'. $sale['serie'] .' '+ $sale['noBill'] +'</small><br><small class="text-olive text-muted">Remision No°</small><br><small>'+ $sale['noDeliver'] +'</small></td>
+                            <td><small class="w3-deep-orange">Factura No°</small><br><small>'.$sale['serie'].' '.$sale['noBill'].'</small><br><small class="w3-indigo">Remision No°</small><br><small>'.$sale['noDeliver'].'</small></td>
                             <td>'.$sale['customer'].'</td>
                             <td>'.$sale['dateEnd'].'</td>
                             <td>'.$sale['paymentMethod'].'</td>
