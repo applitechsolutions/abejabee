@@ -67,7 +67,7 @@ $(document).ready(function () {
 
         swal.showLoading();
 
-        var tabla = '<div class="box-body table-responsive no-padding"><table id="registros" class="table table-bordered table-striped"><thead><tr><th>Ruta</th><th>Vendedor</th><th>Cliente</th><th>Dias</th><th>30 días</th><th>60 días</th><th>90 días</th></tr></thead><tbody class="contenidoRPT1"></tbody><tfoot><tr><th>Ruta</th><th>Vendedor</th><th>Cliente</th><th>Dias</th><th>30 días</th><th>60 días</th><th>90 días</th></tr></tfoot></table></div><button type="button" onclick="printReport1()" class="btn bg-teal-active btn-sm"><i class="fa fa-print"></i> Imprimir</button>';
+        var tabla = '<div class="box-body table-responsive no-padding"><table id="registros" class="table table-bordered table-striped"><thead><tr><th>Ruta</th><th>Vendedor</th><th>Cliente</th><th>Factura No°</th><th>Adelanto</th><th>Total</th><th>Fecha de Venta</th><th>Fecha de Vencimiento</th><th>Envío No°</th><th>Días</th><th>30 días</th><th>60 días</th><th>90 días</th></tr></thead><tbody class="contenidoRPT1"></tbody><tfoot><tr><th>Ruta</th><th>Vendedor</th><th>Cliente</th><th>Factura No°</th><th>Adelanto</th><th>Total</th><th>Fecha de Venta</th><th>Fecha de Vencimiento</th><th>Envío No°</th><th>Días</th><th>30 días</th><th>60 días</th><th>90 días</th></tr></tfoot></table></div><button type="button" onclick="printReport1()" class="btn bg-teal-active btn-sm"><i class="fa fa-print"></i> Imprimir</button>';
 
         $("#listadoReporte1").append(tabla);
 
@@ -83,6 +83,12 @@ $(document).ready(function () {
                     contenido += "<td>" + registro.route + "</td>";
                     contenido += "<td>" + registro.seller + "</td>";
                     contenido += "<td>" + registro.customer + "</td>";
+                    contenido += '<td><small class="text-orange text-muted">Factura No°</small><br><small>'+ registro.serie +' '+ registro.noBill +'</small><br><small class="text-olive text-muted">Remision No°</small><br><small>'+ registro.noDeliver +'</small></td>';
+                    contenido += "<td>" + registro.advance + "</td>";
+                    contenido += "<td>" + registro.totalSale + "</td>";
+                    contenido += "<td>" + registro.dateStart + "</td>";
+                    contenido += "<td>" + registro.dateEnd + "</td>";
+                    contenido += "<td>" + registro.noShipment + "</td>";
                     contenido += "<td>" + registro.days + "</td>";
                     contenido += "<td>" + registro.mora30 + "</td>";
                     contenido += "<td>" + registro.mora60 + "</td>";
