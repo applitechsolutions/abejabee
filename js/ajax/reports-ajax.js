@@ -62,7 +62,7 @@ function listarDetallerpt2(idv) {
     jQuery('.btn_avanzar').attr('hidden', false);
     $("#listadoDetalle2").html("");
     
-    var tabla = '<div class="box-body table-responsive no-padding"><table id="registros2" class="table table-bordered table-striped"><thead><tr><th>Codigo de Product</th><th>Nombre</th><th>Marca</th><th>Cantidad</th><th>Precio</th><th>Descuento</th><th>SubTotal</th><th>Comisión</th></tr></thead><tbody class="contenidorptDetalle2"></tbody><tfoot><tr><th>Codigo de Product</th><th>Nombre</th><th>Marca</th><th>Cantidad</th><th>Precio</th><th>Descuento</th><th>SubTotal</th><th>Comisión</th></tr></tfoot></table></div><button type="button" onclick="printReport2()" class="btn bg-teal-active btn-sm"><i class="fa fa-print"></i> Imprimir</button>';
+    var tabla = '<div class="box-body table-responsive no-padding"><table id="registros2" class="table table-bordered table-striped"><thead><tr><th>Codigo de Product</th><th>Nombre</th><th>Marca</th><th>Cantidad</th><th>Precio</th><th>Descuento</th><th>SubTotal</th><th>Comisión</th></tr></thead><tbody class="contenidorptDetalle2"></tbody><tfoot><tr><th>Codigo de Product</th><th>Nombre</th><th>Marca</th><th>Cantidad</th><th>Precio</th><th>Descuento</th><th>SubTotal</th><th>Comisión</th></tr></tfoot></table></div><button type="button" onclick="printrptDetail2('+idv+')" class="btn bg-teal-active btn-sm"><i class="fa fa-print"></i> Imprimir</button>';
 
     $("#listadoDetalle2").append(tabla);
     
@@ -129,10 +129,11 @@ function printReport2() {
     $('#modal-reporte').modal('show');
 }
 
-function printrptDetail2() {
+function printrptDetail2(idVent) {
     
-    var idSeller = $('.idVen').val();
-    changeReport('salesBySeller.php?idVendedor='+idSeller);
+    var fec1 = $('.fp'+idVent).val();
+    var fec2 = $('.fv'+idVent).val();
+    changeReport('salesBySellerDetail.php?idVenta='+idVent+'&fecha1='+fec1+'&fecha2='+fec2);
     $('#modal-reporte').modal('show');
 }
 
