@@ -4,6 +4,7 @@ $(document).ready(function () {
         e.preventDefault();
         $("#listadoReporte1").html("");
         $("#listadoReporte2").html("");
+        $("#listadoReporte3").html("");
         
         var tabla = '<div class="box-body table-responsive no-padding"><table id="registros" class="table table-bordered table-striped"><thead><tr><th>Fecha</th><th>Factura No°</th><th>Cliente</th><th>Fecha de vencimiento</th><th>Método de pago</th><th>Envío No°</th><th>Anticipo</th><th>Total</th><th><i class="fa fa-cogs"></i> Acciones</th></tr></thead><tbody class="contenidoRPT"></tbody><tfoot><tr><th>Fecha</th><th>Factura No°</th><th>Cliente</th><th>Fecha de vencimiento</th><th>Método de pago</th><th>Envío No°</th><th>Entrega No°</th><th>Anticipo</th><th>Total</th><th><span class="fa fa-cogs"></span></th></tr></tfoot></table></div><button type="button" onclick="printReport2()" class="btn bg-teal-active btn-sm"><i class="fa fa-print"></i> Imprimir</button><a id="btn_avanzar" href="#tab_2" data-toggle="tab" class="btn btn-flat pull-right text-bold btn_avanzar" hidden><i class="glyphicon glyphicon-forward"></i> Avanzar a la venta seleccionada...</a>';
 
@@ -58,6 +59,7 @@ $(document).ready(function () {
 
         $("#listadoReporte1").html("");
         $("#listadoReporte2").html("");
+        $("#listadoReporte3").html("");
 
         var datos = $(this).serializeArray();
 
@@ -110,11 +112,63 @@ $(document).ready(function () {
         });
     })
 
+    $('#form-rptCustomByDep').on('submit', function (e) {
+        e.preventDefault();
+
+        $("#listadoReporte1").html("");
+        $("#listadoReporte2").html("");
+        $("#listadoReporte3").html("");
+
+        var tabla = '<div class="box-body table-responsive no-padding"><table id="registros" class="table table-bordered table-striped"><thead><tr><th>Código</th><th>Cliente</th><th>Teléfono</th><th>Total</th><th><i class="fa fa-cogs"></i> Detalle</th></tr></thead><tbody class="contenidoRPT3"></tbody><tfoot><tr><th>Código</th><th>Cliente</th><th>Teléfono</th><th>Total</th><th><span class="fa fa-cogs"></span></th></tr></tfoot></table></div><button type="button" onclick="printReport3()" class="btn bg-teal-active btn-sm"><i class="fa fa-print"></i> Imprimir</button><a id="btn_avanzar" href="#tab_5" data-toggle="tab" class="btn btn-flat pull-right text-bold btn_avanzar3" hidden><i class="glyphicon glyphicon-forward"></i> Avanzar al detalle seleccionado...</a>';
+
+        $("#listadoReporte3").append(tabla);
+        
+        var datos = $(this).serializeArray();
+
+        swal({
+            title: 'Generando el reporte...'
+        });
+
+        swal.showLoading();
+
+        $.ajax({
+            type: $(this).attr('method'),
+            data: datos,
+            url: $(this).attr('action'),
+            datatype: 'json',
+            success: function (data) {
+                console.log(data);
+                $.each(data, function (key, registro) {
+                    var contenido = "<tr>";
+                    contenido += "<td>" + registro.customerCode + "</td>";
+                    contenido += "<td>" + registro.customerName + "</td>";
+                    contenido += "<td>" + registro.customerTel + "</td>";
+                    contenido += "<td>Q " + registro.total + "</td>";
+                    contenido += '<td><div class="btn-group-vertical"><a href="#tab_5" onclick="listarDetallerpt3('+ registro.idCustomer +')" data-toggle="tab" class="btn bg-teal btn-flat margin detalle_rpt3"><i class="fa fa-info"></i></a></div></td>';
+                    contenido += '</tr>';
+                    $(".contenidoRPT3").append(contenido);
+                });
+                swal.close();
+                funciones();
+            },
+            error: function (data) {
+                swal({
+                    type: 'error',
+                    title: 'Error',
+                    text: 'Algo ha salido mal, intentalo más tarde',
+                })
+            }
+
+        });
+
+    })
+
 });
 
 function listarDetallerpt2(idv) {
     jQuery('.btn_avanzar').attr('hidden', false);
     $("#listadoDetalle2").html("");
+    $("#listadoDetalle3").html("");
     
     var tabla = '<div class="box-body table-responsive no-padding"><table id="registros2" class="table table-bordered table-striped"><thead><tr><th>Codigo de Product</th><th>Nombre</th><th>Marca</th><th>Cantidad</th><th>Precio</th><th>Descuento</th><th>SubTotal</th><th>Comisión</th></tr></thead><tbody class="contenidorptDetalle2"></tbody><tfoot><tr><th>Codigo de Product</th><th>Nombre</th><th>Marca</th><th>Cantidad</th><th>Precio</th><th>Descuento</th><th>SubTotal</th><th>Comisión</th></tr></tfoot></table></div><button type="button" onclick="printrptDetail2('+idv+')" class="btn bg-teal-active btn-sm"><i class="fa fa-print"></i> Imprimir</button>';
 
@@ -173,6 +227,57 @@ function listarDetallerpt2(idv) {
     })
 }
 
+function listarDetallerpt3(idc) {
+    jQuery('.btn_avanzar3').attr('hidden', false);
+    $("#listadoDetalle2").html("");
+    $("#listadoDetalle3").html("");
+
+
+    var tabla = '<div class="box-body table-responsive no-padding"><table id="registros2" class="table table-bordered table-striped"><thead><tr><th>Documento</th><th>Fecha de Pago</th><th>Saldo</th></tr></thead><tbody class="contenidorptDetalle3"></tbody><tfoot><tr><th>Documento</th><th>Fecha de Pago</th><th>Saldo</th></tr></tfoot></table></div><button type="button" onclick="printrptDetail3('+idc+')" class="btn bg-teal-active btn-sm"><i class="fa fa-print"></i> Imprimir</button>';
+
+    $("#listadoDetalle3").append(tabla);
+
+    swal({
+        title: 'Generando el reporte...'
+    });
+
+    swal.showLoading();
+
+    $.ajax({
+        type: 'POST',
+        data: {
+            'idCliente': idc
+        },
+        url: 'BLL/rptDetailCustomByDep.php',
+        success(data) {
+            console.log(data);
+            $.each(data, function (key, registro) {
+                var contenido = "<tr>";
+                contenido += '<td><small class="text-orange text-muted">Factura No°</small><br><small>'+ registro.serie +' '+ registro.noBill +'</small><br><small class="text-olive text-muted">Remision No°</small><br><small>'+ registro.noDeliver +'</small></td>';
+                contenido += "<td>" + registro.dateStart + "</td>";
+                contenido += "<td>Q " + registro.saldo + "</td>";
+                contenido += '</tr>';
+                $(".contenidorptDetalle3").append(contenido);
+            });
+            swal.close();
+            funciones2();
+        },
+        error: function (data) {
+            swal({
+                type: 'error',
+                title: 'Error',
+                text: 'Algo ha salido mal, intentalo más tarde',
+            })
+        }
+    })
+}
+
+function printReport1() {
+    
+    changeReport('ventasVencidas.php');
+    $('#modal-reporte').modal('show');
+}
+
 function printReport2() {
     
     var idSeller = $('.idVen').val();
@@ -182,17 +287,23 @@ function printReport2() {
     $('#modal-reporte').modal('show');
 }
 
-function printReport1() {
-    
-    changeReport('ventasVencidas.php');
-    $('#modal-reporte').modal('show');
-}
-
 function printrptDetail2(idVent) {
     
     var fec1 = $('.fp'+idVent).val();
     var fec2 = $('.fv'+idVent).val();
     changeReport('salesBySellerDetail.php?idVenta='+idVent+'&fecha1='+fec1+'&fecha2='+fec2);
+    $('#modal-reporte').modal('show');
+}
+
+function printReport3() {
+    var idDep = $("[name='depReporte']").val();
+    changeReport('CustomByDep.php?idDepartamento='+idDep);
+    $('#modal-reporte').modal('show');
+}
+
+function printrptDetail3(idCliente) {
+    
+    changeReport('CustomByDepDetail.php?idCliente='+idCliente);
     $('#modal-reporte').modal('show');
 }
 

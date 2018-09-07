@@ -62,6 +62,9 @@ include_once 'funciones/bd_conexion.php';
                                 <li>
                                     <a href="#tab_3" data-toggle="tab"><i class="fa fa-paper-plane"></i> Ventas vencidas o atrasadas</a>
                                 </li>
+                                <li>
+                                    <a href="#tab_4" data-toggle="tab"><i class="fa fa-address-card"></i> Clientes por Departamento</a>
+                                </li>
                             </ul>
                             <div class="tab-content">
                                 <div class="tab-pane" id="tab_1">
@@ -85,20 +88,20 @@ include_once 'funciones/bd_conexion.php';
                                                                     <option value="" disabled selected>Seleccione a
                                                                         un
                                                                         vendedor</option>
-                                                                    <?php
-                                                                        try {
-                                                                        $sql = "SELECT * FROM seller";
-                                                                        $resultado = $conn->query($sql);
-                                                                        while ($seller_route = $resultado->fetch_assoc()) {?>
-                                                                    <option value="<?php echo $seller_route['idSeller']; ?>">
-                                                                        <?php echo $seller_route['sellerFirstName']. " " .$seller_route['sellerLastName']; ?>
-                                                                    </option>
-                                                                    <?php 
-                                                                        }
-                                                                        } catch (Exception $e) {
-                                                                            echo "Error: " . $e->getMessage();
-                                                                        }
-                                                                    ?>
+                                            <?php
+                                                try {
+                                                $sql = "SELECT * FROM seller";
+                                                $resultado = $conn->query($sql);
+                                                while ($seller_route = $resultado->fetch_assoc()) {?>
+                                            <option value="<?php echo $seller_route['idSeller']; ?>">
+                                                <?php echo $seller_route['sellerFirstName']. " " .$seller_route['sellerLastName']; ?>
+                                            </option>
+                                            <?php 
+                                                }
+                                                } catch (Exception $e) {
+                                                    echo "Error: " . $e->getMessage();
+                                                }
+                                            ?>
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -183,6 +186,72 @@ include_once 'funciones/bd_conexion.php';
                                             <!-- /.box -->
                                         </section>
                                         <!-- /.content -->
+                                    </div>
+                                </div>
+                                <!-- /.tab-pane -->
+                                <div class="tab-pane" id="tab_4">
+                                    <div class="row">
+                                        <!-- Main content -->
+                                        <section class="content">
+                                            <!-- Default box -->
+                                            <h4 class="box-title">Listado de clientes con ventas activas por departamento en rango de fechas</h4>
+                                            <div class="box-body">
+                                                <form role="form" id="form-rptCustomByDep" name="form-rptCustomByDep"
+                                                    method="post" action="BLL/rptCustomByDep.php">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <span class="text-danger text-uppercase">*</span>
+                                                                <label>Departamento</label>
+                                                                <select id="depReporte" name="depReporte" class="form-control select2"
+                                                                    style="width: 100%;">
+                                                                    <option value="" disabled selected>Seleccione
+                                                                        un
+                                                                        departamento</option>
+                                            <?php
+                                                try {
+                                                $sql = "SELECT * FROM deparment";
+                                                $resultado = $conn->query($sql);
+                                                while ($seller_route = $resultado->fetch_assoc()) {?>
+                                            <option value="<?php echo $seller_route['idDeparment']; ?>">
+                                                <?php echo $seller_route['name']; ?>
+                                            </option>
+                                            <?php 
+                                                }
+                                                } catch (Exception $e) {
+                                                    echo "Error: " . $e->getMessage();
+                                                }
+                                            ?>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- /.box-body -->
+                                                    <div class="box-footer">
+                                                        <button type="submit" class="btn btn-primary pull-right" id="rpt1">
+                                                            <i class="fa fa-list-alt" aria-hidden="true"></i>
+                                                            Generar Listado</button>
+                                                    </div>
+                                                    <!-- TABLA DEL LISTADO DE REPORTES -->
+                                                    <div id="listadoReporte3" class="modal-body">
+                                                    </div>
+                                                    <!-- TABLA DEL LISTADO DE REPORTES -->
+                                                </form>
+                                            </div>
+                                            <!-- /.box-body -->
+                                            <!-- /.box -->
+                                        </section>
+                                        <!-- /.content -->
+                                    </div>
+                                </div>
+                                <!-- /.tab-pane -->
+                                <div class="tab-pane" id="tab_5">
+                                    <div class="row">
+                                            <a href="#tab_4" data-toggle="tab" class="btn btn-flat pull-right text-bold">
+                                                    <i class="glyphicon glyphicon-backward"></i> Regresar al listado anterior...</a>
+                                    </div>                                    
+                                    <div id="listadoDetalle3" class="modal-body">
+
                                     </div>
                                 </div>
                                 <!-- /.tab-pane -->

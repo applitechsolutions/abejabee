@@ -207,6 +207,11 @@
             ?>
           </ul>
         </li>
+        <li>
+          <a href="report.php">
+            <i class="fa fa-book" aria-hidden="true"></i><span>Reportes</span>
+          </a>
+        </li>
       </ul>
     </section>
     <!-- /.sidebar -->
