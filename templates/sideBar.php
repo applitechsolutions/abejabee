@@ -207,11 +207,15 @@
             ?>
           </ul>
         </li>
+        <?php 
+            if ($_SESSION['rol'] == 1) {?>
         <li>
           <a href="report.php">
             <i class="fa fa-book" aria-hidden="true"></i><span>Reportes</span>
           </a>
-        </li>
+        </li><?php
+        }
+        ?>
       </ul>
     </section>
     <!-- /.sidebar -->
