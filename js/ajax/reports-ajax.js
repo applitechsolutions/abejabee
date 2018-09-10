@@ -6,7 +6,7 @@ $(document).ready(function () {
         $("#listadoReporte2").html("");
         $("#listadoReporte3").html("");
         
-        var tabla = '<div class="box-body table-responsive no-padding"><table id="registros" class="table table-bordered table-striped"><thead><tr><th>Fecha</th><th>Factura No°</th><th>Cliente</th><th>Fecha de vencimiento</th><th>Método de pago</th><th>Envío No°</th><th>Anticipo</th><th>Total</th><th><i class="fa fa-cogs"></i> Acciones</th></tr></thead><tbody class="contenidoRPT"></tbody><tfoot><tr><th>Fecha</th><th>Factura No°</th><th>Cliente</th><th>Fecha de vencimiento</th><th>Método de pago</th><th>Envío No°</th><th>Entrega No°</th><th>Anticipo</th><th>Total</th><th><span class="fa fa-cogs"></span></th></tr></tfoot></table></div><button type="button" onclick="printReport2()" class="btn bg-teal-active btn-sm"><i class="fa fa-print"></i> Imprimir</button><a id="btn_avanzar" href="#tab_2" data-toggle="tab" class="btn btn-flat pull-right text-bold btn_avanzar" hidden><i class="glyphicon glyphicon-forward"></i> Avanzar a la venta seleccionada...</a>';
+        var tabla = '<div class="box-body table-responsive no-padding"><table id="registros" class="table table-bordered table-striped"><thead><tr><th>Fecha</th><th>Factura No°</th><th>Cliente</th><th>Fecha de vencimiento</th><th>Método de pago</th><th>Envío No°</th><th>Anticipo</th><th>Total</th><th><i class="fa fa-cogs"></i> Acciones</th></tr></thead><tbody class="contenidoRPT"></tbody><tfoot><tr><th>Fecha</th><th>Factura No°</th><th>Cliente</th><th>Fecha de vencimiento</th><th>Método de pago</th><th>Envío No°</th><th>Anticipo</th><th>Total</th><th><i class="fa fa-cogs"></i> Acciones</th></tr></tfoot></table></div><button type="button" onclick="printReport2()" class="btn bg-teal-active btn-sm"><i class="fa fa-print"></i> Imprimir</button><a id="btn_avanzar" href="#tab_2" data-toggle="tab" class="btn btn-flat pull-right text-bold btn_avanzar" hidden><i class="glyphicon glyphicon-forward"></i> Avanzar a la venta seleccionada...</a>';
 
         $("#listadoReporte2").append(tabla);
         
@@ -27,14 +27,14 @@ $(document).ready(function () {
                 console.log(data);
                 $.each(data, function (key, registro) {
                     var contenido = "<tr>";
-                    contenido += "<td><input class='idVen' type='hidden' value='" + registro._idSeller + "'>" + registro.dateStart + "</td>";
+                    contenido += "<td><input class='idVen' type='hidden' value='" + registro._idSeller + "'>" + convertDate(registro.dateStart); + "</td>";
                     contenido += '<td><small class="text-orange text-muted">Factura No°</small><br><small>'+ registro.serie +' '+ registro.noBill +'</small><br><small class="text-olive text-muted">Remision No°</small><br><small>'+ registro.noDeliver +'</small></td>';
                     contenido += "<td><input class='fp"+ registro.idSale +"' type='hidden' value='" + registro.fechapago + "'>" + registro.customer + "</td>";
-                    contenido += "<td><input class='fv"+ registro.idSale +"' type='hidden' value='" + registro.dateEnd + "'>" + registro.dateEnd + "</td>";
+                    contenido += "<td><input class='fv"+ registro.idSale +"' type='hidden' value='" + registro.dateEnd + "'>" + convertDate(registro.dateEnd) + "</td>";
                     contenido += "<td>" + registro.paymentMethod + "</td>";
                     contenido += "<td>" + registro.noShipment + "</td>";
-                    contenido += "<td>" + registro.advance + "</td>";
-                    contenido += "<td>" + registro.totalSale + "</td>";
+                    contenido += "<td>Q." + registro.advance + "</td>";
+                    contenido += "<td>Q." + registro.totalSale + "</td>";
                     contenido += '<td><div class="btn-group-vertical"><a href="#tab_2" onclick="listarDetallerpt2('+ registro.idSale +')" data-toggle="tab" class="btn bg-teal btn-flat margin detalle_rpt2"><i class="fa fa-info"></i></a></div></td>';
                     contenido += '</tr>';
                     $(".contenidoRPT").append(contenido);
@@ -86,15 +86,15 @@ $(document).ready(function () {
                     contenido += "<td>" + registro.seller + "</td>";
                     contenido += "<td>" + registro.customer + "</td>";
                     contenido += '<td><small class="text-orange text-muted">Factura No°</small><br><small>'+ registro.serie +' '+ registro.noBill +'</small><br><small class="text-olive text-muted">Remision No°</small><br><small>'+ registro.noDeliver +'</small></td>';
-                    contenido += "<td>" + registro.advance + "</td>";
-                    contenido += "<td>" + registro.totalSale + "</td>";
-                    contenido += "<td>" + registro.dateStart + "</td>";
-                    contenido += "<td>" + registro.dateEnd + "</td>";
+                    contenido += "<td>Q." + registro.advance + "</td>";
+                    contenido += "<td>Q." + registro.totalSale + "</td>";
+                    contenido += "<td>" + convertDate(registro.dateStart); + "</td>";
+                    contenido += "<td>" + convertDate(registro.dateEnd) + "</td>";
                     contenido += "<td>" + registro.noShipment + "</td>";
                     contenido += "<td>" + registro.days + "</td>";
-                    contenido += "<td>" + registro.mora30 + "</td>";
-                    contenido += "<td>" + registro.mora60 + "</td>";
-                    contenido += "<td>" + registro.mora90 + "</td>";
+                    contenido += "<td>Q." + registro.mora30 + "</td>";
+                    contenido += "<td>Q." + registro.mora60 + "</td>";
+                    contenido += "<td>Q." + registro.mora90 + "</td>";
                     contenido += '</tr>';
                     $(".contenidoRPT1").append(contenido);
                 });
@@ -207,10 +207,10 @@ function listarDetallerpt2(idv) {
                 contenido += "<td>" + registro.nombre + "</td>";
                 contenido += "<td>" + registro.marca + "</td>";
                 contenido += "<td>" + registro.quantity + "</td>";
-                contenido += "<td>" + registro.priceS + "</td>";
-                contenido += "<td>" + registro.discount + "</td>";
-                contenido += "<td>" + sub.toFixed(2) + "</td>";
-                contenido += "<td>" + comision(diffDays, registro.marca, sub.toFixed(2)) + "</td>";
+                contenido += "<td>Q." + registro.priceS + "</td>";
+                contenido += "<td>Q." + registro.discount + "</td>";
+                contenido += "<td>Q." + sub.toFixed(2) + "</td>";
+                contenido += "<td>Q." + comision(diffDays, registro.marca, sub.toFixed(2)) + "</td>";
                 contenido += '</tr>';
                 $(".contenidorptDetalle2").append(contenido);
             });
@@ -254,7 +254,7 @@ function listarDetallerpt3(idc) {
             $.each(data, function (key, registro) {
                 var contenido = "<tr>";
                 contenido += '<td><small class="text-orange text-muted">Factura No°</small><br><small>'+ registro.serie +' '+ registro.noBill +'</small><br><small class="text-olive text-muted">Remision No°</small><br><small>'+ registro.noDeliver +'</small></td>';
-                contenido += "<td>" + registro.dateStart + "</td>";
+                contenido += "<td>" + convetDate(registro.dateStart); + "</td>";
                 contenido += "<td>Q " + registro.saldo + "</td>";
                 contenido += '</tr>';
                 $(".contenidorptDetalle3").append(contenido);
