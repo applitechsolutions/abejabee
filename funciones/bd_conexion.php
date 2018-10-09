@@ -1,6 +1,6 @@
 <?php
 
-$conn = new mysqli('us-cdbr-gcp-east-01.cleardb.net', 'bce3db991ab40c', 'b553d955', 'gcp_7991657fa35342e92d26');
+$conn = new mysqli('us-cdbr-azure-central-a.cloudapp.net', 'b4ca207be675e3', '45d554a4', 'schlenker');
 
 if ($conn->connect_error) {
     echo $error -> $conn->connect_error;
