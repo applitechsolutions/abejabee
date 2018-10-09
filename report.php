@@ -63,7 +63,7 @@ include_once 'funciones/bd_conexion.php';
                                     <a href="#tab_3" data-toggle="tab"><i class="fa fa-paper-plane"></i> Ventas vencidas o atrasadas</a>
                                 </li>
                                 <li>
-                                    <a href="#tab_4" data-toggle="tab"><i class="fa fa-address-card"></i> Clientes por Departamento</a>
+                                    <a href="#tab_4" data-toggle="tab"><i class="fa fa-address-card"></i> Clientes por Ruta</a>
                                 </li>
                             </ul>
                             <div class="tab-content">
@@ -194,7 +194,7 @@ include_once 'funciones/bd_conexion.php';
                                         <!-- Main content -->
                                         <section class="content">
                                             <!-- Default box -->
-                                            <h4 class="box-title">Listado de clientes con ventas activas por departamento en rango de fechas</h4>
+                                            <h4 class="box-title">Listado de clientes con ventas activas por ruta</h4>
                                             <div class="box-body">
                                                 <form role="form" id="form-rptCustomByDep" name="form-rptCustomByDep"
                                                     method="post" action="BLL/rptCustomByDep.php">
@@ -202,19 +202,19 @@ include_once 'funciones/bd_conexion.php';
                                                         <div class="col-md-6">
                                                             <div class="form-group">
                                                                 <span class="text-danger text-uppercase">*</span>
-                                                                <label>Departamento</label>
+                                                                <label>Ruta</label>
                                                                 <select id="depReporte" name="depReporte" class="form-control select2"
                                                                     style="width: 100%;">
                                                                     <option value="" disabled selected>Seleccione
-                                                                        un
-                                                                        departamento</option>
+                                                                        una
+                                                                        Ruta</option>
                                             <?php
                                                 try {
-                                                $sql = "SELECT * FROM deparment";
+                                                $sql = "SELECT idRoute, codeRoute, routeName FROM route where state = 0";
                                                 $resultado = $conn->query($sql);
                                                 while ($seller_route = $resultado->fetch_assoc()) {?>
-                                            <option value="<?php echo $seller_route['idDeparment']; ?>">
-                                                <?php echo $seller_route['name']; ?>
+                                            <option value="<?php echo $seller_route['idRoute']; ?>">
+                                                <?php echo $seller_route['codeRoute']." ".$seller_route['routeName']; ?>
                                             </option>
                                             <?php 
                                                 }
