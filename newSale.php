@@ -424,10 +424,10 @@ while ($product = $resultado->fetch_assoc()) {
                                     <td>
                                       <div class="form-group margin">
                                         <select id="SelectPrice<?php echo $product['idProduct']; ?>" class="form-control select2 SelectPrice" style="width: 100%;">
-                                         <option value="plus-square">Farmacia: Q.
+                                         <option value="plus-square" selected="selected">Farmacia: Q.
                                             <?php echo $product['pharma']; ?>
                                           </option>
-                                          <option value="users" selected="selected"> Público: Q.
+                                          <option value="users"> Público: Q.
                                             <?php echo $product['public']; ?>
                                           </option>
                                           <option value="briefcase">Negocio: Q.
