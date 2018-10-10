@@ -757,7 +757,7 @@ function saveDetailS(idEnc, remision) {
                 console.log(data);
                 resultado = JSON.parse(data);
                 if (resultado.respuesta == 'exito') {
-                    saveStockS(resultado.idProducto, resultado.cantidad);
+                    //saveStockS(resultado.idProducto, resultado.cantidad);
                 }
             }
         })
