@@ -48,7 +48,8 @@ if ($_POST['priceSale'] == 'editar') {
             );
         } else {
             $respuesta = array(
-                'respuesta' => 'error'
+                'respuesta' => 'exito',
+                'mensaje' => 'Producto actualizado correctamente!'
             );
         }
         $stmt->close();
