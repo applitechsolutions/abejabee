@@ -2,6 +2,8 @@
 include_once '../funciones/bd_conexion.php';
 
 if ($_POST['venta'] == 'nueva') {
+    $factura = $_POST['noBillS'];
+    $serie = $_POST['serieS'];
     $fecha_venta = $_POST['dateSale'];
     $fecha_venc = $_POST['dateSaleEnd'];
     $cliente = $_POST['customerS'];
@@ -19,8 +21,8 @@ if ($_POST['venta'] == 'nueva') {
                 'respuesta' => 'vacio',
             );
         } else {
-            $stmt = $conn->prepare("INSERT INTO sale(_idSeller, _idCustomer, totalSale, advance, dateStart, dateEnd, paymentMethod, noDeliver) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("iiddssss", $vendedor, $cliente, $total, $adelanto, $fc, $fv, $pago, $remision);
+            $stmt = $conn->prepare("INSERT INTO sale (_idSeller, _idCustomer, noBill, serie, totalSale, advance, dateStart, dateEnd, paymentMethod, noDeliver) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("iissddssss", $vendedor, $cliente, $factura, $serie, $total, $adelanto, $fc, $fv, $pago, $remision);
             $stmt->execute();
             $id_registro = $stmt->insert_id;
             if ($id_registro > 0) {
