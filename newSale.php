@@ -313,7 +313,7 @@ try {
     $resultado = $conn->query($sql);
     while ($seller_sale = $resultado->fetch_assoc()) {?>
                                     <option value="<?php echo $seller_sale['idSeller']; ?>">
-                                      <?php echo $seller_sale['sellerFirstName'] . " " . $seller_sale['sellerLastName']; ?>
+                                      <?php echo $seller_sale['sellerCode'] . " " . $seller_sale['sellerFirstName'] . " " . $seller_sale['sellerLastName']; ?>
                                     </option>
                                     <?php
 }
