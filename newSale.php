@@ -309,7 +309,7 @@ try {
                                   <option value="" selected>Seleccione un vendedor</option>
                                   <?php
 try {
-    $sql = "SELECT idSeller, sellerFirstName, sellerLastName FROM seller WHERE state = 0";
+    $sql = "SELECT idSeller, sellerCode, sellerFirstName, sellerLastName FROM seller WHERE state = 0";
     $resultado = $conn->query($sql);
     while ($seller_sale = $resultado->fetch_assoc()) {?>
                                     <option value="<?php echo $seller_sale['idSeller']; ?>">
