@@ -74,7 +74,7 @@ $(document).ready(function () {
         }
     });
 
-    $('#form-sale').on('submit', function (e) {
+    $('#form-saleuu').on('submit', function (e) {
         e.preventDefault();
 
         var datos = $(this).serializeArray();
