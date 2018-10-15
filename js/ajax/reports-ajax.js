@@ -165,6 +165,7 @@ $(document).ready(function () {
 
 });
 
+
 function listarDetallerpt2(idv) {
     jQuery('.btn_avanzar').attr('hidden', false);
     $("#listadoDetalle2").html("");
@@ -254,7 +255,7 @@ function listarDetallerpt3(idc) {
             $.each(data, function (key, registro) {
                 var contenido = "<tr>";
                 contenido += '<td><small class="text-orange text-muted">Factura No°</small><br><small>'+ registro.serie +' '+ registro.noBill +'</small><br><small class="text-olive text-muted">Remision No°</small><br><small>'+ registro.noDeliver +'</small></td>';
-                contenido += "<td>" + convetDate(registro.dateStart); + "</td>";
+                contenido += "<td>" + convertDate(registro.dateStart); + "</td>";
                 contenido += "<td>Q " + registro.saldo + "</td>";
                 contenido += '</tr>';
                 $(".contenidorptDetalle3").append(contenido);
