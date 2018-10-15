@@ -3,7 +3,7 @@
     header("Content-Type: application/json; charset=UTF-8");
 
     $result = $conn->query("SELECT 
-    (select concat(codeRoute, ' ', routeName) from route where _idSeller = S._idSeller) as route,
+    (select (select concat(codeRoute, ' ', routeName) from route where idRoute = _idRoute) as route from customer where idCustomer = S._idCustomer) as route,
     (select concat(sellerCode, ' ', sellerFirstName, ' ', sellerLastName) from seller where idSeller = S._idSeller) as seller,
     (select concat(customerCode, ' ', customerName) from customer where idCustomer = S._idCustomer) as customer,
     S.idSale, S.noBill, S.serie, S.noDeliver, S.advance, S.totalSale, S.dateStart, S.dateEnd, S.noShipment,
