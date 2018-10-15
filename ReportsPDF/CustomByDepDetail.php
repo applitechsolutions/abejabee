@@ -70,7 +70,7 @@ $pagina='
                         <tr>
                             <td><small class="w3-deep-orange">Factura No°</small><br><small>'.$cliente['serie'].' '.$cliente['noBill'].'</small><br><small class="w3-indigo">Remision No°</small><br><small>'.$cliente['noDeliver'].'</small></td>
                             <td>'.$cliente['dateStart'].'</td>
-                            <td>'.$cliente['saldo'].'</td>
+                            <td>Q.'.$cliente['saldo'].'</td>
                         </tr>';
                     }
         $pagina .= '</tbody>

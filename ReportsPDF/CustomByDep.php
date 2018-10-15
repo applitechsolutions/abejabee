@@ -73,7 +73,7 @@ $pagina='
                             <td>'.$cliente['customerCode'].'</td>
                             <td>'.$cliente['customerName'].'</td>
                             <td>'.$cliente['customerTel'].'</td>
-                            <td>'.$cliente['total'].'</td>
+                            <td>Q.'.$cliente['total'].'</td>
                         </tr>';
                     }
         $pagina .= '</tbody>

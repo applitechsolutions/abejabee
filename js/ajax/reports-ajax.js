@@ -234,7 +234,7 @@ function listarDetallerpt3(idc) {
     $("#listadoDetalle3").html("");
 
 
-    var tabla = '<div class="box-body table-responsive no-padding"><table id="registros2" class="table table-bordered table-striped"><thead><tr><th>Documento</th><th>Fecha de Pago</th><th>Saldo</th></tr></thead><tbody class="contenidorptDetalle3"></tbody><tfoot><tr><th>Documento</th><th>Fecha de Pago</th><th>Saldo</th></tr></tfoot></table></div><button type="button" onclick="printrptDetail3('+idc+')" class="btn bg-teal-active btn-sm"><i class="fa fa-print"></i> Imprimir</button>';
+    var tabla = '<div class="box-body table-responsive no-padding"><table id="registros2" class="table table-bordered table-striped"><thead><tr><th>Documento</th><th>Fecha</th><th>Saldo</th></tr></thead><tbody class="contenidorptDetalle3"></tbody><tfoot><tr><th>Documento</th><th>Fecha de Pago</th><th>Saldo</th></tr></tfoot></table></div><button type="button" onclick="printrptDetail3('+idc+')" class="btn bg-teal-active btn-sm"><i class="fa fa-print"></i> Imprimir</button>';
 
     $("#listadoDetalle3").append(tabla);
 
