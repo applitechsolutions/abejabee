@@ -4,14 +4,14 @@ include_once '../funciones/bd_conexion.php';
 
 //Se indica lo que se va a imprimir en formato HTML
 
-$idDepa = $_GET['idDepartamento'];
+$idRoute = $_GET['idDepartamento'];
 
 try{
     $sql = "SELECT idCustomer, customerCode, customerName, customerTel,
     (SELECT name FROM deparment WHERE idDeparment = C._idDeparment) as depName, 
     (select Sum((SELECT balance FROM balance where _idSale = idSale order by idBalance desc limit 1))
     from sale where _idCustomer = idCustomer and cancel = 0) as total
-    FROM customer C WHERE _idDeparment = $idDepa";
+    FROM customer C WHERE _idRoute = $idRoute";
 
     $resultado = $conn->query($sql);
     $res = $conn->query($sql);
@@ -30,7 +30,7 @@ $pagina='
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Clientes Por Departamento</title>
+        <title>Clientes Por Ruta</title>
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/3/w3.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     </head>
