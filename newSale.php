@@ -397,7 +397,7 @@ while ($product = $resultado->fetch_assoc()) {
                                     </td>
                                     <td>
                                       <div class="margin">
-                                        <?php echo $product['productName']; ?>
+                                        <?php echo $product['productName']." ".$product['description']; ?>
                                       </div>
                                     </td>
                                     <td>
