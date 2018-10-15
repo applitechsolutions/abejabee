@@ -18,7 +18,7 @@ $(document).ready(function () {
             })
         } else {
             var tipo = $(this).attr('data-tipo');
-            $(this).attr('hidden', true);
+            // $(this).attr('hidden', true);
 
             $.ajax({
                 type: 'POST',
@@ -62,6 +62,13 @@ $(document).ready(function () {
                     });
                     nuevaFila += "</tr>";
                     $("#agregadosS").append(nuevaFila);
+                    swal({
+                        position: 'top-end',
+                        type: 'success',
+                        title: '¡Agregado al detalle!',
+                        showConfirmButton: false,
+                        timer: 1000
+                    })
                 },
                 error: function (data) {
                     swal({
@@ -809,7 +816,7 @@ function changeReportL(report) {
 function eliminarS(idp) {
 
     $('#registros_length select').val('-1').trigger("change");
-    jQuery('[data-id="' + idp + '"]').attr('hidden', false);
+    //jQuery('[data-id="' + idp + '"]').attr('hidden', false);
     $('#registros_length select').val('10').trigger("change");
 
     var idproduct = document.getElementsByClassName("idproducto_class");
