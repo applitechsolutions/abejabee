@@ -7,10 +7,10 @@ $(document).ready(function () {
         var cantidad = parseInt($('#new_' + id + '_cantidadS').val());
         var max_stock = parseInt($('.max_' + id + '_stock').val());
         var descuento = $('#new_' + id + '_descuentoS').val();
-        var prec = $('#SelectPrice' + id).val();
+        var prec = $('#SelectPrecio' + id).val();
 
         console.log(max_stock);
-        if (isNaN(cantidad) || cantidad < 1 || cantidad > max_stock || isNaN(descuento) || descuento < 0) {
+        if (isNaN(cantidad) || cantidad < 1 || cantidad > max_stock || isNaN(descuento) || descuento < 0 || isNaN(prec) || prec < 0) {
             swal({
                 type: 'error',
                 title: 'Error',
@@ -32,7 +32,7 @@ $(document).ready(function () {
 
                     var nuevaFila = "<tr id='detalleS'>";
                     $.each(data, function (key, registro) {
-                        if (prec == 'users') {
+                       /* if (prec == 'users') {
                             var subtotal = (registro.public - descuento) * cantidad;
                             var precio = registro.public;
                         } else if (prec == 'plus-square') {
@@ -44,7 +44,9 @@ $(document).ready(function () {
                         } else if (prec == 'money') {
                             var subtotal = (registro.bonus - descuento) * cantidad;
                             var precio = registro.bonus;
-                        }
+                        }*/
+                        subtotal = (prec - descuento) * cantidad;
+                        var precio = prec;
                         nuevaFila += "<td><img src='img/products/" + registro.picture + "'width='80' onerror='ImgError(this);'></td>";
                         nuevaFila += "<td><input class='idproducto_class' type='hidden' value='" + registro.idProduct + "'>" + registro.productName + "</td>";
                         nuevaFila += "<td>" + registro.productCode + "</td>";
@@ -869,8 +871,4 @@ function updateTotalS(cant, cost, proc) {
 
     $("#totalSale").text('Q. ' + Total.toFixed(2));
     $("#totalS").val(parseFloat(Total));
-}
-
-function precios() {
-    $('#modal-prices').modal('show');
 }
