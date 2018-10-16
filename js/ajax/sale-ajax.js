@@ -870,3 +870,7 @@ function updateTotalS(cant, cost, proc) {
     $("#totalSale").text('Q. ' + Total.toFixed(2));
     $("#totalS").val(parseFloat(Total));
 }
+
+function precios() {
+    $('#modal-prices').modal('show');
+}

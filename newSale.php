@@ -556,6 +556,7 @@ while ($product = $resultado->fetch_assoc()) {
                                             <?php echo $product['bonus']; ?>
                                           </option>
                                         </select>
+                                        <p onclick="precios()"><i class="fa fa-refresh"> Actualizar</i></p>
                                       </div>
                                     </td>
                                     <td>
