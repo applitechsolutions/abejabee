@@ -29,6 +29,125 @@ include_once 'funciones/bd_conexion.php';
           <!-- /.box-header -->
           <div class="box-body">
 
+           <!-- MODAL EDITAR PRECIOS -->
+           <div class="modal fade" id="modal-prices">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button id="closePrices" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title"><i class="fa fa-balance-scale"></i> Editar precios de producto</h4>
+                  </div>
+                  <div class="modal-body">
+                  <div class="row">
+                      <div class="col-lg-6">
+                        <div class="form-group">
+                          <span class="text-danger text-uppercase">*</span>
+                          <label for="costo">Público</label>
+                          <div class="input-group">
+                            <span class="input-group-addon">
+                              <i>Q.</i>
+                            </span>
+                            <input type="number" id="public" name="public" placeholder="0.00" min="0.00" step="0.01" class="form-control">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="form-group">
+                          <span class="text-danger text-uppercase">*</span>
+                          <label for="costo">Farmacia</label>
+                          <div class="input-group">
+                            <span class="input-group-addon">
+                              <i>Q.</i>
+                            </span>
+                            <input type="number" id="pharma" name="pharma" placeholder="0.00" min="0.00" step="0.01" class="form-control">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <div class="form-group">
+                          <span class="text-danger text-uppercase">*</span>
+                          <label for="costo">Negocio</label>
+                          <div class="input-group">
+                            <span class="input-group-addon">
+                              <i>Q.</i>
+                            </span>
+                            <input type="number" id="business" name="business" placeholder="0.00" min="0.00" step="0.01" class="form-control">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="form-group">
+                          <span class="text-danger text-uppercase">*</span>
+                          <label for="costo">Bono</label>
+                          <div class="input-group">
+                            <span class="input-group-addon">
+                              <i>Q.</i>
+                            </span>
+                            <input type="number" id="bonus" name="bonus" placeholder="0.00" min="0.00" step="0.01" class="form-control">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- /.box-body -->
+                    <div class="modal-footer">
+                      <input type="hidden" name="producto" value="precios">
+                      <?php
+if ($_SESSION['rol'] == 1) {?>
+                       <span class="text-warning pull-right"> *Debe llenar los campos obligatorios </span>
+                      <button type="submit" class="btn btn-primary pull-right" id="crear-pago">
+                        <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+                      <?php
+} elseif ($_SESSION['rol'] == 2) {?>
+                      <span class="text-warning pull-right"> *No tiene permisos para ingresar pagos </span>
+                      <?php
+}
+?>
+                    </div>
+                    <div class="box box-primary">
+                      <div class="box-header">
+                        <h3 class="box-title">
+                          <i class="fa fa-history"></i> Historial</h3>
+                      </div>
+                      <!-- /.box-header -->
+                      <div class="box-body table-responsive no-padding">
+                        <table id="detallesB" class="table table-bordered table-striped product-add">
+                          <thead>
+                            <tr>
+                              <th>Documento No°</th>
+                              <th>Fecha</th>
+                              <th>Tipo</th>
+                              <th>Monto</th>
+                              <th>Recibo No°</th>
+                              <th>Saldo</th>
+                          </thead>
+                          <tbody>
+                          </tbody>
+                          <tfoot>
+                            <tr>
+                              <th>Documento No°</th>
+                              <th>Fecha</th>
+                              <th>Tipo</th>
+                              <th>Monto</th>
+                              <th>Recibo No°</th>
+                              <th>Saldo</th>
+                            </tr>
+                          </tfoot>
+                        </table>
+                        <!-- /.box-body -->
+                      </div>
+                    </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+
             <!-- MODAL CORRELATIVO -->
             <div class="modal fade" id="modal-correlative">
               <div class="modal-dialog">
