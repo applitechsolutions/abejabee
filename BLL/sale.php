@@ -190,4 +190,31 @@ if ($_POST['venta'] == 'editarShipment') {
     die(json_encode($respuesta));
 }
 
+if ($_POST['venta'] == 'anular') {
+    $idSale = $_POST['idSale'];
+
+    try {
+        $stmt = $conn->prepare('UPDATE sale SET state = 1 WHERE idSale = ?');
+        $stmt->bind_param("i", $idSale);
+        $stmt->execute();
+        if ($stmt->affected_rows) {
+            $respuesta = array(
+                'respuesta' => 'exito',
+                'id_eliminado' => $idSale
+            );
+        }else {
+            $respuesta = array(
+                'respuesta' => 'error'
+            );
+        }
+        $stmt->close();
+        $conn->close();
+    }catch(Exception $e) {
+        $respuesta = array(
+            'respuesta' => $e->getMessage()
+        );
+    }
+    die(json_encode($respuesta));
+}
+
 ?>

@@ -14,7 +14,7 @@
     (SELECT balance FROM balance where _idSale = S.idSale order by idBalance desc limit 1) END as mora60,
     CASE WHEN DATEDIFF(curdate(), S.dateEnd) > 89 THEN 
     (SELECT balance FROM balance where _idSale = S.idSale order by idBalance desc limit 1) END as mora90
-    FROM sale S WHERE cancel = 0 AND DATEDIFF(curdate(), S.dateEnd) > 29");
+    FROM sale S WHERE cancel = 0 AND state = 0 AND DATEDIFF(curdate(), S.dateEnd) > 29");
     $outp = array();
     $outp = $result->fetch_all(MYSQLI_ASSOC);
 

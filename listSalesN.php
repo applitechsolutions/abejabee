@@ -14,7 +14,7 @@ include_once 'funciones/bd_conexion.php';
     <section class="content-header">
       <h1>
         <i class="glyphicon glyphicon-tags"></i> Ventas
-        <small>Listado de ventas activas con saldo pendiente de cancelar</small>
+        <small>Listado de ventas anuladas o canceladas</small>
       </h1>
     </section>
 
@@ -24,7 +24,7 @@ include_once 'funciones/bd_conexion.php';
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Listado de ventas activas</h3>
+              <h3 class="box-title">Listado de ventas anuladas</h3>
             </div>
 
             <!-- MODAL DETALLES -->
@@ -71,13 +71,7 @@ include_once 'funciones/bd_conexion.php';
                         </table>
                       </div>
                       <!-- /.box-body -->
-                    </div>
-                    <?php
-                    if ($_SESSION['rol'] == 1) {?>
-                      <div id="anularV" class="modal-footer">                    
-                      </div><?php 
-                    }?>
-                    
+                    </div>                    
                   </div>
                 </div>
               </div>
@@ -100,7 +94,7 @@ include_once 'funciones/bd_conexion.php';
                         <div class="info-box bg-aqua">
                           <span class="info-box-icon"><i class="fa fa-money"></i></span>
                           <div class="info-box-content">
-                            <span class="info-box-text">Saldo actual:</span>
+                            <span class="info-box-text">Monto de la venta:</span>
                             <span class="info-box-number"><label for="totalB" id="totalBal"></label></span>
                           </div>
                           <!-- /.info-box-content -->
@@ -151,20 +145,7 @@ include_once 'funciones/bd_conexion.php';
 
                     <!-- /.box-body -->
                     <div class="modal-footer">
-                      <input type="hidden" name="tipo" value="pago">
-                      <input type="hidden" id="idSale" name="idSale" value="0">
-                      <input type="hidden" id="totalB" name="totalB" value="0">
-                      <?php
-if ($_SESSION['rol'] == 1) {?>
-                       <span class="text-warning pull-right"> *Debe llenar los campos obligatorios </span>
-                      <button type="submit" class="btn btn-primary pull-right" id="crear-pago">
-                        <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
-                      <?php
-} elseif ($_SESSION['rol'] == 2) {?>
                       <span class="text-warning pull-right"> *No tiene permisos para ingresar pagos </span>
-                      <?php
-}
-?>
                     </div>
                     <div class="box box-primary">
                       <div class="box-header">
@@ -206,32 +187,6 @@ if ($_SESSION['rol'] == 1) {?>
             </div>
             <!-- /.modal-content -->
 
-            <!-- MODAL IMPRIMIR -->
-            <div class="modal fade" id="modal-printS">
-              <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button onclick="recargarPagina();" type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title"><li class="glyphicon glyphicon-print"></li> Imprimir</h4>
-                  </div>
-                  <div class="modal-body">
-                    <div class="box box-info">
-                      <div class="box-header">
-                      </div>
-                      <!-- /.box-header -->
-                      <div id="divreporteL" class="w3-rest">
-                        <iframe src="" style="width: 100%; height: 700px; min-width: 300px;"></iframe>
-                      </div>
-                      <!-- /.box-body -->
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- /.modal-content -->
-            </div>
-
             <!-- /.box-header -->
             <div class="box-body table-responsive no-padding">
               <table id="registros" class="table table-bordered table-striped">
@@ -255,7 +210,7 @@ try {
     $sql = "SELECT S.*,
                     (select concat(sellerFirstName, ' ', sellerLastName) from seller where idSeller = S._idSeller) as seller,
                     (select concat(customerCode, ' ', customerName) from customer where idCustomer = S._idCustomer) as customer
-                    FROM sale S WHERE S.cancel = 0 AND S.state = 0";
+                    FROM sale S WHERE S.cancel = 0 AND S.state = 1";
     $resultado = $conn->query($sql);
 } catch (Exception $e) {
     $error = $e->getMessage();
@@ -304,16 +259,6 @@ while ($sale = $resultado->fetch_assoc()) {
                             class="fa fa-info"></i> Detalles</button>
                         <button type="button" class="btn btn-primary btn-sm detalle_balance" data-id="<?php echo $sale['idSale']; ?>" data-tipo="listBalance"><i
                             class="fa fa-balance-scale"></i> Balance</button>
-                        <div class="btn-group">
-                          <button type="button" class="btn bg-teal-active btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-                            <span><i class="fa fa-print"></i> Imprimir</span>
-                          </button>
-                          <ul class="dropdown-menu">
-                            <li><a href="#" onclick="imprimir('factura',<?php echo $sale['idSale']; ?>);">Factura</a></li>
-                            <li><a href="#" onclick="imprimir('remision',<?php echo $sale['idSale']; ?>);">Remision</a></li>
-                            <li><a href="#" onclick="imprimir('guia',<?php echo $sale['idSale']; ?>);">Guía</a></li>
-                          </ul>
-                        </div>
                       </div>
                     </td>
                   </tr>

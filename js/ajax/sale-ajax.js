@@ -385,6 +385,7 @@ $(document).ready(function () {
     $('.detalle_sale').on('click', function (e) {
         e.preventDefault();
         $("#detalles").find('tbody').html("");
+        $("#anularV").html("");
         var id = $(this).attr('data-id');
         var tipo = $(this).attr('data-tipo');
 
@@ -413,6 +414,10 @@ $(document).ready(function () {
                     nuevaFila += "</tr>";
                     $("#detalles").append(nuevaFila);
                 });
+                var btnAnular = "<a href='#' onclick='anularSale(" + id  + ")' class='btn bg-maroon btn-lg btn-flat'>";
+                btnAnular += "<i class='fa fa-ban'></i> Anular Venta";
+                btnAnular += "</a>";
+                $("#anularV").append(btnAnular);
                 swal.close();
                 $('#modal-detailS').modal('show');
             },
@@ -480,6 +485,33 @@ $(document).ready(function () {
         });
     });
 });
+
+function anularSale(idSale){
+
+    $.ajax({
+        type: 'POST',
+        data: {
+            'venta': 'anular',
+            'idSale': idSale
+        },
+        url: 'BLL/sale.php',
+        success(data) {
+            console.log(data);
+            var resultado = JSON.parse(data);
+            if (resultado.respuesta == 'exito') {
+                setTimeout(function () {
+                    location.reload();
+                }, 1500);
+            } else {
+                swal({
+                    type: 'error',
+                    title: 'Error!',
+                    text: 'No se pudo anular la venta.'
+                })
+            }
+        }
+    });
+}
 
 function recargarPagina() {
     location.reload();
@@ -633,7 +665,7 @@ function cancelSale(idSale) {
                 swal({
                     type: 'error',
                     title: 'Error!',
-                    text: 'No se pudo eliminar la ruta.'
+                    text: 'No se pudo culminar la venta.'
                 })
             }
         }
