@@ -4,7 +4,7 @@
     
     $idSale = $_POST['id'];
 
-    $result = $conn->query("SELECT quantity, priceS, discount,
+    $result = $conn->query("SELECT _idProduct, quantity, priceS, discount,
     (SELECT productName FROM product WHERE idProduct = D._idProduct) as nombre,
     (SELECT productCode FROM product WHERE idProduct = D._idProduct) as codigo,
     (SELECT picture FROM product WHERE idProduct = D._idProduct) as imagen

@@ -405,9 +405,9 @@ $(document).ready(function () {
                     var nuevaFila = "<tr>";
                     var sub = registro.quantity * (parseFloat(Math.round(registro.priceS * 100) / 100).toFixed(2) - parseFloat(Math.round(registro.discount * 100) / 100).toFixed(2));
                     nuevaFila += "<td><img src='img/products/" + registro.imagen + "'width='80' onerror='ImgError(this);'></td>";
-                    nuevaFila += "<td>" + registro.nombre + "</td>";
+                    nuevaFila += "<td><input class='idproducto_class' type='hidden' value='" + registro._idProduct + "'>" + registro.nombre + "</td>";
                     nuevaFila += "<td>" + registro.codigo + "</td>";
-                    nuevaFila += "<td>" + registro.quantity + "</td>";
+                    nuevaFila += "<td><input class='cantidad_class' type='hidden' value='" + registro.quantity + "'>" + registro.quantity + "</td>";
                     nuevaFila += "<td>Q." + registro.priceS + "</td>";
                     nuevaFila += "<td>Q." + registro.discount + "</td>";
                     nuevaFila += "<td>Q." + sub.toFixed(2) + "</td>";
@@ -487,7 +487,36 @@ $(document).ready(function () {
 });
 
 function anularSale(idSale){
+    swal({
+        title: 'Anulando la venta...'
+    });
+    swal.showLoading();
+    // var id_product = document.getElementsByClassName("idproducto_class");
+    // var cantidad_detalle = document.getElementsByClassName("cantidad_class");
 
+    // var i;
+    // for (i = 0; i < id_product.length; i++) {
+
+    //     idproduct = id_product[i].value;
+    //     cantdet = cantidad_detalle[i].value;
+
+    //     $.ajax({
+    //         type: 'POST',
+    //         data: {
+    //             'tipo': 'compra',
+    //             'cantidad': cantdet,
+    //             'id_product': idproduct
+    //         },
+    //         url: 'BLL/storage.php',
+    //         datatype: 'json',
+    //         success: function (data) {
+    //             console.log(data);
+    //             resultado = JSON.parse(data);
+    //             if (resultado.respuesta == 'exito') {
+    //             }
+    //         }
+    //     })
+    // }
     $.ajax({
         type: 'POST',
         data: {
@@ -501,7 +530,7 @@ function anularSale(idSale){
             if (resultado.respuesta == 'exito') {
                 setTimeout(function () {
                     location.reload();
-                }, 1500);
+                }, 3000);
             } else {
                 swal({
                     type: 'error',

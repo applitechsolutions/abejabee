@@ -6,7 +6,7 @@ $(document).ready(function () {
         var id = $(this).attr('data-id');
         var costo = $('#new_' +id + '_costo').val();
         var cantidad = $('#new_' + id + '_cantidad').val();
-        if (isNaN(cantidad) || cantidad < 1 || isNaN(costo) || costo < 1) {
+        if (isNaN(cantidad) || cantidad < 1 || isNaN(costo) || costo < 0) {
             swal({
                 type: 'error',
                 title: 'Error',
@@ -202,16 +202,15 @@ function saveDetail(idEnc) {
             }
         })
     }
-    swal.close();
-    swal({
-        title: 'Exito!',
-        text: '¡Compra realizada correctamente!',
-        timer: 2000,
-        type: 'success'
-    }).then(
-        setTimeout(function () {
-            location.reload();
-        }, 1500))
+    setTimeout(function () {
+        swal.close();
+        swal({
+            title: 'Exito!',
+            text: '¡Compra realizada correctamente!',
+            timer: 4000,
+            type: 'success'
+        })
+    }, 4000)
 }
 
 function saveStock(id_product, cantidad_detalle) {
