@@ -670,17 +670,24 @@ while ($product = $resultado->fetch_assoc()) {
                                 <input type="number" id="advance" name="advance" placeholder="0.00" min="0.00" step="0.01" class="form-control" value="0.00">
                               </div>
                             </div>
-                          </div>
-
-                          <div class="row">
-                            <div class="form-group col-lg-6 pull-left">
+                            <div class="form-group col-lg-6">
+                              <span class="text-danger text-uppercase">*</span>
+                              <label for="note">Nota: </label>
+                              <div class="input-group">
+                                <span class="input-group-addon">
+                                  <i class="fa fa-sticky-note"></i>
+                                </span>
+                                <input type="text" class="form-control" id="note" name="note">
+                              </div>
+                            </div>
+                            <div class="form-group col-lg-6 pull-right">
                               <input type="hidden" name="venta" value="nueva">
                               <input type="hidden" id="totalS" name="totalS" value="0">
-                              <button type="submit" class="btn btn-primary pull-left" id="crear-venta">
+                              <span class="text-warning">Debe llenar los campos obligatorios* </span>
+                              <button type="submit" class="btn btn-primary" id="crear-venta">
                                 <i class="fa fa-floppy-o" aria-hidden="true"></i> Confirmar venta</button>
-                              <span class="text-warning">*Debe llenar los campos obligatorios </span>
                             </div>
-                          </div>
+                          </div>                 
                         </div>
                         </form>
                         <!-- /.box-body -->

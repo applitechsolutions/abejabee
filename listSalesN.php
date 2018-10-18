@@ -247,7 +247,7 @@ while ($sale = $resultado->fetch_assoc()) {
                       <?php echo $sale['paymentMethod']; ?>
                     </td>
                     <td>
-                      <?php echo $sale['noShipment']; ?>
+                      <?php echo $sale['noShipment']."___ ".$sale['note']; ?>
                     </td>
                     <td>Q.<?php echo $sale['advance']; ?>
                     </td>

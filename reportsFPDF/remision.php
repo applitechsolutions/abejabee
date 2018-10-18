@@ -10,7 +10,7 @@ class PDF extends FPDF
 } // FIN Class PDF
 
 try {
-    $sql = "SELECT dateStart, dateEnd, totalSale, noDeliver, paymentMethod,
+    $sql = "SELECT dateStart, dateEnd, totalSale, noDeliver, paymentMethod, note,
                     (select sellerCode from seller where idSeller = S._idSeller) as sellercode,
                     (select name from town where idTown = C._idTown) as municipio,
                     (select name from village where idVillage = C._idVillage) as aldea,
@@ -151,7 +151,8 @@ while ($sale = $resultado->fetch_assoc()) {
     $pdf->MultiCell(150, 5, $str, 0,'L',0); 
 
     //TOTAL-LETRAS
+    $note = iconv('UTF-8', 'windows-1252', $sale['note']);
     $pdf->SetXY(10,  $Contador+ 20);
-    $pdf->MultiCell(85, 5, '', 1,'L',0);
+    $pdf->MultiCell(85, 5, $note, 1,'L',0);
 }
 $pdf->Output(); //Salida al navegador

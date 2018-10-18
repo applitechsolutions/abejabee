@@ -10,6 +10,7 @@ if ($_POST['venta'] == 'nueva') {
     $adelanto = $_POST['advance'];
     $total = $_POST['totalS'];
     $remision = $_POST['noRemi'];
+    $note = $_POST['note'];
     $fc = date('Y-m-d', strtotime($fecha_venta));
     $fv = date('Y-m-d', strtotime($fecha_venc));
 
@@ -19,8 +20,8 @@ if ($_POST['venta'] == 'nueva') {
                 'respuesta' => 'vacio',
             );
         } else {
-            $stmt = $conn->prepare("INSERT INTO sale (_idSeller, _idCustomer, totalSale, advance, dateStart, dateEnd, paymentMethod, noDeliver) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("iiddssss", $vendedor, $cliente, $total, $adelanto, $fc, $fv, $pago, $remision);
+            $stmt = $conn->prepare("INSERT INTO sale (_idSeller, _idCustomer, totalSale, advance, dateStart, dateEnd, paymentMethod, noDeliver, note) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("iiddsssss", $vendedor, $cliente, $total, $adelanto, $fc, $fv, $pago, $remision, $note);
             $stmt->execute();
             $id_registro = $stmt->insert_id;
             if ($id_registro > 0) {
