@@ -219,3 +219,25 @@ if ($_POST['producto'] == 'agregarS') {
     }
     echo json_encode($outp);
 }
+
+if ($_POST['producto'] == 'agregarPrec') {
+    header("Content-Type: application/json; charset=UTF-8");
+    $id_agregar = $_POST['id'];
+
+    try {
+        $result = $conn->query("SELECT idProduct,
+        (select price from priceSale where _idProduct = P.idProduct and _idPrice = 1) as public,
+        (select price from priceSale where _idProduct = P.idProduct and _idPrice = 11) as pharma,
+        (select price from priceSale where _idProduct = P.idProduct and _idPrice = 21) as business,
+        (select price from priceSale where _idProduct = P.idProduct and _idPrice = 31) as bonus
+        FROM product P WHERE idProduct = $id_agregar");
+        $outp = array();
+        $outp = $result->fetch_all(MYSQLI_ASSOC);
+
+    } catch (Exception $e) {
+        $outp = array(
+            'respuesta' => $e->getMessage(),
+        );
+    }
+    echo json_encode($outp);
+}

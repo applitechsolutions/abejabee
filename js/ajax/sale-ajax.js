@@ -1,5 +1,35 @@
 $(document).ready(function () {
 
+    $('.SelectPrice').on('change', function (e) {
+        e.preventDefault();
+
+        var id = $(this).attr('id-data');
+        var prec = $('#SelectPrice' + id).val();
+
+        $.ajax({
+            type: 'POST',
+            data: {
+                'id': id,
+                'producto': 'agregarPrec'
+            },
+            url: 'BLL/product.php',
+            success(data) {
+                console.log(data);
+                $.each(data, function (key, registro) {
+                    if (prec == 'users') {
+                        $('#SelectPrecio'+registro.idProduct).val(registro.public);
+                    } else if (prec == 'plus-square') {
+                        $('#SelectPrecio'+registro.idProduct).val(registro.pharma);
+                    } else if (prec == 'briefcase') {
+                        $('#SelectPrecio'+registro.idProduct).val(registro.business);
+                    } else if (prec == 'money') {
+                        $('#SelectPrecio'+registro.idProduct).val(registro.bonus);
+                    }
+                });
+            },
+        })
+    });
+
     $('.agregar_productoS').on('click', function (e) {
         e.preventDefault();
 
