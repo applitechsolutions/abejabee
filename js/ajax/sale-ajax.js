@@ -521,32 +521,32 @@ function anularSale(idSale){
         title: 'Anulando la venta...'
     });
     swal.showLoading();
-    // var id_product = document.getElementsByClassName("idproducto_class");
-    // var cantidad_detalle = document.getElementsByClassName("cantidad_class");
+    var id_product = document.getElementsByClassName("idproducto_class");
+    var cantidad_detalle = document.getElementsByClassName("cantidad_class");
 
-    // var i;
-    // for (i = 0; i < id_product.length; i++) {
+    var i;
+    for (i = 0; i < id_product.length; i++) {
 
-    //     idproduct = id_product[i].value;
-    //     cantdet = cantidad_detalle[i].value;
+        idproduct = id_product[i].value;
+        cantdet = cantidad_detalle[i].value;
 
-    //     $.ajax({
-    //         type: 'POST',
-    //         data: {
-    //             'tipo': 'compra',
-    //             'cantidad': cantdet,
-    //             'id_product': idproduct
-    //         },
-    //         url: 'BLL/storage.php',
-    //         datatype: 'json',
-    //         success: function (data) {
-    //             console.log(data);
-    //             resultado = JSON.parse(data);
-    //             if (resultado.respuesta == 'exito') {
-    //             }
-    //         }
-    //     })
-    // }
+        $.ajax({
+            type: 'POST',
+            data: {
+                'tipo': 'compra',
+                'cantidad': cantdet,
+                'id_product': idproduct
+            },
+            url: 'BLL/storage.php',
+            datatype: 'json',
+            success: function (data) {
+                console.log(data);
+                resultado = JSON.parse(data);
+                if (resultado.respuesta == 'exito') {
+                }
+            }
+        })
+    }
     $.ajax({
         type: 'POST',
         data: {
@@ -857,7 +857,7 @@ function saveDetailS(idEnc, remision) {
                 console.log(data);
                 resultado = JSON.parse(data);
                 if (resultado.respuesta == 'exito') {
-                    //saveStockS(resultado.idProducto, resultado.cantidad);
+                    saveStockS(resultado.idProducto, resultado.cantidad);
                 }
             }
         })

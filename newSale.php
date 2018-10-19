@@ -483,7 +483,7 @@ try {
                               <tbody>
                                 <?php
 try {
-    $sql = "SELECT idProduct, productName, productCode, cost, description, picture,
+    $sql = "SELECT idProduct, productName, productCode, cost, description, picture, S.stock,
     (select makeName from make where idMake = P._idMake and state = 0) as make,
     (select catName from category where idCategory = P._idCategory and state = 0) as category,
     (select unityName from unity where idUnity = P._idUnity and state = 0) as unity,
@@ -491,17 +491,8 @@ try {
     (select price from priceSale where _idProduct = P.idProduct and _idPrice = 11) as pharma,
     (select price from priceSale where _idProduct = P.idProduct and _idPrice = 21) as business,
     (select price from priceSale where _idProduct = P.idProduct and _idPrice = 31) as bonus
-    FROM product P WHERE P.state = 0";
-    // $sql = "SELECT idProduct, productName, productCode, cost, description, picture, S.stock,
-    // (select makeName from make where idMake = P._idMake and state = 0) as make,
-    // (select catName from category where idCategory = P._idCategory and state = 0) as category,
-    // (select unityName from unity where idUnity = P._idUnity and state = 0) as unity,
-    // (select price from priceSale where _idProduct = P.idProduct and _idPrice = 1) as public,
-    // (select price from priceSale where _idProduct = P.idProduct and _idPrice = 11) as pharma,
-    // (select price from priceSale where _idProduct = P.idProduct and _idPrice = 21) as business,
-    // (select price from priceSale where _idProduct = P.idProduct and _idPrice = 31) as bonus
-    // FROM product P INNER JOIN storage S ON S._idProduct = P.idProduct
-    // WHERE state = 0 AND S.stock > 0";
+    FROM product P INNER JOIN storage S ON S._idProduct = P.idProduct
+    WHERE state = 0 AND S.stock > 0";
     $resultado = $conn->query($sql);
 } catch (Exception $e) {
     $error = $e->getMessage();
@@ -565,11 +556,11 @@ while ($product = $resultado->fetch_assoc()) {
                                     </td>
                                     <td>
                                       <input class="form-control input-sm" type="number" id="new_<?php echo $product['idProduct']; ?>_cantidadS" name="cantidad"
-                                        min="1" step="1" value="1" max="<?php //echo $product['stock']; ?>" style="width: 65%;">
+                                        min="1" step="1" value="1" max="<?php echo $product['stock']; ?>" style="width: 65%;">
                                       <p class="text-green">Disp.
-                                        <?php //echo $product['stock']; ?>
+                                        <?php echo $product['stock']; ?>
                                       </p>
-                                      <input class="max_<?php echo $product['idProduct']; ?>_stock" type="hidden" value="<?php //echo $product['stock']; ?>">
+                                      <input class="max_<?php echo $product['idProduct']; ?>_stock" type="hidden" value="<?php echo $product['stock']; ?>">
                                     </td>
                                     <td>
                                       <input class="id_producto_agregar" type="hidden" value="<?php echo $product['idProduct']; ?>">
