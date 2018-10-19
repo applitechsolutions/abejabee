@@ -7,11 +7,13 @@ include_once '../funciones/bd_conexion.php';
 $idRoute = $_GET['idDepartamento'];
 
 try{
-    $sql = "SELECT idCustomer, customerCode, customerName, customerTel,
-    (SELECT name FROM deparment WHERE idDeparment = C._idDeparment) as depName, 
+    $sql = "SELECT idCustomer, customerCode, customerName, customerTel, 
+    (SELECT name FROM deparment WHERE idDeparment = C._idDeparment) as depName, S.serie, S.noBill, S.noDeliver, S.dateStart,
+    (SELECT balance FROM balance WHERE _idSale = idSale ORDER BY idBalance DESC LIMIT 1) AS saldo,
     (select Sum((SELECT balance FROM balance where _idSale = idSale order by idBalance desc limit 1))
     from sale where _idCustomer = idCustomer and cancel = 0) as total
-    FROM customer C WHERE _idRoute = $idRoute";
+    FROM customer C INNER JOIN sale S ON C.idCustomer = S._idCustomer
+    WHERE _idRoute = $idRoute AND S.cancel = 0 ORDER BY C.idCustomer ASC";
 
     $resultado = $conn->query($sql);
     $res = $conn->query($sql);
@@ -63,16 +65,23 @@ $pagina='
                             <th style="background-color: #1d2128; color: white">Código</th>
                             <th style="background-color: #1d2128; color: white">Nombre</th>
                             <th style="background-color: #1d2128; color: white">Télefono</th>
+                            <th style="background-color: #1d2128; color: white">Documento</th>
+                            <th style="background-color: #1d2128; color: white">Fecha de Pago</th>
+                            <th style="background-color: #1d2128; color: white">Saldo</th>
                             <th style="background-color: #1d2128; color: white">Total</th>
                         </tr>
                     </thead>
                     <tbody class="w3-white">';
             while ($cliente = $resultado->fetch_assoc()) {
+                $dateStart = date_create($sale['dateStart']);
                 $pagina.='
                         <tr>
                             <td>'.$cliente['customerCode'].'</td>
                             <td>'.$cliente['customerName'].'</td>
                             <td>'.$cliente['customerTel'].'</td>
+                            <td><small class="w3-deep-orange">Factura No°</small><br><small>'.$cliente['serie'].' '.$cliente['noBill'].'</small><br><small class="w3-indigo">Remision No°</small><br><small>'.$cliente['noDeliver'].'</small></td>
+                            <td>'.date_format($dateStart, 'd/m/y').'</td>
+                            <td>Q.'.$cliente['saldo'].'</td>
                             <td>Q.'.$cliente['total'].'</td>
                         </tr>';
                     }
