@@ -91,6 +91,8 @@ $(document).ready(function () {
                         nuevaFila += "<td><a id='quitar' onclick='eliminarS(" + registro.idProduct + ");' data-id-detalle='" + registro.idProduct + "' class='btn bg-maroon btn-flat margin quitar_product'><i class='fa fa-remove'></i></a></td>";
                         precio = parseFloat(precio) - parseFloat(descuento);
                         updateTotalS(cantidad, precio, 0);
+                        $('.max_' + registro.idProduct + '_stock').val(parseInt(max_stock - cantidad));
+                        $('.max_' + registro.idProduct + '_stockP').text("Disp."+parseInt(max_stock - cantidad));
                     });
                     nuevaFila += "</tr>";
                     $("#agregadosS").append(nuevaFila);
