@@ -4,9 +4,6 @@ $(document).ready(function() {
 
         var datos = $(this).serializeArray();
 
-        swal({
-            title: 'Iniciando sesión...'
-        });
         $.ajax({
             type: $(this).attr('method'),
             data: datos,
@@ -15,15 +12,15 @@ $(document).ready(function() {
             success: function(data){
                 console.log(data);
                 var resultado = data;
-                swal.close();
                 if (resultado.respuesta == 'exitoso') {
                     swal(
                         'Login Correcto!',
-                        'Bienvenid@ '+resultado.usuario+'!!'
-                      )
-                      setTimeout(function() {
-                          window.location.href = 'index.php';
-                      }, 1000);
+                        'Bienvenid@ '+resultado.usuario+'!!',
+                        'success'
+                    ).then(
+                        setTimeout(function () {
+                            window.location.href = 'index.php';
+                        }, 1500))
                 } else {
                     swal({
                         type: 'error',
