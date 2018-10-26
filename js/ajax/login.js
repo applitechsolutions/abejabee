@@ -4,6 +4,9 @@ $(document).ready(function() {
 
         var datos = $(this).serializeArray();
 
+        swal({
+            title: 'Iniciando sesión...'
+        });
         $.ajax({
             type: $(this).attr('method'),
             data: datos,
@@ -12,6 +15,7 @@ $(document).ready(function() {
             success: function(data){
                 console.log(data);
                 var resultado = data;
+                swal.close();
                 if (resultado.respuesta == 'exitoso') {
                     swal(
                         'Login Correcto!',
