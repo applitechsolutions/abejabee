@@ -19,8 +19,7 @@ $(document).ready(function() {
                 if (resultado.respuesta == 'exitoso') {
                     swal(
                         'Login Correcto!',
-                        'Bienvenid@ '+resultado.usuario+'!!',
-                        'success'
+                        'Bienvenid@ '+resultado.usuario+'!!'
                       )
                       setTimeout(function() {
                           window.location.href = 'index.php';
