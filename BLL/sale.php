@@ -51,6 +51,55 @@ if ($_POST['venta'] == 'nueva') {
     die(json_encode($respuesta));
 }
 
+if ($_POST['venta'] == 'editar') {
+    $id_sale = $_POST['id_sale'];
+    $fecha_venta = $_POST['dateSale'];
+    $fecha_venc = $_POST['dateSaleEnd'];
+    $cliente = $_POST['customerS'];
+    $vendedor = $_POST['sellerS'];
+    $pago = $_POST['payment'];
+    $adelanto = $_POST['advance'];
+    $total = $_POST['totalS'];
+    $remision = $_POST['noRemi'];
+    $note = $_POST['note'];
+    $fc = date('Y-m-d', strtotime($fecha_venta));
+    $fv = date('Y-m-d', strtotime($fecha_venc));
+
+    try {
+        if ($fecha_venta == "" || $fecha_venc == "" || $cliente == "" || $total == "0" || $vendedor == "" || $remision == "" || $pago == "") {
+            $respuesta = array(
+                'respuesta' => 'vacio',
+            );
+        } else {
+            $stmt = $conn->prepare("UPDATE sale SET  _idSeller = ?, _idCustomer = ?, totalSale = ?, advance = ?, dateStart = ?, dateEnd = ?, paymentMethod = ?, noDeliver = ?, note = ? WHERE idSale = ?");
+            $stmt->bind_param("iiddsssssi", $vendedor, $cliente, $total, $adelanto, $fc, $fv, $pago, $remision, $note, $id_sale);
+            $stmt->execute();
+            if ($stmt->affected_rows) {
+                $respuesta = array(
+                    'respuesta' => 'exito',
+                    'idVenta' => $stmt->insert_id,
+                    'proceso' => 'editado',
+                    'adelanto' => $adelanto,
+                    'total' => $total,
+                    'fecha' => $fecha_venta,
+                    'remision' => $remision
+                );
+            } else {
+                $respuesta = array(
+                    'respuesta' => 'error',
+                    'idVenta' => $id_registro,
+                );
+            }
+            $stmt->close();
+            $conn->close();
+        }
+    } catch (Exception $e) {
+        echo 'Error: ' . $e . getMessage();
+    }
+
+    die(json_encode($respuesta));
+}
+
 if ($_POST['venta'] == 'envio') {
 
     $transport = $_POST['transport'];

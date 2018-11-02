@@ -133,7 +133,12 @@ $(document).ready(function () {
                 console.log(data);
                 var resultado = JSON.parse(data);
                 if (resultado.respuesta == 'exito') {
-                    saveBalanceS(resultado.idVenta, resultado.adelanto, resultado.total, resultado.fecha, resultado.remision);
+                    if (resultado.proceso == 'nuevo') {
+                        saveBalanceS(resultado.idVenta, resultado.adelanto, resultado.total, resultado.fecha, resultado.remision);
+                    }else if (resultado.proceso == 'editado') {
+                        
+                    }
+                    
                 } else if (resultado.respuesta == 'vacio') {
                     swal({
                         type: 'warning',
@@ -446,6 +451,9 @@ $(document).ready(function () {
                     nuevaFila += "</tr>";
                     $("#detalles").append(nuevaFila);
                 });
+                // var btnAnular = "<a href='editSale.php?id=" + id  + "' class='btn bg-green btn-lg btn-flat pull-left'>";
+                // btnAnular += "<i class='fa fa-pencil'></i> Editar Venta";
+                // btnAnular += "</a>";
                 var btnAnular = "<a href='#' onclick='anularSale(" + id  + ")' class='btn bg-maroon btn-lg btn-flat'>";
                 btnAnular += "<i class='fa fa-ban'></i> Anular Venta";
                 btnAnular += "</a>";
@@ -929,13 +937,15 @@ function eliminarS(idp) {
         descuento = descuento_detalle[x].value;
 
         if (idprod == idp) {
+            var max_stock = parseInt($('.max_' + idp + '_stock').val());
             precion = parseFloat(precion) - parseFloat(descuento);
             updateTotalS(cantn, precion, 1);
+            $('.max_' + idp + '_stock').val(parseInt(parseInt(max_stock)  + parseInt(cantn)));
+            $('.max_' + idp + '_stockP').text("Disp."+parseInt(parseInt(max_stock)  + parseInt(cantn)));
         }
     }
 
     jQuery('[data-id-detalle="' + idp + '"]').parents('#detalleS').remove();
-
 }
 
 function tab2() {

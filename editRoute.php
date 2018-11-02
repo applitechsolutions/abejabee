@@ -16,7 +16,7 @@ if (!filter_var($id, FILTER_VALIDATE_INT)) {
       <h1>
       <i class="fa fa-truck"></i>
         Rutas
-        <small>Llene el formulario para editar una nueva ruta</small>
+        <small>Llene el formulario para editar una ruta</small>
       </h1>
     </section>
 

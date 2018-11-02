@@ -60,10 +60,12 @@
     }
 
     $('#datepicker').datepicker({
+      format: 'dd/mm/yyyy',
       autoclose: true
     });
 
     $('#datepicker2').datepicker({
+      format: 'dd/mm/yyyy',
       autoclose: true
     });    
 

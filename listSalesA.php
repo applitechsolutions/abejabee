@@ -299,7 +299,7 @@ while ($sale = $resultado->fetch_assoc()) {
                     <td>Q.<?php echo $sale['totalSale']; ?>
                     </td>
                     <td>
-                      <div class="btn-group-vertical no-margin">
+                      <div class="btn-group-vertical col-xs-8">
                         <button type="button" class="btn btn-success btn-sm detalle_sale" data-id="<?php echo $sale['idSale']; ?>" data-tipo="listDetailS"><i
                             class="fa fa-info"></i> Detalles</button>
                         <button type="button" class="btn btn-primary btn-sm detalle_balance" data-id="<?php echo $sale['idSale']; ?>" data-tipo="listBalance"><i
