@@ -4,7 +4,7 @@ include_once '../funciones/bd_conexion.php';
 if ($_POST['tipo'] == 'saldo') {
     $id_sale = $_POST['id_sale'];
     $monto = $_POST['monto'];
-    $fecha = $_POST['fecha']; 
+    $fecha = strtr($_POST['fecha'], '/', '-');
     $bal = 0;  
 
     $fc = date('Y-m-d', strtotime($fecha));
@@ -47,7 +47,7 @@ if ($_POST['tipo'] == 'saldo') {
 if ($_POST['tipo'] == 'pago') {
     $id_sale = $_POST['idSale'];
     $noDocument = $_POST['noDocument'];
-    $dateB = $_POST['dateB']; 
+    $dateB = strtr($_POST['dateB'], '/', '-');
     $amount = $_POST['amount'];
     $noReceipt = $_POST['noReceipt'];
     $totalB = $_POST['totalB'];

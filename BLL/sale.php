@@ -2,8 +2,8 @@
 include_once '../funciones/bd_conexion.php';
 
 if ($_POST['venta'] == 'nueva') {
-    $fecha_venta = $_POST['dateSale'];
-    $fecha_venc = $_POST['dateSaleEnd'];
+    $fecha_venta = strtr($_POST['dateSale'], '/', '-');
+    $fecha_venc = strtr($_POST['dateSaleEnd'], '/', '-');
     $cliente = $_POST['customerS'];
     $vendedor = $_POST['sellerS'];
     $pago = $_POST['payment'];
@@ -53,8 +53,8 @@ if ($_POST['venta'] == 'nueva') {
 
 if ($_POST['venta'] == 'editar') {
     $id_sale = $_POST['id_sale'];
-    $fecha_venta = $_POST['dateSale'];
-    $fecha_venc = $_POST['dateSaleEnd'];
+    $fecha_venta = strtr($_POST['dateSale'], '/', '-');
+    $fecha_venc = strtr($_POST['dateSaleEnd'], '/', '-');
     $cliente = $_POST['customerS'];
     $vendedor = $_POST['sellerS'];
     $pago = $_POST['payment'];
