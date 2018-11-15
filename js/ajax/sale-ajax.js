@@ -77,7 +77,11 @@ $(document).ready(function () {
                         }*/
                         subtotal = (prec - descuento) * cantidad;
                         var precio = prec;
-                        nuevaFila += "<td><img src='img/products/" + registro.picture + "'width='80' onerror='ImgError(this);'></td>";
+                        if (registro.picture == null) {
+                            nuevaFila += "<td><img src='img/products/notfound.jpg' width='80' onerror='ImgError(this);'></td>";
+                        }else{
+                            nuevaFila += "<td><img src='img/products/" + registro.picture + "' width='80' onerror='ImgError(this);'></td>";
+                        }                        
                         nuevaFila += "<td><input class='idproducto_class' type='hidden' value='" + registro.idProduct + "'>" + registro.productName + "</td>";
                         nuevaFila += "<td>" + registro.productCode + "</td>";
                         nuevaFila += "<td>" + registro.make + "</td>";
@@ -101,7 +105,7 @@ $(document).ready(function () {
                         type: 'success',
                         title: '¡Agregado al detalle!',
                         showConfirmButton: false,
-                        timer: 1000
+                        timer: 1500
                     })
                 },
                 error: function (data) {
@@ -116,14 +120,30 @@ $(document).ready(function () {
     });
 
     $('#form-sale').on('submit', function (e) {
-        e.preventDefault();
-
-        var datos = $(this).serializeArray();
+        e.preventDefault();    
 
         swal({
             title: 'Generando la venta...'
         });
         swal.showLoading();
+        var datos = $(this).serializeArray();
+
+        var id_product = document.getElementsByClassName("idproducto_class");
+        var precio_detalle = document.getElementsByClassName("precio_class");
+        var cantidad_detalle = document.getElementsByClassName("cantidad_class");
+        var descuento_detalle = document.getElementsByClassName("descuento_class");
+
+        var json = "";
+        var i;
+        for (i = 0; i < id_product.length; i++) {
+            json += ',{"idproduct":"' + id_product[i].value + '"'
+            json += ',"precio_det":"' + precio_detalle[i].value + '"'
+            json += ',"cantdet":"' + cantidad_detalle[i].value + '"'
+            json += ',"descudet":"' + descuento_detalle[i].value + '"}'
+        }
+        obj = JSON.parse('{ "detailS" : [' + json.substr(1) + ']}');
+        datos.push({name: 'json', value: JSON.stringify(obj)});
+
         $.ajax({
             type: $(this).attr('method'),
             data: datos,
@@ -134,11 +154,20 @@ $(document).ready(function () {
                 var resultado = JSON.parse(data);
                 if (resultado.respuesta == 'exito') {
                     if (resultado.proceso == 'nuevo') {
-                        saveBalanceS(resultado.idVenta, resultado.adelanto, resultado.total, resultado.fecha, resultado.remision);
+                        changeReportF('remision.php?idSale=' + resultado.idVenta);
+                        updateCorrelativo('guia', 'A', resultado.remision);
+                        $("#idSale").val(resultado.idVenta);
+                        swal.close();
+                        swal({
+                            title: 'Exito!',
+                            text: '¡Venta creada exitosamente!',
+                            timer: 2000,
+                            type: 'success'
+                        })
+                        tab3();
                     }else if (resultado.proceso == 'editado') {
                         
-                    }
-                    
+                    }                    
                 } else if (resultado.respuesta == 'vacio') {
                     swal({
                         type: 'warning',
@@ -526,6 +555,12 @@ $(document).ready(function () {
     });
 });
 
+function ImgError(source) {
+    source.src = "img/products/notfound.jpg";
+    source.onerror = "";
+    return true;
+}
+
 function anularSale(idSale){
     swal({
         title: 'Anulando la venta...'
@@ -810,96 +845,6 @@ function updateCorrelativo(correlative, serie, last) {
                 showConfirmButton: false,
                 timer: 1500
             })
-        }
-    })
-}
-
-function saveBalanceS(idEnc, adelanto, total, fecha, remision) {
-    var monto = parseFloat(total) - parseFloat(adelanto);
-
-    $.ajax({
-        type: 'POST',
-        data: {
-            'tipo': 'saldo',
-            'id_sale': idEnc,
-            'monto': monto,
-            'fecha': fecha
-        },
-        url: 'BLL/balance.php',
-        datatype: 'json',
-        success: function (data) {
-            console.log(data);
-            resultado = JSON.parse(data);
-            if (resultado.respuesta == 'exito') {
-                saveDetailS(resultado.idVenta, remision);
-            }
-        }
-    })
-}
-
-function saveDetailS(idEnc, remision) {
-
-    var id_product = document.getElementsByClassName("idproducto_class");
-    var precio_detalle = document.getElementsByClassName("precio_class");
-    var cantidad_detalle = document.getElementsByClassName("cantidad_class");
-    var descuento_detalle = document.getElementsByClassName("descuento_class");
-
-    var i;
-    for (i = 0; i < id_product.length; i++) {
-
-        idproduct = id_product[i].value;
-        preciodet = precio_detalle[i].value;
-        cantdet = cantidad_detalle[i].value;
-        descudet = descuento_detalle[i].value;
-
-        $.ajax({
-            type: 'POST',
-            data: {
-                'id_sale': idEnc,
-                'id_producto': idproduct,
-                'precio_detalle': preciodet,
-                'cantidad_detalle': cantdet,
-                'descuento_detalle': descudet
-            },
-            url: 'BLL/detailS.php',
-            datatype: 'json',
-            success: function (data) {
-                console.log(data);
-                resultado = JSON.parse(data);
-                if (resultado.respuesta == 'exito') {
-                    saveStockS(resultado.idProducto, resultado.cantidad);
-                }
-            }
-        })
-    }
-    changeReportF('remision.php?idSale=' + idEnc);
-    updateCorrelativo('guia', 'A', remision);
-    $("#idSale").val(idEnc);
-    swal.close();
-    swal({
-        title: 'Exito!',
-        text: '¡Venta creada exitosamente!',
-        timer: 2000,
-        type: 'success'
-    })
-    tab3();
-}
-
-function saveStockS(id_product, cantidad_detalle) {
-
-    $.ajax({
-        type: 'POST',
-        data: {
-            'tipo': 'venta',
-            'cantidad': cantidad_detalle,
-            'id_product': id_product
-        },
-        url: 'BLL/storage.php',
-        datatype: 'json',
-        success: function (data) {
-            console.log(data);
-            resultado = JSON.parse(data);
-            if (resultado.respuesta == 'exito') {}
         }
     })
 }

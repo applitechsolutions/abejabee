@@ -3,8 +3,8 @@
     header("Content-Type: application/json; charset=UTF-8");
     
     $idSeller = $_POST['sellerReporte'];
-    $fechainicio = $_POST['dateSrpt2'];
-    $fechafinal = $_POST['dateErpt2'];
+    $fechainicio = strtr($_POST['dateSrpt2'], '/', '-');
+    $fechafinal = strtr($_POST['dateErpt2'], '/', '-');
 
     $fi = date('Y-m-d', strtotime($fechainicio));
     $ff = date('Y-m-d', strtotime($fechafinal));

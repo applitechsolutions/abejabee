@@ -10,7 +10,7 @@ if ($_POST['reg-vendedor'] == 'nuevo') {
     $direccion = $_POST['direc-vendedor'];
     $telefono = $_POST['tel-vendedor'];
     $dpi = $_POST['dpi-vendedor'];
-    $bday = $_POST['bday-vendedor'];
+    $bday = strtr($_POST['bday-vendedor'], '/', '-');
 
     $fecha_formateada = date('Y-m-d', strtotime($bday));
     $genero = $_POST['gen-vendedor'];
@@ -59,7 +59,7 @@ if ($_POST['reg-vendedor'] == 'actualizar') {
     $direccion = $_POST['direc-vendedor'];
     $telefono = $_POST['tel-vendedor'];
     $dpi = $_POST['dpi-vendedor'];
-    $bday = $_POST['bday-vendedor'];
+    $bday = strtr($_POST['bday-vendedor'], '/', '-');
 
     $fecha_formateada = date('Y-m-d', strtotime($bday));
     $genero = $_POST['gen-vendedor'];

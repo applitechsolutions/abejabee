@@ -2,8 +2,9 @@
 include_once '../funciones/bd_conexion.php';
 
 if ($_POST['venta'] == 'nueva') {
-    $fecha_venta = $_POST['dateSale'];
-    $fecha_venc = $_POST['dateSaleEnd'];
+
+    $fecha_venta = strtr($_POST['dateSale'], '/', '-');
+    $fecha_venc = strtr($_POST['dateSaleEnd'], '/', '-');
     $cliente = $_POST['customerS'];
     $vendedor = $_POST['sellerS'];
     $pago = $_POST['payment'];
@@ -14,47 +15,111 @@ if ($_POST['venta'] == 'nueva') {
     $fc = date('Y-m-d', strtotime($fecha_venta));
     $fv = date('Y-m-d', strtotime($fecha_venc));
 
+    $MyArray = json_decode($_POST['json']);
+
     try {
-        if ($fecha_venta == "" || $fecha_venc == "" || $cliente == "" || $total == "0" || $vendedor == "" || $remision == "" || $pago == "") {
+        if ($fecha_venta == "" || $fecha_venc == "" || $cliente == "" || $total == "0" || $vendedor == "" || $remision == "" || $pago == "" || $MyArray == null) {
             $respuesta = array(
                 'respuesta' => 'vacio',
             );
         } else {
+            /* Switch off auto commit to allow transactions*/
+            mysqli_autocommit($conn, false);
+            $query_success = true;
+
+            //Insert Sale
             $stmt = $conn->prepare("INSERT INTO sale (_idSeller, _idCustomer, totalSale, advance, dateStart, dateEnd, paymentMethod, noDeliver, note) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
             $stmt->bind_param("iiddsssss", $vendedor, $cliente, $total, $adelanto, $fc, $fv, $pago, $remision, $note);
-            $stmt->execute();
+            if (!mysqli_stmt_execute($stmt)) {
+                $query_success = false;
+            }
             $id_registro = $stmt->insert_id;
+            mysqli_stmt_close($stmt);
+
             if ($id_registro > 0) {
-                $respuesta = array(
-                    'respuesta' => 'exito',
-                    'idVenta' => $id_registro,
-                    'proceso' => 'nuevo',
-                    'adelanto' => $adelanto,
-                    'total' => $total,
-                    'fecha' => $fecha_venta,
-                    'remision' => $remision
-                );
+                $bal = 0;
+                $monto = $total - $adelanto;
+                //Insert BALANCE
+                $stmt = $conn->prepare("INSERT INTO balance(_idSale, date, balpay, amount, balance) VALUES (?, ?, ?, ?, ?)");
+                $stmt->bind_param("isidd", $id_registro, $fc, $bal, $monto, $monto);
+                if (!mysqli_stmt_execute($stmt)) {
+                    $query_success = false;
+                }
+                mysqli_stmt_close($stmt);
+
+                foreach ($MyArray->detailS as $detail) {
+                    //Insert DETAILS
+                    $stmt = $conn->prepare("INSERT INTO detailS(_idSale, _idProduct, quantity, priceS, discount) VALUES (?, ?, ?, ?, ?)");
+                    $stmt->bind_param("iiidd", $id_registro, $detail->idproduct, $detail->cantdet, $detail->precio_det, $detail->descudet);
+                    if (!mysqli_stmt_execute($stmt)) {
+                        $query_success = false;
+                    }
+                    mysqli_stmt_close($stmt);
+
+                    //Update STORAGE
+                    $sql = 'SELECT idStorage, stock FROM storage WHERE _idProduct = ? AND _idCellar = 1';
+                    $stmt = mysqli_prepare($conn, $sql);
+                    mysqli_stmt_bind_param($stmt, 'i', $detail->idproduct);
+                    if (!mysqli_stmt_execute($stmt)) {
+                    $query_success = FALSE;
+                    }
+                    mysqli_stmt_bind_result($stmt, $idStorage, $storage);
+                    if (!mysqli_stmt_fetch($stmt)) {
+                    $query_success = FALSE;
+                    }
+                    $stock = $storage - $detail->cantdet;
+                    mysqli_stmt_close($stmt);
+
+                    if ($idStorage > 0) {
+                        $stmt = $conn->prepare("UPDATE storage SET stock = ? WHERE idStorage = ?");
+                        $stmt->bind_param("ii", $stock, $idStorage);
+                        if (!mysqli_stmt_execute($stmt)) {
+                            $query_success = false;
+                        }
+                        mysqli_stmt_close($stmt);
+                    }else {
+                        $id_cellar = 1;
+                        $stmt = $conn->prepare("INSERT INTO storage (stock, _idProduct, _idCellar) VALUES (?, ?, ?)");
+                        $stmt->bind_param("iii", $detail->cantdet, $detail->idproduct, $id_cellar);
+                        if (!mysqli_stmt_execute($stmt)) {
+                            $query_success = false;
+                        }
+                        mysqli_stmt_close($stmt);
+                    }
+                }
+                if ($query_success) {
+                    mysqli_commit($conn);
+                    $respuesta = array(
+                        'respuesta' => 'exito',
+                        'idVenta' => $id_registro,
+                        'proceso' => 'nuevo',
+                        'remision' => $remision,
+                    );
+                } else {
+                    mysqli_rollback($conn);
+                    $respuesta = array(
+                        'respuesta' => 'error',
+                        'idVenta' => $id_registro,
+                    );
+                }
             } else {
                 $respuesta = array(
                     'respuesta' => 'error',
                     'idVenta' => $id_registro,
                 );
             }
-            $stmt->close();
             $conn->close();
         }
-
     } catch (Exception $e) {
         echo 'Error: ' . $e . getMessage();
     }
-
     die(json_encode($respuesta));
 }
 
 if ($_POST['venta'] == 'editar') {
     $id_sale = $_POST['id_sale'];
-    $fecha_venta = $_POST['dateSale'];
-    $fecha_venc = $_POST['dateSaleEnd'];
+    $fecha_venta = strtr($_POST['dateSale'], '/', '-');
+    $fecha_venc = strtr($_POST['dateSaleEnd'], '/', '-');
     $cliente = $_POST['customerS'];
     $vendedor = $_POST['sellerS'];
     $pago = $_POST['payment'];
@@ -82,7 +147,7 @@ if ($_POST['venta'] == 'editar') {
                     'adelanto' => $adelanto,
                     'total' => $total,
                     'fecha' => $fecha_venta,
-                    'remision' => $remision
+                    'remision' => $remision,
                 );
             } else {
                 $respuesta = array(
@@ -152,18 +217,18 @@ if ($_POST['venta'] == 'cancel') {
         if ($stmt->affected_rows) {
             $respuesta = array(
                 'respuesta' => 'exito',
-                'id_eliminado' => $idSale
+                'id_eliminado' => $idSale,
             );
-        }else {
+        } else {
             $respuesta = array(
-                'respuesta' => 'error'
+                'respuesta' => 'error',
             );
         }
         $stmt->close();
         $conn->close();
-    }catch(Exception $e) {
+    } catch (Exception $e) {
         $respuesta = array(
-            'respuesta' => $e->getMessage()
+            'respuesta' => $e->getMessage(),
         );
     }
     die(json_encode($respuesta));
@@ -188,7 +253,7 @@ if ($_POST['venta'] == 'editarCorrelativo') {
                 $respuesta = array(
                     'respuesta' => 'exito',
                     'idSale' => $id_registro,
-                    'mensaje' => 'Envio generado correctamente!'
+                    'mensaje' => 'Envio generado correctamente!',
                 );
             } else {
                 $respuesta = array(
@@ -223,7 +288,7 @@ if ($_POST['venta'] == 'editarShipment') {
                 $respuesta = array(
                     'respuesta' => 'exito',
                     'idSale' => $id_registro,
-                    'mensaje' => 'Envio generado correctamente!'
+                    'mensaje' => 'Envio generado correctamente!',
                 );
             } else {
                 $respuesta = array(
@@ -250,21 +315,19 @@ if ($_POST['venta'] == 'anular') {
         if ($stmt->affected_rows) {
             $respuesta = array(
                 'respuesta' => 'exito',
-                'id_eliminado' => $idSale
+                'id_eliminado' => $idSale,
             );
-        }else {
+        } else {
             $respuesta = array(
-                'respuesta' => 'error'
+                'respuesta' => 'error',
             );
         }
         $stmt->close();
         $conn->close();
-    }catch(Exception $e) {
+    } catch (Exception $e) {
         $respuesta = array(
-            'respuesta' => $e->getMessage()
+            'respuesta' => $e->getMessage(),
         );
     }
     die(json_encode($respuesta));
 }
-
-?>

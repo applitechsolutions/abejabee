@@ -1,7 +1,7 @@
 <?php
 include_once '../funciones/bd_conexion.php';
 if ($_POST['compra'] == 'nueva') {
-    $fecha_compra = $_POST['date'];
+    $fecha_compra = strtr($_POST['date'], '/', '-');
     $proveedor = $_POST['provider'];
     $factura = $_POST['noBill'];
     $serie = $_POST['serie'];
