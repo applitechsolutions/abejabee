@@ -2,7 +2,6 @@
 include_once '../funciones/bd_conexion.php';
 
 if ($_POST['venta'] == 'nueva') {
-
     $fecha_venta = strtr($_POST['dateSale'], '/', '-');
     $fecha_venc = strtr($_POST['dateSaleEnd'], '/', '-');
     $cliente = $_POST['customerS'];
