@@ -60,12 +60,26 @@ $(document).ready(function () {
     $('#form-purchase').on('submit', function (e) {
         e.preventDefault();
 
-        var datos = $(this).serializeArray();
-
         swal({
             title: 'Generando la compra...'
         });
         swal.showLoading();
+        var datos = $(this).serializeArray();
+
+        var id_product = document.getElementsByClassName("idproducto_class");
+        var costo_detalle = document.getElementsByClassName("costo_class");
+        var cantidad_detalle = document.getElementsByClassName("cantidad_class");
+
+        var json = "";
+        var i;
+        for (i = 0; i < id_product.length; i++) {
+            json += ',{"idproduct":"' + id_product[i].value + '"'
+            json += ',"costodet":"' + costo_detalle[i].value + '"'
+            json += ',"cantdet":"' + cantidad_detalle[i].value + '"}'
+        }
+        obj = JSON.parse('{ "detailP" : [' + json.substr(1) + ']}');
+        datos.push({name: 'json', value: JSON.stringify(obj)});
+       
         $.ajax({
             type: $(this).attr('method'),
             data: datos,
@@ -75,7 +89,16 @@ $(document).ready(function () {
                 console.log(data);
                 var resultado = JSON.parse(data);
                 if (resultado.respuesta == 'exito') {
-                    saveDetail(resultado.idCompra);
+                    swal.close();
+                    swal({
+                        title: 'Exito!',
+                        text: '¡Compra realizada correctamente!',
+                        timer: 1500,
+                        type: 'success'
+                    })
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1500);
                 } else if (resultado.respuesta == 'vacio') {
                     swal({
                         type: 'warning',
@@ -168,68 +191,6 @@ function eliminar(idp) {
 
     jQuery('[data-id-detalle="' + idp + '"]').parents('#detalle').remove();
 
-}
-
-function saveDetail(idEnc) {
-
-    var id_product = document.getElementsByClassName("idproducto_class");
-    var costo_detalle = document.getElementsByClassName("costo_class");
-    var cantidad_detalle = document.getElementsByClassName("cantidad_class");
-
-    var i;
-    for (i = 0; i < id_product.length; i++) {
-
-        idproduct = id_product[i].value;
-        costodet = costo_detalle[i].value;
-        cantdet = cantidad_detalle[i].value;
-
-        $.ajax({
-            type: 'POST',
-            data: {
-                'id_purchase': idEnc,
-                'id_producto': idproduct,
-                'costo_detalle': costodet,
-                'cantidad_detalle': cantdet
-            },
-            url: 'BLL/detailP.php',
-            datatype: 'json',
-            success: function (data) {
-                console.log(data);
-                resultado = JSON.parse(data);
-                if (resultado.respuesta == 'exito') {
-                    saveStock(resultado.idProducto, resultado.cantidad);
-                }
-            }
-        })
-    }
-    setTimeout(function () {
-        swal.close();
-        swal({
-            title: 'Exito!',
-            text: '¡Compra realizada correctamente!',
-            timer: 4000,
-            type: 'success'
-        })
-    }, 4000)
-}
-
-function saveStock(id_product, cantidad_detalle) {
-    $.ajax({
-        type: 'POST',
-        data: {
-            'tipo': 'compra',
-            'cantidad': cantidad_detalle,
-            'id_product': id_product
-        },
-        url: 'BLL/storage.php',
-        datatype: 'json',
-        success: function (data) {
-            console.log(data);
-            resultado = JSON.parse(data);
-            if (resultado.respuesta == 'exito') {
-            }
-        }
-    })
 }
 
 function updateTotal(cant, cost, proc) {

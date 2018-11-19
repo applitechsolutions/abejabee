@@ -150,7 +150,7 @@ $(document).ready(function () {
             url: $(this).attr('action'),
             datatype: 'json',
             success: function (data) {
-                console.log(data);
+                console.log(data);            
                 var resultado = JSON.parse(data);
                 if (resultado.respuesta == 'exito') {
                     if (resultado.proceso == 'nuevo') {

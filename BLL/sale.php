@@ -36,6 +36,7 @@ if ($_POST['venta'] == 'nueva') {
             mysqli_stmt_close($stmt);
 
             if ($id_registro > 0) {
+                
                 $bal = 0;
                 $monto = $total - $adelanto;
                 //Insert BALANCE
