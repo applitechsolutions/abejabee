@@ -566,43 +566,38 @@ function anularSale(idSale){
         title: 'Anulando la venta...'
     });
     swal.showLoading();
+
     var id_product = document.getElementsByClassName("idproducto_class");
     var cantidad_detalle = document.getElementsByClassName("cantidad_class");
 
+    var json = "";
     var i;
     for (i = 0; i < id_product.length; i++) {
-
-        idproduct = id_product[i].value;
-        cantdet = cantidad_detalle[i].value;
-
-        $.ajax({
-            type: 'POST',
-            data: {
-                'tipo': 'compra',
-                'cantidad': cantdet,
-                'id_product': idproduct
-            },
-            url: 'BLL/storage.php',
-            datatype: 'json',
-            success: function (data) {
-                console.log(data);
-                resultado = JSON.parse(data);
-                if (resultado.respuesta == 'exito') {
-                }
-            }
-        })
+        json += ',{"idproduct":"' + id_product[i].value + '"'
+        json += ',"cantdet":"' + cantidad_detalle[i].value + '"}'
     }
+    obj = JSON.parse('{ "detailNULL" : [' + json.substr(1) + ']}');
+    datos = Array(
+        {name: 'json', value: JSON.stringify(obj)},
+        {name: 'idSale', value: idSale}
+    );
+
     $.ajax({
         type: 'POST',
-        data: {
-            'venta': 'anular',
-            'idSale': idSale
-        },
-        url: 'BLL/sale.php',
-        success(data) {
+        data: datos,
+        url: 'BLL/anularSale.php',
+        datatype: 'json',
+        success: function (data) {
             console.log(data);
-            var resultado = JSON.parse(data);
+            resultado = JSON.parse(data);
             if (resultado.respuesta == 'exito') {
+                swal({
+                    position: 'top-end',
+                    type: 'success',
+                    title: '¡Venta Anulada!',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
                 setTimeout(function () {
                     location.reload();
                 }, 3000);
@@ -614,7 +609,7 @@ function anularSale(idSale){
                 })
             }
         }
-    });
+    })
 }
 
 function recargarPagina() {
