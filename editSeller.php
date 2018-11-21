@@ -67,7 +67,8 @@
                       <div class="input-group-addon">
                         <i class="fa fa-calendar"></i>
                       </div>
-                      <input type="text" class="form-control pull-right datepicker" id="datepicker" name="bday-vendedor" value="<?php echo $seller['birthDate']; ?>">
+                      <?php  $date = date_create($seller['birthDate']); ?>
+                      <input type="text" class="form-control pull-right datepicker" id="datepicker" name="bday-vendedor" value="<?php echo      date_format($date, 'd/m/Y'); ?>">
                     </div>
                   </div>
                   <div class="form-group">

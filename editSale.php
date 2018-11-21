@@ -211,7 +211,7 @@ try {
                                     <i class="fa fa-calendar"></i>
                                   </div>
                                   <?php  $dateStar = date_create($sale['dateStart']); ?>
-                                  <input type="text" class="form-control pull-right datepicker" id="datepicker" name="dateSale" value="<?php echo date_format($dateStar, 'd/m/y'); ?>">
+                                  <input type="text" class="form-control pull-right datepicker" id="datepicker" name="dateSale" value="<?php echo date_format($dateStar, 'd/m/Y'); ?>">
                                 </div>
                               </div>
                             </div>
@@ -225,7 +225,7 @@ try {
                                     <i class="fa fa-calendar"></i>
                                   </div>
                                   <?php  $dateEnd = date_create($sale['dateEnd']); ?>
-                                  <input type="text" class="form-control pull-right datepicker" id="datepicker2" name="dateSaleEnd" value="<?php echo date_format($dateEnd, 'd/m/y'); ?>">
+                                  <input type="text" class="form-control pull-right datepicker" id="datepicker2" name="dateSaleEnd" value="<?php echo date_format($dateEnd, 'd/m/Y'); ?>">
                                 </div>
                               </div>
                             </div>

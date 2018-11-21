@@ -60,7 +60,7 @@
                       <td><?php echo $seller['sellerAddress']; ?></td>
                       <td><?php echo $seller['sellerMobile']; ?></td>
                       <td><?php echo $seller['DPI']; ?></td>
-                      <td><?php echo date_format($date, 'd/m/y'); ?></td>
+                      <td><?php echo date_format($date, 'd/m/Y'); ?></td>
                       <?php if ($seller['gender'] == '0') {
                         ?><td>Masculino</td><?php
                       }else if ($seller['gender'] == '1'){

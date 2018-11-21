@@ -166,7 +166,17 @@ $(document).ready(function () {
                         })
                         tab3();
                     }else if (resultado.proceso == 'editado') {
-                        
+                        changeReportF('remision.php?idSale=' + resultado.idVenta);
+                        updateCorrelativo('guia', 'A', resultado.remision);
+                        $("#idSale").val(resultado.idVenta);
+                        swal.close();
+                        swal({
+                            title: 'Exito!',
+                            text: '¡Venta editada exitosamente!',
+                            timer: 2000,
+                            type: 'success'
+                        })
+                        tab3();
                     }                    
                 } else if (resultado.respuesta == 'vacio') {
                     swal({
@@ -480,10 +490,10 @@ $(document).ready(function () {
                     nuevaFila += "</tr>";
                     $("#detalles").append(nuevaFila);
                 });
-                // var btnAnular = "<a href='editSale.php?id=" + id  + "' class='btn bg-green btn-lg btn-flat pull-left'>";
-                // btnAnular += "<i class='fa fa-pencil'></i> Editar Venta";
-                // btnAnular += "</a>";
-                var btnAnular = "<a href='#' onclick='anularSale(" + id  + ")' class='btn bg-maroon btn-lg btn-flat'>";
+                var btnAnular = "<a href='editSale.php?id=" + id  + "' class='btn bg-green btn-lg btn-flat pull-left'>";
+                btnAnular += "<i class='fa fa-pencil'></i> Editar Venta";
+                btnAnular += "</a>";
+                btnAnular += "<a href='#' onclick='anularSale(" + id  + ")' class='btn bg-maroon btn-lg btn-flat'>";
                 btnAnular += "<i class='fa fa-ban'></i> Anular Venta";
                 btnAnular += "</a>";
                 $("#anularV").append(btnAnular);

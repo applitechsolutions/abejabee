@@ -36,7 +36,7 @@ if ($_POST['venta'] == 'nueva') {
             mysqli_stmt_close($stmt);
 
             if ($id_registro > 0) {
-                
+
                 $bal = 0;
                 $monto = $total - $adelanto;
                 //Insert BALANCE
@@ -61,11 +61,11 @@ if ($_POST['venta'] == 'nueva') {
                     $stmt = mysqli_prepare($conn, $sql);
                     mysqli_stmt_bind_param($stmt, 'i', $detail->idproduct);
                     if (!mysqli_stmt_execute($stmt)) {
-                    $query_success = FALSE;
+                        $query_success = false;
                     }
                     mysqli_stmt_bind_result($stmt, $idStorage, $storage);
                     if (!mysqli_stmt_fetch($stmt)) {
-                    $query_success = FALSE;
+                        $query_success = false;
                     }
                     $stock = $storage - $detail->cantdet;
                     mysqli_stmt_close($stmt);
@@ -77,7 +77,7 @@ if ($_POST['venta'] == 'nueva') {
                             $query_success = false;
                         }
                         mysqli_stmt_close($stmt);
-                    }else {
+                    } else {
                         $id_cellar = 1;
                         $stmt = $conn->prepare("INSERT INTO storage (stock, _idProduct, _idCellar) VALUES (?, ?, ?)");
                         $stmt->bind_param("iii", $detail->cantdet, $detail->idproduct, $id_cellar);
@@ -130,38 +130,164 @@ if ($_POST['venta'] == 'editar') {
     $fc = date('Y-m-d', strtotime($fecha_venta));
     $fv = date('Y-m-d', strtotime($fecha_venc));
 
+    $MyArray = json_decode($_POST['json']);
+
     try {
-        if ($fecha_venta == "" || $fecha_venc == "" || $cliente == "" || $total == "0" || $vendedor == "" || $remision == "" || $pago == "") {
+        if ($fecha_venta == "" || $fecha_venc == "" || $cliente == "" || $total == "0" || $vendedor == "" || $remision == "" || $pago == "" || $MyArray == null) {
             $respuesta = array(
                 'respuesta' => 'vacio',
             );
         } else {
+            /* Switch off auto commit to allow transactions*/
+            mysqli_autocommit($conn, false);
+            $query_success = true;
+
+            //Update Sale
             $stmt = $conn->prepare("UPDATE sale SET  _idSeller = ?, _idCustomer = ?, totalSale = ?, advance = ?, dateStart = ?, dateEnd = ?, paymentMethod = ?, noDeliver = ?, note = ? WHERE idSale = ?");
             $stmt->bind_param("iiddsssssi", $vendedor, $cliente, $total, $adelanto, $fc, $fv, $pago, $remision, $note, $id_sale);
-            $stmt->execute();
-            if ($stmt->affected_rows) {
+            if (!mysqli_stmt_execute($stmt)) {
+                $query_success = false;
+            }
+            mysqli_stmt_close($stmt);
+
+            //Update BALANCE
+            $bal = 0;
+            $monto = $total - $adelanto;
+            $nuevo_balance = $monto;
+            $stmt = $conn->prepare("UPDATE balance SET date = ?, amount = ?, balance = ? WHERE _idSale = ? AND balpay = ?");
+            $stmt->bind_param("sddii", $fc, $monto, $monto, $id_sale, $bal);
+            if (!mysqli_stmt_execute($stmt)) {
+                $query_success = false;
+            }
+            mysqli_stmt_close($stmt);
+
+            //Selecciona los pagos realizados
+            try {
+                $sql = "SELECT idBalance, amount FROM balance WHERE balpay = 1 ORDER BY idBalance ASC;";
+                $resultado = $conn->query($sql);
+            } catch (Exception $e) {
+                $query_success = false;
+            }
+            while ($balance = $resultado->fetch_assoc()) {
+                //Update PAY'S
+                $nuevo_balance = $nuevo_balance - $balance['amount'];
+
+                $stmt = $conn->prepare("UPDATE balance SET balance = ? WHERE idBalance = ?");
+                $stmt->bind_param("di", $nuevo_balance, $balance['idBalance']);
+                if (!mysqli_stmt_execute($stmt)) {
+                    $query_success = false;
+                }
+                mysqli_stmt_close($stmt);
+            }
+
+            //Regresa todo el stock inicial
+            try {
+                $sql = "SELECT _idProduct, quantity FROM detailS WHERE _idSale = $id_sale;";
+                $resultado = $conn->query($sql);
+            } catch (Exception $e) {
+                $query_success = false;
+            }
+            while ($det = $resultado->fetch_assoc()) {
+                 //Update STORAGE
+                 $sql = 'SELECT idStorage, stock FROM storage WHERE _idProduct = ? AND _idCellar = 1';
+                 $stmt = mysqli_prepare($conn, $sql);
+                 mysqli_stmt_bind_param($stmt, 'i', $det['_idProduct']);
+                 if (!mysqli_stmt_execute($stmt)) {
+                 $query_success = false;
+                 }
+                 mysqli_stmt_bind_result($stmt, $idStorage, $storage);
+                 if (!mysqli_stmt_fetch($stmt)) {
+                 $idStorage = 0;
+                 }
+                 $stock = $storage + $det['quantity'];
+                 mysqli_stmt_close($stmt);
+
+                 if ($idStorage > 0) {
+                     $stmt = $conn->prepare("UPDATE storage SET stock = ? WHERE idStorage = ?");
+                     $stmt->bind_param("ii", $stock, $idStorage);
+                     if (!mysqli_stmt_execute($stmt)) {
+                         $query_success = false;
+                     }
+                     mysqli_stmt_close($stmt);
+                 }else {
+                     $id_cellar = 1;
+                     $stmt = $conn->prepare("INSERT INTO storage (stock, _idProduct, _idCellar) VALUES (?, ?, ?)");
+                     $stmt->bind_param("iii", $det['quantity'], $det['_idProduct'], $id_cellar);
+                     if (!mysqli_stmt_execute($stmt)) {
+                         $query_success = false;
+                     }
+                     mysqli_stmt_close($stmt);
+                }                
+            }
+
+            //Elimina el detailS inicial
+            $stmt = $conn->prepare("DELETE FROM detailS WHERE _idSale = ?");
+            $stmt->bind_param("i", $id_sale);
+            if (!mysqli_stmt_execute($stmt)) {
+                $query_success = false;
+            }
+            mysqli_stmt_close($stmt);                         
+
+            foreach ($MyArray->detailS as $detail) {
+                //Insert DETAILS
+                $stmt = $conn->prepare("INSERT INTO detailS(_idSale, _idProduct, quantity, priceS, discount) VALUES (?, ?, ?, ?, ?)");
+                $stmt->bind_param("iiidd", $id_sale, $detail->idproduct, $detail->cantdet, $detail->precio_det, $detail->descudet);
+                if (!mysqli_stmt_execute($stmt)) {
+                    $query_success = false;
+                }
+                mysqli_stmt_close($stmt);
+
+                //Update STORAGE
+                $sql = 'SELECT idStorage, stock FROM storage WHERE _idProduct = ? AND _idCellar = 1';
+                $stmt = mysqli_prepare($conn, $sql);
+                mysqli_stmt_bind_param($stmt, 'i', $detail->idproduct);
+                if (!mysqli_stmt_execute($stmt)) {
+                    $query_success = false;
+                }
+                mysqli_stmt_bind_result($stmt, $idStorage, $storage);
+                if (!mysqli_stmt_fetch($stmt)) {
+                    $query_success = false;
+                }
+                $stock = $storage - $detail->cantdet;
+                mysqli_stmt_close($stmt);
+
+                if ($idStorage > 0) {
+                    $stmt = $conn->prepare("UPDATE storage SET stock = ? WHERE idStorage = ?");
+                    $stmt->bind_param("ii", $stock, $idStorage);
+                    if (!mysqli_stmt_execute($stmt)) {
+                        $query_success = false;
+                    }
+                    mysqli_stmt_close($stmt);
+                } else {
+                    $id_cellar = 1;
+                    $stmt = $conn->prepare("INSERT INTO storage (stock, _idProduct, _idCellar) VALUES (?, ?, ?)");
+                    $stmt->bind_param("iii", $detail->cantdet, $detail->idproduct, $id_cellar);
+                    if (!mysqli_stmt_execute($stmt)) {
+                        $query_success = false;
+                    }
+                    mysqli_stmt_close($stmt);
+                }
+            }
+            if ($query_success) {
+                mysqli_commit($conn);
                 $respuesta = array(
                     'respuesta' => 'exito',
-                    'idVenta' => $stmt->insert_id,
+                    'idVenta' => $id_sale,
                     'proceso' => 'editado',
-                    'adelanto' => $adelanto,
-                    'total' => $total,
-                    'fecha' => $fecha_venta,
                     'remision' => $remision,
                 );
             } else {
+                mysqli_rollback($conn);
                 $respuesta = array(
                     'respuesta' => 'error',
-                    'idVenta' => $id_registro,
+                    'idVenta' => $id_sale,
                 );
             }
-            $stmt->close();
             $conn->close();
         }
     } catch (Exception $e) {
         echo 'Error: ' . $e . getMessage();
     }
-
     die(json_encode($respuesta));
 }
 
@@ -304,5 +430,3 @@ if ($_POST['venta'] == 'editarShipment') {
     }
     die(json_encode($respuesta));
 }
-
-?>
