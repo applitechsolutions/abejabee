@@ -22,6 +22,11 @@
 
 <script src="js/demo.js"></script>
 <script src="js/sweetalert2.min.js"></script>
+<script src="js/jquery.dataTables.min.js"></script>
+<script src="js/dataTables.bootstrap.min.js"></script>
+<script src="js/bootstrap-datepicker.min.js"></script>
+<script src="js/icheck.min.js"></script>
+<script src="js/select2.full.min.js"></script>
 <!-- AJAX FOR SCHLENKER PHARMA -->
 <script src="js/ajax/reports-ajax.js"></script>
 <script src="js/ajax/sale-ajax.js"></script>
@@ -33,11 +38,6 @@
 <script src="js/ajax/provider-ajax.js"></script>
 <script src="js/ajax/user-ajax.js"></script>
 <script src="js/ajax/login.js"></script>
-<script src="js/jquery.dataTables.min.js"></script>
-<script src="js/dataTables.bootstrap.min.js"></script>
-<script src="js/bootstrap-datepicker.min.js"></script>
-<script src="js/icheck.min.js"></script>
-<script src="js/select2.full.min.js"></script>
 
 
 <script>
