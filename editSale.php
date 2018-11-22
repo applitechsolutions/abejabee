@@ -441,7 +441,7 @@ while ($product = $resultado->fetch_assoc()) {
                                         min="0.00" step="0.01" value="0.00" style="width: 50%;">
                                     </td>
                                     <td>
-                                      <input class="form-control input-sm" type="number" id="new_<?php echo $product['idProduct']; ?>_cantidadS" name="cantidad"
+                                      <input class="form-control input-sm" type="number" id="new_<?php echo $product['idProduct']; ?>_cantidadS" name="cantidadXD"
                                         min="1" step="1" value="1" max="<?php echo $product['stock']; ?>" style="width: 65%;">
                                       <p class="text-green max_<?php echo $product['idProduct']; ?>_stockP">Disp.
                                         <?php echo $product['stock']; ?>
