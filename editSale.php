@@ -198,7 +198,7 @@ try {
                   </ul>
                   <div class="tab-content">
                     <div class="tab-pane active" id="tab_1">
-                      <form role="form" id="form-sale" name="form-sale" method="post" action="BLL/sale.php">
+                      <form role="form" id="form-sale" name="form-sale" method="post" action="BLL/sale.php" novalidate>
                         <div class="box-body">
                           <div class="row">
 
