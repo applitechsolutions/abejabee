@@ -163,7 +163,7 @@ if ($_POST['venta'] == 'editar') {
 
             //Selecciona los pagos realizados
             try {
-                $sql = "SELECT idBalance, amount FROM balance WHERE balpay = 1 ORDER BY idBalance ASC;";
+                $sql = "SELECT idBalance, amount FROM balance WHERE _idSale = $id_sale AND balpay = 1 ORDER BY idBalance ASC;";
                 $resultado = $conn->query($sql);
             } catch (Exception $e) {
                 $query_success = false;
