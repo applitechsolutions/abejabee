@@ -70,7 +70,7 @@
             <div class="inner">
               <h3><?php echo $productos['productos']; ?></h3>
 
-              <p>Límite de existencia</p>
+              <p>En límite de existencia</p>
             </div>
             <div class="icon">
               <i class="fa fa-exclamation-triangle"></i>
@@ -172,8 +172,13 @@
                     $ventasPT = $resultado->fetch_assoc();
                     ?>
                   <div class="progress-group">
+                  <?php
+                    $sql = "SELECT COUNT(idSale) AS ventasP FROM sale WHERE dateEnd >= CURDATE() AND cancel = 1 AND state = 0";
+                    $resultado = $conn->query($sql);
+                    $ventasP = $resultado->fetch_assoc();
+                    ?>
                     <span class="progress-text">Ventas pagadas</span>
-                    <span class="progress-number"><b>480</b>/<?php echo $ventasPT['ventasPT']; ?></span>
+                    <span class="progress-number"><b><?php echo $ventasP['ventasP']; ?></b>/<?php echo $ventasPT['ventasPT']; ?></span>
 
                     <div class="progress sm">
                       <div class="progress-bar progress-bar-green" style="width: 80%"></div>
@@ -181,8 +186,13 @@
                   </div>
                   <!-- /.progress-group -->
                   <div class="progress-group">
+                  <?php
+                    $sql = "SELECT COUNT(idSale) AS ventasPV FROM sale WHERE dateEnd <= CURDATE() AND cancel = 1 AND state = 0";
+                    $resultado = $conn->query($sql);
+                    $ventasPV = $resultado->fetch_assoc();
+                    ?>
                     <span class="progress-text">Ventas pagadas vencidas</span>
-                    <span class="progress-number"><b>250</b>/<?php echo $ventasPT['ventasPT']; ?></span>
+                    <span class="progress-number"><b><?php echo $ventasPV['ventasPV']; ?></b>/<?php echo $ventasPT['ventasPT']; ?></span>
 
                     <div class="progress sm">
                       <div class="progress-bar progress-bar-yellow" style="width: 80%"></div>
