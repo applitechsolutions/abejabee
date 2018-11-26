@@ -132,7 +132,6 @@
                   <p class="text-center">
                     <strong>Estado actual</strong>
                   </p>
-
                    <?php
                     $sql = "SELECT COUNT(idSale) AS ventasT FROM sale WHERE cancel = 0 AND state = 0";
                     $resultado = $conn->query($sql);
