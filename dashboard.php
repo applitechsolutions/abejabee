@@ -133,7 +133,7 @@
                     <strong>Estado actual</strong>
                   </p>
                    <?php
-                    $sql = "SELECT COUNT(idSale) AS ventasT FROM sale WHERE cancel = 0 AND state = 0";
+                    $sql = "SELECT COUNT(idSale) AS ventasT FROM sale WHERE state = 0";
                     $resultado = $conn->query($sql);
                     $ventasT = $resultado->fetch_assoc();
                     ?>
@@ -147,7 +147,7 @@
                     <span class="progress-number"><b><?php echo $ventas['ventas']; ?></b>/<?php echo $ventasT['ventasT']; ?></span>
 
                     <div class="progress sm">
-                      <div class="progress-bar progress-bar-aqua" style="width: 80%"></div>
+                      <div class="progress-bar progress-bar-green" style="width: 80%"></div>
                     </div>
                   </div>
                   <!-- /.progress-group -->
@@ -165,33 +165,28 @@
                     </div>
                   </div>
                   <!-- /.progress-group -->
+                  <div class="progress-group">
                   <?php
                     $sql = "SELECT COUNT(idSale) AS ventasPT FROM sale WHERE cancel = 1 AND state = 0";
                     $resultado = $conn->query($sql);
                     $ventasPT = $resultado->fetch_assoc();
                     ?>
-                  <div class="progress-group">
-                  <?php
-                    $sql = "SELECT COUNT(idSale) AS ventasP FROM sale WHERE dateEnd >= CURDATE() AND cancel = 1 AND state = 0";
-                    $resultado = $conn->query($sql);
-                    $ventasP = $resultado->fetch_assoc();
-                    ?>
                     <span class="progress-text">Ventas pagadas</span>
-                    <span class="progress-number"><b><?php echo $ventasP['ventasP']; ?></b>/<?php echo $ventasPT['ventasPT']; ?></span>
+                    <span class="progress-number"><b><?php echo $ventasPT['ventasPT']; ?>/<?php echo $ventasT['ventasT']; ?></span>
 
                     <div class="progress sm">
-                      <div class="progress-bar progress-bar-green" style="width: 80%"></div>
+                      <div class="progress-bar progress-bar-aqua" style="width: 80%"></div>
                     </div>
-                  </div>
+                </div>
                   <!-- /.progress-group -->
                   <div class="progress-group">
                   <?php
-                    $sql = "SELECT COUNT(idSale) AS ventasPV FROM sale WHERE dateEnd <= CURDATE() AND cancel = 1 AND state = 0";
+                    $sql = "SELECT COUNT(idSale) AS ventasPV FROM sale WHERE state = 1";
                     $resultado = $conn->query($sql);
                     $ventasPV = $resultado->fetch_assoc();
                     ?>
-                    <span class="progress-text">Ventas pagadas vencidas</span>
-                    <span class="progress-number"><b><?php echo $ventasPV['ventasPV']; ?></b>/<?php echo $ventasPT['ventasPT']; ?></span>
+                    <span class="progress-text">Ventas anuladas</span>
+                    <span class="progress-number"><b><?php echo $ventasPV['ventasPV']; ?></b>/---  </span>
 
                     <div class="progress sm">
                       <div class="progress-bar progress-bar-yellow" style="width: 80%"></div>
@@ -206,41 +201,41 @@
             <!-- ./box-body -->
             <div class="box-footer">
               <div class="row">
-                <div class="col-sm-3 col-xs-6">
+              <div class="col-sm-3 col-xs-6">
                   <div class="description-block border-right">
-                    <span class="description-percentage text-green"><i class="fa fa-caret-up"></i> 17%</span>
-                    <h5 class="description-header">$35,210.43</h5>
-                    <span class="description-text">TOTAL REVENUE</span>
-                  </div>
-                  <!-- /.description-block -->
-                </div>
-                <!-- /.col -->
-                <div class="col-sm-3 col-xs-6">
-                  <div class="description-block border-right">
-                    <span class="description-percentage text-yellow"><i class="fa fa-caret-left"></i> 0%</span>
+                    <span class="description-percentage text-ye"><i class="fa fa-caret-left"></i> <?php echo $ventasT['ventasT']; ?></b></span>
                     <h5 class="description-header">$10,390.90</h5>
-                    <span class="description-text">TOTAL COST</span>
+                    <span class="description-text">TOTAL VENTAS</span>
                   </div>
                   <!-- /.description-block -->
                 </div>
                 <!-- /.col -->
                 <div class="col-sm-3 col-xs-6">
                   <div class="description-block border-right">
-                    <span class="description-percentage text-green"><i class="fa fa-caret-up"></i> 20%</span>
-                    <h5 class="description-header">$24,813.53</h5>
-                    <span class="description-text">TOTAL PROFIT</span>
+                    <span class="description-percentage text-green"><i class="fa fa-caret-up"></i> <?php echo $ventas['ventas']; ?></b></span>
+                    <h5 class="description-header">$35,210.43</h5>
+                    <span class="description-text">TOTAL ACTIVO</span>
                   </div>
                   <!-- /.description-block -->
                 </div>
-                <!-- /.col -->
                 <div class="col-sm-3 col-xs-6">
                   <div class="description-block">
-                    <span class="description-percentage text-red"><i class="fa fa-caret-down"></i> 18%</span>
+                    <span class="description-percentage text-red"><i class="fa fa-caret-down"></i> <?php echo $ventasV['ventasV']; ?></span>
                     <h5 class="description-header">1200</h5>
-                    <span class="description-text">GOAL COMPLETIONS</span>
+                    <span class="description-text">TOTAL ATRASADO</span>
                   </div>
                   <!-- /.description-block -->
                 </div>
+                <!-- /.col -->
+                <div class="col-sm-3 col-xs-6">
+                  <div class="description-block border-right">
+                    <span class="description-percentage text-aqua"><i class="fa fa-caret-up"></i> <?php echo $ventasPT['ventasPT']; ?></span>
+                    <h5 class="description-header">$24,813.53</h5>
+                    <span class="description-text">TOTAL CANCELADO</span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+                <!-- /.col -->
               </div>
               <!-- /.row -->
             </div>

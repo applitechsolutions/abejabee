@@ -144,6 +144,14 @@
             months[i]=[String(data[i].month)];
             count[i]=[String(data[i].ventasT)];
         }
+
+     $.getJSON('BLL/dashSalesPbyMonths.php', function(data2) {
+    var count2 = [];
+    var i=0;
+         for(i=0;i<data2.length;i++){
+            count2[i]=[String(data2[i].ventasT)];
+        }
+       
       var areaChartData = {
       labels  : months,
       datasets: [
@@ -165,12 +173,12 @@
           pointStrokeColor    : 'rgba(60,141,188,1)',
           pointHighlightFill  : '#fff',
           pointHighlightStroke: 'rgba(60,141,188,1)',
-          data                : [28, 48, 40, 19, 86, 27, 90]
+          data                : count2
         }
       ]
-    }
+      }
 
-    var areaChartOptions = {
+      var areaChartOptions = {
       //Boolean - If we should show the scale at all
       showScale               : true,
       //Boolean - Whether grid lines are shown across the chart
@@ -211,6 +219,7 @@
 
     //Create the line chart
     areaChart.Line(areaChartData, areaChartOptions)
+     });
     });
 
 </script>
