@@ -598,7 +598,7 @@ while ($product = $resultado->fetch_assoc()) {
                               <input type="hidden" name="id_sale" value="<?php echo $id; ?>">
                               <input type="hidden" id="totalS" name="totalS" value="<?php echo $sale['totalSale']; ?>">
                               <span class="text-warning">Debe llenar los campos obligatorios* </span>
-                              <button type="button" class="btn btn-primary" id="crear-venta">
+                              <button type="submit" class="btn btn-primary" id="crear-venta">
                                 <i class="fa fa-floppy-o" aria-hidden="true"></i> Confirmar venta</button>
                             </div>
                           </div>                 

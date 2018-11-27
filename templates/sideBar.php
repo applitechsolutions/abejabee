@@ -24,38 +24,6 @@
       </form>
       <!-- /.search form -->
 
-       <!-- MODAL correlativo -->
-       <div class="modal fade" id="modal-correlativo">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                  <h4 class="modal-title"><i class="glyphicon glyphicon-cog"></i> Correlativo de facturas</h4>
-                </div>
-                <div class="modal-body">
-                  <form role="form" id="form-departamento" name="form-departamento" method="post" action="BLL/department.php">
-                    <div class="form-group">
-                      <span class="text-danger text-uppercase">*</span>
-                      <label for="nombre">Nombre</label>
-                      <input type="text" class="form-control" id="name" name="name" placeholder="Escriba un nombre" autofocus>
-                    </div>
-                    <div class="modal-footer">
-                      <input type="hidden" name="departamento" value="nuevo">
-                      <button type="submit" class="btn btn-info" id="crear-departamento">
-                        <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
-                      <span class="text-warning w3-small w3-padding">*Debe llenar los campos obligatorios</span>
-                      <button id="depClose" type="button" class="btn btn-danger w3-round-medium pull-right" data-dismiss="modal">Cerrar</button>
-                    </div>
-                </div>
-                </form>
-              </div>
-            </div>
-            <!-- /.modal-content -->
-          </div>
-
-
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">Menú de Administración</li>
