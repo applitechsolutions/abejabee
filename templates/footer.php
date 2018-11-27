@@ -136,8 +136,16 @@
     // This will get the first returned node in the jQuery collection.
     var areaChart       = new Chart(areaChartCanvas)
 
-    var areaChartData = {
-      labels  : ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+   $.getJSON('BLL/dashSalesbyMonths.php', function(data) {
+    var months = [];
+    var count = [];
+    var i=0;
+         for(i=0;i<data.length;i++){
+            months[i]=[String(data[i].month)];
+            count[i]=[String(data[i].ventasT)];
+        }
+      var areaChartData = {
+      labels  : months,
       datasets: [
         {
           label               : 'Electronics',
@@ -147,7 +155,7 @@
           pointStrokeColor    : '#c1c7d1',
           pointHighlightFill  : '#fff',
           pointHighlightStroke: 'rgba(220,220,220,1)',
-          data                : [65, 59, 80, 81, 56, 55, 40]
+          data                : count
         },
         {
           label               : 'Digital Goods',
@@ -203,6 +211,8 @@
 
     //Create the line chart
     areaChart.Line(areaChartData, areaChartOptions)
+    });
+
 </script>
 </body>
 </html>
