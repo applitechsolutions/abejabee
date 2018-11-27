@@ -210,6 +210,4 @@ function updateTotal(cant, cost, proc) {
 
     $("#totalPurchase").text('Q. ' + Total.toFixed(2));
     $("#total").val(parseFloat(Total));
-
-
 }

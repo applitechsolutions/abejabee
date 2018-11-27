@@ -171,7 +171,7 @@ function listarDetallerpt2(idv) {
     $("#listadoDetalle2").html("");
     $("#listadoDetalle3").html("");
     
-    var tabla = '<div class="box-body table-responsive no-padding"><table id="registros2" class="table table-bordered table-striped"><thead><tr><th>Codigo de Product</th><th>Nombre</th><th>Marca</th><th>Cantidad</th><th>Precio</th><th>Descuento</th><th>SubTotal</th><th>Comisión</th></tr></thead><tbody class="contenidorptDetalle2"></tbody><tfoot><tr><th>Codigo de Product</th><th>Nombre</th><th>Marca</th><th>Cantidad</th><th>Precio</th><th>Descuento</th><th>SubTotal</th><th>Comisión</th></tr></tfoot></table></div><button type="button" onclick="printrptDetail2('+idv+')" class="btn bg-teal-active btn-sm"><i class="fa fa-print"></i> Imprimir</button>';
+    var tabla = '<div class="box-body table-responsive no-padding"><table id="registros2" class="table table-bordered table-striped"><thead><tr><th>Codigo de Product</th><th>Nombre</th><th>Marca</th><th>Cantidad</th><th>Precio</th><th>Descuento</th><th>SubTotal</th><th>Comisión</th></tr></thead><tbody class="contenidorptDetalle2"></tbody><tfoot><tr><th>Codigo de Product</th><th>Nombre</th><th>Marca</th><th>Cantidad</th><th>Precio</th><th>Descuento</th><th>SubTotal</th><th>Comisión</th></tr></tfoot></table></div><button type="button" onclick="printrptDetail2('+idv+')" class="btn bg-teal-active btn-sm"><i class="fa fa-print"></i> Imprimir</button><div class="row"><div class="form-group col-lg-6 pull-right"><div class="input-group"><span class="input-group-addon"><span class="text-danger text-uppercase">*</span><label for="totalComision" class="control-label">Total:</label><span><h5 id="totalComision" class="text-bold">Q.0.00</h5></span></span></div></div></div>';
 
     $("#listadoDetalle2").append(tabla);
     
@@ -201,8 +201,11 @@ function listarDetallerpt2(idv) {
         url: 'BLL/rptDetailSalesBySeller.php',
         success(data) {
             console.log(data);
+            var totalCom = 0;
             $.each(data, function (key, registro) {
                 var sub = registro.quantity * (parseFloat(Math.round(registro.priceS * 100) / 100).toFixed(2) - parseFloat(Math.round(registro.discount * 100) / 100).toFixed(2));
+                var comi = comision(diffDays, registro.marca, sub.toFixed(2));
+                totalCom = parseFloat(totalCom) + parseFloat(comi);
                 var contenido = "<tr>";
                 contenido += "<td>" + registro.codigo + "</td>";
                 contenido += "<td>" + registro.nombre + "</td>";
@@ -215,6 +218,7 @@ function listarDetallerpt2(idv) {
                 contenido += '</tr>';
                 $(".contenidorptDetalle2").append(contenido);
             });
+            $('#totalComision').html('Q.'+ totalCom.toFixed(2));
             swal.close();
             funciones2();
         },

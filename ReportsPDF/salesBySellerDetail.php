@@ -60,7 +60,7 @@ $pagina='
                     <!-- /.col -->
                 </div>
                 <div style="text-align: center;">
-                    <h3>Comisiones</h3>
+                    <h3>Detalle de Comisiones</h3>
                 </div>
             </div>
             <div id="contenido">
@@ -100,20 +100,31 @@ $pagina='
                         $comision = 0;
                     }
                 }
-                
+                $subtotalComision += $comision;
                 $pagina.='
                         <tr>
                             <td>'.$sale['codigo'].'</td>
                             <td>'.$sale['nombre'].'</td>
                             <td>'.$sale['marca'].'</td>
                             <td>'.$sale['quantity'].'</td>
-                            <td>'.$sale['priceS'].'</td>
-                            <td>'.$sale['discount'].'</td>
-                            <td>'.$subtotal.'</td>
-                            <td>'.$comision.'</td>
+                            <td>Q. '.$sale['priceS'].'</td>
+                            <td>Q. '.$sale['discount'].'</td>
+                            <td>Q. '.$subtotal.'</td>
+                            <td>Q. '.$comision.'</td>
                         </tr>';
                     }
         $pagina .= '</tbody>
+                    <tfoot>
+                        <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th style="text-align: right;" colspan="2">Total Comisiones :</th>
+                        <td>Q. '. $subtotalComision .'</td>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>

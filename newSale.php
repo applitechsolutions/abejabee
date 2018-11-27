@@ -511,7 +511,6 @@ while ($product = $resultado->fetch_assoc()) {
                         <br>
                         <div class="box-footer">
                           <div class="row">
-
                             <div class="form-group col-lg-6 pull-right">
                               <div class="input-group">
                                 <span class="input-group-addon">
