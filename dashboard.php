@@ -178,7 +178,7 @@
                     <span class="progress-number"><b><?php echo $ventasPT['ventasPT']; ?>/<?php echo $ventasT['ventasT']; ?></span>
 
                     <div class="progress sm">
-                      <div class="progress-bar progress-bar-aqua" style="width: 80%"></div>
+                      <div class="progress-bar progress-bar-info" style="width: 80%"></div>
                     </div>
                 </div>
                   <!-- /.progress-group -->
