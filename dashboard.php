@@ -4,6 +4,10 @@
   include_once 'templates/navBar.php';
   include_once 'templates/sideBar.php';
   include_once 'funciones/bd_conexion.php';
+
+  function porcentaje($total, $parte, $redondear = 2) {
+    return round($parte / $total * 100, $redondear);
+}
 ?>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -105,12 +109,11 @@
         <div class="col-md-12">
           <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title">Reporte mensual de ventas</h3>
+              <h3 class="box-title">Reporte anual de ventas</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                 </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
               </div>
             </div>
             <!-- /.box-header -->
@@ -133,13 +136,13 @@
                     <strong>Estado actual</strong>
                   </p>
                    <?php
-                    $sql = "SELECT COUNT(idSale) AS ventasT FROM sale WHERE state = 0";
+                    $sql = "SELECT COUNT(idSale) AS ventasT, sum(totalSale) as total FROM sale WHERE state = 0 AND YEAR(dateEnd) = YEAR(CURDATE())";
                     $resultado = $conn->query($sql);
                     $ventasT = $resultado->fetch_assoc();
                     ?>
                   <div class="progress-group">
                   <?php
-                    $sql = "SELECT COUNT(idSale) AS ventas FROM sale WHERE dateEnd >= CURDATE() AND cancel = 0 AND state = 0";
+                    $sql = "SELECT COUNT(idSale) AS ventas, sum(totalSale) as total FROM sale WHERE dateEnd >= CURDATE() AND cancel = 0 AND state = 0";
                     $resultado = $conn->query($sql);
                     $ventas = $resultado->fetch_assoc();
                     ?>
@@ -153,7 +156,7 @@
                   <!-- /.progress-group -->
                   <div class="progress-group">
                   <?php
-                    $sql = "SELECT COUNT(idSale) AS ventasV FROM sale WHERE dateEnd <= CURDATE() AND cancel = 0 AND state = 0";
+                    $sql = "SELECT COUNT(idSale) AS ventasV, sum(totalSale) as total FROM sale WHERE dateEnd <= CURDATE() AND cancel = 0 AND state = 0 AND YEAR(dateEnd) = YEAR(CURDATE())";
                     $resultado = $conn->query($sql);
                     $ventasV = $resultado->fetch_assoc();
                     ?>
@@ -167,7 +170,7 @@
                   <!-- /.progress-group -->
                   <div class="progress-group">
                   <?php
-                    $sql = "SELECT COUNT(idSale) AS ventasPT FROM sale WHERE cancel = 1 AND state = 0";
+                    $sql = "SELECT COUNT(idSale) AS ventasPT, sum(totalSale) as total FROM sale WHERE cancel = 1 AND state = 0 AND YEAR(dateStart) = YEAR(CURDATE())";
                     $resultado = $conn->query($sql);
                     $ventasPT = $resultado->fetch_assoc();
                     ?>
@@ -204,7 +207,7 @@
               <div class="col-sm-3 col-xs-6">
                   <div class="description-block border-right">
                     <span class="description-percentage text-ye"><i class="fa fa-caret-left"></i> <?php echo $ventasT['ventasT']; ?></b></span>
-                    <h5 class="description-header">$10,390.90</h5>
+                    <h5 class="description-header">Q<?php echo number_format($ventasT['total'], 2, '.', ','); ?></h5>
                     <span class="description-text">TOTAL VENTAS</span>
                   </div>
                   <!-- /.description-block -->
@@ -212,16 +215,16 @@
                 <!-- /.col -->
                 <div class="col-sm-3 col-xs-6">
                   <div class="description-block border-right">
-                    <span class="description-percentage text-green"><i class="fa fa-caret-up"></i> <?php echo $ventas['ventas']; ?></b></span>
-                    <h5 class="description-header">$35,210.43</h5>
+                    <span class="description-percentage text-green"><i class="fa fa-caret-up"></i> <?php echo porcentaje($ventasT['ventasT'],$ventas['ventas'],2); ?>%</b></span>
+                    <h5 class="description-header">Q<?php echo number_format($ventas['total'], 2, '.', ','); ?></h5>
                     <span class="description-text">TOTAL ACTIVO</span>
                   </div>
                   <!-- /.description-block -->
                 </div>
                 <div class="col-sm-3 col-xs-6">
                   <div class="description-block">
-                    <span class="description-percentage text-red"><i class="fa fa-caret-down"></i> <?php echo $ventasV['ventasV']; ?></span>
-                    <h5 class="description-header">1200</h5>
+                    <span class="description-percentage text-red"><i class="fa fa-caret-down"></i> <?php echo porcentaje($ventasT['ventasT'],$ventasV['ventasV'],2); ?>%</span>
+                    <h5 class="description-header">Q<?php echo number_format($ventasV['total'], 2, '.', ','); ?></h5>
                     <span class="description-text">TOTAL ATRASADO</span>
                   </div>
                   <!-- /.description-block -->
@@ -229,8 +232,8 @@
                 <!-- /.col -->
                 <div class="col-sm-3 col-xs-6">
                   <div class="description-block border-right">
-                    <span class="description-percentage text-aqua"><i class="fa fa-caret-up"></i> <?php echo $ventasPT['ventasPT']; ?></span>
-                    <h5 class="description-header">$24,813.53</h5>
+                    <span class="description-percentage text-aqua"><i class="fa fa-caret-up"></i> <?php echo porcentaje($ventasT['ventasT'],$ventasPT['ventasPT'],2); ?>%</span>
+                    <h5 class="description-header">Q<?php echo number_format($ventasPT['total'], 2, '.', ','); ?></h5>
                     <span class="description-text">TOTAL CANCELADO</span>
                   </div>
                   <!-- /.description-block -->
