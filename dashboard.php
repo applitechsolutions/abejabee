@@ -178,7 +178,7 @@
                     <span class="progress-number"><b><?php echo $ventasPT['ventasPT']; ?>/<?php echo $ventasT['ventasT']; ?></span>
 
                     <div class="progress sm">
-                      <div class="progress-bar progress-bar-info" style="width: 80%"></div>
+                      <div class="progress-bar progress-bar" style="width: 80%"></div>
                     </div>
                 </div>
                   <!-- /.progress-group -->
@@ -232,7 +232,7 @@
                 <!-- /.col -->
                 <div class="col-sm-3 col-xs-6">
                   <div class="description-block border-right">
-                    <span class="description-percentage text-aqua"><i class="fa fa-caret-up"></i> <?php echo porcentaje($ventasT['ventasT'],$ventasPT['ventasPT'],2); ?>%</span>
+                    <span class="description-percentage text-blue"><i class="fa fa-caret-up"></i> <?php echo porcentaje($ventasT['ventasT'],$ventasPT['ventasPT'],2); ?>%</span>
                     <h5 class="description-header">Q<?php echo number_format($ventasPT['total'], 2, '.', ','); ?></h5>
                     <span class="description-text">TOTAL CANCELADO</span>
                   </div>
