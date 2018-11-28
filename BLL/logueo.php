@@ -23,7 +23,8 @@ if (isset($_POST['ingresar'])) {
                     $_SESSION['rol'] = $permiso_log;
                     $respuesta = array(
                         'respuesta' => 'exitoso',
-                        'usuario' => $nombre_log
+                        'usuario' => $nombre_log,
+                        'permiso' => $permiso_log
                     );
                 }else {
                     $respuesta = array(

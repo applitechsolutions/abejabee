@@ -28,15 +28,19 @@
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">Menú de Administración</li>
         <li class="treeview">
-          <a href="index.php">
-            <i class="fa fa-dashboard"></i> <span>Dashboard</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
+        <?php 
+            if ($_SESSION['rol'] == 1) {?>
+        <li>
+          <a href="dashboard.php">
+            <i class="fa fa-line-chart" aria-hidden="true"></i><span> Dashboard</span>
           </a>
-          <ul class="treeview-menu">
-            <li><a href="index.php"><i class="fa fa-archive"></i> Inventario</a></li>
-          </ul>
+        </li><?php
+        }
+        ?>
+        <li>
+          <a href="index.php">
+            <i class="fa fa-archive"></i> <span>Inventario</span>
+          </a>
         </li>
         <li class="treeview">
           <a href="#">

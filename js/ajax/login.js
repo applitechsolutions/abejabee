@@ -19,7 +19,11 @@ $(document).ready(function() {
                         'success'
                     ).then(
                         setTimeout(function () {
-                            window.location.href = 'index.php';
+                            if (resultado.permiso == 1) {
+                                window.location.href = 'dashboard.php';
+                            }else{
+                                window.location.href = 'index.php';
+                            }                            
                         }, 1500))
                 } else {
                     swal({
