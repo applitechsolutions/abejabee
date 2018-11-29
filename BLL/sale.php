@@ -26,9 +26,16 @@ if ($_POST['venta'] == 'nueva') {
             mysqli_autocommit($conn, false);
             $query_success = true;
 
+            //Si el anticipo es igual al total se marca la venta como pagada.
+            $cancel = 0;
+            $monto = $total - $adelanto;
+            if ($monto == 0) {
+                $cancel = 1;
+            }
+
             //Insert Sale
-            $stmt = $conn->prepare("INSERT INTO sale (_idSeller, _idCustomer, totalSale, advance, dateStart, dateEnd, paymentMethod, noDeliver, note) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("iiddsssss", $vendedor, $cliente, $total, $adelanto, $fc, $fv, $pago, $remision, $note);
+            $stmt = $conn->prepare("INSERT INTO sale (_idSeller, _idCustomer, totalSale, advance, dateStart, dateEnd, paymentMethod, noDeliver, note, cancel) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("iiddsssssi", $vendedor, $cliente, $total, $adelanto, $fc, $fv, $pago, $remision, $note, $cancel);
             if (!mysqli_stmt_execute($stmt)) {
                 $query_success = false;
             }
@@ -38,7 +45,6 @@ if ($_POST['venta'] == 'nueva') {
             if ($id_registro > 0) {
 
                 $bal = 0;
-                $monto = $total - $adelanto;
                 //Insert BALANCE
                 $stmt = $conn->prepare("INSERT INTO balance(_idSale, date, balpay, amount, balance) VALUES (?, ?, ?, ?, ?)");
                 $stmt->bind_param("isidd", $id_registro, $fc, $bal, $monto, $monto);
@@ -142,9 +148,16 @@ if ($_POST['venta'] == 'editar') {
             mysqli_autocommit($conn, false);
             $query_success = true;
 
+            //Si el anticipo es igual al total se marca la venta como pagada.
+            $cancel = 0;
+            $monto = $total - $adelanto;
+            if ($monto == 0) {
+                $cancel = 1;
+            }
+            
             //Update Sale
-            $stmt = $conn->prepare("UPDATE sale SET  _idSeller = ?, _idCustomer = ?, totalSale = ?, advance = ?, dateStart = ?, dateEnd = ?, paymentMethod = ?, noDeliver = ?, note = ? WHERE idSale = ?");
-            $stmt->bind_param("iiddsssssi", $vendedor, $cliente, $total, $adelanto, $fc, $fv, $pago, $remision, $note, $id_sale);
+            $stmt = $conn->prepare("UPDATE sale SET  _idSeller = ?, _idCustomer = ?, totalSale = ?, advance = ?, dateStart = ?, dateEnd = ?, paymentMethod = ?, noDeliver = ?, note = ?, cancel = ? WHERE idSale = ?");
+            $stmt->bind_param("iiddsssssii", $vendedor, $cliente, $total, $adelanto, $fc, $fv, $pago, $remision, $note, $cancel, $id_sale);
             if (!mysqli_stmt_execute($stmt)) {
                 $query_success = false;
             }
@@ -152,7 +165,6 @@ if ($_POST['venta'] == 'editar') {
 
             //Update BALANCE
             $bal = 0;
-            $monto = $total - $adelanto;
             $nuevo_balance = $monto;
             $stmt = $conn->prepare("UPDATE balance SET date = ?, amount = ?, balance = ? WHERE _idSale = ? AND balpay = ?");
             $stmt->bind_param("sddii", $fc, $monto, $monto, $id_sale, $bal);
