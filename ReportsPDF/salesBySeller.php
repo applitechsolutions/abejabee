@@ -34,12 +34,12 @@ try{
 //     $vendedor = $nombre['seller'];
 // }
 
-$dia1 = strftime("%d", strtotime($_POST['fecha1']));
-$mes1 = strftime("%B", strtotime($_POST['fecha1']));
-$year1 = strftime("%Y", strtotime($_POST['fecha1']));
-$dia2 = strftime("%d", strtotime($_POST['fecha2']));
-$mes2 = strftime("%B", strtotime($_POST['fecha2']));
-$year2 = strftime("%Y", strtotime($_POST['fecha2']));
+$dia1 = strftime("%d", strtotime($_GET['fecha1']));
+$mes1 = strftime("%B", strtotime($_GET['fecha1']));
+$year1 = strftime("%Y", strtotime($_GET['fecha1']));
+$dia2 = strftime("%d", strtotime($_GET['fecha2']));
+$mes2 = strftime("%B", strtotime($_GET['fecha2']));
+$year2 = strftime("%Y", strtotime($_GET['fecha2']));
 
 function mes($mes){
     if ($mes == 'January') {
