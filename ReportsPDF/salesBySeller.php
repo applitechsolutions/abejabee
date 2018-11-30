@@ -11,9 +11,6 @@ $fecha2 = strtr($_GET['fecha2'], '/', '-');
 $fi = date('Y-m-d', strtotime($fecha1));
 $ff = date('Y-m-d', strtotime($fecha2));
 
-$f1 = date('m/d/Y', strtotime($_GET['fecha1']));
-$f2 = date('m/d/Y', strtotime($_GET['fecha2']));
-
 try{
     $sql = "SELECT S.*,
     (select concat(sellerFirstName, ' ', sellerLastName) from seller where idSeller = S._idSeller) as seller,
@@ -127,9 +124,10 @@ $pagina='
                         </tr>
                     </thead>
                     <tbody class="w3-white">';
+            $subtotalComision = 0;
             while ($sale = $resultado->fetch_assoc()) {
                 $datetime1 = date_create($sale['fechapago']);
-                $datetime2 = date_create($sale['dateEnd'] );
+                $datetime2 = date_create($sale['dateEnd']);
                 $interval = date_diff($datetime2, $datetime1);
                 $diferencia = $interval->format('%a');
 
@@ -154,7 +152,7 @@ $pagina='
                         $comision = 0;
                     }
                 }
-                $subtotalComision += number_format($comision, 2, '.', ',');
+                $subtotalComision += $comision;
                 $dateStar = date_create($sale['dateStart']);
                 $fechapago = date_create($sale['fechapago']);
                 $pagina.='
