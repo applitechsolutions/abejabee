@@ -11,6 +11,14 @@ $fecha2 = strtr($_GET['fecha2'], '/', '-');
 $fi = date('Y-m-d', strtotime($fecha1));
 $ff = date('Y-m-d', strtotime($fecha2));
 
+$f1 = date('m/d/Y', strtotime($_GET['fecha1']));
+$f2 = date('m/d/Y', strtotime($_GET['fecha2']));
+
+$datetime1 = date_create($f1);
+$datetime2 = date_create($f2);
+$interval = date_diff($datetime2, $datetime1);
+$diferencia = $interval->format('%a');
+
 try{
     $sql = "SELECT S.*,
     (select concat(sellerFirstName, ' ', sellerLastName) from seller where idSeller = S._idSeller) as seller,
@@ -30,16 +38,16 @@ try{
     echo $error;
 }
 
-// while ($nombre = $res->fetch_assoc()) {
-//     $vendedor = $nombre['seller'];
-// }
+while ($nombre = $res->fetch_assoc()) {
+    $vendedor = $nombre['seller'];
+}
 
-$dia1 = strftime("%d", strtotime($_GET['fecha1']));
-$mes1 = strftime("%B", strtotime($_GET['fecha1']));
-$year1 = strftime("%Y", strtotime($_GET['fecha1']));
-$dia2 = strftime("%d", strtotime($_GET['fecha2']));
-$mes2 = strftime("%B", strtotime($_GET['fecha2']));
-$year2 = strftime("%Y", strtotime($_GET['fecha2']));
+$dia1 = strftime("%d", strtotime($f1));
+$mes1 = strftime("%B", strtotime($f1));
+$year1 = strftime("%Y", strtotime($f1));
+$dia2 = strftime("%d", strtotime($f2));
+$mes2 = strftime("%B", strtotime($f2));
+$year2 = strftime("%Y", strtotime($f2));
 
 function mes($mes){
     if ($mes == 'January') {
@@ -146,19 +154,21 @@ $pagina='
                         $comision = 0;
                     }
                 }
-                $subtotalComision += $comision;
+                $subtotalComision += number_format($comision, 2, '.', ',');
+                $dateStar = date_create($sale['dateStart']);
+                $fechapago = date_create($sale['fechapago']);
                 $pagina.='
                         <tr>
-                            <td>'.$sale['dateStart'].'</td>
+                            <td>'.date_format($dateStar, 'd/m/y').'</td>
                             <td><small class="w3-deep-orange">Factura No°</small><br><small>'.$sale['serie'].' '.$sale['noBill'].'</small><br><small class="w3-indigo">Remision No°</small><br><small>'.$sale['noDeliver'].'</small></td>
-                            <td>'.$sale['fechapago'].'</td>
+                            <td>'.date_format($fechapago, 'd/m/y').'</td>
                             <td>'.$sale['paymentMethod'].'</td>
                             <td>'.$sale['codigo'].' '.$sale['nombre'].'</td>
                             <td>'.$sale['quantity'].'</td>
                             <td>Q. '.$sale['priceS'].'</td>
                             <td>Q. '.$sale['discount'].'</td>
                             <td>Q. '.$subtotal.'</td>
-                            <td>Q. '.$comision.'</td>
+                            <td>Q. '.number_format($comision, 2, '.', ',').'</td>
                         </tr>';
                     }
         $pagina .= '</tbody>
@@ -172,7 +182,7 @@ $pagina='
                         <th></th>
                         <th></th>
                         <th style="text-align: right;" colspan="2">Total Comisiones :</th>
-                        <td>Q. '. $subtotalComision .'</td>
+                        <td>Q. '. number_format($subtotalComision, 2, '.', ',') .'</td>
                         </tr>
                     </tfoot>
                 </table>
