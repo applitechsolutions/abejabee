@@ -36,9 +36,9 @@ while ($nombre = $res->fetch_assoc()) {
 }
 
 
-$dia1 = strftime("%d", strtotime($fecha1));
-$mes1 = strftime("%B", strtotime($fecha1));
-$year1 = strftime("%Y", strtotime($fecha1));
+$dia1 = strftime("%d", strtotime($fi));
+$mes1 = strftime("%B", strtotime($fi));
+$year1 = strftime("%Y", strtotime($fi));
 $dia2 = strftime("%d", strtotime($fecha2));
 $mes2 = strftime("%B", strtotime($fecha2));
 $year2 = strftime("%Y", strtotime($fecha2));
@@ -166,6 +166,10 @@ $pagina='
         $pagina .= '</tbody>
                     <tfoot>
                         <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
                         <th></th>
                         <th></th>
                         <th></th>
