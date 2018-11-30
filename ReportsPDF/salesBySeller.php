@@ -21,7 +21,7 @@ try{
     (SELECT makeName FROM make WHERE idMake = (SELECT _idMake FROM product WHERE idProduct = D._idProduct)) as marca
     FROM sale S 
     INNER JOIN detailS D ON S.idSale = D._idSale
-    WHERE S.cancel = 1 AND S._idSeller = $idVendedor AND (SELECT date FROM balance WHERE _idSale = S.idSale ORDER BY idBalance DESC LIMIT 1) BETWEEN '$fi' AND '$ff'";
+    WHERE S.cancel = 1 AND S._idSeller = $idVendedor AND (SELECT date FROM balance WHERE _idSale = S.idSale ORDER BY idBalance DESC LIMIT 1) BETWEEN '$fi' AND '$ff' ORDER BY S.dateStart ASC";
 
     $resultado = $conn->query($sql);
     $res = $conn->query($sql);
