@@ -14,11 +14,6 @@ $ff = date('Y-m-d', strtotime($fecha2));
 $f1 = date('m/d/Y', strtotime($_GET['fecha1']));
 $f2 = date('m/d/Y', strtotime($_GET['fecha2']));
 
-$datetime1 = date_create($f1);
-$datetime2 = date_create($f2);
-$interval = date_diff($datetime2, $datetime1);
-$diferencia = $interval->format('%a');
-
 try{
     $sql = "SELECT S.*,
     (select concat(sellerFirstName, ' ', sellerLastName) from seller where idSeller = S._idSeller) as seller,
@@ -42,12 +37,12 @@ while ($nombre = $res->fetch_assoc()) {
     $vendedor = $nombre['seller'];
 }
 
-$dia1 = strftime("%d", strtotime($f1));
-$mes1 = strftime("%B", strtotime($f1));
-$year1 = strftime("%Y", strtotime($f1));
-$dia2 = strftime("%d", strtotime($f2));
-$mes2 = strftime("%B", strtotime($f2));
-$year2 = strftime("%Y", strtotime($f2));
+$dia1 = strftime("%d", strtotime($fi));
+$mes1 = strftime("%B", strtotime($fi));
+$year1 = strftime("%Y", strtotime($fi));
+$dia2 = strftime("%d", strtotime($ff));
+$mes2 = strftime("%B", strtotime($ff));
+$year2 = strftime("%Y", strtotime($ff));
 
 function mes($mes){
     if ($mes == 'January') {
@@ -133,6 +128,11 @@ $pagina='
                     </thead>
                     <tbody class="w3-white">';
             while ($sale = $resultado->fetch_assoc()) {
+                $datetime1 = date_create($sale['fechapago']);
+                $datetime2 = date_create($sale['dateEnd'] );
+                $interval = date_diff($datetime2, $datetime1);
+                $diferencia = $interval->format('%a');
+
                 $sub = $sale['quantity'] * $sale['priceS'];
                 $subtotal = number_format($sub, 2, '.', ',');
                 if ($sale['marca'] == 'SCHLENKER') {
