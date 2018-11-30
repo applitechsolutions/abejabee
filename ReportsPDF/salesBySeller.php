@@ -103,7 +103,7 @@ $pagina='
                     <!-- /.col -->
                 </div>
                 <div style="text-align: center;">
-                    <h3>XDVentas realizadas por '. $vendedor .'</h3>
+                    <h3>Ventas realizadas por '. $vendedor .'</h3>
                     <h4>'.$mensaje.'</h4>
                 </div>
             </div>
