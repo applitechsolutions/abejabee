@@ -5,8 +5,8 @@ include_once '../funciones/bd_conexion.php';
 //Se indica lo que se va a imprimir en formato HTML
 
 $idVendedor = $_GET['idVendedor'];
-$fecha1 = strtr($_POST['fecha1'], '/', '-');
-$fecha2 = strtr($_POST['fecha2'], '/', '-');
+$fecha1 = strtr($_GET['fecha1'], '/', '-');
+$fecha2 = strtr($_GET['fecha2'], '/', '-');
 
 $fi = date('Y-m-d', strtotime($fecha1));
 $ff = date('Y-m-d', strtotime($fecha2));
