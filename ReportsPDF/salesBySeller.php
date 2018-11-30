@@ -174,7 +174,6 @@ $pagina='
                         <th></th>
                         <th></th>
                         <th></th>
-                        <th></th>
                         <th style="text-align: right;" colspan="2">Total Comisiones :</th>
                         <td>Q. '. $subtotalComision .'</td>
                         </tr>
