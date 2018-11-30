@@ -133,7 +133,7 @@ $pagina='
 
                 $sub = $sale['quantity'] * ($sale['priceS'] - 
                 $sale['discount']);
-                $subtotal = number_format($sub, 2, '.', ',');
+                $subtotal = $sub;
                 if ($sale['marca'] == 'SCHLENKER') {
                     if ($diferencia <= '30') {
                         $comision = $subtotal * 0.1;
