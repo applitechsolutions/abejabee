@@ -131,7 +131,8 @@ $pagina='
                 $interval = date_diff($datetime2, $datetime1);
                 $diferencia = $interval->format('%a');
 
-                $sub = $sale['quantity'] * $sale['priceS'];
+                $sub = $sale['quantity'] * ($sale['priceS'] - 
+                $sale['discount']);
                 $subtotal = number_format($sub, 2, '.', ',');
                 if ($sale['marca'] == 'SCHLENKER') {
                     if ($diferencia <= '30') {
