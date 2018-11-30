@@ -161,7 +161,7 @@ $pagina='
                             <td>'.date_format($dateStar, 'd/m/y').'</td>
                             <td><small class="w3-deep-orange">Factura No°</small><br><small>'.$sale['serie'].' '.$sale['noBill'].'</small><br><small class="w3-indigo">Remision No°</small><br><small>'.$sale['noDeliver'].'</small></td>
                             <td>'.date_format($fechapago, 'd/m/y').'</td>
-                            <td>'.$sale['paymentMethod'].' '.$diferencia.'</td>
+                            <td>'.$sale['paymentMethod'].'</td>
                             <td>'.$sale['codigo'].' '.$sale['nombre'].'</td>
                             <td>'.$sale['quantity'].'</td>
                             <td>Q. '.$sale['priceS'].'</td>
