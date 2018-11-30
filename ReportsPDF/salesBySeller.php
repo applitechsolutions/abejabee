@@ -11,8 +11,6 @@ $fecha2 = strtr($_POST['fecha2'], '/', '-');
 $fi = date('Y-m-d', strtotime($fecha1));
 $ff = date('Y-m-d', strtotime($fecha2));
 
-echo $fecha1;
-
 try{
     $sql = "SELECT S.*,
     (select concat(sellerFirstName, ' ', sellerLastName) from seller where idSeller = S._idSeller) as seller,
@@ -33,16 +31,15 @@ try{
 
 while ($nombre = $res->fetch_assoc()) {
     $vendedor = $nombre['seller'];
-    echo $vendedor;
 }
 
 
 $dia1 = strftime("%d", strtotime($_POST['fecha1']));
 $mes1 = strftime("%B", strtotime($_POST['fecha1']));
 $year1 = strftime("%Y", strtotime($_POST['fecha1']));
-$dia2 = strftime("%d", strtotime($fecha2));
-$mes2 = strftime("%B", strtotime($fecha2));
-$year2 = strftime("%Y", strtotime($fecha2));
+$dia2 = strftime("%d", strtotime($_POST['fecha2']));
+$mes2 = strftime("%B", strtotime($_POST['fecha2']));
+$year2 = strftime("%Y", strtotime($_POST['fecha2']));
 
 function mes($mes){
     if ($mes == 'January') {
