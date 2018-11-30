@@ -33,12 +33,13 @@ try{
 
 while ($nombre = $res->fetch_assoc()) {
     $vendedor = $nombre['seller'];
+    console.log($vendedor);
 }
 
 
-$dia1 = strftime("%d", strtotime($fi));
-$mes1 = strftime("%B", strtotime($fi));
-$year1 = strftime("%Y", strtotime($fi));
+$dia1 = strftime("%d", strtotime($_POST['fecha1']));
+$mes1 = strftime("%B", strtotime($_POST['fecha1']));
+$year1 = strftime("%Y", strtotime($_POST['fecha1']));
 $dia2 = strftime("%d", strtotime($fecha2));
 $mes2 = strftime("%B", strtotime($fecha2));
 $year2 = strftime("%Y", strtotime($fecha2));
@@ -166,7 +167,6 @@ $pagina='
         $pagina .= '</tbody>
                     <tfoot>
                         <tr>
-                        <th></th>
                         <th></th>
                         <th></th>
                         <th></th>
