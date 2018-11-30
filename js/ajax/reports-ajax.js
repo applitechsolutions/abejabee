@@ -64,12 +64,9 @@ $(document).ready(function () {
                     var fecha1 = registro.fechapago;
                     var fecha2 = registro.dateEnd;
                     var date1 = new Date(fecha1);
-                    var date2 = new Date(fecha2);
-                    console.log(date1);
-                    console.log(date2);                
+                    var date2 = new Date(fecha2);          
                     var timeDiff = Math.abs(date2.getTime() - date1.getTime());
-                    var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
-                    console.log(diffDays);
+                    var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
                     var sub = registro.quantity * (parseFloat(Math.round(registro.priceS * 100) / 100).toFixed(2) - parseFloat(Math.round(registro.discount * 100) / 100).toFixed(2));
                     var comi = comision(diffDays, registro.marca, sub.toFixed(2));
                     totalCom = parseFloat(totalCom) + parseFloat(comi);
