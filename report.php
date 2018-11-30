@@ -1,6 +1,9 @@
 <?php
 include_once 'funciones/sesiones.php';
 include_once 'templates/header.php';
+?>
+<body class="hold-transition skin-blue sidebar-collapse sidebar-mini">
+<?php
 include_once 'templates/navBar.php';
 include_once 'templates/sideBar.php';
 include_once 'funciones/bd_conexion.php';

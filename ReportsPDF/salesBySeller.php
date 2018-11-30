@@ -17,8 +17,12 @@ try{
     $sql = "SELECT S.*,
     (select concat(sellerFirstName, ' ', sellerLastName) from seller where idSeller = S._idSeller) as seller,
     (SELECT date FROM balance WHERE _idSale = S.idSale ORDER BY idBalance DESC LIMIT 1) as fechapago,
-    (select concat(customerCode, ' ', customerName) from customer where idCustomer = S._idCustomer) as customer
-    FROM sale S WHERE S.cancel = 1 AND S._idSeller = $idVendedor AND (SELECT date FROM balance WHERE _idSale = S.idSale ORDER BY idBalance DESC LIMIT 1) BETWEEN '$fi' AND '$ff'";
+    quantity, priceS, discount,
+    (SELECT productName FROM product WHERE idProduct = D._idProduct) as nombre,
+    (SELECT productCode FROM product WHERE idProduct = D._idProduct) as codigo,
+    (SELECT makeName FROM make WHERE idMake = (SELECT _idMake FROM product WHERE idProduct = D._idProduct)) as marca
+    FROM sale S INNER JOIN detailS D ON S.idSale = D._idSale
+    WHERE S.cancel = 1 AND S._idSeller = $idVendedor AND (SELECT date FROM balance WHERE _idSale = S.idSale ORDER BY idBalance DESC LIMIT 1) BETWEEN '$fi' AND '$ff'";
 
     $resultado = $conn->query($sql);
     $res = $conn->query($sql);
@@ -111,29 +115,66 @@ $pagina='
                         <tr>
                             <th style="background-color: #1d2128; color: white">Fecha</th>
                             <th style="background-color: #1d2128; color: white">Factura No°</th>
-                            <th style="background-color: #1d2128; color: white">Cliente</th>
-                            <th style="background-color: #1d2128; color: white">Fecha de vencimiento</th>
+                            <th style="background-color: #1d2128; color: white">Fecha de pago</th>
                             <th style="background-color: #1d2128; color: white">Método de pago</th>
-                            <th style="background-color: #1d2128; color: white">Envío No°</th>
-                            <th style="background-color: #1d2128; color: white">Anticipo</th>
-                            <th style="background-color: #1d2128; color: white">Total</th>
+                            <th style="background-color: #1d2128; color: white">Producto</th>
+                            <th style="background-color: #1d2128; color: white">Cantidad</th>
+                            <th style="background-color: #1d2128; color: white">Precio</th>
+                            <th style="background-color: #1d2128; color: white">Descuento</th>
+                            <th style="background-color: #1d2128; color: white">Subtotal</th>
+                            <th style="background-color: #1d2128; color: white">Comisión</th>
                         </tr>
                     </thead>
                     <tbody class="w3-white">';
             while ($sale = $resultado->fetch_assoc()) {
+                $sub = $sale['quantity'] * $sale['priceS'];
+                $subtotal = number_format($sub, 2, '.', ',');
+                if ($sale['marca'] == 'SCHLENKER') {
+                    if ($diferencia <= '30') {
+                        $comision = $subtotal * 0.1;
+                    } else if ($diferencia > '30' && $diferencia <= '60') {
+                        $comision = $subtotal * 0.08;
+                    } else if ($diferencia > '60' && $diferencia <= '90') {
+                        $comision = $subtotal * 0.05;
+                    } else {
+                        $comision = 0;
+                    }
+                } else {
+                    if ($diferencia <= '30') {
+                        $comision = $subtotal * 0.05;
+                    } else if ($diferencia > '30' && $diferencia <= '60') {
+                        $comision = $subtotal * 0.03;
+                    } else {
+                        $comision = 0;
+                    }
+                }
+                $subtotalComision += $comision;
                 $pagina.='
                         <tr>
                             <td>'.$sale['dateStart'].'</td>
                             <td><small class="w3-deep-orange">Factura No°</small><br><small>'.$sale['serie'].' '.$sale['noBill'].'</small><br><small class="w3-indigo">Remision No°</small><br><small>'.$sale['noDeliver'].'</small></td>
-                            <td>'.$sale['customer'].'</td>
-                            <td>'.$sale['dateEnd'].'</td>
+                            <td>'.$sale['fechapago'].'</td>
                             <td>'.$sale['paymentMethod'].'</td>
-                            <td>'.$sale['noShipment'].'</td>
-                            <td>'.$sale['advance'].'</td>
-                            <td>'.$sale['totalSale'].'</td>
+                            <td>'.$sale['codigo'].' '.$sale['nombre'].'</td>
+                            <td>'.$sale['quantity'].'</td>
+                            <td>Q. '.$sale['priceS'].'</td>
+                            <td>Q. '.$sale['discount'].'</td>
+                            <td>Q. '.$subtotal.'</td>
+                            <td>Q. '.$comision.'</td>
                         </tr>';
                     }
         $pagina .= '</tbody>
+                    <tfoot>
+                        <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th style="text-align: right;" colspan="2">Total Comisiones :</th>
+                        <td>Q. '. $subtotalComision .'</td>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>
