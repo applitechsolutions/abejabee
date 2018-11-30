@@ -30,10 +30,9 @@ try{
     echo $error;
 }
 
-while ($nombre = $res->fetch_assoc()) {
-    $vendedor = $nombre['seller'];
-}
-
+// while ($nombre = $res->fetch_assoc()) {
+//     $vendedor = $nombre['seller'];
+// }
 
 $dia1 = strftime("%d", strtotime($_POST['fecha1']));
 $mes1 = strftime("%B", strtotime($_POST['fecha1']));
