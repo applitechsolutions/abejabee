@@ -15,11 +15,12 @@ try{
     $sql = "SELECT S.*,
     (select concat(sellerFirstName, ' ', sellerLastName) from seller where idSeller = S._idSeller) as seller,
     (SELECT date FROM balance WHERE _idSale = S.idSale ORDER BY idBalance DESC LIMIT 1) as fechapago,
-    quantity, priceS, discount,
-    (SELECT productName FROM product WHERE idProduct = D._idProduct) as nombre,
-    (SELECT productCode FROM product WHERE idProduct = D._idProduct) as codigo,
-    (SELECT makeName FROM make WHERE idMake = (SELECT _idMake FROM product WHERE idProduct = D._idProduct)) as marca
-    FROM sale S INNER JOIN detailS D ON S.idSale = D._idSale
+    -- D.quantity, D.priceS, D.discount,
+    -- (SELECT productName FROM product WHERE idProduct = D._idProduct) as nombre,
+    -- (SELECT productCode FROM product WHERE idProduct = D._idProduct) as codigo,
+    -- (SELECT makeName FROM make WHERE idMake = (SELECT _idMake FROM product WHERE idProduct = D._idProduct)) as marca
+    FROM sale S 
+    -- INNER JOIN detailS D ON S.idSale = D._idSale
     WHERE S.cancel = 1 AND S._idSeller = $idVendedor AND (SELECT date FROM balance WHERE _idSale = S.idSale ORDER BY idBalance DESC LIMIT 1) BETWEEN '$fi' AND '$ff'";
 
     $resultado = $conn->query($sql);
