@@ -33,7 +33,7 @@ try{
 
 while ($nombre = $res->fetch_assoc()) {
     $vendedor = $nombre['seller'];
-    console.log($vendedor);
+    echo $vendedor;
 }
 
 
