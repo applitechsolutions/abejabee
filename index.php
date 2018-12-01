@@ -31,7 +31,6 @@
                     <tr>
                       <th>Código</th>
                       <th>Nombre</th>
-                      <th>Mínimo</th>
                       <th>Marca</th>
                       <th>Categoría</th>
                       <th>Unidad</th>
@@ -64,9 +63,6 @@
                         <td>
                           <?php echo $product['productName']; ?>
                         </td>
-                        <td class="text-center">
-                        <?php echo $product['minStock']; ?>
-                        </td>
                         <td>
                           <?php echo $product['make']; ?>
                         </td>
@@ -79,14 +75,23 @@
                         <td>
                           Q.<?php echo $product['cost']; ?>
                         </td>
-                        <td class="text-center">
-                          <?php
+                        <td>
+                        <ul>
+                          <li>
+                            <small>Mínima:</small><span class="label label-default"><?php echo $product['minStock']; ?></span>
+                          </li>
+                          <li>
+                            <small>Actual:</small>
+                        <?php
                           if ($product['minStock'] == $product['stock']) {?>
-                            <span class="label label-warning"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span><?php
+                            <span class="label label-warning"><?php echo $product['stock']; ?> <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> </span><?php
                           }else if ($product['minStock'] > $product['stock']) {?>
-                            <span class="label label-danger"><i class="fa fa-exclamation" aria-hidden="true"></i></span><?php
-                          }?>
-                          <?php echo $product['stock']; ?>
+                            <span class="label label-danger"><?php echo $product['stock']; ?> <i class="fa fa-exclamation" aria-hidden="true"></i> </span><?php
+                          }else{?>
+                            <span class="label label-primary"><?php echo $product['stock']; ?></span><?php
+                            }?>
+                          </li>
+                        </ul>    
                         </td>
                         <td>
                           <img src="img/products/<?php echo $product['picture']; ?>" width="100" onerror="this.src='img/products/notfound.jpg';">
@@ -104,7 +109,6 @@
                     <tr>
                       <th>Código</th>
                       <th>Nombre</th>
-                      <th>Mínimo</th>
                       <th>Marca</th>
                       <th>Categoría</th>
                       <th>Unidad</th>
