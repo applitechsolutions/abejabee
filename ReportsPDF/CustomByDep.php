@@ -8,12 +8,12 @@ $idRoute = $_GET['idDepartamento'];
 
 try{
     $sql = "SELECT idCustomer, customerCode, customerName, customerTel, 
-    (SELECT name FROM deparment WHERE idDeparment = C._idDeparment) as depName, S.serie, S.noBill, S.noDeliver, S.dateStart,
+    (SELECT routeName FROM route WHERE idRoute = C._idRoute) as depName, S.serie, S.noBill, S.noDeliver, S.dateStart,
     (SELECT balance FROM balance WHERE _idSale = idSale ORDER BY idBalance DESC LIMIT 1) AS saldo,
     (select Sum((SELECT balance FROM balance where _idSale = idSale order by idBalance desc limit 1))
     from sale where _idCustomer = idCustomer and cancel = 0) as total
     FROM customer C INNER JOIN sale S ON C.idCustomer = S._idCustomer
-    WHERE _idRoute = $idRoute AND S.cancel = 0 ORDER BY C.idCustomer ASC";
+    WHERE _idRoute = $idRoute AND S.cancel = 0 AND S.state = 0 ORDER BY C.idCustomer ASC";
 
     $resultado = $conn->query($sql);
     $res = $conn->query($sql);
@@ -73,7 +73,7 @@ $pagina='
                     </thead>
                     <tbody class="w3-white">';
             while ($cliente = $resultado->fetch_assoc()) {
-                $dateStart = date_create($sale['dateStart']);
+                $dateStart = date_create($cliente['dateStart']);
                 $pagina.='
                         <tr>
                             <td>'.$cliente['customerCode'].'</td>

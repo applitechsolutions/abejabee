@@ -7,7 +7,11 @@
     $result = $conn->query("SELECT idCustomer, customerCode, customerName, customerTel, 
     (select Sum((SELECT balance FROM balance where _idSale = idSale order by idBalance desc limit 1))
     from sale where _idCustomer = idCustomer and cancel = 0) as total
-    FROM customer WHERE _idRoute =$idRut AND state = 0");
+    FROM customer WHERE _idRoute = $idRut AND state = 0 AND (select Sum((SELECT balance FROM balance where _idSale = idSale order by idBalance desc limit 1))
+    from sale where _idCustomer = idCustomer and cancel = 0) > 0");
+
+    // $result = $conn->query("SELECT C.idCustomer, C.customerCode, C.customerName, C.customerTel, (SELECT balance FROM balance where _idSale = S.idSale order by idBalance desc limit 1) as total FROM customer C INNER JOIN sale S ON C.idCustomer = S._idCustomer WHERE C._idRoute = $idRut AND C.state = 0 AND S.state = 0 AND S.cancel = 0 GROUP BY S.idSale");
+
     $outp = array();
     // while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
     //     $outp[] = $result->fetch_array(MYSQLI_ASSOC);
