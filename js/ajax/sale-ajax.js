@@ -167,7 +167,6 @@ $(document).ready(function () {
                         tab3();
                     }else if (resultado.proceso == 'editado') {
                         changeReportF('remision.php?idSale=' + resultado.idVenta);
-                        updateCorrelativo('guia', 'A', resultado.remision);
                         $("#idSale").val(resultado.idVenta);
                         swal.close();
                         swal({

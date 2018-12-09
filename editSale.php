@@ -253,10 +253,9 @@ try {
                                   <div class="form-group col-lg-3">
                                     <label for="noRemi">No. de Guía de remision</label>
                                     <div class="input-group">
-                                      <input type="text" class="form-control" id="noRemi1" name="noRemi1" value="<?php echo $sale['noDeliver']; ?>" disabled>
-                                      <input type="hidden" class="form-control" id="noRemi" name="noRemi" value="<?php echo $sale['noDeliver']; ?>">
+                                      <input type="text" class="form-control" id="noRemi" name="noRemi" value="<?php echo $sale['noDeliver']; ?>">
                                       <div class="input-group-btn">
-                                        <button type="button" class="btn bg-info" data-toggle="modal" data-target="#modal-remi">
+                                        <button type="button" class="btn bg-info" data-toggle="modal" data-target="#modal-remi" disabled>
                                           <i class="glyphicon glyphicon-print" aria-hidden="true"></i>
                                           Correlativo
                                         </button>
