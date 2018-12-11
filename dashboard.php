@@ -146,7 +146,7 @@
                     <strong>Estado actual</strong>
                   </p>
                   <?php
-                      $sql = "SELECT COUNT(idSale) AS ventasT, sum(totalSale) as total FROM sale WHERE state = 0 AND YEAR(dateEnd) = YEAR(CURDATE())";
+                      $sql = "SELECT COUNT(idSale) AS ventasT, sum(totalSale) as total FROM sale WHERE state = 0 AND YEAR(dateStart) = YEAR(CURDATE())";
                       $resultado = $conn->query($sql);
                       $ventasT = $resultado->fetch_assoc();
                       ?>

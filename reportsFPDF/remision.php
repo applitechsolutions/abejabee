@@ -119,7 +119,8 @@ while ($sale = $resultado->fetch_assoc()) {
         $sql = "SELECT D.quantity, TRUNCATE((D.priceS - D.discount) ,2) as precio,
     TRUNCATE((TRUNCATE((D.priceS - D.discount) ,2) * D.quantity) ,2) as total,
     (select productCode from product where idProduct = D._idProduct) as codigo,
-    (select productName from product where idProduct = D._idProduct) as nombre
+    (select productName from product where idProduct = D._idProduct) as nombre,
+    (select catName from category where idCategory = (select _idCategory from product where idProduct = D._idProduct)) as categoria
     from details D WHERE _idSale = $idSale";
         $resultado = $conn->query($sql);
     } catch (Exception $e) {
@@ -132,10 +133,11 @@ while ($sale = $resultado->fetch_assoc()) {
     while ($detailS = $resultado->fetch_assoc()) {
         $COD = iconv('UTF-8', 'windows-1252', $detailS['codigo']);
         $NOMBRE = iconv('UTF-8', 'windows-1252', $detailS['nombre']);
+        $CATEGORIA = iconv('UTF-8', 'windows-1252', $detailS['categoria']);
         $Contador = $Contador + 4;
         $pdf->Cell(10);
         $pdf->Cell(30, 4, $COD , 0, 0, 'L');
-        $pdf->Cell(75, 4, $NOMBRE, 0, 0, 'L');
+        $pdf->Cell(75, 4, $NOMBRE. ' '. $CATEGORIA, 0, 0, 'L');
         $pdf->Cell(18, 4, $detailS['quantity'], 0, 0, 'R');
         $pdf->Cell(33, 4, 'Q.'.$detailS['precio'], 0, 0, 'R');
         $pdf->Cell(34, 4, $detailS['total'], 0, 1, 'R');
