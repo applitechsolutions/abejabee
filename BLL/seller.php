@@ -3,7 +3,6 @@ include_once '../funciones/bd_conexion.php';
 
 if ($_POST['reg-vendedor'] == 'nuevo') {
 
-    //die(json_encode($_POST));
     $codigo = $_POST['codigo-vendedor'];
     $nombre = $_POST['nombre-vendedor'];
     $apellido = $_POST['apel-vendedor'];
@@ -14,38 +13,65 @@ if ($_POST['reg-vendedor'] == 'nuevo') {
 
     $fecha_formateada = date('Y-m-d', strtotime($bday));
     $genero = $_POST['gen-vendedor'];
-   // die(json_encode($fecha_formateada));
-    
-    try{
-        if ($codigo == '' || $nombre == '' || $apellido == '' || $telefono == '' || $dpi == '' || $genero == '') {
+    // die(json_encode($fecha_formateada));
+
+    $s30 = $_POST['s30'];
+    $s60 = $_POST['s60'];
+    $s90 = $_POST['s90'];
+    $o30 = $_POST['o30'];
+    $o60 = $_POST['o60'];
+
+    try {
+        if ($codigo == '' || $nombre == '' || $apellido == '' || $telefono == '' || $dpi == '' || $genero == '' || $s30 == '' || $s60 == '' || $s90 == '' || $o30 == '' || $o60 == '') {
             $respuesta = array(
-                'respuesta' => 'vacio'
+                'respuesta' => 'vacio',
             );
-        }else {
+        } else {
+            /* Switch off auto commit to allow transactions*/
+            mysqli_autocommit($conn, false);
+            $query_success = true;
+
             $stmt = $conn->prepare("INSERT INTO seller (sellerCode, sellerFirstName, sellerLastName, sellerAddress, sellerMobile, DPI, birthDate, gender) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
             $stmt->bind_param("sssssssi", $codigo, $nombre, $apellido, $direccion, $telefono, $dpi, $fecha_formateada, $genero);
-            $stmt->execute();
+            if (!mysqli_stmt_execute($stmt)) {
+                $query_success = false;
+            }
             $id_registro = $stmt->insert_id;
+            mysqli_stmt_close($stmt);
+
             if ($id_registro > 0) {
-                $respuesta = array(
-                    'respuesta' => 'exito',
-                    'idSeller' => $id_registro,
-                    'mensaje' => 'Vendedor creado correctamente!',
-                    'proceso' => 'nuevo'
-                );
-                
-            }else {
+                $stmt = $conn->prepare("INSERT INTO commission(_idSeller, s30, s60, s90, o30, o60) VALUES (?, ?, ?, ?, ?, ?)");
+                $stmt->bind_param("iiiiii", $id_registro, $s30, $s60, $s90, $o30, $o60);
+                if (!mysqli_stmt_execute($stmt)) {
+                    $query_success = false;
+                }
+                mysqli_stmt_close($stmt);
+
+                if ($query_success) {
+                    mysqli_commit($conn);
+                    $respuesta = array(
+                        'respuesta' => 'exito',
+                        'idSeller' => $id_registro,
+                        'mensaje' => 'Vendedor creado correctamente!',
+                        'proceso' => 'nuevo',
+                    );
+                } else {
+                    mysqli_rollback($conn);
+                    $respuesta = array(
+                        'respuesta' => 'error',
+                        'idSeller' => $id_registro,
+                    );
+                }
+            } else {
                 $respuesta = array(
                     'respuesta' => 'error',
-                    'idSeller' => $id_registro
+                    'idSeller' => $id_registro,
                 );
             }
-            $stmt->close();
             $conn->close();
         }
-        
-    }catch(Exception $e){
-        echo 'Error: '. $e.getMessage();
+    } catch (Exception $e) {
+        echo 'Error: ' . $e . getMessage();
     }
     die(json_encode($respuesta));
 }
@@ -64,28 +90,61 @@ if ($_POST['reg-vendedor'] == 'actualizar') {
     $fecha_formateada = date('Y-m-d', strtotime($bday));
     $genero = $_POST['gen-vendedor'];
 
+    $s30 = $_POST['s30'];
+    $s60 = $_POST['s60'];
+    $s90 = $_POST['s90'];
+    $o30 = $_POST['o30'];
+    $o60 = $_POST['o60'];
+
     try {
-        $stmt = $conn->prepare("UPDATE seller SET sellerCode = ?, sellerFirstName = ?, sellerLastName = ?, sellerAddress = ?, sellerMobile = ?, DPI = ?, birthDate = ?, gender = ? WHERE idSeller = ?");
-        $stmt->bind_param("sssssssii", $codigo, $nombre, $apellido, $direccion, $telefono, $dpi, $fecha_formateada, $genero, $id_seller);
-        $stmt->execute();
-        if ($stmt->affected_rows) {
+        if ($codigo == '' || $nombre == '' || $apellido == '' || $telefono == '' || $dpi == '' || $genero == '' || $s30 == '' || $s60 == '' || $s90 == '' || $o30 == '' || $o60 == '') {
             $respuesta = array(
-                'respuesta' => 'exito',
-                'id_actualizado' => $stmt->insert_id,
-                'mensaje' => 'Vendedor actualizado correctamente!',
-                'proceso' => 'editado'
+                'respuesta' => 'vacio',
             );
-            
-        }else {
-            $respuesta = array(
-                'respuesta' => 'error',
-                'idSeller' => $id_registro
-            );
+        } else {
+            /* Switch off auto commit to allow transactions*/
+            mysqli_autocommit($conn, false);
+            $query_success = true;
+
+            $stmt = $conn->prepare("UPDATE seller SET sellerCode = ?, sellerFirstName = ?, sellerLastName = ?, sellerAddress = ?, sellerMobile = ?, DPI = ?, birthDate = ?, gender = ? WHERE idSeller = ?");
+            $stmt->bind_param("sssssssii", $codigo, $nombre, $apellido, $direccion, $telefono, $dpi, $fecha_formateada, $genero, $id_seller);
+            if (!mysqli_stmt_execute($stmt)) {
+                $query_success = false;
+            }          
+            mysqli_stmt_close($stmt);
+
+            if ($query_success) {                
+                $stmt = $conn->prepare("UPDATE commission SET s30 = ?, s60 = ?, s90 = ?, o30 = ?, o60 = ? WHERE _idSeller = ?");
+                $stmt->bind_param("iiiiii", $s30, $s60, $s90, $o30, $o60, $id_seller);
+                if (!mysqli_stmt_execute($stmt)) {
+                    $query_success = false;
+                }
+                mysqli_stmt_close($stmt);
+                if ($query_success) {
+                    mysqli_commit($conn);
+                    $respuesta = array(
+                        'respuesta' => 'exito',
+                        'id_actualizado' => $id_seller,
+                        'mensaje' => 'Vendedor actualizado correctamente!',
+                        'proceso' => 'editado',
+                    );
+                } else {
+                    mysqli_rollback($conn);
+                    $respuesta = array(
+                        'respuesta' => 'error',
+                        'idSeller' => $id_registro,
+                    );
+                }
+            } else {
+                $respuesta = array(
+                    'respuesta' => 'error',
+                    'idSeller' => $id_registro,
+                );
+            }
+            $conn->close();
         }
-        $stmt->close();
-        $conn->close();
-    }catch(Exception $e) {
-        echo 'Error: '. $e.getMessage();
+    } catch (Exception $e) {
+        echo 'Error: ' . $e . getMessage();
     }
     die(json_encode($respuesta));
 }
@@ -100,20 +159,19 @@ if ($_POST['reg-vendedor'] == 'eliminar') {
         if ($stmt->affected_rows) {
             $respuesta = array(
                 'respuesta' => 'exito',
-                'id_eliminado' => $id_eliminar
+                'id_eliminado' => $id_eliminar,
             );
-        }else {
+        } else {
             $respuesta = array(
-                'respuesta' => 'error'
+                'respuesta' => 'error',
             );
         }
         $stmt->close();
         $conn->close();
-    }catch(Exception $e) {
+    } catch (Exception $e) {
         $respuesta = array(
-            'respuesta' => $e->getMessage()
+            'respuesta' => $e->getMessage(),
         );
     }
     die(json_encode($respuesta));
 }
-?>

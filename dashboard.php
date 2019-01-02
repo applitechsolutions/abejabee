@@ -144,11 +144,20 @@
                 <div class="col-md-4">
                   <p class="text-center">
                     <strong>Estado actual</strong>
-                  </p>
+                  </p>                 
                   <?php
-                      $sql = "SELECT COUNT(idSale) AS ventasT, sum(totalSale) as total FROM sale WHERE state = 0 AND YEAR(dateStart) = YEAR(CURDATE())";
+                   //ventas activas vencidas:
+                      $sql = "SELECT COUNT(idSale) AS ventasV, sum(totalSale) as total FROM sale WHERE dateEnd <= CURDATE() AND cancel = 0 AND state = 0";
+                      $resultado = $conn->query($sql);
+                      $ventasV = $resultado->fetch_assoc();
+                      ?>
+                  <?php
+                  //total de ventas:
+                      $sql = "SELECT COUNT(idSale) AS ventasT, sum(totalSale) as total FROM sale WHERE state = 0 AND YEAR(dateEnd) = YEAR(CURDATE()) AND dateEnd > CURDATE()";
                       $resultado = $conn->query($sql);
                       $ventasT = $resultado->fetch_assoc();
+                      $ventasTotal = $ventasT['ventasT'] + $ventasV['ventasV'];
+                      $total = $ventasT['total'] + $ventasV['total'];
                       ?>
                   <div class="progress-group">
                     <?php
@@ -159,26 +168,21 @@
                     <span class="progress-text">Ventas activas</span>
                     <span class="progress-number"><b>
                         <?php echo $ventas['ventas']; ?></b>/
-                      <?php echo $ventasT['ventasT']; ?></span>
+                      <?php echo $ventasTotal; ?></span>
   
                     <div class="progress sm">
-                      <div class="progress-bar progress-bar-green" style="width: <?php echo porcentaje($ventasT['ventasT'],$ventas['ventas'],2); ?>%"></div>
+                      <div class="progress-bar progress-bar-green" style="width: <?php echo porcentaje($ventasTotal,$ventas['ventas'],2); ?>%"></div>
                     </div>
                   </div>
                   <!-- /.progress-group -->
                   <div class="progress-group">
-                    <?php
-                      $sql = "SELECT COUNT(idSale) AS ventasV, sum(totalSale) as total FROM sale WHERE dateEnd <= CURDATE() AND cancel = 0 AND state = 0 AND YEAR(dateEnd) = YEAR(CURDATE())";
-                      $resultado = $conn->query($sql);
-                      $ventasV = $resultado->fetch_assoc();
-                      ?>
-                    <span class="progress-text">Ventas activas vencidas</span>
+                    <span class="progress-text">Ventas vencidas</span>
                     <span class="progress-number"><b>
                         <?php echo $ventasV['ventasV']; ?></b>/
-                      <?php echo $ventasT['ventasT']; ?></span>
+                      <?php echo $ventasTotal; ?></span>
   
                     <div class="progress sm">
-                      <div class="progress-bar progress-bar-red" style="width: <?php echo porcentaje($ventasT['ventasT'],$ventasV['ventasV'],2); ?>%"></div>
+                      <div class="progress-bar progress-bar-red" style="width: <?php echo porcentaje($ventasTotal,$ventasV['ventasV'],2); ?>%"></div>
                     </div>
                   </div>
                   <!-- /.progress-group -->
@@ -191,10 +195,10 @@
                     <span class="progress-text">Ventas pagadas</span>
                     <span class="progress-number"><b>
                         <?php echo $ventasPT['ventasPT']; ?>/
-                        <?php echo $ventasT['ventasT']; ?></span>
+                        <?php echo $ventasTotal; ?></span>
   
                     <div class="progress sm">
-                      <div class="progress-bar progress-bar" style="width: <?php echo porcentaje($ventasT['ventasT'],$ventasPT['ventasPT'],2); ?>%"></div>
+                      <div class="progress-bar progress-bar" style="width: <?php echo porcentaje($ventasTotal,$ventasPT['ventasPT'],2); ?>%"></div>
                     </div>
                   </div>
                   <!-- /.progress-group -->
@@ -224,9 +228,9 @@
                 <div class="col-sm-3 col-xs-6">
                   <div class="description-block border-right">
                     <span class="description-percentage text-ye"><i class="fa fa-caret-left"></i>
-                      <?php echo $ventasT['ventasT']; ?></b></span>
+                      <?php echo $ventasTotal; ?></b></span>
                     <h5 class="description-header">Q
-                      <?php echo number_format($ventasT['total'], 2, '.', ','); ?>
+                      <?php echo number_format($total, 2, '.', ','); ?>
                     </h5>
                     <span class="description-text">TOTAL VENTAS</span>
                   </div>
@@ -236,7 +240,7 @@
                 <div class="col-sm-3 col-xs-6">
                   <div class="description-block border-right">
                     <span class="description-percentage text-green"><i class="fa fa-caret-up"></i>
-                      <?php echo porcentaje($ventasT['ventasT'],$ventas['ventas'],2); ?>%</b></span>
+                      <?php echo porcentaje($ventasTotal,$ventas['ventas'],2); ?>%</b></span>
                     <h5 class="description-header">Q
                       <?php echo number_format($ventas['total'], 2, '.', ','); ?>
                     </h5>
@@ -247,7 +251,7 @@
                 <div class="col-sm-3 col-xs-6">
                   <div class="description-block">
                     <span class="description-percentage text-red"><i class="fa fa-caret-down"></i>
-                      <?php echo porcentaje($ventasT['ventasT'],$ventasV['ventasV'],2); ?>%</span>
+                      <?php echo porcentaje($ventasTotal,$ventasV['ventasV'],2); ?>%</span>
                     <h5 class="description-header">Q
                       <?php echo number_format($ventasV['total'], 2, '.', ','); ?>
                     </h5>
@@ -259,7 +263,7 @@
                 <div class="col-sm-3 col-xs-6">
                   <div class="description-block border-right">
                     <span class="description-percentage text-blue"><i class="fa fa-caret-up"></i>
-                      <?php echo porcentaje($ventasT['ventasT'],$ventasPT['ventasPT'],2); ?>%</span>
+                      <?php echo porcentaje($ventasTotal,$ventasPT['ventasPT'],2); ?>%</span>
                     <h5 class="description-header">Q
                       <?php echo number_format($ventasPT['total'], 2, '.', ','); ?>
                     </h5>
