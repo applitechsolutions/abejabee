@@ -18,6 +18,11 @@ try{
     D.quantity, D.priceS, D.discount,
     (SELECT productName FROM product WHERE idProduct = D._idProduct) as nombre,
     (SELECT productCode FROM product WHERE idProduct = D._idProduct) as codigo,
+    (SELECT s30 FROM commission WHERE _idSeller = $idVendedor) as s30,
+    (SELECT s60 FROM commission WHERE _idSeller = $idVendedor) as s60,
+    (SELECT s90 FROM commission WHERE _idSeller = $idVendedor) as s90,
+    (SELECT o30 FROM commission WHERE _idSeller = $idVendedor) as o30,
+    (SELECT o60 FROM commission WHERE _idSeller = $idVendedor) as o60,
     (SELECT makeName FROM make WHERE idMake = (SELECT _idMake FROM product WHERE idProduct = D._idProduct)) as marca
     FROM sale S 
     INNER JOIN detailS D ON S.idSale = D._idSale
@@ -136,19 +141,19 @@ $pagina='
                 $subtotal = $sub;
                 if ($sale['marca'] == 'SCHLENKER') {
                     if ($diferencia <= '30') {
-                        $comision = $subtotal * 0.1;
+                        $comision = $subtotal * ($sale['s30'] / 100);
                     } else if ($diferencia > '30' && $diferencia <= '60') {
-                        $comision = $subtotal * 0.08;
+                        $comision = $subtotal * ($sale['s60'] / 100);
                     } else if ($diferencia > '60' && $diferencia <= '90') {
-                        $comision = $subtotal * 0.05;
+                        $comision = $subtotal * ($sale['s90'] / 100);
                     } else {
                         $comision = 0;
                     }
                 } else {
                     if ($diferencia <= '30') {
-                        $comision = $subtotal * 0.05;
+                        $comision = $subtotal * ($sale['o30'] / 100);
                     } else if ($diferencia > '30' && $diferencia <= '60') {
-                        $comision = $subtotal * 0.03;
+                        $comision = $subtotal * ($sale['o60'] / 100);
                     } else {
                         $comision = 0;
                     }
@@ -181,7 +186,7 @@ $pagina='
                         <th></th>
                         <th></th>
                         <th style="text-align: right;" colspan="2">Total Comisiones :</th>
-                        <td>Q. '. number_format($subtotalComision, 2, '.', ',') .'</td>
+                        <td>Q. <small>'. number_format($subtotalComision, 2, '.', ',') .'</small></td>
                         </tr>
                     </tfoot>
                 </table>

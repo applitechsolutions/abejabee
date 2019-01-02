@@ -24,8 +24,53 @@
             <div class="box-header">
               <h3 class="box-title">Listado general de vendedores en el sistema</h3>
             </div>
+
+          <!-- MODAL DETALLE PRODUCCIONES -->
+            <div class="modal fade" id="modal-commission">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Comisiones</h4>
+                  </div>
+                  <div class="modal-body">
+                    <div class="box box-success">
+                      <div class="box">
+                        <div id="nombre-vendedor" class="box-header">
+                          
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body no-padding">
+                          <table id="comisiones" class="table table-striped">
+                            <tr>
+                              <th style="width: 10px; color: MidnightBlue;"><small>Propio</small></th>
+                              <th>30/d</th>
+                              <th>60/d</th>
+                              <th>90/d</th>
+                              <th style="width: 10px; color: MidnightBlue;"><small>Otros</small></th>
+                              <th>30/d</th>
+                              <th>60/d</th>
+                            </tr>
+                            <tr id="contenido-comision">
+                              
+                            </tr>
+                          </table>
+                        </div>
+                        <!-- /.box-body -->
+                      </div>
+                      <!-- /.box -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /.modal-content -->
+            </div>
+          <!-- MODAL DETALLE PRODUCCIONES -->
+
             <!-- /.box-header -->
-            <div class="box-body table-responsive no-padding">
+            <div class="box-body table-responsive no-padding small">
               <table id="registros" class="table table-bordered table-striped">
                 <thead>
                 <tr>
@@ -70,7 +115,8 @@
                       <?php
                       if ($_SESSION['rol'] == 1) {?>
                         <a class="btn bg-green btn-flat margin" href="editSeller.php?id=<?php echo $seller['idSeller'] ?>"><i class="fa fa-pencil"></i></a>
-                        <a href="#" data-id="<?php echo $seller['idSeller']; ?>" data-tipo="seller" class="btn bg-maroon btn-flat margin borrar_vendedor"><i class="fa fa-trash"></i></a><?php
+                        <a href="#" data-id="<?php echo $seller['idSeller']; ?>" data-tipo="seller" class="btn bg-maroon btn-flat margin borrar_vendedor"><i class="fa fa-trash"></i></a>
+                        <a href="#" data-id="<?php echo $seller['idSeller']; ?>" data-tipo="listCommission" class="btn bg-navy btn-flat margin listarcomision"><i class="fa fa-info"></i></a><?php
                       }else if ($_SESSION['rol'] == 2) {?>
                         <a class="btn bg-green btn-flat margin" onclick="valListados()"><i class="fa fa-pencil"></i></a>
                         <a href="#" class="btn bg-maroon btn-flat margin" onclick="valListados()"><i class="fa fa-trash"></i></a><?php
