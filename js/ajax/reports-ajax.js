@@ -68,7 +68,8 @@ $(document).ready(function () {
                     var timeDiff = Math.abs(date2.getTime() - date1.getTime());
                     var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
                     var sub = registro.quantity * (parseFloat(Math.round(registro.priceS * 100) / 100).toFixed(2) - parseFloat(Math.round(registro.discount * 100) / 100).toFixed(2));
-                    var comi = comision(diffDays, registro.marca, sub.toFixed(2));
+                    console.log((registro.s60/100));
+                    var comi = comision(diffDays, registro.marca, sub.toFixed(2), registro.s30, registro.s60, registro.s90, registro.o30, registro.o60);
                     totalCom = parseFloat(totalCom) + parseFloat(comi);
                     var contenido = "<tr>";
                     contenido += "<td><input class='idVen' type='hidden' value='" + registro._idSeller + "'>" + convertDate(registro.dateStart); + "</td>";
@@ -80,7 +81,7 @@ $(document).ready(function () {
                     contenido += "<td>Q." + registro.priceS + "</td>";
                     contenido += "<td>Q." + registro.discount + "</td>";
                     contenido += "<td>Q." + sub.toFixed(2) + "</td>";
-                    contenido += "<td>Q." + comision(diffDays, registro.marca, sub.toFixed(2)) + "</td>";
+                    contenido += "<td>Q." + comision(diffDays, registro.marca, sub.toFixed(2), registro.s30, registro.s60, registro.s90, registro.o30, registro.o60) + "</td>";
                     contenido += '</tr>';
                     $(".contenidoRPT").append(contenido);
                 });
@@ -362,23 +363,23 @@ function convertDate(dateString) {
     return [p[2], p[1], p[0]].join("-")
 }
 
-function comision(dif, marca, subtotal) {
+function comision(dif, marca, subtotal, s30, s60, s90, o30, o60) {
     var comision;
     if (marca == 'SCHLENKER') {
         if (dif <= 30) {
-            comision = subtotal * 0.1;
+            comision = subtotal * (s30/100);
         } else if (dif > 30 && dif <= 60) {
-            comision = subtotal * 0.08;
+            comision = subtotal * (s60/100);
         } else if (dif > 60 && dif <= 90) {
-            comision = subtotal * 0.05;
+            comision = subtotal * (s90/100);
         } else {
             comision = 0;
         }
     } else {
         if (dif <= 30) {
-            comision = subtotal * 0.05;
+            comision = subtotal * (o30/100);
         } else if (dif > 30 && dif <= 60) {
-            comision = subtotal * 0.03;
+            comision = subtotal * (o60/100);
         } else {
             comision = 0;
         }

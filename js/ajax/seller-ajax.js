@@ -91,4 +91,48 @@ $(document).ready(function() {
                 });
             });
     });
+
+    $('.listarcomision').on('click', function (e) {
+        e.preventDefault();
+        $('#contenido-comision').html("");
+        $('#nombre-vendedor').html("");
+        var id = $(this).attr('data-id');
+        var tipo = $(this).attr('data-tipo');
+
+        swal({
+            title: 'Cargando detalle de compra...'
+       });
+       swal.showLoading();
+        $.ajax({
+            type: 'POST',
+            data: {
+                'id': id
+            },
+            url: 'BLL/' + tipo + '.php',
+            success(data) {
+                console.log(data);
+                $.each(data, function (key, registro) {
+                    var nombredetalle = "<h3 class='box-title'>"+ registro.nombre +" "+ registro.apellido +"</h3>";
+                    $('#nombre-vendedor').append(nombredetalle);
+                    var nuevaFila = "<td></td>";
+                    nuevaFila += "<td>" + registro.s30 + "%</td>";
+                    nuevaFila += "<td>" + registro.s60 + "%</td>";
+                    nuevaFila += "<td>" + registro.s90 + "%</td>";
+                    nuevaFila += "<td></td>";
+                    nuevaFila += "<td>" + registro.o30 + "%</td>";
+                    nuevaFila += "<td>" + registro.o60 + "%</td>";
+                    $("#contenido-comision").append(nuevaFila);
+                });
+                swal.close();
+                $('#modal-commission').modal('show');
+            },
+            error: function (data) {
+                swal({
+                    type: 'error',
+                    title: 'Error',
+                    text: 'Ha ocurrido un error, intente más tarde :(',
+                })
+            }
+        });
+    });
 });
