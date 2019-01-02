@@ -100,7 +100,7 @@ $(document).ready(function() {
         var tipo = $(this).attr('data-tipo');
 
         swal({
-            title: 'Cargando detalle de compra...'
+            title: 'Cargando comisiones...'
        });
        swal.showLoading();
         $.ajax({
