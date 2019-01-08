@@ -68,7 +68,6 @@ $pagina='
                             <th style="background-color: #1d2128; color: white">Documento</th>
                             <th style="background-color: #1d2128; color: white">Fecha de Pago</th>
                             <th style="background-color: #1d2128; color: white">Saldo</th>
-                            <th style="background-color: #1d2128; color: white">Total</th>
                         </tr>
                     </thead>
                     <tbody class="w3-white">';
@@ -82,7 +81,6 @@ $pagina='
                             <td><small class="w3-deep-orange">Factura No°</small><br><small>'.$cliente['serie'].' '.$cliente['noBill'].'</small><br><small class="w3-indigo">Remision No°</small><br><small>'.$cliente['noDeliver'].'</small></td>
                             <td>'.date_format($dateStart, 'd/m/y').'</td>
                             <td>Q.'.$cliente['saldo'].'</td>
-                            <td>Q.'.$cliente['total'].'</td>
                         </tr>';
                     }
         $pagina .= '</tbody>
