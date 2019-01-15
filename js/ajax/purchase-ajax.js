@@ -97,7 +97,7 @@ $(document).ready(function () {
                         type: 'success'
                     })
                     setTimeout(function () {
-                        location.reload();
+                        imprimirP('compra',resultado.idCompra);
                     }, 1500);
                 } else if (resultado.respuesta == 'vacio') {
                     swal({
@@ -159,6 +159,15 @@ $(document).ready(function () {
         });
     });
 });
+
+function imprimirP(tipo, idPurchase) {
+        changeReportP(tipo + '.php?idPurchase=' + idPurchase);
+        $('#modal-printP').modal('show');
+}
+
+function changeReportP(report) {
+    $('#divreporteP').html('<iframe src="reportsFPDF/' + report + '" style="width: 100%; min-width: 300px; height: 500px"></iframe>');
+}
 
 function ImgError(source) {
     source.src = "img/products/notfound.jpg";
