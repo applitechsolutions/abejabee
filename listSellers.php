@@ -44,14 +44,8 @@
                         <!-- /.box-header -->
                         <div class="box-body no-padding">
                           <table id="comisiones" class="table table-striped">
-                            <tr>
-                              <th style="width: 10px; color: MidnightBlue;"><small>Propio</small></th>
-                              <th>30/d</th>
-                              <th>60/d</th>
-                              <th>90/d</th>
-                              <th style="width: 10px; color: MidnightBlue;"><small>Otros</small></th>
-                              <th>30/d</th>
-                              <th>60/d</th>
+                            <tr id="encabezado-comision">
+                              
                             </tr>
                             <tr id="contenido-comision">
                               

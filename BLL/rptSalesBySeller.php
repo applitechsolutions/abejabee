@@ -19,6 +19,11 @@
     (SELECT s90 FROM commission WHERE _idSeller = $idSeller) as s90,
     (SELECT o30 FROM commission WHERE _idSeller = $idSeller) as o30,
     (SELECT o60 FROM commission WHERE _idSeller = $idSeller) as o60,
+    (SELECT sd30 FROM commission WHERE _idSeller = $idSeller) as sd30,
+    (SELECT sd60 FROM commission WHERE _idSeller = $idSeller) as sd60,
+    (SELECT sd90 FROM commission WHERE _idSeller = $idSeller) as sd90,
+    (SELECT od30 FROM commission WHERE _idSeller = $idSeller) as od30,
+    (SELECT od60 FROM commission WHERE _idSeller = $idSeller) as od60,
     (SELECT makeName FROM make WHERE idMake = (SELECT _idMake FROM product WHERE idProduct = D._idProduct)) as marca
      FROM sale S INNER JOIN detailS D ON S.idSale = D._idSale
      WHERE S.cancel = 1 AND S._idSeller = $idSeller AND (SELECT date FROM balance WHERE _idSale = S.idSale ORDER BY idBalance DESC LIMIT 1) BETWEEN '$fi' AND '$ff' ORDER BY S.dateStart ASC");

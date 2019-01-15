@@ -96,6 +96,7 @@ $(document).ready(function() {
         e.preventDefault();
         $('#contenido-comision').html("");
         $('#nombre-vendedor').html("");
+        $('#encabezado-comision').html("");
         var id = $(this).attr('data-id');
         var tipo = $(this).attr('data-tipo');
 
@@ -112,8 +113,16 @@ $(document).ready(function() {
             success(data) {
                 console.log(data);
                 $.each(data, function (key, registro) {
-                    var nombredetalle = "<h3 class='box-title'>"+ registro.nombre +" "+ registro.apellido +"</h3>";
+                    var nombredetalle = "<h3 class='box-title'>"+ registro.nombre +" "+ registro.apellido +"</h3>";  
                     $('#nombre-vendedor').append(nombredetalle);
+                    var encabezado = "<th style='width: 10px; color: MidnightBlue;'><small>Propio</small></th>";
+                    encabezado += "<th>" + registro.sd30 + "/d</th>";
+                    encabezado += "<th>" + registro.sd60 + "/d</th>";
+                    encabezado += "<th>" + registro.sd90 + "/d</th>";
+                    encabezado += "<th style='width: 10px; color: MidnightBlue;'><small>Otros</small></th>";
+                    encabezado += "<th>" + registro.od30 + "/d</th>";
+                    encabezado += "<th>" + registro.od60 + "/d</th>"; 
+                    $("#encabezado-comision").append(encabezado);
                     var nuevaFila = "<td></td>";
                     nuevaFila += "<td>" + registro.s30 + "%</td>";
                     nuevaFila += "<td>" + registro.s60 + "%</td>";

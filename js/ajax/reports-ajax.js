@@ -69,7 +69,7 @@ $(document).ready(function () {
                     var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
                     var sub = registro.quantity * (parseFloat(Math.round(registro.priceS * 100) / 100).toFixed(2) - parseFloat(Math.round(registro.discount * 100) / 100).toFixed(2));
                     console.log((registro.s60/100));
-                    var comi = comision(diffDays, registro.marca, sub.toFixed(2), registro.s30, registro.s60, registro.s90, registro.o30, registro.o60);
+                    var comi = comision(diffDays, registro.marca, sub.toFixed(2), registro.s30, registro.s60, registro.s90, registro.o30, registro.o60, registro.sd30, registro.sd60, registro.sd90, registro.od30, registro.od60);
                     totalCom = parseFloat(totalCom) + parseFloat(comi);
                     var contenido = "<tr>";
                     contenido += "<td><input class='idVen' type='hidden' value='" + registro._idSeller + "'>" + convertDate(registro.dateStart); + "</td>";
@@ -81,7 +81,7 @@ $(document).ready(function () {
                     contenido += "<td>Q." + registro.priceS + "</td>";
                     contenido += "<td>Q." + registro.discount + "</td>";
                     contenido += "<td>Q." + sub.toFixed(2) + "</td>";
-                    contenido += "<td>Q." + comision(diffDays, registro.marca, sub.toFixed(2), registro.s30, registro.s60, registro.s90, registro.o30, registro.o60) + "</td>";
+                    contenido += "<td>Q." + comision(diffDays, registro.marca, sub.toFixed(2), registro.s30, registro.s60, registro.s90, registro.o30, registro.o60, registro.sd30, registro.sd60, registro.sd90, registro.od30, registro.od60) + "</td>";
                     contenido += '</tr>';
                     $(".contenidoRPT").append(contenido);
                 });
@@ -363,22 +363,22 @@ function convertDate(dateString) {
     return [p[2], p[1], p[0]].join("-")
 }
 
-function comision(dif, marca, subtotal, s30, s60, s90, o30, o60) {
+function comision(dif, marca, subtotal, s30, s60, s90, o30, o60, sd30, sd60, sd90, od30, od60) {
     var comision;
     if (marca == 'SCHLENKER') {
-        if (dif <= 30) {
+        if (dif <= sd30) {
             comision = subtotal * (s30/100);
-        } else if (dif > 30 && dif <= 60) {
+        } else if (dif > sd30 && dif <= sd60) {
             comision = subtotal * (s60/100);
-        } else if (dif > 60 && dif <= 90) {
+        } else if (dif > sd60 && dif <= sd90) {
             comision = subtotal * (s90/100);
         } else {
             comision = 0;
         }
     } else {
-        if (dif <= 30) {
+        if (dif <= od30) {
             comision = subtotal * (o30/100);
-        } else if (dif > 30 && dif <= 60) {
+        } else if (dif > od30 && dif <= od60) {
             comision = subtotal * (o60/100);
         } else {
             comision = 0;

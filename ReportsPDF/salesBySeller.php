@@ -23,6 +23,11 @@ try{
     (SELECT s90 FROM commission WHERE _idSeller = $idVendedor) as s90,
     (SELECT o30 FROM commission WHERE _idSeller = $idVendedor) as o30,
     (SELECT o60 FROM commission WHERE _idSeller = $idVendedor) as o60,
+    (SELECT sd30 FROM commission WHERE _idSeller = $idVendedor) as sd30,
+    (SELECT sd60 FROM commission WHERE _idSeller = $idVendedor) as sd60,
+    (SELECT sd90 FROM commission WHERE _idSeller = $idVendedor) as sd90,
+    (SELECT od30 FROM commission WHERE _idSeller = $idVendedor) as od30,
+    (SELECT od60 FROM commission WHERE _idSeller = $idVendedor) as od60,
     (SELECT makeName FROM make WHERE idMake = (SELECT _idMake FROM product WHERE idProduct = D._idProduct)) as marca
     FROM sale S 
     INNER JOIN detailS D ON S.idSale = D._idSale
@@ -140,19 +145,19 @@ $pagina='
                 $sale['discount']);
                 $subtotal = $sub;
                 if ($sale['marca'] == 'SCHLENKER') {
-                    if ($diferencia <= '30') {
+                    if ($diferencia <= $sale['sd30']) {
                         $comision = $subtotal * ($sale['s30'] / 100);
-                    } else if ($diferencia > '30' && $diferencia <= '60') {
+                    } else if ($diferencia > $sale['sd30'] && $diferencia <= $sale['sd60']) {
                         $comision = $subtotal * ($sale['s60'] / 100);
-                    } else if ($diferencia > '60' && $diferencia <= '90') {
+                    } else if ($diferencia > $sale['sd60'] && $diferencia <= $sale['sd90']) {
                         $comision = $subtotal * ($sale['s90'] / 100);
                     } else {
                         $comision = 0;
                     }
                 } else {
-                    if ($diferencia <= '30') {
+                    if ($diferencia <= $sale['od30']) {
                         $comision = $subtotal * ($sale['o30'] / 100);
-                    } else if ($diferencia > '30' && $diferencia <= '60') {
+                    } else if ($diferencia > $sale['od30'] && $diferencia <= $sale['od60']) {
                         $comision = $subtotal * ($sale['o60'] / 100);
                     } else {
                         $comision = 0;
