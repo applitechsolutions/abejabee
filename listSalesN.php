@@ -230,7 +230,10 @@ while ($sale = $resultado->fetch_assoc()) {
                       <br>
                       <small><?php echo $sale['serie'] . ' ' . $sale['noBill']; ?></small>
                       <br>
+                    <?php 
+                    if ($_SESSION['rol'] == 1) {?>
                       <small class="text-olive text-muted">Remision No°</small>
+                    <?php } ?>
                       <br>
                       <small><?php echo $sale['noDeliver']; ?></small>
                     </td>

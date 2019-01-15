@@ -199,7 +199,10 @@ while ($sale = $resultado->fetch_assoc()) {
                       <br>
                       <small><?php echo $sale['serie'] . ' ' . $sale['noBill']; ?></small>
                       <br>
+                    <?php 
+                    if ($_SESSION['rol'] == 1) {?>
                       <small class="text-olive text-muted">Remision No°</small>
+                    <?php } ?>
                       <br>
                       <small><?php echo $sale['noDeliver']; ?></small>
                     </td>
@@ -234,7 +237,10 @@ while ($sale = $resultado->fetch_assoc()) {
                           </button>
                           <ul class="dropdown-menu">
                             <li><a href="#" onclick="imprimir('factura',<?php echo $sale['idSale']; ?>);">Factura</a></li>
+                            <?php 
+                            if ($_SESSION['rol'] == 1) {?>
                             <li><a href="#" onclick="imprimir('remision',<?php echo $sale['idSale']; ?>);">Remision</a></li>
+                            <?php } ?>
                             <li><a href="#" onclick="imprimir('guia',<?php echo $sale['idSale']; ?>);">Guía</a></li>
                           </ul>
                         </div>
