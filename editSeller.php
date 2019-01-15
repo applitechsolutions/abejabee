@@ -114,9 +114,15 @@ $seller = $resultado->fetch_assoc();
                                         value="<?php echo date_format($date, 'd/m/Y'); ?>">
                                 </div>
                             </div>
-                            <h5 class="text-blue">Comisiones de producto propio<small> (En porcentaje %)</small></h5>
+                            <h5 class="text-blue">Comisión de producto propio<small> (En días <span><i class="fa fa-calendar"></i></span>
+                                    y porcentaje %)</small></h5>
                             <div class="form-group col-md-4">
-                                <span class="text-danger text-uppercase">*</span><label for="codigo">30 días</label>
+                                <span class="text-danger text-uppercase">*</span><label for="codigo">#1</label>
+                                <div class="input-group">
+                                    <input type="number" min="0" step="1" value="<?php echo $seller['sd30']; ?>" class="form-control"
+                                        id="sd30" name="sd30" placeholder="#Días">
+                                    <span class="input-group-addon"> <i class="fa fa-calendar"></i></span>
+                                </div>
                                 <div class="input-group">
                                     <input type="number" min="0" step="1" max="100" value="<?php echo $seller['s30']; ?>"
                                         class="form-control" id="s30" name="s30" placeholder="Comisión a 30 días">
@@ -124,7 +130,12 @@ $seller = $resultado->fetch_assoc();
                                 </div>
                             </div>
                             <div class="form-group col-md-4">
-                                <span class="text-danger text-uppercase">*</span><label for="codigo">60 días</label>
+                                <span class="text-danger text-uppercase">*</span><label for="codigo">#2</label>
+                                <div class="input-group">
+                                    <input type="number" min="0" step="1" value="<?php echo $seller['sd60']; ?>" class="form-control"
+                                        id="sd60" name="sd60" placeholder="#Días">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                </div>
                                 <div class="input-group">
                                     <input type="number" min="0" step="1" max="100" value="<?php echo $seller['s60']; ?>"
                                         class="form-control" id="s60" name="s60" placeholder="Comisión a 60 días">
@@ -132,16 +143,27 @@ $seller = $resultado->fetch_assoc();
                                 </div>
                             </div>
                             <div class="form-group col-md-4">
-                                <span class="text-danger text-uppercase">*</span><label for="codigo">90 días</label>
+                                <span class="text-danger text-uppercase">*</span><label for="codigo">#3</label>
+                                <div class="input-group">
+                                    <input type="number" min="0" step="1" value="<?php echo $seller['sd90']; ?>" class="form-control"
+                                        id="sd90" name="sd90" placeholder="#Días">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                </div>
                                 <div class="input-group">
                                     <input type="number" min="0" step="1" max="100" value="<?php echo $seller['s90']; ?>"
                                         class="form-control" id="s90" name="s90" placeholder="Comisión a 90 días">
                                     <span class="input-group-addon">%</span>
                                 </div>
                             </div>
-                            <h5 class="text-blue">Comisiones de otro producto<small> (En porcentaje %)</small></h5>
+                            <h5 class="text-blue">Comisión de otro producto<small> (En días <span><i class="fa fa-calendar"></i></span>
+                                    y porcentaje %)</small></h5>
                             <div class="form-group col-md-4">
-                                <span class="text-danger text-uppercase">*</span><label for="codigo">30 días</label>
+                                <span class="text-danger text-uppercase">*</span><label for="codigo">#1</label>
+                                <div class="input-group">
+                                    <input type="number" min="0" step="1" value="<?php echo $seller['od30']; ?>" class="form-control"
+                                        id="od30" name="od30" placeholder="#Días">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                </div>
                                 <div class="input-group">
                                     <input type="number" min="0" step="1" max="100" value="<?php echo $seller['o30']; ?>"
                                         class="form-control" id="o30" name="o30" placeholder="Comisión a 30 días">
@@ -149,7 +171,12 @@ $seller = $resultado->fetch_assoc();
                                 </div>
                             </div>
                             <div class="form-group col-md-4">
-                                <span class="text-danger text-uppercase">*</span><label for="codigo">60 días</label>
+                                <span class="text-danger text-uppercase">*</span><label for="codigo">#2</label>
+                                <div class="input-group">
+                                    <input type="number" min="0" step="1" value="<?php echo $seller['od60']; ?>" class="form-control"
+                                        id="od60" name="od60" placeholder="#Días">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                </div>
                                 <div class="input-group">
                                     <input type="number" min="0" step="1" max="100" value="<?php echo $seller['o60']; ?>"
                                         class="form-control" id="o60" name="o60" placeholder="Comisión a 60 días">
