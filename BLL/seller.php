@@ -16,13 +16,18 @@ if ($_POST['reg-vendedor'] == 'nuevo') {
     // die(json_encode($fecha_formateada));
 
     $s30 = $_POST['s30'];
+    $sd30 = $_POST['s30'];
     $s60 = $_POST['s60'];
+    $sd60 = $_POST['s60'];
     $s90 = $_POST['s90'];
+    $sd90 = $_POST['s90'];
     $o30 = $_POST['o30'];
+    $od30 = $_POST['o30'];
     $o60 = $_POST['o60'];
+    $od60 = $_POST['o60'];
 
     try {
-        if ($codigo == '' || $nombre == '' || $apellido == '' || $telefono == '' || $dpi == '' || $genero == '' || $s30 == '' || $s60 == '' || $s90 == '' || $o30 == '' || $o60 == '') {
+        if ($codigo == '' || $nombre == '' || $apellido == '' || $telefono == '' || $dpi == '' || $genero == '' || $s30 == '' || $s60 == '' || $s90 == '' || $o30 == '' || $o60 == '' || $sd30 == '' || $sd60 == '' || $sd90 == '' || $od30 == '' || $od60 == '') {
             $respuesta = array(
                 'respuesta' => 'vacio',
             );
@@ -40,8 +45,8 @@ if ($_POST['reg-vendedor'] == 'nuevo') {
             mysqli_stmt_close($stmt);
 
             if ($id_registro > 0) {
-                $stmt = $conn->prepare("INSERT INTO commission(_idSeller, s30, s60, s90, o30, o60) VALUES (?, ?, ?, ?, ?, ?)");
-                $stmt->bind_param("iiiiii", $id_registro, $s30, $s60, $s90, $o30, $o60);
+                $stmt = $conn->prepare("INSERT INTO commission(_idSeller, s30, s60, s90, o30, o60, sd30, sd60, sd90, od30, od60) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                $stmt->bind_param("iiiiiiiiiii", $id_registro, $s30, $s60, $s90, $o30, $o60, $sd30, $sd60, $sd90, $od30, $od60);
                 if (!mysqli_stmt_execute($stmt)) {
                     $query_success = false;
                 }
@@ -91,13 +96,18 @@ if ($_POST['reg-vendedor'] == 'actualizar') {
     $genero = $_POST['gen-vendedor'];
 
     $s30 = $_POST['s30'];
+    $sd30 = $_POST['s30'];
     $s60 = $_POST['s60'];
+    $sd60 = $_POST['s60'];
     $s90 = $_POST['s90'];
+    $sd90 = $_POST['s90'];
     $o30 = $_POST['o30'];
+    $od30 = $_POST['o30'];
     $o60 = $_POST['o60'];
+    $od60 = $_POST['o60'];
 
     try {
-        if ($codigo == '' || $nombre == '' || $apellido == '' || $telefono == '' || $dpi == '' || $genero == '' || $s30 == '' || $s60 == '' || $s90 == '' || $o30 == '' || $o60 == '') {
+        if ($codigo == '' || $nombre == '' || $apellido == '' || $telefono == '' || $dpi == '' || $genero == '' || $s30 == '' || $s60 == '' || $s90 == '' || $o30 == '' || $o60 == '' || $sd30 == '' || $sd60 == '' || $sd90 == '' || $od30 == '' || $od60 == '') {
             $respuesta = array(
                 'respuesta' => 'vacio',
             );
@@ -110,12 +120,12 @@ if ($_POST['reg-vendedor'] == 'actualizar') {
             $stmt->bind_param("sssssssii", $codigo, $nombre, $apellido, $direccion, $telefono, $dpi, $fecha_formateada, $genero, $id_seller);
             if (!mysqli_stmt_execute($stmt)) {
                 $query_success = false;
-            }          
+            }
             mysqli_stmt_close($stmt);
 
-            if ($query_success) {                
-                $stmt = $conn->prepare("UPDATE commission SET s30 = ?, s60 = ?, s90 = ?, o30 = ?, o60 = ? WHERE _idSeller = ?");
-                $stmt->bind_param("iiiiii", $s30, $s60, $s90, $o30, $o60, $id_seller);
+            if ($query_success) {
+                $stmt = $conn->prepare("UPDATE commission SET s30 = ?, s60 = ?, s90 = ?, o30 = ?, o60 = ?, sd30 = ?, sd60 = ?, sd90 = ?, od30 = ?, od60 = ? WHERE _idSeller = ?");
+                $stmt->bind_param("iiiiiiiiiii", $s30, $s60, $s90, $o30, $o60, $sd30, $sd60, $sd90, $od30, $od60, $id_seller);
                 if (!mysqli_stmt_execute($stmt)) {
                     $query_success = false;
                 }

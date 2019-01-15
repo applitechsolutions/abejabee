@@ -94,9 +94,15 @@ include_once 'funciones/bd_conexion.php';
                                     <input type="text" class="form-control pull-right datepicker" id="datepicker" name="bday-vendedor">
                                 </div>
                             </div>
-                            <h5 class="text-blue">Comisiones de producto propios<small> (En porcentaje %)</small></h5>
+                            <h5 class="text-blue">Comisión de producto propio<small> (En días <span><i class="fa fa-calendar"></i></span>
+                                    y porcentaje %)</small></h5>
                             <div class="form-group col-md-4">
-                                <span class="text-danger text-uppercase">*</span><label for="codigo">30 días</label>
+                                <span class="text-danger text-uppercase">*</span><label for="codigo">#1</label>
+                                <div class="input-group">
+                                    <input type="number" min="0" step="1" value="30" class="form-control" id="sd30"
+                                        name="sd30" placeholder="#Días">
+                                    <span class="input-group-addon"> <i class="fa fa-calendar"></i></span>
+                                </div>
                                 <div class="input-group">
                                     <input type="number" min="0" step="1" max="100" value="10" class="form-control" id="s30"
                                         name="s30" placeholder="Comisión a 30 días">
@@ -104,7 +110,12 @@ include_once 'funciones/bd_conexion.php';
                                 </div>
                             </div>
                             <div class="form-group col-md-4">
-                                <span class="text-danger text-uppercase">*</span><label for="codigo">60 días</label>
+                                <span class="text-danger text-uppercase">*</span><label for="codigo">#2</label>
+                                <div class="input-group">
+                                    <input type="number" min="0" step="1" value="60" class="form-control" id="sd60"
+                                        name="sd60" placeholder="#Días">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                </div>
                                 <div class="input-group">
                                     <input type="number" min="0" step="1" max="100" value="8" class="form-control" id="s60"
                                         name="s60" placeholder="Comisión a 60 días">
@@ -112,16 +123,28 @@ include_once 'funciones/bd_conexion.php';
                                 </div>
                             </div>
                             <div class="form-group col-md-4">
-                                <span class="text-danger text-uppercase">*</span><label for="codigo">90 días</label>
+                                <span class="text-danger text-uppercase">*</span><label for="codigo">#3</label>
+                                <div class="input-group">
+                                    <input type="number" min="0" step="1" value="90" class="form-control" id="sd90"
+                                        name="sd90" placeholder="#Días">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                </div>
                                 <div class="input-group">
                                     <input type="number" min="0" step="1" max="100" value="5" class="form-control" id="s90"
                                         name="s90" placeholder="Comisión a 90 días">
                                     <span class="input-group-addon">%</span>
                                 </div>
                             </div>
-                            <h5 class="text-blue">Comisiones de otro producto<small> (En porcentaje %)</small></h5>
+                            <br>
+                            <h5 class="text-blue">Comisión de otro producto<small> (En días <span><i class="fa fa-calendar"></i></span>
+                                    y porcentaje %)</small></h5>
                             <div class="form-group col-md-4">
-                                <span class="text-danger text-uppercase">*</span><label for="codigo">30 días</label>
+                                <span class="text-danger text-uppercase">*</span><label for="codigo">#1</label>
+                                <div class="input-group">
+                                    <input type="number" min="0" step="1" value="30" class="form-control" id="od30"
+                                        name="od30" placeholder="#Días">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                </div>
                                 <div class="input-group">
                                     <input type="number" min="0" step="1" max="100" value="5" class="form-control" id="o30"
                                         name="o30" placeholder="Comisión a 30 días">
@@ -129,7 +152,12 @@ include_once 'funciones/bd_conexion.php';
                                 </div>
                             </div>
                             <div class="form-group col-md-4">
-                                <span class="text-danger text-uppercase">*</span><label for="codigo">60 días</label>
+                                <span class="text-danger text-uppercase">*</span><label for="codigo">#2</label>
+                                <div class="input-group">
+                                    <input type="number" min="0" step="1" value="60" class="form-control" id="od60"
+                                        name="od60" placeholder="#Días">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                </div>
                                 <div class="input-group">
                                     <input type="number" min="0" step="1" max="100" value="3" class="form-control" id="o60"
                                         name="o60" placeholder="Comisión a 60 días">
