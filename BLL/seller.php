@@ -16,15 +16,15 @@ if ($_POST['reg-vendedor'] == 'nuevo') {
     // die(json_encode($fecha_formateada));
 
     $s30 = $_POST['s30'];
-    $sd30 = $_POST['s30'];
+    $sd30 = $_POST['sd30'];
     $s60 = $_POST['s60'];
-    $sd60 = $_POST['s60'];
+    $sd60 = $_POST['sd60'];
     $s90 = $_POST['s90'];
-    $sd90 = $_POST['s90'];
+    $sd90 = $_POST['sd90'];
     $o30 = $_POST['o30'];
-    $od30 = $_POST['o30'];
+    $od30 = $_POST['od30'];
     $o60 = $_POST['o60'];
-    $od60 = $_POST['o60'];
+    $od60 = $_POST['od60'];
 
     try {
         if ($codigo == '' || $nombre == '' || $apellido == '' || $telefono == '' || $dpi == '' || $genero == '' || $s30 == '' || $s60 == '' || $s90 == '' || $o30 == '' || $o60 == '' || $sd30 == '' || $sd60 == '' || $sd90 == '' || $od30 == '' || $od60 == '') {
@@ -96,15 +96,15 @@ if ($_POST['reg-vendedor'] == 'actualizar') {
     $genero = $_POST['gen-vendedor'];
 
     $s30 = $_POST['s30'];
-    $sd30 = $_POST['s30'];
+    $sd30 = $_POST['sd30'];
     $s60 = $_POST['s60'];
-    $sd60 = $_POST['s60'];
+    $sd60 = $_POST['sd60'];
     $s90 = $_POST['s90'];
-    $sd90 = $_POST['s90'];
+    $sd90 = $_POST['sd90'];
     $o30 = $_POST['o30'];
-    $od30 = $_POST['o30'];
+    $od30 = $_POST['od30'];
     $o60 = $_POST['o60'];
-    $od60 = $_POST['o60'];
+    $od60 = $_POST['od60'];
 
     try {
         if ($codigo == '' || $nombre == '' || $apellido == '' || $telefono == '' || $dpi == '' || $genero == '' || $s30 == '' || $s60 == '' || $s90 == '' || $o30 == '' || $o60 == '' || $sd30 == '' || $sd60 == '' || $sd90 == '' || $od30 == '' || $od60 == '') {
