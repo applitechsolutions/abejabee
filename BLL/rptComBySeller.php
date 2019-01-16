@@ -2,7 +2,7 @@
 include_once '../funciones/bd_conexion.php';
 header("Content-Type: application/json; charset=UTF-8");
 
-$idSeller = $_POST['sellerReporte'];
+$idSeller = $_POST['sellerReporte4'];
 $fechainicio = strtr($_POST['dateSrpt4'], '/', '-');
 $fechafinal = strtr($_POST['dateErpt4'], '/', '-');
 
