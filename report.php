@@ -68,6 +68,9 @@ include_once 'funciones/bd_conexion.php';
                                 <li>
                                     <a href="#tab_4" data-toggle="tab"><i class="fa fa-address-card"></i> Clientes por Ruta</a>
                                 </li>
+                                <li>
+                                    <a href="#tab_6" data-toggle="tab"><i class="fa fa-line-chart"></i> Ventas por vendedor</a>
+                                </li>
                             </ul>
                             <div class="tab-content">
                                 <div class="tab-pane" id="tab_1">
@@ -255,6 +258,85 @@ include_once 'funciones/bd_conexion.php';
                                     </div>                                    
                                     <div id="listadoDetalle3" class="modal-body">
 
+                                    </div>
+                                </div>
+                                <!-- /.tab-pane -->
+                                <div class="tab-pane" id="tab_6">
+                                    <div class="row">
+                                        <!-- Main content -->
+                                        <section class="content">
+                                            <!-- Default box -->
+
+                                            <h4 class="box-title">Listado de ventas realizadas en rango de
+                                                fechas</h4>
+                                            <div class="box-body">
+                                                <form role="form" id="form-ComBySeller" name="form-ComBySeller"
+                                                    method="post" action="BLL/rptComBySeller.php">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <span class="text-danger text-uppercase">*</span>
+                                                                <label>Vendedor</label>
+                                                                <select id="sellerReporte4" name="sellerReporte4" class="form-control select2"
+                                                                    style="width: 100%;">
+                                                                    <option value="" disabled selected>Seleccione a un vendedor</option>
+                                                            <?php
+                                                                try {
+                                                                $sql = "SELECT * FROM seller";
+                                                                $resultado = $conn->query($sql);
+                                                                while ($seller_route = $resultado->fetch_assoc()) {
+                                                            ?>
+                                                                    <option value="<?php echo $seller_route['idSeller']; ?>">
+                                                <?php echo $seller_route['sellerFirstName']. " " .$seller_route['sellerLastName']; ?>
+                                                                    </option>
+                                            <?php 
+                                                }
+                                                } catch (Exception $e) {
+                                                    echo "Error: " . $e->getMessage();
+                                                }
+                                            ?>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <span class="text-danger text-uppercase">*</span>
+                                                                <label>Fecha Inicial</label>
+                                                                <div class="input-group date">
+                                                                    <div class="input-group-addon">
+                                                                        <i class="fa fa-calendar"></i>
+                                                                    </div>
+                                                                    <input type="text" class="form-control pull-right datepicker"
+                                                                        id="datepicker3" name="dateSrpt4">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <span class="text-danger text-uppercase">*</span>
+                                                                <label>Fecha Final</label>
+                                                                <div class="input-group date">
+                                                                    <div class="input-group-addon">
+                                                                        <i class="fa fa-calendar"></i>
+                                                                    </div>
+                                                                    <input type="text" class="form-control pull-right datepicker"
+                                                                        id="datepicker4" name="dateErpt4">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- /.box-body -->
+                                                    <div class="box-footer">
+                                                        <button type="submit" class="btn btn-primary pull-right" id="rpt4">
+                                                            <i class="fa fa-list-alt" aria-hidden="true"></i>
+                                                            Generar Listado</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <!-- /.box-body -->
+                                            <!-- /.box -->
+                                        </section>
+                                        <!-- /.content -->
                                     </div>
                                 </div>
                                 <!-- /.tab-pane -->
