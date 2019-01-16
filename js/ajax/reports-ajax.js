@@ -270,7 +270,7 @@ $(document).ready(function () {
                     contenido += "<td>" + registro.codigo +" " + registro.nombre + "</td>";
                     contenido += "<td>" + registro.marca + "</td>";
                     contenido += "<td>" + registro.cantidad + "</td>";
-                    contenido += "<td>" + registro.subtotal + "</td>";
+                    contenido += "<td>Q." + registro.subtotal + "</td>";
                     contenido += '</tr>';
                     $(".contenidoRPT4").append(contenido);
                 });
@@ -435,6 +435,12 @@ function printReport3() {
 function printrptDetail3(idCliente) {
     
     changeReport('CustomByDepDetail.php?idCliente='+idCliente);
+    $('#modal-reporte').modal('show');
+}
+
+function printReport4() {
+    
+    changeReport('ComBySeller.php');
     $('#modal-reporte').modal('show');
 }
 
