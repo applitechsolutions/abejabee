@@ -13,6 +13,7 @@ $ff = date('Y-m-d', strtotime($fecha2));
 
 try {
     $sql = "SELECT S.idSale, S.dateStart, S.paymentMethod,
+    (select concat(sellerFirstName, ' ', sellerLastName) from seller where idSeller = S._idSeller) as seller,
     (SELECT productCode FROM product WHERE idProduct = D._idProduct) as codigo,
     (SELECT productName FROM product WHERE idProduct = D._idProduct) as nombre,
     (SELECT makeName FROM make WHERE idMake = (SELECT _idMake FROM product WHERE idProduct = D._idProduct)) as marca,
