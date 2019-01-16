@@ -156,7 +156,7 @@ $(document).ready(function () {
                 })
             }
         });
-    })
+    });
 
     $('#form-rptCustomByDep').on('submit', function (e) {
         e.preventDefault();
@@ -207,7 +207,87 @@ $(document).ready(function () {
 
         });
 
-    })
+    });
+
+    $('#form-ComBySeller').on('submit', function (e) {
+        e.preventDefault();
+        $("#listadoReporte1").html("");
+        $("#listadoReporte2").html("");
+        $("#listadoReporte3").html("");
+        $("#listadoReporte4").html("");
+        
+        var tabla = '<div class="box-body table-responsive no-padding">'+
+            '<table id="registros" class="table table-bordered table-striped">'+
+                '<thead>'+
+                    '<tr>'+
+                        '<th>Fecha Inicio</th>'+
+                        '<th>Método de pago</th>'+
+                        '<th>Producto</th>'+
+                        '<th>Marca</th>'+
+                        '<th>Cantidad</th>'+
+                        '<th>Subtotal</th>'+
+                    '</tr>'+
+                '</thead>'+
+                '<tbody class="contenidoRPT4"></tbody>'+
+                '<tfoot>'+
+                    '<tr>'+
+                        '<th>Fecha Inicio</th>'+
+                        '<th>Método de pago</th>'+
+                        '<th>Producto</th>'+
+                        '<th>Marca</th>'+
+                        '<th>Cantidad</th>'+
+                        '<th>Subtotal</th>'+
+                    '</tr>'+
+                '</tfoot>'+
+            '</table>'+
+        '</div><div class="row"><button type="button" onclick="printReport4()" class="btn bg-teal-active btn-md"><i class="fa fa-print"></i>'+
+            ' Imprimir</button>'+
+            '</div><div class="row"><div class="form-group col-lg-6 pull-right"><div class="input-group"><span class="input-group-addon"><span class="text-danger text-uppercase">*</span><label for="totalVentas" class="control-label">Total:</label><span><h5 id="totalVentas" class="text-bold">Q.0.00</h5></span></span></div></div></div>';
+
+        $("#listadoReporte4").append(tabla);
+        
+        var datos = $(this).serializeArray();
+
+        swal({
+            title: 'Generando el reporte...'
+        });
+
+        swal.showLoading();
+
+        $.ajax({
+            type: $(this).attr('method'),
+            data: datos,
+            url: $(this).attr('action'),
+            datatype: 'json',
+            success: function (data) {
+                console.log(data);
+                var totalCom = 0;
+                $.each(data, function (key, registro) {
+                    totalCom = parseFloat(totalCom) + parseFloat(registro.subtotal);
+                    var contenido = "<tr>";
+                    contenido += "<td>" + convertDate(registro.dateStart); + "</td>";
+                    contenido += "<td>" + registro.paymentMethod + "</td>";
+                    contenido += "<td>" + registro.codigo +" " + registro.nombre + "</td>";
+                    contenido += "<td>" + registro.marca + "</td>";
+                    contenido += "<td>" + registro.cantidad + "</td>";
+                    contenido += "<td>" + registro.subtotal + "</td>";
+                    contenido += '</tr>';
+                    $(".contenidoRPT4").append(contenido);
+                });
+                $('#totalVentas').html('Q.'+ totalCom.toFixed(2));
+                swal.close();
+                funciones();                
+            },
+            error: function (data) {
+                swal({
+                    type: 'error',
+                    title: 'Error',
+                    text: 'Algo ha salido mal, intentalo más tarde',
+                })
+            }
+
+        });
+    });
 
 });
 

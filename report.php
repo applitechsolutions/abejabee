@@ -331,6 +331,10 @@ include_once 'funciones/bd_conexion.php';
                                                             <i class="fa fa-list-alt" aria-hidden="true"></i>
                                                             Generar Listado</button>
                                                     </div>
+                                                <!-- TABLA DEL LISTADO DE REPORTES -->
+                                                    <div id="listadoReporte4" class="modal-body">
+                                                    </div>
+                                                <!-- TABLA DEL LISTADO DE REPORTES -->
                                                 </form>
                                             </div>
                                             <!-- /.box-body -->
