@@ -3,8 +3,8 @@ include_once '../funciones/bd_conexion.php';
 header("Content-Type: application/json; charset=UTF-8");
 
 $idSeller = $_POST['sellerReporte'];
-$fechainicio = strtr($_POST['dateSrpt2'], '/', '-');
-$fechafinal = strtr($_POST['dateErpt2'], '/', '-');
+$fechainicio = strtr($_POST['dateSrpt4'], '/', '-');
+$fechafinal = strtr($_POST['dateErpt4'], '/', '-');
 
 $fi = date('Y-m-d', strtotime($fechainicio));
 $ff = date('Y-m-d', strtotime($fechafinal));
