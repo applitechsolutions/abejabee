@@ -440,7 +440,10 @@ function printrptDetail3(idCliente) {
 
 function printReport4() {
     
-    changeReport('ComBySeller.php');
+    var idSeller = $("[name='sellerReporte4']").val();
+    var f1 = $("[name='dateSrpt4']").val();
+    var f2 = $("[name='dateErpt4']").val();
+    changeReport('ComBySeller.php?idVendedor='+idSeller+'&fecha1='+f1+'&fecha2='+f2);
     $('#modal-reporte').modal('show');
 }
 

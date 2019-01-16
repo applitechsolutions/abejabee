@@ -141,10 +141,6 @@ $pagina .= '</tbody>
                         <th></th>
                         <th></th>
                         <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
                         <th style="text-align: right;" colspan="2">Total vendido:</th>
                         <td>Q. <small>' . number_format($Total, 2, '.', ',') . '</small></td>
                         </tr>
