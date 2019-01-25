@@ -4,7 +4,7 @@
     
     $idSale = $_POST['id'];
 
-    $result = $conn->query("SELECT balance FROM balance where _idSale = $idSale order by idBalance desc limit 1");
+    $result = $conn->query("SELECT balance FROM balance where _idSale = $idSale AND state != 2 order by idBalance desc limit 1");
     $outp = array();
     $outp = $result->fetch_all(MYSQLI_ASSOC);
 

@@ -175,14 +175,16 @@ if ($_POST['venta'] == 'editar') {
 
             //Selecciona los pagos realizados
             try {
-                $sql = "SELECT idBalance, amount FROM balance WHERE _idSale = $id_sale AND balpay = 1 ORDER BY idBalance ASC;";
+                $sql = "SELECT idBalance, amount, state FROM balance WHERE _idSale = $id_sale AND balpay = 1 AND state !=2 ORDER BY idBalance ASC;";
                 $resultado = $conn->query($sql);
             } catch (Exception $e) {
                 $query_success = false;
             }
             while ($balance = $resultado->fetch_assoc()) {
                 //Update PAY'S
-                $nuevo_balance = $nuevo_balance - $balance['amount'];
+                if ($balance['state'] != 1) {
+                    $nuevo_balance = $nuevo_balance - $balance['amount'];
+                }
 
                 $stmt = $conn->prepare("UPDATE balance SET balance = ? WHERE idBalance = ?");
                 $stmt->bind_param("di", $nuevo_balance, $balance['idBalance']);
