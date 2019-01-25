@@ -289,6 +289,106 @@ $(document).ready(function () {
         });
     });
 
+    $('#form-dailyStock').on('submit', function (e) {
+        e.preventDefault();
+        $("#listadoReporte1").html("");
+        $("#listadoReporte2").html("");
+        $("#listadoReporte3").html("");
+        $("#listadoReporte4").html("");
+        $("#listadoReporte5").html("");
+        
+        var tabla = '<div class="box-body table-responsive no-padding">'+
+            '<table id="registros" class="table table-bordered table-striped">'+
+                '<thead>'+
+                    '<tr>'+
+                        '<th>Código</th>'+
+                        '<th>Nombre</th>'+
+                        '<th>Marca</th>'+
+                        '<th>Categoría</th>'+
+                        '<th>Unidad</th>'+
+                        '<th>Costo</th>'+
+                        '<th>Existencia</th>'+
+                    '</tr>'+
+                '</thead>'+
+                '<tbody class="contenidoRPT5"></tbody>'+
+                '<tfoot>'+
+                    '<tr>'+
+                        '<th>Código</th>'+
+                        '<th>Nombre</th>'+
+                        '<th>Marca</th>'+
+                        '<th>Categoría</th>'+
+                        '<th>Unidad</th>'+
+                        '<th>Costo</th>'+
+                        '<th>Existencia</th>'+
+                    '</tr>'+
+                '</tfoot>'+
+            '</table>'+
+        '</div><div class="row"><button type="button" onclick="printReport5()" class="btn bg-teal-active btn-md"><i class="fa fa-print"></i>'+
+            ' Imprimir</button>'+
+            '</div>';
+
+        $("#listadoReporte5").append(tabla);
+        
+        var datos = $(this).serializeArray();
+
+        swal({
+            title: 'Generando el reporte...'
+        });
+
+        swal.showLoading();
+
+        $.ajax({
+            type: $(this).attr('method'),
+            data: datos,
+            url: $(this).attr('action'),
+            datatype: 'json',
+            success: function (data) {
+                console.log(data);
+                
+                $.each(data, function (key, registro) {
+                    if (registro.ventas != null && registro.compras != null) {
+                        if (parseInt(registro.ventas) < parseInt(registro.compras)) {
+                            var difS = parseInt(registro.compras) - parseInt(registro.ventas);
+                        }else {
+                            var difS = parseInt(registro.ventas) - parseInt(registro.compras);
+                        }
+                        var stock = parseInt(registro.stock) - parseInt(difS);
+                    } else if (registro.ventas != null && registro.compras == null) {
+                        var stock = parseInt(registro.stock) + parseInt(registro.ventas);
+                    } else if (registro.ventas == null && registro.compras != null) {
+                        if (parseInt(registro.compras) > parseInt(registro.stock)) {
+                            var stock = parseInt(registro.compras) - parseInt(registro.stock);
+                        } else {
+                            var stock = parseInt(registro.stock) - parseInt(registro.compras);
+                        }
+                    } else {
+                        var stock = registro.stock;;
+                    }
+                    var contenido = "<tr>";
+                    contenido += "<td>" + registro.productCode + "</td>";
+                    contenido += "<td>" + registro.productName + "</td>";
+                    contenido += "<td>" + registro.make + "</td>";
+                    contenido += "<td>" + registro.category + "</td>";
+                    contenido += "<td>" + registro.unity + "</td>";
+                    contenido += "<td>Q." + registro.cost + "</td>";
+                    contenido += "<td>" + stock + "</td>";
+                    contenido += '</tr>';
+                    $(".contenidoRPT5").append(contenido);
+                });
+                swal.close();
+                funciones();                
+            },
+            error: function (data) {
+                swal({
+                    type: 'error',
+                    title: 'Error',
+                    text: 'Algo ha salido mal, intentalo más tarde',
+                })
+            }
+
+        });
+    });
+
 });
 
 
@@ -444,6 +544,12 @@ function printReport4() {
     var f1 = $("[name='dateSrpt4']").val();
     var f2 = $("[name='dateErpt4']").val();
     changeReport('ComBySeller.php?idVendedor='+idSeller+'&fecha1='+f1+'&fecha2='+f2);
+    $('#modal-reporte').modal('show');
+}
+
+function printReport5() {
+    var f1 = $("[name='dateSrpt5']").val();
+    changeReport('dailyStock.php?fecha1='+f1);
     $('#modal-reporte').modal('show');
 }
 

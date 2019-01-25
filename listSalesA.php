@@ -125,6 +125,11 @@ include_once 'funciones/bd_conexion.php';
                               <input type="text" class="form-control pull-right datepicker" id="datepicker" name="dateB">
                             </div>
                           </div>
+                          <div class="form-group">
+                            <span class="text-danger text-uppercase">*</span>
+                            <label for="amount">Tipo</label>
+                            <label><input type="checkbox" id="cheque" name="cheque" value="0" class="flat-red" checked> Cheque</label>
+                          </div>
                         </div>
                     </div>
                     <div class="row">

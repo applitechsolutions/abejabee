@@ -71,6 +71,9 @@ include_once 'funciones/bd_conexion.php';
                                 <li>
                                     <a href="#tab_6" data-toggle="tab"><i class="fa fa-line-chart"></i> Ventas por vendedor</a>
                                 </li>
+                                <li>
+                                    <a href="#tab_7" data-toggle="tab"><i class="fa fa-archive"></i> Inventario por fechas</a>
+                                </li>
                             </ul>
                             <div class="tab-content">
                                 <div class="tab-pane" id="tab_1">
@@ -333,6 +336,50 @@ include_once 'funciones/bd_conexion.php';
                                                     </div>
                                                 <!-- TABLA DEL LISTADO DE REPORTES -->
                                                     <div id="listadoReporte4" class="modal-body">
+                                                    </div>
+                                                <!-- TABLA DEL LISTADO DE REPORTES -->
+                                                </form>
+                                            </div>
+                                            <!-- /.box-body -->
+                                            <!-- /.box -->
+                                        </section>
+                                        <!-- /.content -->
+                                    </div>
+                                </div>
+                                <!-- /.tab-pane -->
+                                <div class="tab-pane" id="tab_7">
+                                    <div class="row">
+                                        <!-- Main content -->
+                                        <section class="content">
+                                            <!-- Default box -->
+
+                                            <h4 class="box-title">Listado de inventario en una fecha</h4>
+                                            <div class="box-body">
+                                                <form role="form" id="form-dailyStock" name="form-dailyStock"
+                                                    method="post" action="BLL/rptdailyStock.php">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <span class="text-danger text-uppercase">*</span>
+                                                                <label>Fecha</label>
+                                                                <div class="input-group date">
+                                                                    <div class="input-group-addon">
+                                                                        <i class="fa fa-calendar"></i>
+                                                                    </div>
+                                                                    <input type="text" class="form-control pull-right datepicker"
+                                                                        id="datepicker5" name="dateSrpt5">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- /.box-body -->
+                                                    <div class="box-footer">
+                                                        <button type="submit" class="btn btn-primary pull-right" id="rpt4">
+                                                            <i class="fa fa-list-alt" aria-hidden="true"></i>
+                                                            Generar Listado</button>
+                                                    </div>
+                                                <!-- TABLA DEL LISTADO DE REPORTES -->
+                                                    <div id="listadoReporte5" class="modal-body">
                                                     </div>
                                                 <!-- TABLA DEL LISTADO DE REPORTES -->
                                                 </form>
