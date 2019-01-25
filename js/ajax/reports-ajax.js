@@ -388,7 +388,6 @@ $(document).ready(function () {
 
         });
     });
-
 });
 
 
