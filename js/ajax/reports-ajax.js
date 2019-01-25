@@ -347,12 +347,7 @@ $(document).ready(function () {
                 
                 $.each(data, function (key, registro) {
                     if (registro.ventas != null && registro.compras != null) {
-                        if (parseInt(registro.ventas) < parseInt(registro.compras)) {
-                            var difS = parseInt(registro.compras) - parseInt(registro.ventas);
-                        }else {
-                            var difS = parseInt(registro.ventas) - parseInt(registro.compras);
-                        }
-                        var stock = parseInt(registro.stock) - parseInt(difS);
+                        var stock = parseInt(registro.stock) + parseInt(registro.ventas) - parseInt(registro.compras);
                     } else if (registro.ventas != null && registro.compras == null) {
                         var stock = parseInt(registro.stock) + parseInt(registro.ventas);
                     } else if (registro.ventas == null && registro.compras != null) {

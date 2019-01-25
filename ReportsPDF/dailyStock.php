@@ -107,12 +107,7 @@ $pagina = '
                     <tbody class="w3-white">';
 while ($stock = $resultado->fetch_assoc()) {
     if ($stock['ventas'] != null && $stock['compras'] != null) {
-        if ($stock['ventas'] < $stock['compras']) {
-            $difS = $stock['compras'] - $stock['ventas'];
-        }else {
-            $difS = $stock['ventas'] - $stock['compras'];
-        }
-        $inv = $stock['stock'] - $difS;
+        $inv = $stock['stock'] + $stock['ventas'] - $stock['compras'];
     } else if ($stock['ventas'] != null && $stock['compras'] == null) {
         $inv = $stock['stock'] + $stock['ventas'];
     } else if ($stock['ventas'] == null && $stock['compras']!= null) {
