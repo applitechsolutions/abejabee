@@ -89,7 +89,7 @@
             return $state;
         }
 
-        $('#datepicker, #datepicker5').datepicker({
+        $('#datepicker, #datepicker5, #datepicker6').datepicker({
             format: 'dd/mm/yyyy',
             autoclose: true
         });

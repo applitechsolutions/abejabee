@@ -111,11 +111,7 @@ while ($stock = $resultado->fetch_assoc()) {
     } else if ($stock['ventas'] != null && $stock['compras'] == null) {
         $inv = $stock['stock'] + $stock['ventas'];
     } else if ($stock['ventas'] == null && $stock['compras']!= null) {
-        if ($stock['compras'] > $stock['stock']) {
-            $inv = $stock['compras'] - $stock['stock'];
-        } else {
-            $inv = $stock['stock'] - $stock['compras'];
-        }
+        $inv = $stock['stock'] - $stock['compras'];
     } else {
         $inv = $stock['stock'];
     }

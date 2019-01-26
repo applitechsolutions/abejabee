@@ -351,11 +351,7 @@ $(document).ready(function () {
                     } else if (registro.ventas != null && registro.compras == null) {
                         var stock = parseInt(registro.stock) + parseInt(registro.ventas);
                     } else if (registro.ventas == null && registro.compras != null) {
-                        if (parseInt(registro.compras) > parseInt(registro.stock)) {
-                            var stock = parseInt(registro.compras) - parseInt(registro.stock);
-                        } else {
-                            var stock = parseInt(registro.stock) - parseInt(registro.compras);
-                        }
+                        var stock = parseInt(registro.stock) - parseInt(registro.compras);
                     } else {
                         var stock = registro.stock;;
                     }
@@ -383,6 +379,152 @@ $(document).ready(function () {
 
         });
     });
+
+    $('#form-stockByProd').on('submit', function (e) {
+        e.preventDefault();
+        $("#listadoReporte1").html("");
+        $("#listadoReporte2").html("");
+        $("#listadoReporte3").html("");
+        $("#listadoReporte4").html("");
+        $("#listadoReporte5").html("");
+        $("#listadoReporte6").html("");
+        $("#listadoReporte6-5").html("");
+
+        var tabla = '<h3>COMPRAS</h3><div class="box-body table-responsive no-padding">'+
+                        '<table id="registros" class="table table-bordered table-striped">'+
+                            '<thead>'+
+                                '<tr>'+
+                                    '<th>Fecha</th>'+
+                                    '<th>Proveedor</th>'+
+                                    '<th>Factura</th>'+
+                                    '<th>Serie</th>'+
+                                    '<th>No. Documento</th>'+
+                                    '<th>Costo</th>'+
+                                    '<th>Total</th>'+
+                                '</tr>'+
+                            '</thead>'+
+                            '<tbody class="contenidoRPT6"></tbody>'+
+                            '<tfoot>'+
+                                '<tr>'+
+                                    '<th>Fecha</th>'+
+                                    '<th>Proveedor</th>'+
+                                    '<th>Factura</th>'+
+                                    '<th>Serie</th>'+
+                                    '<th>No. Documento</th>'+
+                                    '<th>Costo</th>'+
+                                    '<th>Total</th>'+
+                                '</tr>'+
+                            '</tfoot>'+
+                        '</table>'+
+                    '</div>';
+        
+        var tabla1 = '<h3>VENTAS</h3><div class="box-body table-responsive no-padding">'+
+            '<table id="registros2" class="table table-bordered table-striped">'+
+                '<thead>'+
+                    '<tr>'+
+                        '<th>Fecha</th>'+
+                        '<th>Factura</th>'+
+                        '<th>Remisión</th>'+
+                        '<th>Detalles</th>'+
+                        '<th>Precio</th>'+
+                        '<th>Total</th>'+
+                    '</tr>'+
+                '</thead>'+
+                '<tbody class="contenidoRPT6-5"></tbody>'+
+                '<tfoot>'+
+                    '<tr>'+
+                        '<th>Fecha</th>'+
+                        '<th>Factura</th>'+
+                        '<th>Remisión</th>'+
+                        '<th>Detalles</th>'+
+                        '<th>Precio</th>'+
+                        '<th>Total</th>'+
+                    '</tr>'+
+                '</tfoot>'+
+            '</table>'+
+        '</div>'+
+        '<div class="row">'+
+            '<button type="button" onclick="printReport5()" class="btn bg-teal-active btn-md"><i class="fa fa-print"></i>'+
+            ' Imprimir</button>'+
+        '</div>';
+
+        $("#listadoReporte6").append(tabla);        
+        $("#listadoReporte6-5").append(tabla1);
+        
+        var datos = $(this).serializeArray();
+
+        swal({
+            title: 'Generando el reporte...'
+        });
+
+        swal.showLoading();
+
+        $.ajax({
+            type: $(this).attr('method'),
+            data: datos,
+            url: $(this).attr('action'),
+            datatype: 'json',
+            success: function (data) {
+                console.log(data);
+                $.each(data, function (key, registro) {
+                    var contenido = "<tr>";
+                    contenido += "<td>" + convertDate(registro.datePurchase) + "</td>";
+                    contenido += "<td>" + registro.provider + "</td>";
+                    contenido += "<td>" + registro.noBill + "</td>";
+                    contenido += "<td>" + registro.serie + "</td>";
+                    contenido += "<td>" + registro.noDocument + "</td>";
+                    contenido += "<td>Q." + registro.costP + "</td>";
+                    contenido += "<td>" + registro.quantity + "</td>";
+                    contenido += '</tr>';
+                    $(".contenidoRPT6").append(contenido);
+                });
+                swal.close();
+                funciones();                
+            },
+            error: function (data) {
+                swal({
+                    type: 'error',
+                    title: 'Error',
+                    text: 'Algo ha salido mal, intentalo más tarde',
+                })
+            }
+
+        });
+
+        $.ajax({
+            type: $(this).attr('method'),
+            data: datos,
+            url:  'BLL/rptstockByProductV.php',
+            datatype: 'json',
+            success: function (data) {
+                console.log(data);
+                var actTotal;
+                $.each(data, function (key, registro) {
+                    actTotal = registro.stock;
+                    var contenido = "<tr>";
+                    contenido += "<td>" + convertDate(registro.dateStart) + "</td>";
+                    contenido += "<td>" + registro.serie + " " + registro.noBill +"</td>";
+                    contenido += "<td>" + registro.noDeliver + "</td>";
+                    contenido += "<td>" + registro.note + "</td>";
+                    contenido += "<td>Q." + registro.price + "</td>";
+                    contenido += "<td>" + registro.quantity + "</td>";
+                    contenido += '</tr>';
+                    $(".contenidoRPT6-5").append(contenido);
+                });
+                $('#totalStock').text(actTotal);
+                swal.close();
+                funciones2();                
+            },
+            error: function (data) {
+                swal({
+                    type: 'error',
+                    title: 'Error',
+                    text: 'Algo ha salido mal, intentalo más tarde',
+                })
+            }
+
+        });
+    });    
 });
 
 

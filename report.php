@@ -74,6 +74,9 @@ include_once 'funciones/bd_conexion.php';
                                 <li>
                                     <a href="#tab_7" data-toggle="tab"><i class="fa fa-archive"></i> Inventario por fechas</a>
                                 </li>
+                                <li>
+                                    <a href="#tab_8" data-toggle="tab"><i class="fab fa-opencart"></i> Compras y ventas por producto</a>
+                                </li>
                             </ul>
                             <div class="tab-content">
                                 <div class="tab-pane" id="tab_1">
@@ -380,6 +383,98 @@ include_once 'funciones/bd_conexion.php';
                                                     </div>
                                                 <!-- TABLA DEL LISTADO DE REPORTES -->
                                                     <div id="listadoReporte5" class="modal-body">
+                                                    </div>
+                                                <!-- TABLA DEL LISTADO DE REPORTES -->
+                                                </form>
+                                            </div>
+                                            <!-- /.box-body -->
+                                            <!-- /.box -->
+                                        </section>
+                                        <!-- /.content -->
+                                    </div>
+                                </div>
+                                <!-- /.tab-pane -->
+                                <div class="tab-pane" id="tab_8">
+                                    <div class="row">
+                                        <!-- Main content -->
+                                        <section class="content">
+                                            <!-- Default box -->
+                                            <h4 class="box-title">Ventas y Compras de un producto a partir decbin una fecha</h4>
+                                            <div class="box-body">
+                                                <form role="form" id="form-stockByProd" name="form-stockByProd"
+                                                    method="post" action="BLL/rptstockByProductC.php">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <span class="text-danger text-uppercase">*</span>
+                                                                <label>Producto</label>
+                                                                <select id="sellerReporte" name="prodReporte" class="form-control select2"
+                                                                    style="width: 100%;">
+                                                                    <option value="" disabled selected>Seleccione a
+                                                                        un
+                                                                        producto</option>
+                                            <?php
+                                            try {
+                                                $sql = "SELECT P.*, (SELECT catName FROM category WHERE idCategory = P._idCategory) as category FROM product P WHERE state = 0";
+                                                $resultado = $conn->query($sql);
+                                                while ($productName = $resultado->fetch_assoc()) {?>
+                                            <option value="<?php echo $productName['idProduct']; ?>">
+                                                <?php echo $productName['productCode']. " " .$productName['productName']. " " .$productName['category']; ?>
+                                            </option>
+                                            <?php 
+                                                }
+                                            } catch (Exception $e) {
+                                                echo "Error: " . $e->getMessage();
+                                            }
+                                            ?>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <span class="text-danger text-uppercase">*</span>
+                                                                <label>Fecha Inicial</label>
+                                                                <div class="input-group date">
+                                                                    <div class="input-group-addon">
+                                                                        <i class="fa fa-calendar"></i>
+                                                                    </div>
+                                                                    <input type="text" class="form-control pull-right datepicker"
+                                                                        id="datepicker6" name="dateSrpt6">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3 pull-right">
+                                                    <div class="info-box bg-blue">
+                                                        <span class="info-box-icon"><i class="fas fa-store"></i></span>
+                                                        <div class="info-box-content">
+                                                            <span class="info-box-text">Existencia actual:</span>
+                                                            <span class="info-box-number"><label for="totalS"
+                                                                    id="totalStock"></label></span>
+                                                        </div>
+                                                        <!-- /.info-box-content -->
+                                                    </div>
+                                                </div>
+                                                    </div>
+                                                    <!-- /.box-body -->
+                                                    <div class="box-footer">
+                                                    <div class="row">
+                                                        <div class="col-md-6">                 
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                        <button type="submit" class="btn btn-primary pull-right" id="rpt1">
+                                                            <i class="fa fa-list-alt" aria-hidden="true"></i>
+                                                            Generar Listado</button>
+                                                        </div>
+                                                        <div class="col-md-3 pull-right">                                       
+                                                </div>
+                                                       
+                                                    </div>
+                                                <!-- TABLA DEL LISTADO DE REPORTES -->
+                                                    <div id="listadoReporte6" class="modal-body">
+                                                    </div>
+                                                <!-- TABLA DEL LISTADO DE REPORTES -->
+                                                <!-- TABLA DEL LISTADO DE REPORTES -->
+                                                    <div id="listadoReporte6-5" class="modal-body">
                                                     </div>
                                                 <!-- TABLA DEL LISTADO DE REPORTES -->
                                                 </form>
