@@ -19,9 +19,14 @@ try {
 
     $resultadoC = $conn->query($sqlC);
     $resultadoV = $conn->query($sqlV);
+    $res = $conn->query($sqlV);
 } catch (Exception $e) {
     $error = $e->getMessage();
     echo $error;
+}
+
+while ($stock = $res->fetch_assoc()) {
+    $existencia = $stock['stock'];
 }
 
 $dia1 = strftime("%d", strtotime($fi));
@@ -88,9 +93,12 @@ $pagina = '
                     </div>
                     <!-- /.col -->
                 </div>
-                <div style="text-align: center;">
-                    <h3>Listado de Compras y Ventas en la fecha: </h3>
-                    <h4>' . $mensaje . '</h4>
+                <div>
+                    <h3 style="text-align: left;">Listado de Compras y Ventas en la fecha: <h4>' . $mensaje . '</h4></h3>
+                    <h3 style="text-align: right;">Existencia Actual: ' . $existencia . '</h3>
+                </div>
+                <div>
+                    
                 </div>
             </div>
             <div>
@@ -132,7 +140,7 @@ while ($stockC = $resultadoC->fetch_assoc()) {
                             <th></th>
                             <th></th>
                             <th style="text-align: right;" colspan="2">Total comprado:</th>
-                            <td><small>' . number_format($totalC, 2, '.', ',') . '</small></td>
+                            <td><small>' . $totalC . '</small></td>
                         </tr>
                     </tfoot>
                 </table>
@@ -173,7 +181,7 @@ while ($stockV = $resultadoV->fetch_assoc()) {
                             <th></th>
                             <th></th>
                             <th style="text-align: right;" colspan="2">Total vendido:</th>
-                            <td><small>' . number_format($totalV, 2, '.', ',') . '</small></td>
+                            <td><small>' . $totalV . '</small></td>
                         </tr>
                     </tfoot>
                 </table>
