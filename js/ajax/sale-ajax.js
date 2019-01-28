@@ -272,11 +272,6 @@ $(document).ready(function () {
                         if (resultado.new_totalB == '0' && resultado.cheque == '0') {
                             cancelSale(resultado.idSale);
                         }
-                        if (resultado.cheque == '1') {
-                            bandera = 1;
-                        } else {
-                            bandera = 0;
-                        }
                         document.getElementById("form-pay").reset();
                         $("#correlativeCloseB").click();
                         swal.close();
@@ -623,6 +618,16 @@ $(document).ready(function () {
             }
         });
     });
+
+    $('#cheque').on('ifChecked', function(event){
+        bandera = 1;
+        console.log('true');
+      });
+
+      $('#cheque').on('ifUnchecked', function(event){
+        bandera = 0;
+        console.log('false');
+      });
 
     $('.detalle_balanceC').on('click', function (e) {
         e.preventDefault();
