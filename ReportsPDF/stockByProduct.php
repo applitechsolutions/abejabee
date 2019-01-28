@@ -13,7 +13,7 @@ try {
     P.noBill, P.serie, noDocument, D.costP, D.quantity
     FROM `detailp` D INNER JOIN purchase P ON D._idPurchase = p.idPurchase where D._idProduct = $product AND P.datePurchase >= '$fi'";
 
-    $sqlV = "SELECT S.dateStart, S.noBill, S.serie, S.noDeliver, S.note, (D.priceS - D.discount) as price, D.quantity, 
+    $sqlV = "SELECT S.dateStart, S.noBill, S.serie, S.noDeliver, S.note, (D.priceS - D.discount) as price, D.quantity,
     (select stock from storage WHERE _idProduct = D._idProduct) as stock
     FROM `details` D INNER JOIN sale S ON D._idSale = S.idSale WHERE D._idProduct = $product AND S.dateStart >= '$fi' AND S.state = 0";
 
@@ -35,7 +35,6 @@ while ($stock = $res->fetch_assoc()) {
 while ($prod = $resP->fetch_assoc()) {
     $producto = $prod['productCode'] . " " . $prod['productName'] . " " . $prod['category'];
 }
-
 
 $dia1 = strftime("%d", strtotime($fi));
 $mes1 = strftime("%B", strtotime($fi));
@@ -72,8 +71,7 @@ function mes($mes)
     return $mes;
 }
 
-$mensaje = $dia1 . ' de ' . mes($mes1) . ' del ' . $year1; 
-
+$mensaje = $dia1 . ' de ' . mes($mes1) . ' del ' . $year1;
 
 $pagina = '
 <!DOCTYPE html>
@@ -124,12 +122,12 @@ $pagina = '
                     <!-- /.col -->
                 </div>
                 <div  style="text-align: center;">
-                    <h3>Listado de Compras y Ventas realizadas desde: <h4>' . $mensaje . '</h4></h3>
-                </div>
-                <div>
-                    <h4 style="text-align: left;">' . $producto .'</h4><h4 style="text-align: right;">Existencia Actual: ' . $existencia . '</h4>
+                    <h3>Listado de compras y ventas realizadas desde: <h4>' . $mensaje . '</h4></h3>
                 </div>
             </div>
+            <div>
+                    <h4 style="text-align: left;">' . $producto . '</h4><h4 style="text-align: right;">Existencia Actual: ' . $existencia . '</h4>
+                </div>
             <div>
                 <h3>COMPRAS</h3>
             </div>
@@ -161,7 +159,7 @@ while ($stockC = $resultadoC->fetch_assoc()) {
                             <td>' . $stockC['quantity'] . '</td>
                         </tr>';
 }
-        $pagina .= '</tbody>
+$pagina .= '</tbody>
                     <tfoot>
                         <tr>
                             <th></th>
@@ -203,7 +201,7 @@ while ($stockV = $resultadoV->fetch_assoc()) {
                             <td>' . $stockV['quantity'] . '</td>
                         </tr>';
 }
-        $pagina .= '</tbody>
+$pagina .= '</tbody>
                     <tfoot>
                         <tr>
                             <th></th>
@@ -225,5 +223,3 @@ $mpdf = new mPDF('utf-8', 'LETTER', 0, '', 10, 10, 10, 10, 0, 0); //se define el
 $mpdf->WriteHTML($pagina); //se escribe la variable pagina
 
 $mpdf->Output($file, 'I'); //Se crea el documento pdf y se muestra en el navegador
-
-?>
