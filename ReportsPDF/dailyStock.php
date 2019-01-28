@@ -14,7 +14,7 @@ try {
     (select makeName from make where idMake = P._idMake and state = 0) as make,
     (select catName from category where idCategory = P._idCategory and state = 0) as category,
     (select unityName from unity where idUnity = P._idUnity and state = 0) as unity
-    FROM storage S INNER JOIN product P ON P.idProduct = S._idProduct WHERE P.state = 0";
+    FROM storage S INNER JOIN product P ON P.idProduct = S._idProduct WHERE P.state = 0 ORDER BY P.productCode";
 
     $resultado = $conn->query($sql);
 } catch (Exception $e) {
