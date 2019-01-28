@@ -441,7 +441,7 @@ try {
                                                                 <div class="form-group">
                                                                     <span class="text-danger text-uppercase">*</span>
                                                                     <label>Producto</label>
-                                                                    <select id="sellerReporte" name="prodReporte"
+                                                                    <select id="prodReporte" name="prodReporte"
                                                                         class="form-control select2"
                                                                         style="width: 100%;">
                                                                         <option value="" disabled selected>Seleccione a

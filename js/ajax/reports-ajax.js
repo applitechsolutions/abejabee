@@ -444,7 +444,7 @@ $(document).ready(function () {
             '</table>'+
         '</div>'+
         '<div class="row">'+
-            '<button type="button" onclick="printReport5()" class="btn bg-teal-active btn-md"><i class="fa fa-print"></i>'+
+            '<button type="button" onclick="printReport6()" class="btn bg-teal-active btn-md"><i class="fa fa-print"></i>'+
             ' Imprimir</button>'+
         '</div><div class="row"><div class="form-group col-lg-6 pull-right"><div class="input-group"><span class="input-group-addon"><span class="text-danger text-uppercase">*</span><label for="totalVentas" class="control-label">Total:</label><span><h4 id="totalVentas" class="text-bold">0</h4></span></span></div></div></div>';
 
@@ -692,6 +692,13 @@ function printReport4() {
 function printReport5() {
     var f1 = $("[name='dateSrpt5']").val();
     changeReport('dailyStock.php?fecha1='+f1);
+    $('#modal-reporte').modal('show');
+}
+
+function printReport6() {
+    var idProducto = $("[name='prodReporte']").val();
+    var f1 = $("[name='dateSrpt6']").val();
+    changeReport('stockByProduct.php?idProducto='+idProducto+'&fecha1='+f1);
     $('#modal-reporte').modal('show');
 }
 

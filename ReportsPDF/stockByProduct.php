@@ -3,20 +3,22 @@ include 'pdfclass/mpdf.php'; //Se importa la librería de PDF
 include_once '../funciones/bd_conexion.php';
 
 //Se indica lo que se va a imprimir en formato HTML
+$product = $_GET['idProducto'];
 $fecha1 = strtr($_GET['fecha1'], '/', '-');
 
 $fi = date('Y-m-d', strtotime($fecha1));
 
 try {
-    $sql = "SELECT P.idProduct, P.productName, P.productCode, P.cost, P.minStock, P.picture, S.stock,
-    (select SUM(quantity) from detailP DP INNER JOIN purchase PU ON DP._idPurchase = PU.idPurchase where _idProduct = P.idProduct AND PU.datePurchase > '2019-01-01' AND PU.datePurchase <= CURDATE()) as compras,
-    (select SUM(quantity) from detailS DS INNER JOIN sale S ON DS._idSale = S.idSale where _idProduct = P.idProduct AND S.dateStart > '$fi' AND S.dateStart <= CURDATE() AND state = 0) as ventas,
-    (select makeName from make where idMake = P._idMake and state = 0) as make,
-    (select catName from category where idCategory = P._idCategory and state = 0) as category,
-    (select unityName from unity where idUnity = P._idUnity and state = 0) as unity
-    FROM storage S INNER JOIN product P ON P.idProduct = S._idProduct WHERE P.state = 0 ORDER BY P.productCode";
+    $sqlC = "SELECT P.datePurchase, (select providerName from provider where idProvider = P._idProvider) as provider,
+    P.noBill, P.serie, noDocument, D.costP, D.quantity
+    FROM `detailp` D INNER JOIN purchase P ON D._idPurchase = p.idPurchase where D._idProduct = $product AND P.datePurchase >= '$fi'";
 
-    $resultado = $conn->query($sql);
+    $sqlV = "SELECT S.dateStart, S.noBill, S.serie, S.noDeliver, S.note, (D.priceS - D.discount) as price, D.quantity, 
+    (select stock from storage WHERE _idProduct = D._idProduct) as stock
+    FROM `details` D INNER JOIN sale S ON D._idSale = S.idSale WHERE D._idProduct = $product AND S.dateStart >= '$fi' AND S.state = 0";
+
+    $resultadoC = $conn->query($sqlC);
+    $resultadoV = $conn->query($sqlV);
 } catch (Exception $e) {
     $error = $e->getMessage();
     echo $error;
@@ -87,46 +89,93 @@ $pagina = '
                     <!-- /.col -->
                 </div>
                 <div style="text-align: center;">
-                    <h3>Listado de Inventario en la fecha: </h3>
+                    <h3>Listado de Compras y Ventas en la fecha: </h3>
                     <h4>' . $mensaje . '</h4>
                 </div>
+            </div>
+            <div>
+                <h3>COMPRAS</h3>
             </div>
             <div id="contenido">
                 <table class="w3-table-all">
                     <thead style="background-color: black;">
                         <tr>
-                            <th style="background-color: #1d2128; color: white">Código</th>
-                            <th style="background-color: #1d2128; color: white">Nombre</th>
-                            <th style="background-color: #1d2128; color: white">Marca</th>
-                            <th style="background-color: #1d2128; color: white">Categoría</th>
-                            <th style="background-color: #1d2128; color: white">Unidad</th>
+                            <th style="background-color: #1d2128; color: white">Fecha</th>
+                            <th style="background-color: #1d2128; color: white">Proveedor</th>
+                            <th style="background-color: #1d2128; color: white">Factura</th>
+                            <th style="background-color: #1d2128; color: white">Serie</th>
+                            <th style="background-color: #1d2128; color: white">No. Documento</th>
                             <th style="background-color: #1d2128; color: white">Costo</th>
-                            <th style="background-color: #1d2128; color: white">Existencia</th>
+                            <th style="background-color: #1d2128; color: white">Total</th>
                         </tr>
                     </thead>
                     <tbody class="w3-white">';
-while ($stock = $resultado->fetch_assoc()) {
-    if ($stock['ventas'] != null && $stock['compras'] != null) {
-        $inv = $stock['stock'] + $stock['ventas'] - $stock['compras'];
-    } else if ($stock['ventas'] != null && $stock['compras'] == null) {
-        $inv = $stock['stock'] + $stock['ventas'];
-    } else if ($stock['ventas'] == null && $stock['compras']!= null) {
-        $inv = $stock['stock'] - $stock['compras'];
-    } else {
-        $inv = $stock['stock'];
-    }
+while ($stockC = $resultadoC->fetch_assoc()) {
+    $dateP = date_create($stockC['datePurchase']);
+    $totalC = $totalC + $stockC['quantity'];
     $pagina .= '
                         <tr>
-                            <td>' . $stock['productCode'] . '</td>
-                            <td>' . $stock['productName'] . '</td>
-                            <td>' . $stock['make'] . '</td>
-                            <td>' . $stock['category'] . '</td>
-                            <td>' . $stock['unity'] . '</td>
-                            <td>Q. ' . $stock['cost'] . '</td>
-                            <td>' . $inv . '</td>
+                            <td>' . date_format($dateP, 'd/m/y') . '</td>
+                            <td>' . $stockC['provider'] . '</td>
+                            <td>' . $stockC['noBill'] . '</td>
+                            <td>' . $stockC['serie'] . '</td>
+                            <td>' . $stockC['noDocument'] . '</td>
+                            <td>Q. ' . $stockC['costP'] . '</td>
+                            <td>' . $stockC['quantity'] . '</td>
                         </tr>';
 }
         $pagina .= '</tbody>
+                    <tfoot>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th style="text-align: right;" colspan="2">Total comprado:</th>
+                            <td><small>' . number_format($totalC, 2, '.', ',') . '</small></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div>
+                <h3>VENTAS</h3>
+            </div>
+            <div id="contenido2">
+                <table class="w3-table-all">
+                    <thead style="background-color: black;">
+                        <tr>
+                            <th style="background-color: #1d2128; color: white">Fecha</th>
+                            <th style="background-color: #1d2128; color: white">Factura</th>
+                            <th style="background-color: #1d2128; color: white">Remisión</th>
+                            <th style="background-color: #1d2128; color: white">Detalles</th>
+                            <th style="background-color: #1d2128; color: white">Precio</th>
+                            <th style="background-color: #1d2128; color: white">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody class="w3-white">';
+while ($stockV = $resultadoV->fetch_assoc()) {
+    $dateS = date_create($stockV['dateStart']);
+    $totalV = $totalV + $stockV['quantity'];
+    $pagina .= '
+                        <tr>
+                            <td>' . date_format($dateS, 'd/m/y') . '</td>
+                            <td>' . $stockV['serie'] . ' ' . $stockV['noBill'] . '</td>
+                            <td>' . $stockV['noDeliver'] . '</td>
+                            <td>' . $stockV['note'] . '</td>
+                            <td>Q. ' . $stockV['price'] . '</td>
+                            <td>' . $stockV['quantity'] . '</td>
+                        </tr>';
+}
+        $pagina .= '</tbody>
+                    <tfoot>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th style="text-align: right;" colspan="2">Total vendido:</th>
+                            <td><small>' . number_format($totalV, 2, '.', ',') . '</small></td>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>
