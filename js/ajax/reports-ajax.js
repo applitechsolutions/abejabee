@@ -416,7 +416,7 @@ $(document).ready(function () {
                                 '</tr>'+
                             '</tfoot>'+
                         '</table>'+
-                    '</div>';
+                    '</div><div class="row"><div class="form-group col-lg-6 pull-right"><div class="input-group"><span class="input-group-addon"><span class="text-danger text-uppercase">*</span><label for="totalCompras" class="control-label">Total:</label><span><h4 id="totalCompras" class="text-bold">0</h4></span></span></div></div></div>';
         
         var tabla1 = '<h3>VENTAS</h3><div class="box-body table-responsive no-padding">'+
             '<table id="registros2" class="table table-bordered table-striped">'+
@@ -446,7 +446,7 @@ $(document).ready(function () {
         '<div class="row">'+
             '<button type="button" onclick="printReport5()" class="btn bg-teal-active btn-md"><i class="fa fa-print"></i>'+
             ' Imprimir</button>'+
-        '</div>';
+        '</div><div class="row"><div class="form-group col-lg-6 pull-right"><div class="input-group"><span class="input-group-addon"><span class="text-danger text-uppercase">*</span><label for="totalVentas" class="control-label">Total:</label><span><h4 id="totalVentas" class="text-bold">0</h4></span></span></div></div></div>';
 
         $("#listadoReporte6").append(tabla);        
         $("#listadoReporte6-5").append(tabla1);
@@ -466,7 +466,9 @@ $(document).ready(function () {
             datatype: 'json',
             success: function (data) {
                 console.log(data);
+                var totalC = 0;
                 $.each(data, function (key, registro) {
+                    totalC = parseInt(totalC) + parseInt(registro.quantity);
                     var contenido = "<tr>";
                     contenido += "<td>" + convertDate(registro.datePurchase) + "</td>";
                     contenido += "<td>" + registro.provider + "</td>";
@@ -478,6 +480,7 @@ $(document).ready(function () {
                     contenido += '</tr>';
                     $(".contenidoRPT6").append(contenido);
                 });
+                $('#totalCompras').text(totalC);
                 swal.close();
                 funciones();                
             },
@@ -499,8 +502,10 @@ $(document).ready(function () {
             success: function (data) {
                 console.log(data);
                 var actTotal;
+                var totalV = 0;
                 $.each(data, function (key, registro) {
                     actTotal = registro.stock;
+                    totalV = parseInt(totalV) + parseInt(registro.quantity);
                     var contenido = "<tr>";
                     contenido += "<td>" + convertDate(registro.dateStart) + "</td>";
                     contenido += "<td>" + registro.serie + " " + registro.noBill +"</td>";
@@ -512,6 +517,7 @@ $(document).ready(function () {
                     $(".contenidoRPT6-5").append(contenido);
                 });
                 $('#totalStock').text(actTotal);
+                $('#totalVentas').text(totalV);
                 swal.close();
                 funciones2();                
             },
