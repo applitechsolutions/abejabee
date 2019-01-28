@@ -57,7 +57,8 @@ function mes($mes)
     return $mes;
 }
 
-$mensaje = $dia1 . ' de ' . mes($mes1) . ' del ' . $year1;
+$mensaje = $dia1 . ' de ' . mes($mes1) . ' del ' . $year1; 
+
 
 $pagina = '
 <!DOCTYPE html>
@@ -109,7 +110,7 @@ while ($stock = $resultado->fetch_assoc()) {
         $inv = $stock['stock'] + $stock['ventas'] - $stock['compras'];
     } else if ($stock['ventas'] != null && $stock['compras'] == null) {
         $inv = $stock['stock'] + $stock['ventas'];
-    } else if ($stock['ventas'] == null && $stock['compras'] != null) {
+    } else if ($stock['ventas'] == null && $stock['compras']!= null) {
         $inv = $stock['stock'] - $stock['compras'];
     } else {
         $inv = $stock['stock'];
@@ -121,11 +122,11 @@ while ($stock = $resultado->fetch_assoc()) {
                             <td>' . $stock['make'] . '</td>
                             <td>' . $stock['category'] . '</td>
                             <td>' . $stock['unity'] . '</td>
-                            <td>' . 'Q.' . $stock['cost'] . '</td>
+                            <td>Q. ' . $stock['cost'] . '</td>
                             <td>' . $inv . '</td>
                         </tr>';
 }
-$pagina .= '</tbody>
+        $pagina .= '</tbody>
                 </table>
             </div>
         </div>
