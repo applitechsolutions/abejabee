@@ -17,9 +17,12 @@ try {
     (select stock from storage WHERE _idProduct = D._idProduct) as stock
     FROM `details` D INNER JOIN sale S ON D._idSale = S.idSale WHERE D._idProduct = $product AND S.dateStart >= '$fi' AND S.state = 0";
 
+    $sqlP = "SELECT P.*, (SELECT catName FROM category WHERE idCategory = P._idCategory) as category FROM product P WHERE P.idProduct = $product";
+
     $resultadoC = $conn->query($sqlC);
     $resultadoV = $conn->query($sqlV);
     $res = $conn->query($sqlV);
+    $resP = $conn->query($sqlP);
 } catch (Exception $e) {
     $error = $e->getMessage();
     echo $error;
@@ -28,6 +31,11 @@ try {
 while ($stock = $res->fetch_assoc()) {
     $existencia = $stock['stock'];
 }
+
+while ($prod = $resP->fetch_assoc()) {
+    $producto = $prod['productCode'] . " " . $prod['productName'] . " " . $prod['category'];
+}
+
 
 $dia1 = strftime("%d", strtotime($fi));
 $mes1 = strftime("%B", strtotime($fi));
@@ -74,6 +82,28 @@ $pagina = '
         <title>NOMBRE DEL REPORTE</title>
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/3/w3.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <style>
+            /* Create three equal columns that floats next to each other */
+            .column {
+            float: left;
+            width: 50%;
+            padding: 15px;
+            }
+
+            /* Clear floats after the columns */
+            .row:after {
+            content: "";
+            display: table;
+            clear: both;
+            }
+
+            /* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
+            @media screen and (max-width:600px) {
+                .column {
+                    width: 100%;
+                }
+            }
+        </style>
     </head>
     <body class="w3-padding">
         <div class="w3-container">
@@ -84,7 +114,7 @@ $pagina = '
                     </div>
                 </div>
                 <!-- title row -->
-                <div class="row">
+                <div>
                     <div class="col-xs-12">
                     <h2 class="page-header">
                         <i class="fa fa-globe"></i> Schlenker, Pharma.
@@ -93,12 +123,11 @@ $pagina = '
                     </div>
                     <!-- /.col -->
                 </div>
-                <div>
-                    <h3 style="text-align: left;">Listado de Compras y Ventas en la fecha: <h4>' . $mensaje . '</h4></h3>
-                    <h3 style="text-align: right;">Existencia Actual: ' . $existencia . '</h3>
+                <div  style="text-align: center;">
+                    <h3>Listado de Compras y Ventas realizadas desde: <h4>' . $mensaje . '</h4></h3>
                 </div>
                 <div>
-                    
+                    <h4 style="text-align: left;">' . $producto .'</h4><h4 style="text-align: right;">Existencia Actual: ' . $existencia . '</h4>
                 </div>
             </div>
             <div>
