@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    var bandera = 0;
 
     $('.SelectPrice').on('change', function (e) {
         e.preventDefault();
@@ -271,6 +272,11 @@ $(document).ready(function () {
                         if (resultado.new_totalB == '0' && resultado.cheque == '0') {
                             cancelSale(resultado.idSale);
                         }
+                        if (resultado.cheque == '1') {
+                            bandera = 1;
+                        } else {
+                            bandera = 0;
+                        }
                         document.getElementById("form-pay").reset();
                         $("#correlativeCloseB").click();
                         swal.close();
@@ -541,7 +547,6 @@ $(document).ready(function () {
             success(data) {
                 console.log(data);
                 var totalP = 0;
-                var bandera = 0;
                 $.each(data, function (key, registro) {
                     if (registro.state == 2) {
                         var nuevaFila = "<tr>";
@@ -596,17 +601,13 @@ $(document).ready(function () {
                         nuevaFila += "</tr>";
                         $("#detallesB").append(nuevaFila);
 
-                        if (bandera == 0) {
-                            if (registro.cheque == 1) {
-                                $('#cheque').prop('checked', true);
-                                //console.log('Canchita XD');
-                            } else {
-                                $('#cheque').prop('checked', false);
-                                //console.log('Marlon XD');
-                            }
-                            bandera = 1;
+                        if (bandera == 1) {
+                            $('#cheque').prop('checked', true);
+                            //console.log('Canchita XD');
+                        } else if (bandera == 0) {
+                            $('#cheque').prop('checked', false);
+                            //console.log('Marlon XD');
                         }
-
                     }
                 });
                 $("#totalPal").text('Q. ' + totalP.toFixed(2));

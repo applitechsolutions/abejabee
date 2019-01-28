@@ -33,6 +33,7 @@ if ($_POST['tipo'] == 'pago') {
                         'mensaje' => 'Pago ingresado con correctamente!',
                         'idSale' => $id_sale,
                         'new_totalB' => $new_totalB,
+                        'cheque' => $cheque
                     );
                 } else {
                     $respuesta = array(
