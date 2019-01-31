@@ -1231,7 +1231,7 @@ function changeReportE(report) {
 }
 
 function changeReportL(report) {
-    $('#divreporteL').html('<iframe src="reportsFPDF/' + report + '" style="width: 100%; min-width: 300px; height: 500px"></iframe>');
+    $('#divreporteL').html('<iframe src="reportsFPDF/' + report + '" style="width: 100%; min-width: 300px; height: 600px"></iframe>');
 }
 
 function eliminarS(idp) {

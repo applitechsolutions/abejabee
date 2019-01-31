@@ -25,6 +25,35 @@
               <h3 class="box-title">Listado de compras</h3>
             </div>
 
+<!-- MODAL IMPRIMIR COMPRA -->
+<div class="modal fade" id="modal-printP">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"
+                                    aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h4 class="modal-title">
+                                    <li class="glyphicon glyphicon-print"></li> Imprimir
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="box box-info">
+                                    <div class="box-header">
+                                    </div>
+                                    <!-- /.box-header -->
+                                    <div id="divreporteP" class="w3-rest">
+                                        <iframe src="" style="width: 100%; height: 700px; min-width: 300px;"></iframe>
+                                    </div>
+                                    <!-- /.box-body -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+
             <!-- MODAL PRODUCTS -->
             <div class="modal fade" id="modal-detail">
               <div class="modal-dialog">
@@ -126,6 +155,9 @@
                       <td>
                         <a href="#" data-id="<?php echo $purchase['idPurchase']; ?>" data-tipo="listDetailP" class="btn bg-orange btn-flat margin detalle_purchase">
                           <i class="fa fa-info"></i>
+                        </a>
+                        <a onclick="imprimirP('compra',<?php echo $purchase['idPurchase']; ?>);" class="btn btn-info btn-flat margin">
+                        <i class="fas fa-print"></i>
                         </a>
                       </td>
                     </tr>

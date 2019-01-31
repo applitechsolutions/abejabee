@@ -166,7 +166,7 @@ function imprimirP(tipo, idPurchase) {
 }
 
 function changeReportP(report) {
-    $('#divreporteP').html('<iframe src="reportsFPDF/' + report + '" style="width: 100%; min-width: 300px; height: 500px"></iframe>');
+    $('#divreporteP').html('<iframe src="reportsFPDF/' + report + '" style="width: 100%; min-width: 300px; height: 600px"></iframe>');
 }
 
 function ImgError(source) {
