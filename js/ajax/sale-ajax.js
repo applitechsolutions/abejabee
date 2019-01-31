@@ -503,7 +503,7 @@ $(document).ready(function () {
                     $("#detalles").append(nuevaFila);
                 });
                 var btnAnular = "<a href='editSale.php?id=" + id + "' class='btn bg-green btn-lg btn-flat pull-left'>";
-                btnAnular += "<i class='fa fa-pencil'></i> Editar Venta";
+                btnAnular += "<i class='fas fa-pen-square'></i> Editar Venta";
                 btnAnular += "</a>";
                 btnAnular += "<a href='#' onclick='anularSale(" + id + ")' class='btn bg-maroon btn-lg btn-flat'>";
                 btnAnular += "<i class='fa fa-ban'></i> Anular Venta";

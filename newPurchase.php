@@ -95,7 +95,7 @@ try {
                                 (select makeName from make where idMake = P._idMake and state = 0) as make,
                                 (select catName from category where idCategory = P._idCategory and state = 0) as category,
                                 (select unityName from unity where idUnity = P._idUnity and state = 0) as unity
-                                FROM product P WHERE state = 0";
+                                FROM product P WHERE state = 0 ORDER BY productCode ASC";
     $resultado = $conn->query($sql);
 } catch (Exception $e) {
     $error = $e->getMessage();

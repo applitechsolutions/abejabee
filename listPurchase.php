@@ -94,7 +94,7 @@
                   <?php
                   try{
                     $sql = "SELECT idPurchase, datePurchase, noBill, serie, noDocument, totalPurchase,
-                    (SELECT providerName FROM provider WHERE idProvider = P._idProvider and state = 0) as proveedor FROM purchase P";
+                    (SELECT providerName FROM provider WHERE idProvider = P._idProvider and state = 0) as proveedor FROM purchase P ORDER BY datePurchase DESC";
                     $resultado = $conn->query($sql);
                   } catch (Exception $e){
                     $error= $e->getMessage();

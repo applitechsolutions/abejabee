@@ -40,7 +40,7 @@
                 <?php
                   try{
                     $sql = "SELECT idRoute, codeRoute, routeName,
-                    (select concat(sellerFirstName, ' ', sellerLastName) from seller where idSeller = _idSeller) as Seller, details FROM route WHERE state = 0;";
+                    (select concat(sellerFirstName, ' ', sellerLastName) from seller where idSeller = _idSeller) as Seller, details FROM route WHERE state = 0 ORDER BY codeRoute ASC";
                     $resultado = $conn->query($sql);
                   } catch (Exception $e){
                     $error= $e->getMessage();
@@ -57,10 +57,10 @@
                       <td>
                       <?php
                       if ($_SESSION['rol'] == 1) {?>
-                        <a class="btn bg-green btn-flat margin" href="editRoute.php?id=<?php echo $route['idRoute'] ?>"><i class="fa fa-pencil"></i></a>
+                        <a class="btn bg-green btn-flat margin" href="editRoute.php?id=<?php echo $route['idRoute'] ?>"><i class="fas fa-pen-square"></i></a>
                         <a href="#" data-id="<?php echo $route['idRoute'];?>" data-tipo="route" class="btn bg-maroon btn-flat margin borrar_ruta"><i class="fa fa-trash"></i></a><?php
                       }elseif ($_SESSION['rol'] == 2) {?>
-                        <a class="btn bg-green btn-flat margin" onclick="valListados()"><i class="fa fa-pencil"></i></a>
+                        <a class="btn bg-green btn-flat margin" onclick="valListados()"><i class="fas fa-pen-square"></i></a>
                         <a href="#" class="btn bg-maroon btn-flat margin" onclick="valListados()"><i class="fa fa-trash"></i></a><?php
                       }
                       ?>
