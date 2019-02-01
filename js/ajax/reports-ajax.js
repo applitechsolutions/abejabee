@@ -2,9 +2,7 @@ $(document).ready(function () {
 
     $('#form-SalesBySeller').on('submit', function (e) {
         e.preventDefault();
-        $("#listadoReporte1").html("");
-        $("#listadoReporte2").html("");
-        $("#listadoReporte3").html("");
+        limpiarReportes()
         
         var tabla = '<div class="box-body table-responsive no-padding">'+
             '<table id="registros" class="table table-bordered table-striped">'+
@@ -103,9 +101,7 @@ $(document).ready(function () {
     $('#form-rpt1').on('submit', function (e) {
         e.preventDefault();
 
-        $("#listadoReporte1").html("");
-        $("#listadoReporte2").html("");
-        $("#listadoReporte3").html("");
+        limpiarReportes()
 
         var datos = $(this).serializeArray();
 
@@ -161,9 +157,7 @@ $(document).ready(function () {
     $('#form-rptCustomByDep').on('submit', function (e) {
         e.preventDefault();
 
-        $("#listadoReporte1").html("");
-        $("#listadoReporte2").html("");
-        $("#listadoReporte3").html("");
+        limpiarReportes()
 
         var tabla = '<div class="box-body table-responsive no-padding"><table id="registros" class="table table-bordered table-striped"><thead><tr><th>Código</th><th>Cliente</th><th>Teléfono</th><th>Total</th><th><i class="fa fa-cogs"></i> Detalle</th></tr></thead><tbody class="contenidoRPT3"></tbody><tfoot><tr><th>Código</th><th>Cliente</th><th>Teléfono</th><th>Total</th><th><span class="fa fa-cogs"></span></th></tr></tfoot></table></div><button type="button" onclick="printReport3()" class="btn bg-teal-active btn-sm"><i class="fa fa-print"></i> Imprimir</button><a id="btn_avanzar" href="#tab_5" data-toggle="tab" class="btn btn-flat pull-right text-bold btn_avanzar3" hidden><i class="glyphicon glyphicon-forward"></i> Avanzar al detalle seleccionado...</a>';
 
@@ -211,10 +205,7 @@ $(document).ready(function () {
 
     $('#form-ComBySeller').on('submit', function (e) {
         e.preventDefault();
-        $("#listadoReporte1").html("");
-        $("#listadoReporte2").html("");
-        $("#listadoReporte3").html("");
-        $("#listadoReporte4").html("");
+        limpiarReportes()
         
         var tabla = '<div class="box-body table-responsive no-padding">'+
             '<table id="registros" class="table table-bordered table-striped">'+
@@ -291,11 +282,7 @@ $(document).ready(function () {
 
     $('#form-dailyStock').on('submit', function (e) {
         e.preventDefault();
-        $("#listadoReporte1").html("");
-        $("#listadoReporte2").html("");
-        $("#listadoReporte3").html("");
-        $("#listadoReporte4").html("");
-        $("#listadoReporte5").html("");
+        limpiarReportes()
         
         var tabla = '<div class="box-body table-responsive no-padding">'+
             '<table id="registros" class="table table-bordered table-striped">'+
@@ -382,13 +369,7 @@ $(document).ready(function () {
 
     $('#form-stockByProd').on('submit', function (e) {
         e.preventDefault();
-        $("#listadoReporte1").html("");
-        $("#listadoReporte2").html("");
-        $("#listadoReporte3").html("");
-        $("#listadoReporte4").html("");
-        $("#listadoReporte5").html("");
-        $("#listadoReporte6").html("");
-        $("#listadoReporte6-5").html("");
+        limpiarReportes()
 
         var tabla = '<h3>COMPRAS</h3><div class="box-body table-responsive no-padding">'+
                         '<table id="registros" class="table table-bordered table-striped">'+
@@ -533,6 +514,15 @@ $(document).ready(function () {
     });    
 });
 
+function limpiarReportes() {
+    $("#listadoReporte1").html("");
+    $("#listadoReporte2").html("");
+    $("#listadoReporte3").html("");
+    $("#listadoReporte4").html("");
+    $("#listadoReporte5").html("");
+    $("#listadoReporte6").html("");
+    $("#listadoReporte6-5").html("");
+}
 
 function listarDetallerpt2(idv) {
     jQuery('.btn_avanzar').attr('hidden', false);
