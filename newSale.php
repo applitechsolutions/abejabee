@@ -373,7 +373,7 @@ try {
     (select price from priceSale where _idProduct = P.idProduct and _idPrice = 21) as business,
     (select price from priceSale where _idProduct = P.idProduct and _idPrice = 31) as bonus
     FROM product P INNER JOIN storage S ON S._idProduct = P.idProduct
-    WHERE state = 0 AND S.stock > 0";
+    WHERE state = 0 AND S.stock > 0 ORDER BY productCode ASC";
     $resultado = $conn->query($sql);
 } catch (Exception $e) {
     $error = $e->getMessage();

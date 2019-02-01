@@ -56,7 +56,7 @@
                     (select price from priceSale where _idProduct = idProduct and _idPrice = 11) as pharma,
                     (select price from priceSale where _idProduct = idProduct and _idPrice = 21) as business,
                     (select price from priceSale where _idProduct = idProduct and _idPrice = 31) as bonus
-                    FROM product P WHERE state = 0";
+                    FROM product P WHERE state = 0 ORDER BY productCode";
                     $resultado = $conn->query($sql);
                   } catch (Exception $e){
                     $error= $e->getMessage();
@@ -112,13 +112,13 @@
                         <?php 
                         if ($_SESSION['rol'] == 1) {?>
                           <a class="btn bg-green btn-flat margin" href="editProduct.php?id=<?php echo $product['idProduct'] ?>">
-                            <i class="fa fa-pencil"></i>
+                          <i class="fas fa-pen-square"></i>
                           </a>
                           <a href="#" data-id="<?php echo $product['idProduct']; ?>" data-tipo="product" class="btn bg-maroon btn-flat margin borrar_product">
                             <i class="fa fa-trash"></i>
                           </a><?php
                         }else if ($_SESSION['rol'] == 2) {?>
-                          <a class="btn bg-green btn-flat margin" onclick="valListados()"><i class="fa fa-pencil"></i></a>
+                          <a class="btn bg-green btn-flat margin" onclick="valListados()"><i class="fas fa-pen-square"></i></a>
                           <a href="#" class="btn bg-maroon btn-flat margin" onclick="valListados()"><i class="fa fa-trash"></i></a><?php
                         }
                         ?>

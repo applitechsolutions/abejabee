@@ -39,7 +39,7 @@
                 <tbody>
                 <?php
                   try{
-                    $sql = "SELECT idUser, firstName, lastName, userName, permissions FROM user WHERE idUser !=".$_SESSION['idusuario']." AND state = 0";
+                    $sql = "SELECT idUser, firstName, lastName, userName, permissions FROM user WHERE idUser !=".$_SESSION['idusuario']." AND state = 0 ORDER BY firstName ASC";
                     $resultado = $conn->query($sql);
                   } catch (Exception $e){
                     $error= $e->getMessage();
@@ -60,10 +60,10 @@
                       <td>
                       <?php 
                       if ($_SESSION['rol'] == 1) {?>
-                        <a class="btn bg-green btn-flat margin" href="editUser.php?id=<?php echo $user['idUser'] ?>"><i class="fa fa-pencil"></i></a>
+                        <a class="btn bg-green btn-flat margin" href="editUser.php?id=<?php echo $user['idUser'] ?>"><i class="fas fa-pen-square"></i></a>
                         <a href="#" data-id="<?php echo $user['idUser']; ?>" data-tipo="user" class="btn bg-maroon btn-flat margin borrar_usuario"><i class="fa fa-trash"></i></a><?php
                       }elseif ($_SESSION['rol'] == 2) {?>
-                        <a class="btn bg-green btn-flat margin" onclick="valListados()"><i class="fa fa-pencil"></i></a>
+                        <a class="btn bg-green btn-flat margin" onclick="valListados()"><i class="fas fa-pen-square"></i></a>
                         <a href="#" onclick="valListados()" class="btn bg-maroon btn-flat margin"><i class="fa fa-trash"></i></a><?php
                       }?>
                       </td>

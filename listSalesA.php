@@ -318,7 +318,7 @@ try {
     $sql = "SELECT S.*,
                     (select concat(sellerFirstName, ' ', sellerLastName) from seller where idSeller = S._idSeller) as seller,
                     (select concat(customerCode, ' ', customerName) from customer where idCustomer = S._idCustomer) as customer
-                    FROM sale S WHERE S.cancel = 0 AND S.state = 0";
+                    FROM sale S WHERE S.cancel = 0 AND S.state = 0 ORDER BY S.idSale DESC";
     $resultado = $conn->query($sql);
 } catch (Exception $e) {
     $error = $e->getMessage();

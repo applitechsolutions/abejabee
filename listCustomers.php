@@ -53,7 +53,7 @@
                     (SELECT name FROM town WHERE idTown = C._idTown) as townName,
                     (SELECT name FROM village WHERE idVillage = C._idVillage) as villaName,
                     (SELECT routeName FROM route WHERE idRoute = C._idRoute and state = 0) as roName
-                    FROM customer C WHERE state = 0";
+                    FROM customer C WHERE state = 0 ORDER BY customerCode ASC";
                     $resultado = $conn->query($sql);
                   } catch (Exception $e){
                     $error= $e->getMessage();
@@ -100,13 +100,13 @@
                       <?php 
                       if ($_SESSION['rol'] == 1) {?>
                         <a class="btn bg-green btn-flat margin" href="editCustomer.php?id=<?php echo $customer['idCustomer'] ?>">
-                          <i class="fa fa-pencil"></i>
+                        <i class="fas fa-pen-square"></i>
                         </a>
                         <a href="#" data-id="<?php echo $customer['idCustomer']; ?>" data-tipo="customer" class="btn bg-maroon btn-flat margin borrar_customer">
                           <i class="fa fa-trash"></i>
                         </a><?php
                       }else if ($_SESSION['rol'] == 2) {?>
-                        <a class="btn bg-green btn-flat margin" onclick="valListados()"><i class="fa fa-pencil"></i></a>
+                        <a class="btn bg-green btn-flat margin" onclick="valListados()"><i class="fas fa-pen-square"></i></a>
                         <a href="#" onclick="valListados()" class="btn bg-maroon btn-flat margin"><i class="fa fa-trash"></i></a><?php
                       }
                       ?>
