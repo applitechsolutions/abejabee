@@ -126,7 +126,7 @@ $pagina = '
                 </div>
             </div>
             <div>
-                    <h4 style="text-align: left;"><strong>' . $producto . '</strong><br>Existencia Actual: ' . $existencia . '</h4>
+                <h4 style="text-align: left;"><strong>' . $producto . '</strong><br>Existencia Actual: ' . $existencia . '</h4>
             </div>
             <div>
                 <h3>COMPRAS</h3>

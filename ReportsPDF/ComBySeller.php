@@ -21,7 +21,21 @@ try {
     FROM sale S INNER JOIN detailS D ON S.idSale = D._idSale
     WHERE S._idSeller = $idVendedor AND S.dateStart BETWEEN '$fi' AND '$ff' GROUP BY (SELECT idProduct FROM product WHERE idProduct = D._idProduct) ORDER BY S.dateStart ASC";
 
+    $sql2 = "SELECT S.idSale,
+    (SELECT concat(sellerFirstName, ' ', sellerLastName) from seller where idSeller = S._idSeller) as seller,
+    (SELECT makeName FROM make WHERE idMake = (SELECT _idMake FROM product WHERE idProduct = D._idProduct)) as marca,
+    SUM(quantity) AS cantidad, SUM((priceS-discount)*quantity) AS subtotal
+    FROM sale S INNER JOIN detailS D ON S.idSale = D._idSale
+    WHERE S._idSeller = $idVendedor AND S.dateStart BETWEEN '$fi' AND '$ff' GROUP BY (SELECT makeName FROM make WHERE idMake = (SELECT _idMake FROM product WHERE idProduct = D._idProduct)) ORDER BY SUM((priceS-discount)*quantity) asc";
+
+    $sql3 = "SELECT S.*, 
+    (select concat(sellerFirstName, ' ', sellerLastName) from seller where idSeller = S._idSeller) as seller,
+    (select concat(customerCode, ' ', customerName) from customer where idCustomer = S._idCustomer) as customer
+    FROM sale S WHERE S._idSeller = $idVendedor AND S.dateStart BETWEEN '$fi' AND '$ff' ORDER BY S.dateStart ASC";
+
     $resultado = $conn->query($sql);
+    $resultado2 = $conn->query($sql2);
+    $resultado3 = $conn->query($sql3);
     $res = $conn->query($sql);
 } catch (Exception $e) {
     $error = $e->getMessage();
@@ -30,6 +44,8 @@ try {
 
 while ($nombre = $res->fetch_assoc()) {
     $vendedor = $nombre['seller'];
+    $subtotal = $nombre['subtotal'];
+    $Total += $subtotal;
 }
 
 $dia1 = strftime("%d", strtotime($fi));
@@ -71,9 +87,9 @@ function mes($mes)
 }
 
 if ($year1 == $year2) {
-    $mensaje = 'Del ' . $dia1 . ' de ' . mes($mes1) . ' al ' . $dia2 . ' de ' . mes($mes2) . ' del ' . $year1;
+    $mensaje = 'Del ' . $dia1 . ' de ' . mes($mes1) . ' al ' . $dia2 . ' de ' . mes($mes2) . ' de ' . $year1;
 } else {
-    $mensaje = 'Del ' . $dia1 . ' de ' . mes($mes1) . ' del ' . $year1 . ' al ' . $dia2 . ' de ' . mes($mes2) . ' del ' . $year2;
+    $mensaje = 'Del ' . $dia1 . ' de ' . mes($mes1) . ' del ' . $year1 . ' al ' . $dia2 . ' de ' . mes($mes2) . ' de ' . $year2;
 }
 
 $pagina = '
@@ -106,8 +122,12 @@ $pagina = '
                     <h3>Ventas realizadas por ' . $vendedor . '</h3>
                     <h4>' . $mensaje . '</h4>
                 </div>
+                <div>
+                    <h4 style="text-align: left; font-weight: bold;">Total Vendido: Q. ' . number_format($Total, 2, '.', ',') . '</h4>
+                </div>
             </div>
             <div id="contenido">
+                <h3>Ventas por Producto</h3>
                 <table class="w3-table-all">
                     <thead style="background-color: black;">
                         <tr>
@@ -120,10 +140,7 @@ $pagina = '
                         </tr>
                     </thead>
                     <tbody class="w3-white">';
-$Total = 0;
 while ($sale = $resultado->fetch_assoc()) {
-    $subtotal = $sale['subtotal'];
-    $Total += $subtotal;
     $dateStar = date_create($sale['dateStart']);
     $pagina .= '
                         <tr>
@@ -132,19 +149,66 @@ while ($sale = $resultado->fetch_assoc()) {
                             <td>' . $sale['codigo'] . ' ' . $sale['nombre'] . '</td>
                             <td>' . $sale['marca'] . '</td>
                             <td>' . $sale['cantidad'] . '</td>
-                            <td>Q. ' . $subtotal . '</td>
+                            <td>Q. ' . $sale['subtotal'] . '</td>
                         </tr>';
 }
-$pagina .= '</tbody>
-                    <tfoot>
+        $pagina .= '</tbody>
+                </table>
+                <br>
+                <h3>Ventas por Casa</h3>
+                <table class="w3-table-all">
+                    <thead style="background-color: black;">
                         <tr>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th style="text-align: right;" colspan="2">Total vendido:</th>
-                        <td>Q. <small>' . number_format($Total, 2, '.', ',') . '</small></td>
+                            <th style="background-color: #1d2128; color: white">Marca</th>
+                            <th style="background-color: #1d2128; color: white">Cantidad</th>
+                            <th style="background-color: #1d2128; color: white">Subtotal</th>
                         </tr>
-                    </tfoot>
+                    </thead>
+                    <tbody class="w3-white">';
+while ($sale2 = $resultado2->fetch_assoc()) {
+    $pagina .= '
+                        <tr>
+                            <td>' . $sale2['marca'] . '</td>
+                            <td>' . $sale2['cantidad'] . '</td>
+                            <td>Q. ' . $sale2['subtotal'] . '</td>
+                        </tr>';
+}
+        $pagina .= '</tbody>
+                </table>
+                <br>
+                <h3>Ventas por Remisión</h3>
+                <table class="w3-table-all">
+                    <thead style="background-color: black;">
+                        <tr>
+                            <th style="background-color: #1d2128; color: white">Fecha Inicio</th>
+                            <th style="background-color: #1d2128; color: white">No. Remisión</th>
+                            <th style="background-color: #1d2128; color: white">Cliente</th>
+                            <th style="background-color: #1d2128; color: white">Fecha Vencimiento</th>
+                            <th style="background-color: #1d2128; color: white">Método de Pago</th>
+                            <th style="background-color: #1d2128; color: white">No. Envío</th>
+                            <th style="background-color: #1d2128; color: white">Detalles</th>
+                            <th style="background-color: #1d2128; color: white">Anticipo</th>
+                            <th style="background-color: #1d2128; color: white">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody class="w3-white">';
+while ($sale3 = $resultado3->fetch_assoc()) {
+    $dateStart = date_create($sale3['dateStart']);
+    $dateEnd = date_create($sale3['dateEnd']);
+    $pagina .= '
+                        <tr>
+                            <td>' . date_format($dateStart, 'd/m/y') . '</td>
+                            <td>' . $sale3['noDeliver'] . '</td>
+                            <td>' . $sale3['customer'] . '</td>
+                            <td>' . date_format($dateEnd, 'd/m/y') . '</td>
+                            <td>' . $sale3['paymentMethod'] . '</td>
+                            <td>' . $sale3['noShipment'] . '</td>
+                            <td>' . $sale3['note'] . '</td>
+                            <td>Q. ' . $sale3['advance'] . '</td>
+                            <td>Q. ' . $sale3['totalSale'] . '</td>
+                        </tr>';
+}
+        $pagina .= '</tbody>
                 </table>
             </div>
         </div>
