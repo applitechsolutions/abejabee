@@ -14,8 +14,8 @@ include_once 'funciones/bd_conexion.php';
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                <i class="glyphicon glyphicon-tags"></i> Ventas
-                <small>Listado de ventas activas con saldo pendiente de cancelar</small>
+            <i class="fas fa-file-invoice"></i> Facturas
+                <small>Listado de ventas activas.</small>
             </h1>
         </section>
 
@@ -318,7 +318,7 @@ try {
     $sql = "SELECT S.*,
                     (select concat(sellerFirstName, ' ', sellerLastName) from seller where idSeller = S._idSeller) as seller,
                     (select concat(customerCode, ' ', customerName) from customer where idCustomer = S._idCustomer) as customer
-                    FROM sale S WHERE S.cancel = 0 AND S.state = 0 ORDER BY S.idSale DESC";
+                    FROM sale S WHERE S.cancel = 0 AND S.state = 0 AND S.noBill IS NOT NULL ORDER BY S.idSale DESC";
     $resultado = $conn->query($sql);
 } catch (Exception $e) {
     $error = $e->getMessage();
@@ -333,19 +333,8 @@ while ($sale = $resultado->fetch_assoc()) {
                                         <td>
                                             <?php echo date_format($dateStar, 'd/m/y'); ?>
                                         </td>
-                                        <td>
-                                            <small class="text-orange text-muted">Factura No°</small>
-                                            <br>
-                                            <small>
-                                                <?php echo $sale['serie'] . ' ' . $sale['noBill']; ?></small>
-                                            <br>
-                                            <?php
-if ($_SESSION['rol'] == 1) {?>
-                                            <small class="text-olive text-muted">Remision No°</small>
-                                            <?php }?>
-                                            <br>
-                                            <small>
-                                                <?php echo $sale['noDeliver']; ?></small>
+                                        <td>                                            
+                                            <?php echo $sale['serie'] . ' ' . $sale['noBill']; ?>
                                         </td>
                                         <td>
                                             <?php echo $sale['seller']; ?>
@@ -365,8 +354,8 @@ if ($_SESSION['rol'] == 1) {?>
                                         <td>Q.
                                             <?php echo $sale['advance']; ?>
                                         </td>
-                                        <td>Q.
-                                            <?php echo $sale['totalSale']; ?>
+                                        <td>
+                                            <?php echo 'Q' . $sale['totalSale']; ?>
                                         </td>
                                         <td>
                                             <div class="btn-group-vertical col-xs-8">
@@ -386,12 +375,6 @@ if ($_SESSION['rol'] == 1) {?>
                                                         <li><a href="#"
                                                                 onclick="imprimir('factura',<?php echo $sale['idSale']; ?>);">Factura</a>
                                                         </li>
-                                                        <?php
-if ($_SESSION['rol'] == 1) {?>
-                                                        <li><a href="#"
-                                                                onclick="imprimir('remision',<?php echo $sale['idSale']; ?>);">Remision</a>
-                                                        </li>
-                                                        <?php }?>
                                                         <li><a href="#"
                                                                 onclick="imprimir('guia',<?php echo $sale['idSale']; ?>);">Guía</a>
                                                         </li>

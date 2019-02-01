@@ -51,13 +51,14 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="listSalesA.php"><i class="fa fa-list-ul" aria-hidden="true"></i> Ver Activas</a></li>
-            <li><a href="listSalesC.php"><i class="fa fa-list-ol" aria-hidden="true"></i> Ver Pagadas</a></li>
+            <li><a href="listSalesA_factura.php"><i class="fa fa-list-ul" aria-hidden="true"></i> Ver Facturas</a></li>
             <?php 
             if ($_SESSION['rol'] == 1) {?>
+            <li><a href="listSalesA_remision.php"><i class="fa fa-list-ul" aria-hidden="true"></i> Ver Remisiones</a></li>
             <li><a href="newSale.php"><i class="fa fa-plus-circle" aria-hidden="true"></i> Nueva Venta</a></li><?php
             }
             ?>
+            <li><a href="listSalesC.php"><i class="fa fa-list-ol" aria-hidden="true"></i> Ver Pagadas</a></li>
              <li><a href="listSalesN.php"><i class="fa  fa-ban" aria-hidden="true"></i> Ver Anuladas</a></li>
           </ul>
         </li>
