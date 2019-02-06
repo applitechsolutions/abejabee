@@ -542,7 +542,7 @@ $(document).ready(function () {
         '<div class="row">'+
             '<button type="button" onclick="printReport6()" class="btn bg-teal-active btn-md"><i class="fa fa-print"></i>'+
             ' Imprimir</button>'+
-        '</div><div class="row"><div class="form-group col-lg-6 pull-right"><div class="input-group"><span class="input-group-addon"><span class="text-danger text-uppercase">*</span><label for="totalVentas" class="control-label">Total:</label><span><h4 id="totalVentas" class="text-bold">0</h4></span></span></div></div></div>';
+        '</div><div class="row"><div class="form-group col-lg-6 pull-right"><div class="input-group"><span class="input-group-addon"><span class="text-danger text-uppercase">*</span><label for="totalVentasStock" class="control-label">Total:</label><span><h4 id="totalVentas" class="text-bold">0</h4></span></span></div></div></div>';
 
         $("#listadoReporte6").append(tabla);        
         $("#listadoReporte6-5").append(tabla1);
@@ -613,7 +613,7 @@ $(document).ready(function () {
                     $(".contenidoRPT6-5").append(contenido);
                 });
                 $('#totalStock').text(actTotal);
-                $('#totalVentas').text(totalV);
+                $('#totalVentasStock').text(totalV);
                 swal.close();
                 funciones2();                
             },

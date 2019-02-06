@@ -624,10 +624,10 @@ $(document).ready(function () {
         console.log('true');
       });
 
-      $('#cheque').on('ifUnchecked', function(event){
-        bandera = 0;
-        console.log('false');
-      });
+    $('#cheque').on('ifUnchecked', function(event){
+    bandera = 0;
+    console.log('false');
+    });
 
     $('.detalle_balanceC').on('click', function (e) {
         e.preventDefault();
