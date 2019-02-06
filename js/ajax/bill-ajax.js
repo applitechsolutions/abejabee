@@ -62,6 +62,50 @@ $(document).ready(function () {
             })
         });
     });
+
+    $('.detalle_bill').on('click', function (e) {
+        e.preventDefault();
+        $("#detalles").find('tbody').html("");
+        var id = $(this).attr('data-id');
+        var tipo = $(this).attr('data-tipo');
+
+        swal({
+            title: 'Cargando detalle de Factura...'
+        });
+        swal.showLoading();
+        $.ajax({
+            type: 'POST',
+            data: {
+                'id': id
+            },
+            url: 'BLL/' + tipo + '.php',
+            success(data) {
+                console.log(data);
+                $.each(data, function (key, registro) {
+                    var nuevaFila = "<tr>";
+                    var sub = registro.quantity * (parseFloat(Math.round(registro.priceB * 100) / 100).toFixed(2) - parseFloat(Math.round(registro.discount * 100) / 100).toFixed(2));
+                    nuevaFila += "<td><img src='img/products/" + registro.imagen + "'width='80' onerror='ImgError(this);'></td>";
+                    nuevaFila += "<td><input class='idproducto_class' type='hidden' value='" + registro._idProduct + "'>" + registro.nombre + "</td>";
+                    nuevaFila += "<td>" + registro.codigo + "</td>";
+                    nuevaFila += "<td><input class='cantidad_class' type='hidden' value='" + registro.quantity + "'>" + registro.quantity + "</td>";
+                    nuevaFila += "<td>Q." + registro.priceB + "</td>";
+                    nuevaFila += "<td>Q." + registro.discount + "</td>";
+                    nuevaFila += "<td>Q." + sub.toFixed(2) + "</td>";
+                    nuevaFila += "</tr>";
+                    $("#detalles").append(nuevaFila);
+                });
+                swal.close();
+                $('#modal-detailS').modal('show');
+            },
+            error: function (data) {
+                swal({
+                    type: 'error',
+                    title: 'Error',
+                    text: 'No se puede agregar al carrito',
+                })
+            }
+        });
+    });
 });
 
 function eliminarDetalle_Factura(id) {

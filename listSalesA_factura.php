@@ -293,14 +293,14 @@ if ($_SESSION['rol'] == 1) {?>
                             <table id="registros" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <th>Fecha</th>
                                         <th>Factura No°</th>
-                                        <th>Vendedor</th>
+                                        <th>Código vendedor</th>
+                                        <th>Código Cliente</th>
                                         <th>Cliente</th>
+                                        <th>Nit</th>
+                                        <th>Dirección</th>
+                                        <th>Teléfono</th>
                                         <th>Fecha de vencimiento</th>
-                                        <th>Método de pago</th>
-                                        <th>Envío No°</th>
-                                        <th>Anticipo</th>
                                         <th>Total</th>
                                         <th>Acciones <i class="fa fa-cogs"></i></th>
                                     </tr>
@@ -308,52 +308,48 @@ if ($_SESSION['rol'] == 1) {?>
                                 <tbody>
                                     <?php
 try {
-    $sql = "SELECT S.*,
-                    (select concat(sellerFirstName, ' ', sellerLastName) from seller where idSeller = S._idSeller) as seller,
-                    (select concat(customerCode, ' ', customerName) from customer where idCustomer = S._idCustomer) as customer
-                    FROM sale S WHERE S.cancel = 0 AND S.state = 0 AND S.noBill IS NOT NULL ORDER BY S.idSale DESC";
+    $sql = "SELECT B.* FROM bill B ORDER BY B.noBill DESC";
     $resultado = $conn->query($sql);
 } catch (Exception $e) {
     $error = $e->getMessage();
     echo $error;
 }
 
-while ($sale = $resultado->fetch_assoc()) {
-    $dateStar = date_create($sale['dateStart']);
-    $dateEnd = date_create($sale['dateEnd']);
+while ($bill = $resultado->fetch_assoc()) {
+    $dateEnd = date_create($bill['dateEnd']);
     ?>
                                     <tr>
-                                        <td>
-                                            <?php echo date_format($dateStar, 'd/m/y'); ?>
-                                        </td>
                                         <td>                                            
-                                            <?php echo $sale['serie'] . ' ' . $sale['noBill']; ?>
+                                            <?php echo $bill['serie'] . ' ' . $bill['noBill']; ?>
                                         </td>
                                         <td>
-                                            <?php echo $sale['seller']; ?>
+                                            <?php echo $bill['codeSeller']; ?>
                                         </td>
                                         <td>
-                                            <?php echo $sale['customer']; ?>
+                                            <?php echo $bill['codeCustomer']; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $bill['custName']; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $bill['custNit']; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $bill['address']; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $bill['mobile']; ?>
                                         </td>
                                         <td>
                                             <?php echo date_format($dateEnd, 'd/m/y'); ?>
                                         </td>
                                         <td>
-                                            <?php echo $sale['paymentMethod']; ?>
-                                        </td>
-                                        <td>
-                                            <?php echo $sale['noShipment'] . "___ " . $sale['note']; ?>
-                                        </td>
-                                        <td>Q.
-                                            <?php echo $sale['advance']; ?>
-                                        </td>
-                                        <td>
-                                            <?php echo 'Q' . $sale['totalSale']; ?>
+                                            <?php echo 'Q' . $bill['total']; ?>
                                         </td>
                                         <td>
                                             <div class="btn-group-vertical col-xs-8">
-                                                <button type="button" class="btn btn-success btn-sm detalle_sale"
-                                                    data-id="<?php echo $sale['idSale']; ?>" data-tipo="listDetailS"><i
+                                                <button type="button" class="btn btn-success btn-sm detalle_bill"
+                                                    data-id="<?php echo $bill['idBill']; ?>" data-tipo="listDetailB"><i
                                                         class="fa fa-info"></i> Detalles</button>
                                                 <!-- <button type="button" class="btn btn-primary btn-sm detalle_balance"
                                                     data-id="<?php //echo $sale['idSale']; ?>" data-tipo="listBalance"><i
@@ -365,10 +361,10 @@ while ($sale = $resultado->fetch_assoc()) {
                                                         <span><i class="fa fa-print"></i> Imprimir</span>
                                                     </button>
                                                     <ul class="dropdown-menu">
-                                                        <li><a href="printSale.php?id=<?php echo $sale['idSale']; ?>"> Factura</a>
+                                                        <li><a href="printSale.php?id=<?php echo $bill['_idSale']; ?>"> Factura</a>
                                                         </li>
                                                         <li><a href="#"
-                                                                onclick="imprimir('guia',<?php echo $sale['idSale']; ?>);">Guía</a>
+                                                                onclick="imprimir('guia',<?php echo $bill['_idSale']; ?>);">Guía</a>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -380,14 +376,14 @@ while ($sale = $resultado->fetch_assoc()) {
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th>Fecha</th>
                                         <th>Factura No°</th>
-                                        <th>Vendedor</th>
+                                        <th>Código vendedor</th>
+                                        <th>Código Cliente</th>
                                         <th>Cliente</th>
+                                        <th>Nit</th>
+                                        <th>Dirección</th>
+                                        <th>Teléfono</th>
                                         <th>Fecha de vencimiento</th>
-                                        <th>Método de pago</th>
-                                        <th>Envío No°</th>
-                                        <th>Anticipo</th>
                                         <th>Total</th>
                                         <th>Acciones <i class="fa fa-cogs"></i></th>
                                     </tr>
