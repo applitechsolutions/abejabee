@@ -602,6 +602,7 @@ $(document).ready(function () {
                 $.each(data, function (key, registro) {
                     actTotal = registro.stock;
                     totalV = parseInt(totalV) + parseInt(registro.quantity);
+                    console.log(registro.quantity);
                     var contenido = "<tr>";
                     contenido += "<td>" + convertDate(registro.dateStart) + "</td>";
                     contenido += "<td>" + registro.serie + " " + registro.noBill +"</td>";
@@ -612,6 +613,7 @@ $(document).ready(function () {
                     contenido += '</tr>';
                     $(".contenidoRPT6-5").append(contenido);
                 });
+                console.log(totalV);
                 $('#totalStock').text(actTotal);
                 $('#totalVentasStock').text(totalV);
                 swal.close();
