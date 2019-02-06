@@ -7,7 +7,7 @@ try{
     	(select (select concat(codeRoute, ' ', routeName) from route where idRoute = _idRoute) as route from customer where idCustomer = S._idCustomer) as route,
     (select concat(sellerCode, ' ', sellerFirstName, ' ', sellerLastName) from seller where idSeller = S._idSeller) as seller,
     (select concat(customerCode, ' ', customerName) from customer where idCustomer = S._idCustomer) as customer,
-    S.idSale, S.noBill, S.serie, S.noDeliver, S.advance, S.totalSale, S.dateStart, S.dateEnd, S.noShipment,
+    S.idSale, S.noDeliver, S.advance, S.totalSale, S.dateStart, S.dateEnd, S.noShipment,
     DATEDIFF(curdate(), S.dateEnd) as days,
     CASE WHEN DATEDIFF(curdate(), S.dateEnd) > 29 AND DATEDIFF(curdate(), S.dateEnd) < 60 THEN 
     (SELECT balance FROM balance where _idSale = S.idSale order by idBalance desc limit 1) END as mora30,
@@ -60,7 +60,7 @@ $pagina='
                             <th style="background-color: #1d2128; color: white">Ruta</th>
                             <th style="background-color: #1d2128; color: white">Vendedor</th>
                             <th style="background-color: #1d2128; color: white">Cliente</th>
-                            <th style="background-color: #1d2128; color: white">Factura No°</th>
+                            <th style="background-color: #1d2128; color: white">Remision No°</th>
                             <th style="background-color: #1d2128; color: white">Adelanto</th>
                             <th style="background-color: #1d2128; color: white">Total</th>
                             <th style="background-color: #1d2128; color: white">Fecha de Venta</th>
@@ -79,7 +79,7 @@ $pagina='
                             <td>'.$sale['route'].'</td>
                             <td>'.$sale['seller'].'</td>
                             <td>'.$sale['customer'].'</td>
-                            <td><small class="w3-deep-orange">Factura No°</small><br><small>'.$sale['serie'].' '.$sale['noBill'].'</small><br><small class="w3-indigo">Remision No°</small><br><small>'.$sale['noDeliver'].'</small></td>
+                            <td>'.$sale['noDeliver'].'</td>
                             <td>'.$sale['advance'].'</td>
                             <td>'.$sale['totalSale'].'</td>
                             <td>'.$sale['dateStart'].'</td>

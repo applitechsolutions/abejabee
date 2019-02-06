@@ -108,12 +108,12 @@ include_once 'funciones/bd_conexion.php';
                                                       class="table table-bordered table-striped product-add">
                                                       <thead>
                                                           <tr>
-                                                            <th>Fecha</th>
-                                                            <th>Recibo No°</th>
-                                                            <th>Tipo</th>
-                                                            <th>Documento No°</th>                                                              
-                                                            <th>Monto</th>                                                              
-                                                            <th>Saldo</th>
+                                                              <th>Fecha</th>
+                                                              <th>Recibo No°</th>
+                                                              <th>Tipo</th>
+                                                              <th>Documento No°</th>
+                                                              <th>Monto</th>
+                                                              <th>Saldo</th>
                                                       </thead>
                                                       <tbody>
                                                       </tbody>
@@ -188,7 +188,7 @@ include_once 'funciones/bd_conexion.php';
                                   <thead>
                                       <tr>
                                           <th>Fecha</th>
-                                          <th>Factura No°</th>
+                                          <th>Remision No°</th>
                                           <th>Vendedor</th>
                                           <th>Cliente</th>
                                           <th>Fecha de vencimiento</th>
@@ -221,16 +221,7 @@ while ($sale = $resultado->fetch_assoc()) {
                                               <?php echo date_format($dateStar, 'd/m/y'); ?>
                                           </td>
                                           <td>
-                                              <small class="text-orange text-muted">Factura No°</small>
-                                              <br>
-                                              <small><?php echo $sale['serie'] . ' ' . $sale['noBill']; ?></small>
-                                              <br>
-                                              <?php
-if ($_SESSION['rol'] == 1) {?>
-                                              <small class="text-olive text-muted">Remision No°</small>
-                                              <?php }?>
-                                              <br>
-                                              <small><?php echo $sale['noDeliver']; ?></small>
+                                                <?php echo $sale['noDeliver']; ?>
                                           </td>
                                           <td>
                                               <?php echo $sale['seller']; ?>
@@ -268,8 +259,8 @@ if ($_SESSION['rol'] == 1) {?>
                                                           <span><i class="fa fa-print"></i> Imprimir</span>
                                                       </button>
                                                       <ul class="dropdown-menu">
-                                                          <li><a href="#"
-                                                                  onclick="imprimir('factura',<?php echo $sale['idSale']; ?>);">Factura</a>
+                                                          <li><a
+                                                                  href="printSale.php?id=<?php echo $sale['idSale']; ?>">Factura</a>
                                                           </li>
                                                           <?php
 if ($_SESSION['rol'] == 1) {?>
@@ -291,7 +282,7 @@ if ($_SESSION['rol'] == 1) {?>
                                   <tfoot>
                                       <tr>
                                           <th>Fecha</th>
-                                          <th>Factura No°</th>
+                                          <th>Remision No°</th>
                                           <th>Vendedor</th>
                                           <th>Cliente</th>
                                           <th>Fecha de vencimiento</th>

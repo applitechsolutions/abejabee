@@ -6,7 +6,7 @@
     (select (select concat(codeRoute, ' ', routeName) from route where idRoute = _idRoute) as route from customer where idCustomer = S._idCustomer) as route,
     (select concat(sellerCode, ' ', sellerFirstName, ' ', sellerLastName) from seller where idSeller = S._idSeller) as seller,
     (select concat(customerCode, ' ', customerName) from customer where idCustomer = S._idCustomer) as customer,
-    S.idSale, S.noBill, S.serie, S.noDeliver, S.advance, S.totalSale, S.dateStart, S.dateEnd, S.noShipment,
+    S.idSale, S.noDeliver, S.advance, S.totalSale, S.dateStart, S.dateEnd, S.noShipment,
     DATEDIFF(curdate(), S.dateEnd) as days,
     CASE WHEN DATEDIFF(curdate(), S.dateEnd) > 29 AND DATEDIFF(curdate(), S.dateEnd) < 60 THEN 
     (SELECT balance FROM balance where _idSale = S.idSale order by idBalance desc limit 1) END as mora30,

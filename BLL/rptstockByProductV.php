@@ -7,7 +7,7 @@ $fechainicio = strtr($_POST['dateSrpt6'], '/', '-');
 
 $fi = date('Y-m-d', strtotime($fechainicio));
 
-$result = $conn->query("SELECT S.dateStart, S.noBill, S.serie, S.noDeliver, S.note, (D.priceS - D.discount) as price, D.quantity, 
+$result = $conn->query("SELECT S.dateStart, S.noDeliver, S.note, (D.priceS - D.discount) as price, D.quantity, 
 (select stock from storage WHERE _idProduct = D._idProduct) as stock
 FROM `details` D INNER JOIN sale S ON D._idSale = S.idSale WHERE D._idProduct = $product AND S.dateStart >= '$fi' AND S.state = 0");
 $outp = array();

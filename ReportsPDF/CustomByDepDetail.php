@@ -7,7 +7,7 @@ include_once '../funciones/bd_conexion.php';
 $idCliente = $_GET['idCliente'];
 
 try{
-    $sql = "SELECT serie, noBill, noDeliver, dateStart,
+    $sql = "SELECT noDeliver, dateStart,
     (SELECT customerName FROM customer WHERE idCustomer = S._idCustomer) as customer,
     (SELECT balance FROM balance WHERE _idSale = idSale ORDER BY idBalance DESC LIMIT 1) AS saldo
     FROM sale S WHERE _idCustomer = $idCliente AND cancel = 0";
@@ -68,7 +68,7 @@ $pagina='
             while ($cliente = $resultado->fetch_assoc()) {
                 $pagina.='
                         <tr>
-                            <td><small class="w3-deep-orange">Factura No°</small><br><small>'.$cliente['serie'].' '.$cliente['noBill'].'</small><br><small class="w3-indigo">Remision No°</small><br><small>'.$cliente['noDeliver'].'</small></td>
+                            <td>'.$cliente['noDeliver'].'</td>
                             <td>'.$cliente['dateStart'].'</td>
                             <td>Q.'.$cliente['saldo'].'</td>
                         </tr>';

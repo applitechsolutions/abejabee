@@ -372,8 +372,7 @@ while ($sale = $resultado->fetch_assoc()) {
                                                         <span><i class="fa fa-print"></i> Imprimir</span>
                                                     </button>
                                                     <ul class="dropdown-menu">
-                                                        <li><a href="#"
-                                                                onclick="imprimir('factura',<?php echo $sale['idSale']; ?>);">Factura</a>
+                                                        <li><a href="printSale.php?id=<?php echo $sale['idSale']; ?>"> Factura</a>
                                                         </li>
                                                         <?php
 if ($_SESSION['rol'] == 1) {?>

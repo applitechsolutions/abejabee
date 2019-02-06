@@ -38,56 +38,6 @@ if (!filter_var($id, FILTER_VALIDATE_INT)) {
               $sale = $resultado->fetch_assoc();
               ?>
 
-            <!-- MODAL CORRELATIVO -->
-            <div class="modal fade" id="modal-correlative">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title">
-                      <i class="glyphicon glyphicon-print" aria-hidden="true"></i> Correlativo de facturación</h4>
-                  </div>
-                  <div class="modal-body">
-                    <form role="form" id="form-correlative" name="form-correlative" method="post" action="BLL/correlative.php">
-                      <div class="row">
-                        <?php
-try {
-    $sql = "SELECT * FROM correlative WHERE idCorrelative = 1";
-    $resultado = $conn->query($sql);
-    while ($correlative = $resultado->fetch_assoc()) {?>
-                          <div class="form-group col-lg-6">
-                            <span class="text-danger text-uppercase">*</span>
-                            <label for="serieC">Serie</label>
-                            <input type="text" class="form-control" id="serieC" name="serieC" value="<?php echo $correlative['serie']; ?>">
-                          </div>
-                          <div class="form-group col-lg-6">
-                            <span class="text-danger text-uppercase">*</span>
-                            <label for="last">Última factura ingresada</label>
-                            <input type="text" class="form-control" id="last" name="last" value="<?php echo $correlative['last']; ?>">
-                          </div>
-                          <?php
-}
-} catch (Exception $e) {
-    echo "Error: " . $e->getMessage();
-}
-?>
-                      </div>
-                      <div class="modal-footer">
-                        <input type="hidden" name="correlative" value="factura">
-                        <button type="submit" class="btn btn-info pull-left" id="crear-correlativo">
-                          <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
-                        <span class="text-warning w3-small w3-padding-small pull-left">*Debe llenar los campos obligatorios</span>
-                        <button id="correlativeClose" type="button" class="btn btn-danger w3-round-medium pull-right" data-dismiss="modal">Cerrar</button>
-                      </div>
-                  </div>
-                  </form>
-                </div>
-              </div>
-              <!-- /.modal-dialog -->
-            </div>
-
             <!-- /.modal-REMISION -->
             <div class="modal fade" id="modal-remi">
               <div class="modal-dialog">
@@ -229,27 +179,6 @@ try {
                                 </div>
                               </div>
                             </div>
-                              <div class="form-group col-lg-1">
-                                <label for="serie">Serie</label>
-                                <input type="hidden" class="form-control" id="serieS1" name="serieS" value="<?php echo $sale['serie']; ?>">
-                                <input type="text" class="form-control" id="serieS" name="serie" value="<?php echo $sale['serie']; ?>" disabled>
-                              </div>
-
-                              <div class="form-group col-lg-3">
-                                <label for="noBill">No. de factura</label>
-                                <div class="input-group">
-
-                                  <input type="text" class="form-control" id="noBillS" name="noBill" value="<?php echo $sale['noBill']; ?>" disabled>
-                                  <input type="hidden" class="form-control" id="noBillS1" name="noBillS" value="<?php echo $sale['noBill']; ?>">
-                                  <div class="input-group-btn">
-                                    <button type="button" class="btn bg-info" data-toggle="modal" data-target="#modal-correlative">
-                                      <i class="glyphicon glyphicon-print" aria-hidden="true"></i>
-                                      Correlativo
-                                    </button>
-                                  </div>
-                                  <!-- /btn-group -->
-                                </div>
-                              </div>
                                   <div class="form-group col-lg-3">
                                     <label for="noRemi">No. de Guía de remision</label>
                                     <div class="input-group">

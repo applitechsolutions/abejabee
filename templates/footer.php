@@ -1,8 +1,9 @@
 <footer class="main-footer">
     <div class="pull-right hidden-xs">
-        <b>Version</b> 1.0.0
+        <b>Version</b> 1.1.0
     </div>
-    <strong>Copyright &copy; 2018 <a href="#">Applitech Solutions</a>.</strong> Todos Los Derechos Reservados.
+    <strong>Copyright &copy; 2018 - <?php echo date("Y"); ?> <a href="#">Applitech Solutions</a>.</strong> Todos Los
+    Derechos Reservados.
 </footer>
 
 
@@ -42,6 +43,8 @@ function convertDate(dateString) {
 <script src="js/Chart.min.js">
 </script>
 <!-- AJAX FOR SCHLENKER PHARMA -->
+<script src="js/ajax/bill-ajax.js">
+</script>
 <script src="js/ajax/reports-ajax.js">
 </script>
 <script src="js/ajax/sale-ajax.js">

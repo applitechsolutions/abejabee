@@ -8,13 +8,13 @@ $idRoute = $_GET['idDepartamento'];
 
 try {
     $sql = "SELECT idCustomer, customerCode, customerName, customerTel,
-    (SELECT routeName FROM route WHERE idRoute = C._idRoute) as depName, S.serie, S.noBill, S.noDeliver, S.dateStart,
+    (SELECT routeName FROM route WHERE idRoute = C._idRoute) as depName, S.noDeliver, S.dateStart,
     (SELECT balance FROM balance WHERE _idSale = idSale ORDER BY idBalance DESC LIMIT 1) AS saldo,
     (SELECT SUM(amount) FROM balance WHERE _idSale = idSale AND cheque = 1 AND state = 1) AS abono
     FROM customer C INNER JOIN sale S ON C.idCustomer = S._idCustomer
     WHERE _idRoute = $idRoute AND S.cancel = 0 AND S.state = 0 ORDER BY C.idCustomer ASC";
 
-    $sql2 = "SELECT S.serie, S.noBill, S.noDeliver, B.noDocument, B.date, B.amount, B.noReceipt, B.balance
+    $sql2 = "SELECT S.noDeliver, B.noDocument, B.date, B.amount, B.noReceipt, B.balance
 FROM customer C INNER JOIN sale S ON C.idCustomer = S._idCustomer INNER JOIN balance B ON S.idSale = B._idSale
 WHERE _idRoute = $idRoute AND S.cancel = 0 AND S.state = 0 AND B.cheque = 1 AND B.state = 1 ORDER BY C.idCustomer ASC";
 
@@ -88,7 +88,7 @@ while ($cliente = $resultado->fetch_assoc()) {
                             <td>' . $cliente['customerCode'] . '</td>
                             <td>' . $cliente['customerName'] . '</td>
                             <td>' . $cliente['customerTel'] . '</td>
-                            <td><small class="w3-deep-orange">Factura No°</small><br><small>' . $cliente['serie'] . ' ' . $cliente['noBill'] . '</small><br><small class="w3-indigo">Remision No°</small><br><small>' . $cliente['noDeliver'] . '</small></td>
+                            <td>' . $cliente['noDeliver'] . '</td>
                             <td>' . date_format($dateStart, 'd/m/y') . '</td>
                             <td>' . 'Q.' . $cliente['saldo'] . '</td>
                             <td><small class="w3-text-gray">Abono: </small><br><small>' . 'Q.' . $abono . '</small><br><small class="w3-text-green">Saldo: </small><br><small>' . 'Q.' . number_format($saldo, 2, '.', ',') . '</small></td>
@@ -104,7 +104,7 @@ $pagina .= '</tbody>
                 <table class="w3-table-all">
                     <thead style="background-color: black;">
                         <tr>
-                            <th style="background-color: #1d2128; color: white">Factura/Remision</th>
+                            <th style="background-color: #1d2128; color: white">Remision No.</th>
                             <th style="background-color: #1d2128; color: white">Fecha</th>
                             <th style="background-color: #1d2128; color: white">Documento</th>
                             <th style="background-color: #1d2128; color: white">Recibo</th>
@@ -117,7 +117,7 @@ while ($cheque = $resultadoCheques->fetch_assoc()) {
     $date = date_create($cheque['date']);
     $pagina .= '
                         <tr>
-                            <td><small class="w3-deep-orange">Factura No°</small><br><small>' . $cheque['serie'] . ' ' . $cheque['noBill'] . '</small><br><small class="w3-indigo">Remision No°</small><br><small>' . $cheque['noDeliver'] . '</small></td>
+                            <td>' . $cheque['noDeliver'] . '</td>
                             <td>' . date_format($date, 'd/m/y') . '</td>
                             <td>' . $cheque['noDocument'] . '</td>
                             <td>' . $cheque['noReceipt'] . '</td>

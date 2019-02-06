@@ -624,7 +624,7 @@ $(document).ready(function () {
         console.log('true');
       });
 
-      $('#cheque').on('ifUnchecked', function(event){
+    $('#cheque').on('ifUnchecked', function(event){
         bandera = 0;
         console.log('false');
       });
@@ -992,80 +992,26 @@ function recargarPagina() {
 }
 
 function generarFactura() {
-    var serie = $("#serieS").val();
-    var last = parseInt($("#noBillS").val());
-    var idSale = $("#idSale").val();
-
-    updateCorrelativo('factura', serie, last);
-    $.ajax({
-        type: "POST",
-        data: {
-            'venta': 'editarCorrelativo',
-            'idSale': idSale,
-            'serie': serie,
-            'last': last
-        },
-        url: 'BLL/sale.php',
-        datatype: 'json',
-        success: function (data) {
-            console.log(data);
-            var resultado = JSON.parse(data);
-            if (resultado.respuesta == 'exito') {
-                changeReportF('factura.php?idSale=' + idSale);
-            } else if (resultado.respuesta == 'vacio') { } else if (resultado.respuesta == 'error') { }
-        }
-    })
+    swal({
+        title: '¿Estás Seguro?',
+        text: "Abandonara este sitio para personalizar la factura",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, abandonar!',
+        cancelButtonText: 'Cancelar'
+    }).then(() => {
+        var idSale = $("#idSale").val();
+        setTimeout(function() {
+            window.location.href = 'printSale.php?id='+idSale;
+        }, 500);
+    });   
 }
 
 function imprimir(tipo, idSale) {
-    if (tipo == 'factura') {
-        swal({
-            title: '¿Estás Seguro?',
-            text: "Generar una impresión altera al correlativo actual",
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Sí, Generar!',
-            cancelButtonText: 'Cancelar'
-        }).then(() => {
-            $.ajax({
-                type: "GET",
-                url: 'BLL/correlativeFactura.php',
-                dataType: "json",
-                success: function (data) {
-                    console.log(data);
-                    $.each(data, function (key, registro) {
-                        var serie = registro.serie;
-                        var last = parseInt(registro.last) + parseInt(1);
 
-                        updateCorrelativo('factura', serie, last);
-                        $.ajax({
-                            type: "POST",
-                            data: {
-                                'venta': 'editarCorrelativo',
-                                'idSale': idSale,
-                                'serie': serie,
-                                'last': last
-                            },
-                            url: 'BLL/sale.php',
-                            datatype: 'json',
-                            success: function (data) {
-                                console.log(data);
-                                var resultado = JSON.parse(data);
-                                if (resultado.respuesta == 'exito') { } else if (resultado.respuesta == 'vacio') { } else if (resultado.respuesta == 'error') { }
-                            }
-                        })
-                    });
-                },
-                error: function (data) {
-                    alert('error');
-                }
-            });
-            changeReportL(tipo + '.php?idSale=' + idSale);
-            $('#modal-printS').modal('show');
-        });
-    } else if (tipo == 'guia') {
+    if (tipo == 'guia') {
         swal({
             title: '¿Estás Seguro?',
             text: "Generar una impresión altera al correlativo actual",

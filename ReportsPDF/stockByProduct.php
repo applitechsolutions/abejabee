@@ -13,7 +13,7 @@ try {
     P.noBill, P.serie, noDocument, D.costP, D.quantity
     FROM `detailp` D INNER JOIN purchase P ON D._idPurchase = p.idPurchase where D._idProduct = $product AND P.datePurchase >= '$fi'";
 
-    $sqlV = "SELECT S.dateStart, S.noBill, S.serie, S.noDeliver, S.note, (D.priceS - D.discount) as price, D.quantity,
+    $sqlV = "SELECT S.dateStart, S.noDeliver, S.note, (D.priceS - D.discount) as price, D.quantity,
     (select stock from storage WHERE _idProduct = D._idProduct) as stock
     FROM `details` D INNER JOIN sale S ON D._idSale = S.idSale WHERE D._idProduct = $product AND S.dateStart >= '$fi' AND S.state = 0";
 
@@ -180,7 +180,6 @@ $pagina .= '</tbody>
                     <thead style="background-color: black;">
                         <tr>
                             <th style="background-color: #1d2128; color: white">Fecha</th>
-                            <th style="background-color: #1d2128; color: white">Factura</th>
                             <th style="background-color: #1d2128; color: white">Remisión</th>
                             <th style="background-color: #1d2128; color: white">Detalles</th>
                             <th style="background-color: #1d2128; color: white">Precio</th>
@@ -194,7 +193,6 @@ while ($stockV = $resultadoV->fetch_assoc()) {
     $pagina .= '
                         <tr>
                             <td>' . date_format($dateS, 'd/m/y') . '</td>
-                            <td>' . $stockV['serie'] . ' ' . $stockV['noBill'] . '</td>
                             <td>' . $stockV['noDeliver'] . '</td>
                             <td>' . $stockV['note'] . '</td>
                             <td>Q. ' . $stockV['price'] . '</td>
@@ -204,7 +202,6 @@ while ($stockV = $resultadoV->fetch_assoc()) {
 $pagina .= '</tbody>
                     <tfoot>
                         <tr>
-                            <th></th>
                             <th></th>
                             <th></th>
                             <th style="text-align: right;" colspan="2">Total vendido:</th>

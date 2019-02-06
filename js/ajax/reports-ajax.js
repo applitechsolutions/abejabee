@@ -9,7 +9,7 @@ $(document).ready(function () {
                 '<thead>'+
                     '<tr>'+
                         '<th>Fecha</th>'+
-                        '<th>Factura No°</th>'+
+                        '<th>Remision No°</th>'+
                         '<th>Fecha de pago</th>'+
                         '<th>Método de pago</th>'+
                         '<th>Producto</th>'+
@@ -24,7 +24,7 @@ $(document).ready(function () {
                 '<tfoot>'+
                     '<tr>'+
                         '<th>Fecha</th>'+
-                        '<th>Factura No°</th>'+
+                        '<th>Remision No°</th>'+
                         '<th>Fecha de pago</th>'+
                         '<th>Método de pago</th>'+
                         '<th>Producto</th>'+
@@ -71,7 +71,7 @@ $(document).ready(function () {
                     totalCom = parseFloat(totalCom) + parseFloat(comi);
                     var contenido = "<tr>";
                     contenido += "<td><input class='idVen' type='hidden' value='" + registro._idSeller + "'>" + convertDate(registro.dateStart); + "</td>";
-                    contenido += '<td><small class="text-orange text-muted">Factura No°</small><br><small>'+ registro.serie +' '+ registro.noBill +'</small><br><small class="text-olive text-muted">Remision No°</small><br><small>'+ registro.noDeliver +'</small></td>';
+                    contenido += '<td>'+ registro.noDeliver +'</td>';
                     contenido += "<td>" + convertDate(registro.fechapago) + "</td>";
                     contenido += "<td>" + registro.paymentMethod + "</td>";
                     contenido += "<td>" + registro.codigo +" " + registro.nombre + "</td>";
@@ -111,7 +111,7 @@ $(document).ready(function () {
 
         swal.showLoading();
 
-        var tabla = '<div class="box-body table-responsive no-padding"><table id="registros" class="table table-bordered table-striped"><thead><tr><th>Ruta</th><th>Vendedor</th><th>Cliente</th><th>Factura No°</th><th>Adelanto</th><th>Total</th><th>Fecha de Venta</th><th>Fecha de Vencimiento</th><th>Envío No°</th><th>Días</th><th>30 días</th><th>60 días</th><th>90 días</th></tr></thead><tbody class="contenidoRPT1"></tbody><tfoot><tr><th>Ruta</th><th>Vendedor</th><th>Cliente</th><th>Factura No°</th><th>Adelanto</th><th>Total</th><th>Fecha de Venta</th><th>Fecha de Vencimiento</th><th>Envío No°</th><th>Días</th><th>30 días</th><th>60 días</th><th>90 días</th></tr></tfoot></table></div><button type="button" onclick="printReport1()" class="btn bg-teal-active btn-sm"><i class="fa fa-print"></i> Imprimir</button>';
+        var tabla = '<div class="box-body table-responsive no-padding"><table id="registros" class="table table-bordered table-striped"><thead><tr><th>Ruta</th><th>Vendedor</th><th>Cliente</th><th>Remision No°</th><th>Adelanto</th><th>Total</th><th>Fecha de Venta</th><th>Fecha de Vencimiento</th><th>Envío No°</th><th>Días</th><th>30 días</th><th>60 días</th><th>90 días</th></tr></thead><tbody class="contenidoRPT1"></tbody><tfoot><tr><th>Ruta</th><th>Vendedor</th><th>Cliente</th><th>Remision No°</th><th>Adelanto</th><th>Total</th><th>Fecha de Venta</th><th>Fecha de Vencimiento</th><th>Envío No°</th><th>Días</th><th>30 días</th><th>60 días</th><th>90 días</th></tr></tfoot></table></div><button type="button" onclick="printReport1()" class="btn bg-teal-active btn-sm"><i class="fa fa-print"></i> Imprimir</button>';
 
         $("#listadoReporte1").append(tabla);
 
@@ -127,7 +127,7 @@ $(document).ready(function () {
                     contenido += "<td>" + registro.route + "</td>";
                     contenido += "<td>" + registro.seller + "</td>";
                     contenido += "<td>" + registro.customer + "</td>";
-                    contenido += '<td><small class="text-orange text-muted">Factura No°</small><br><small>'+ registro.serie +' '+ registro.noBill +'</small><br><small class="text-olive text-muted">Remision No°</small><br><small>'+ registro.noDeliver +'</small></td>';
+                    contenido += '<td>'+ registro.noDeliver +'</td>';
                     contenido += "<td>Q." + registro.advance + "</td>";
                     contenido += "<td>Q." + registro.totalSale + "</td>";
                     contenido += "<td>" + convertDate(registro.dateStart); + "</td>";
@@ -404,7 +404,6 @@ $(document).ready(function () {
                 '<thead>'+
                     '<tr>'+
                         '<th>Fecha</th>'+
-                        '<th>Factura</th>'+
                         '<th>Remisión</th>'+
                         '<th>Detalles</th>'+
                         '<th>Precio</th>'+
@@ -415,7 +414,6 @@ $(document).ready(function () {
                 '<tfoot>'+
                     '<tr>'+
                         '<th>Fecha</th>'+
-                        '<th>Factura</th>'+
                         '<th>Remisión</th>'+
                         '<th>Detalles</th>'+
                         '<th>Precio</th>'+
@@ -489,7 +487,6 @@ $(document).ready(function () {
                     totalV = parseInt(totalV) + parseInt(registro.quantity);
                     var contenido = "<tr>";
                     contenido += "<td>" + convertDate(registro.dateStart) + "</td>";
-                    contenido += "<td>" + registro.serie + " " + registro.noBill +"</td>";
                     contenido += "<td>" + registro.noDeliver + "</td>";
                     contenido += "<td>" + registro.note + "</td>";
                     contenido += "<td>Q." + registro.price + "</td>";
@@ -616,7 +613,7 @@ function listarDetallerpt3(idc) {
             console.log(data);
             $.each(data, function (key, registro) {
                 var contenido = "<tr>";
-                contenido += '<td><small class="text-orange text-muted">Factura No°</small><br><small>'+ registro.serie +' '+ registro.noBill +'</small><br><small class="text-olive text-muted">Remision No°</small><br><small>'+ registro.noDeliver +'</small></td>';
+                contenido += '<td>'+ registro.noDeliver +'</td>';
                 contenido += "<td>" + convertDate(registro.dateStart); + "</td>";
                 contenido += "<td>Q " + registro.saldo + "</td>";
                 contenido += '</tr>';

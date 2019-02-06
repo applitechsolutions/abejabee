@@ -75,13 +75,6 @@ include_once 'funciones/bd_conexion.php';
                                             </div>
                                             <!-- /.box-body -->
                                         </div>
-                                        <?php
-if ($_SESSION['rol'] == 1) {?>
-                                        <div id="anularV" class="modal-footer">
-                                        </div>
-                                        <?php
-}?>
-
                                     </div>
                                 </div>
                             </div>
@@ -362,9 +355,9 @@ while ($sale = $resultado->fetch_assoc()) {
                                                 <button type="button" class="btn btn-success btn-sm detalle_sale"
                                                     data-id="<?php echo $sale['idSale']; ?>" data-tipo="listDetailS"><i
                                                         class="fa fa-info"></i> Detalles</button>
-                                                <button type="button" class="btn btn-primary btn-sm detalle_balance"
-                                                    data-id="<?php echo $sale['idSale']; ?>" data-tipo="listBalance"><i
-                                                        class="fa fa-balance-scale"></i> Balance</button>
+                                                <!-- <button type="button" class="btn btn-primary btn-sm detalle_balance"
+                                                    data-id="<?php //echo $sale['idSale']; ?>" data-tipo="listBalance"><i
+                                                        class="fa fa-balance-scale"></i> Balance</button> -->
                                                 <div class="btn-group">
                                                     <button type="button"
                                                         class="btn bg-teal-active btn-sm dropdown-toggle"
@@ -372,8 +365,7 @@ while ($sale = $resultado->fetch_assoc()) {
                                                         <span><i class="fa fa-print"></i> Imprimir</span>
                                                     </button>
                                                     <ul class="dropdown-menu">
-                                                        <li><a href="#"
-                                                                onclick="imprimir('factura',<?php echo $sale['idSale']; ?>);">Factura</a>
+                                                        <li><a href="printSale.php?id=<?php echo $sale['idSale']; ?>"> Factura</a>
                                                         </li>
                                                         <li><a href="#"
                                                                 onclick="imprimir('guia',<?php echo $sale['idSale']; ?>);">Guía</a>

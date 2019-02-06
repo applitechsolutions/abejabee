@@ -122,7 +122,7 @@ $pagina='
                     <thead style="background-color: black;">
                         <tr>
                             <th style="background-color: #1d2128; color: white">Fecha</th>
-                            <th style="background-color: #1d2128; color: white">Factura No°</th>
+                            <th style="background-color: #1d2128; color: white">Remision No°</th>
                             <th style="background-color: #1d2128; color: white">Fecha de pago</th>
                             <th style="background-color: #1d2128; color: white">Método de pago</th>
                             <th style="background-color: #1d2128; color: white">Producto</th>
@@ -169,7 +169,7 @@ $pagina='
                 $pagina.='
                         <tr>
                             <td>'.date_format($dateStar, 'd/m/y').'</td>
-                            <td><small class="w3-deep-orange">Factura No°</small><br><small>'.$sale['serie'].' '.$sale['noBill'].'</small><br><small class="w3-indigo">Remision No°</small><br><small>'.$sale['noDeliver'].'</small></td>
+                            <td>'.$sale['noDeliver'].'</td>
                             <td>'.date_format($fechapago, 'd/m/y').'</td>
                             <td>'.$sale['paymentMethod'].'</td>
                             <td>'.$sale['codigo'].' '.$sale['nombre'].'</td>
