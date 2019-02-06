@@ -207,7 +207,7 @@ $(document).ready(function () {
         e.preventDefault();
         limpiarReportes()
         
-        var tabla = '<div class="box-body table-responsive no-padding">'+
+        var tabla = '<h3>Ventas por Producto</h3><div class="box-body table-responsive no-padding">'+
             '<table id="registros" class="table table-bordered table-striped">'+
                 '<thead>'+
                     '<tr>'+
@@ -231,11 +231,63 @@ $(document).ready(function () {
                     '</tr>'+
                 '</tfoot>'+
             '</table>'+
-        '</div><div class="row"><button type="button" onclick="printReport4()" class="btn bg-teal-active btn-md"><i class="fa fa-print"></i>'+
-            ' Imprimir</button>'+
-            '</div><div class="row"><div class="form-group col-lg-6 pull-right"><div class="input-group"><span class="input-group-addon"><span class="text-danger text-uppercase">*</span><label for="totalVentas" class="control-label">Total:</label><span><h5 id="totalVentas" class="text-bold">Q.0.00</h5></span></span></div></div></div>';
+        '</div>';
+
+        var tabla2 = '<h3>Ventas por Casa</h3><div class="box-body table-responsive no-padding">'+
+            '<table id="registros2" class="table table-bordered table-striped">'+
+                '<thead>'+
+                    '<tr>'+
+                        '<th>Marca</th>'+
+                        '<th>Cantidad</th>'+
+                        '<th>Subtotal</th>'+
+                    '</tr>'+
+                '</thead>'+
+                '<tbody class="contenidoRPT4-1"></tbody>'+
+                '<tfoot>'+
+                    '<tr>'+
+                        '<th>Marca</th>'+
+                        '<th>Cantidad</th>'+
+                        '<th>Subtotal</th>'+
+                    '</tr>'+
+                '</tfoot>'+
+            '</table>'+
+        '</div>';
+        
+        var tabla3 = '<h3>Ventas por Remisión</h3><div class="box-body table-responsive no-padding">'+
+            '<table id="registros3" class="table table-bordered table-striped">'+
+                '<thead>'+
+                    '<tr>'+
+                        '<th>Fecha Inicio</th>'+
+                        '<th>No. Remisión</th>'+
+                        '<th>Cliente</th>'+
+                        '<th>Fecha Vencimiento</th>'+
+                        '<th>Método de Pago</th>'+
+                        '<th>No. Envío</th>'+
+                        '<th>Detalles</th>'+
+                        '<th>Anticipo</th>'+
+                        '<th>Total</th>'+
+                    '</tr>'+
+                '</thead>'+
+                '<tbody class="contenidoRPT4-2"></tbody>'+
+                '<tfoot>'+
+                    '<tr>'+
+                        '<th>Fecha Inicio</th>'+
+                        '<th>No. Remisión</th>'+
+                        '<th>Cliente</th>'+
+                        '<th>Fecha Vencimiento</th>'+
+                        '<th>Método de Pago</th>'+
+                        '<th>No. Envío</th>'+
+                        '<th>Detalles</th>'+
+                        '<th>Anticipo</th>'+
+                        '<th>Total</th>'+
+                    '</tr>'+
+                '</tfoot>'+
+            '</table>'+
+        '</div>';
 
         $("#listadoReporte4").append(tabla);
+        $("#listadoReporte4-1").append(tabla2);
+        $("#listadoReporte4-2").append(tabla3);
         
         var datos = $(this).serializeArray();
 
@@ -266,8 +318,71 @@ $(document).ready(function () {
                     $(".contenidoRPT4").append(contenido);
                 });
                 $('#totalVentas').html('Q.'+ totalCom.toFixed(2));
+                $('#btnImprimir').attr('hidden', false);
                 swal.close();
                 funciones();                
+            },
+            error: function (data) {
+                swal({
+                    type: 'error',
+                    title: 'Error',
+                    text: 'Algo ha salido mal, intentalo más tarde',
+                })
+            }
+
+        });
+
+        $.ajax({
+            type: $(this).attr('method'),
+            data: datos,
+            url:  'BLL/rptSalesByMake.php',
+            datatype: 'json',
+            success: function (data) {
+                console.log(data);
+                $.each(data, function (key, registro) {
+                    var contenido = "<tr>";
+                    contenido += "<td>" + registro.marca + "</td>";
+                    contenido += "<td>" + registro.cantidad + "</td>";
+                    contenido += "<td>Q." + registro.subtotal + "</td>";
+                    contenido += '</tr>';
+                    $(".contenidoRPT4-1").append(contenido);
+                });
+                swal.close();
+                funciones2();                
+            },
+            error: function (data) {
+                swal({
+                    type: 'error',
+                    title: 'Error',
+                    text: 'Algo ha salido mal, intentalo más tarde',
+                })
+            }
+
+        });
+
+        $.ajax({
+            type: $(this).attr('method'),
+            data: datos,
+            url:  'BLL/rptSalesByRem.php',
+            datatype: 'json',
+            success: function (data) {
+                console.log(data);
+                $.each(data, function (key, registro) {
+                    var contenido = "<tr>";
+                    contenido += "<td>" + convertDate(registro.dateStart); + "</td>";
+                    contenido += "<td>" + registro.noDeliver + "</td>";
+                    contenido += "<td>" + registro.customer + "</td>";
+                    contenido += "<td>" + convertDate(registro.dateEnd); + "</td>";
+                    contenido += "<td>" + registro.paymentMethod + "</td>";
+                    contenido += "<td>" + registro.noShipment + "</td>";
+                    contenido += "<td>" + registro.note + "</td>";
+                    contenido += "<td>Q." + registro.advance + "</td>";
+                    contenido += "<td>Q." + registro.totalSale + "</td>";
+                    contenido += '</tr>';
+                    $(".contenidoRPT4-2").append(contenido);
+                });
+                swal.close();
+                funciones3();                
             },
             error: function (data) {
                 swal({
@@ -425,7 +540,7 @@ $(document).ready(function () {
         '<div class="row">'+
             '<button type="button" onclick="printReport6()" class="btn bg-teal-active btn-md"><i class="fa fa-print"></i>'+
             ' Imprimir</button>'+
-        '</div><div class="row"><div class="form-group col-lg-6 pull-right"><div class="input-group"><span class="input-group-addon"><span class="text-danger text-uppercase">*</span><label for="totalVentas" class="control-label">Total:</label><span><h4 id="totalVentas" class="text-bold">0</h4></span></span></div></div></div>';
+        '</div><div class="row"><div class="form-group col-lg-6 pull-right"><div class="input-group"><span class="input-group-addon"><span class="text-danger text-uppercase">*</span><label for="totalVentasStock" class="control-label">Total:</label><span><h4 id="totalVentasStock" class="text-bold">0</h4></span></span></div></div></div>';
 
         $("#listadoReporte6").append(tabla);        
         $("#listadoReporte6-5").append(tabla1);
@@ -495,7 +610,7 @@ $(document).ready(function () {
                     $(".contenidoRPT6-5").append(contenido);
                 });
                 $('#totalStock').text(actTotal);
-                $('#totalVentas').text(totalV);
+                $('#totalVentasStock').text(totalV);
                 swal.close();
                 funciones2();                
             },
@@ -516,6 +631,8 @@ function limpiarReportes() {
     $("#listadoReporte2").html("");
     $("#listadoReporte3").html("");
     $("#listadoReporte4").html("");
+    $("#listadoReporte4-1").html("");
+    $("#listadoReporte4-2").html("");
     $("#listadoReporte5").html("");
     $("#listadoReporte6").html("");
     $("#listadoReporte6-5").html("");
@@ -721,6 +838,11 @@ function comision(dif, marca, subtotal, s30, s60, s90, o30, o60, sd30, sd60, sd9
 
 function funciones() {
     $('#registros').DataTable({
+        "order": [],
+        "columnDefs": [{
+            "targets": 'no-sort',
+            "orderable": false,
+        }],
         'paging'      : true,
         'lengthChange': true,
         "aLengthMenu" : [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
@@ -751,6 +873,46 @@ function funciones() {
 
 function funciones2() {
     $('#registros2').DataTable({
+        "order": [],
+        "columnDefs": [{
+            "targets": 'no-sort',
+            "orderable": false,
+        }],
+        'paging'      : true,
+        'lengthChange': true,
+        "aLengthMenu" : [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
+        'searching'   : true,
+        'ordering'    : true,
+        'info'        : true,
+        'autoWidth'   : true,
+        'language'    : {
+          paginate: {
+            next:     'Siguiente',
+            previous: 'Anterior',
+            first:    'Primero',
+            last:     'Último'
+          },
+          info: 'Mostrando _START_-_END_ de _TOTAL_ registros',
+          empyTable:  'No hay registros',
+          infoEmpty:  '0 registros',
+          lengthChange: 'Mostrar ',
+          infoFiltered: "(Filtrado de _MAX_ total de registros)",
+          lengthMenu: "Mostrar _MENU_ registros",
+          loadingRecords: "Cargando...",
+          processing: "Procesando...",
+          search: "Buscar:",
+          zeroRecords: "Sin resultados encontrados"
+        }
+    });
+}
+
+function funciones3() {
+    $('#registros3').DataTable({
+        "order": [],
+        "columnDefs": [{
+            "targets": 'no-sort',
+            "orderable": false,
+        }],
         'paging'      : true,
         'lengthChange': true,
         "aLengthMenu" : [[10, 25, 50, -1], [10, 25, 50, "Todos"]],

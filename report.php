@@ -109,21 +109,26 @@ include_once 'funciones/bd_conexion.php';
                                                                         <option value="" disabled selected>Seleccione a
                                                                             un
                                                                             vendedor</option>
-                                                                        <?php
-try {
-    $sql = "SELECT * FROM seller";
-    $resultado = $conn->query($sql);
-    while ($seller_route = $resultado->fetch_assoc()) {?>
+                                        <!-- PHP CONSULTA -->
+                                            <?php
+                                                try {
+                                                    $sql = "SELECT * FROM seller";
+                                                    $resultado = $conn->query($sql);
+                                                    while ($seller_route = $resultado->fetch_assoc()) {
+                                            ?>
+                                        <!-- PHP CONSULTA -->
                                                                         <option
                                                                             value="<?php echo $seller_route['idSeller']; ?>">
                                                                             <?php echo $seller_route['sellerFirstName'] . " " . $seller_route['sellerLastName']; ?>
                                                                         </option>
-                                                                        <?php
-}
-} catch (Exception $e) {
-    echo "Error: " . $e->getMessage();
-}
-?>
+                                        <!-- FIN PHP -->
+                                            <?php
+                                                    }
+                                                } catch (Exception $e) {
+                                                    echo "Error: " . $e->getMessage();
+                                                }
+                                            ?>
+                                        <!-- FIN PHP -->
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -240,21 +245,26 @@ try {
                                                                         <option value="" disabled selected>Seleccione
                                                                             una
                                                                             Ruta</option>
-                                                                        <?php
-try {
-    $sql = "SELECT idRoute, codeRoute, routeName FROM route where state = 0";
-    $resultado = $conn->query($sql);
-    while ($seller_route = $resultado->fetch_assoc()) {?>
+                                        <!-- PHP CONSULTA -->
+                                            <?php
+                                                try {
+                                                    $sql = "SELECT idRoute, codeRoute, routeName FROM route where state = 0";
+                                                    $resultado = $conn->query($sql);
+                                                    while ($seller_route = $resultado->fetch_assoc()) {
+                                            ?>
+                                        <!-- PHP CONSULTA -->
                                                                         <option
                                                                             value="<?php echo $seller_route['idRoute']; ?>">
                                                                             <?php echo $seller_route['codeRoute'] . " " . $seller_route['routeName']; ?>
                                                                         </option>
-                                                                        <?php
-}
-} catch (Exception $e) {
-    echo "Error: " . $e->getMessage();
-}
-?>
+                                        <!-- FIN PHP -->
+                                            <?php
+                                                    }
+                                                } catch (Exception $e) {
+                                                    echo "Error: " . $e->getMessage();
+                                                }
+                                            ?>
+                                        <!-- FIN PHP -->
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -312,22 +322,26 @@ try {
                                                                         style="width: 100%;">
                                                                         <option value="" disabled selected>Seleccione a
                                                                             un vendedor</option>
-                                                                        <?php
-try {
-    $sql = "SELECT * FROM seller";
-    $resultado = $conn->query($sql);
-    while ($seller_route = $resultado->fetch_assoc()) {
-        ?>
+                                        <!-- PHP CONSULTA -->
+                                            <?php
+                                                try {
+                                                    $sql = "SELECT * FROM seller";
+                                                    $resultado = $conn->query($sql);
+                                                    while ($seller_route = $resultado->fetch_assoc()) {
+                                            ?>
+                                        <!-- PHP CONSULTA -->
                                                                         <option
                                                                             value="<?php echo $seller_route['idSeller']; ?>">
                                                                             <?php echo $seller_route['sellerFirstName'] . " " . $seller_route['sellerLastName']; ?>
                                                                         </option>
-                                                                        <?php
-}
-} catch (Exception $e) {
-    echo "Error: " . $e->getMessage();
-}
-?>
+                                        <!-- FIN PHP -->
+                                            <?php
+                                                    }
+                                                } catch (Exception $e) {
+                                                    echo "Error: " . $e->getMessage();
+                                                }
+                                            ?>
+                                        <!-- FIN PHP -->
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -366,11 +380,36 @@ try {
                                                                 id="rpt4">
                                                                 <i class="fa fa-list-alt" aria-hidden="true"></i>
                                                                 Generar Listado</button>
+                                                            <div class="row">
+                                                                <button type="button" onclick="printReport4()" id="btnImprimir" class="btn bg-teal-active btn-md pull-right" hidden><i class="fas fa-print"></i> Imprimir</button>
+                                                            </div>
+                                                            <div class="col-md-3 pull-left">
+                                                                <div class="info-box bg-secondary">
+                                                                    <span class="info-box-icon"><i
+                                                                            class="fas fa-store"></i></span>
+                                                                    <div class="info-box-content">
+                                                                        <span class="info-box-text">Total:</span>
+                                                                        <span class="info-box-number"><label
+                                                                                for="totalS"
+                                                                                id="totalVentas">0</label></span>
+                                                                    </div>
+                                                                    <!-- /.info-box-content -->
+                                                                </div>
+                                                            </div>                                       
                                                         </div>
-                                                        <!-- TABLA DEL LISTADO DE REPORTES -->
+                                                        
+                                                    <!-- TABLA DEL LISTADO DE REPORTES -->
                                                         <div id="listadoReporte4" class="modal-body">
                                                         </div>
-                                                        <!-- TABLA DEL LISTADO DE REPORTES -->
+                                                    <!-- TABLA DEL LISTADO DE REPORTES -->
+                                                    <!-- TABLA DEL LISTADO DE REPORTES -->
+                                                        <div id="listadoReporte4-1" class="modal-body">
+                                                        </div>
+                                                    <!-- TABLA DEL LISTADO DE REPORTES -->
+                                                    <!-- TABLA DEL LISTADO DE REPORTES -->
+                                                        <div id="listadoReporte4-2" class="modal-body">
+                                                        </div>
+                                                    <!-- TABLA DEL LISTADO DE REPORTES -->
                                                     </form>
                                                 </div>
                                                 <!-- /.box-body -->
@@ -447,21 +486,26 @@ try {
                                                                         <option value="" disabled selected>Seleccione a
                                                                             un
                                                                             producto</option>
-                                                                        <?php
-try {
-    $sql = "SELECT P.*, (SELECT catName FROM category WHERE idCategory = P._idCategory) as category FROM product P WHERE state = 0";
-    $resultado = $conn->query($sql);
-    while ($productName = $resultado->fetch_assoc()) {?>
+                                        <!-- CONSULTA PHP -->
+                                            <?php
+                                                try {
+                                                    $sql = "SELECT P.*, (SELECT catName FROM category WHERE idCategory = P._idCategory) as category FROM product P WHERE state = 0";
+                                                    $resultado = $conn->query($sql);
+                                                    while ($productName = $resultado->fetch_assoc()) {
+                                            ?>
+                                        <!-- CONSULTA PHP -->
                                                                         <option
                                                                             value="<?php echo $productName['idProduct']; ?>">
                                                                             <?php echo $productName['productCode'] . " " . $productName['productName'] . " " . $productName['category']; ?>
                                                                         </option>
-                                                                        <?php
-}
-} catch (Exception $e) {
-    echo "Error: " . $e->getMessage();
-}
-?>
+                                        <!-- FIN PHP -->
+                                            <?php
+                                                    }
+                                                } catch (Exception $e) {
+                                                    echo "Error: " . $e->getMessage();
+                                                }
+                                            ?>
+                                        <!-- FIN PHP -->
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -510,14 +554,14 @@ try {
                                                                 </div>
 
                                                             </div>
-                                                            <!-- TABLA DEL LISTADO DE REPORTES -->
+                                                        <!-- TABLA DEL LISTADO DE REPORTES -->
                                                             <div id="listadoReporte6" class="modal-body">
                                                             </div>
-                                                            <!-- TABLA DEL LISTADO DE REPORTES -->
-                                                            <!-- TABLA DEL LISTADO DE REPORTES -->
+                                                        <!-- TABLA DEL LISTADO DE REPORTES -->
+                                                        <!-- TABLA DEL LISTADO DE REPORTES -->
                                                             <div id="listadoReporte6-5" class="modal-body">
                                                             </div>
-                                                            <!-- TABLA DEL LISTADO DE REPORTES -->
+                                                        <!-- TABLA DEL LISTADO DE REPORTES -->
                                                     </form>
                                                 </div>
                                                 <!-- /.box-body -->
