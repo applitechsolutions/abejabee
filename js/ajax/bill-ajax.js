@@ -65,7 +65,7 @@ $(document).ready(function () {
 });
 
 function eliminarDetalle_Factura(id) {
-    var idproduct = document.getElementsByClassName("idproducto_class");
+    var idproduct = document.getElementsByClassName("id_detalle_class");
     var nprecio = document.getElementsByClassName("precio_class");
     var ncantidad = document.getElementsByClassName("cantidad_class");
     var descuento_detalle = document.getElementsByClassName("descuento_class");
