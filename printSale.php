@@ -309,7 +309,7 @@ try {
                                                             width="80" onerror="this.src='img/products/notfound.jpg';">
                                                     </td>
                                                     <td><input class="idproducto_class" type="hidden"
-                                                            value="<?php echo $sale['idProduct']; ?>">
+                                                            value="<?php echo $detailS['idProduct']; ?>">
                                                             <input class="id_detalle_class" type="hidden"
                                                             value="<?php echo $id_detalle; ?>">
                                                         <?php echo $detailS['productName']; ?>
