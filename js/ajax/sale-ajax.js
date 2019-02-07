@@ -684,6 +684,9 @@ $(document).ready(function () {
                         }
                         nuevaFila += "<td>Q." + registro.amount + "</td>";
                         nuevaFila += "<td>Q." + registro.balance + "</td>";
+                        if (tipo == 1) {
+                            nuevaFila += "<td><a href='#' class='btn bg-maroon btn-flat margin' onclick='anularPago(" + id + "," + registro.idBalance + ")'><i class='fa fa-times-circle'></i></a></td>";
+                        }
                         nuevaFila += "</tr>";
                         $("#detallesB").append(nuevaFila);
                     }
@@ -918,6 +921,9 @@ function anularPago(idSale, idBalance) {
                             })
                         }
                     });
+                    if (resultado.activa = 'true') {
+                        recargarPagina();
+                    }
                 } else {
                     swal({
                         type: 'error',

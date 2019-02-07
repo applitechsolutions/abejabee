@@ -121,11 +121,21 @@ if ($_POST['tipo'] == 'anular') {
             }           
         }
 
+        if ($nuevo_balance > 0) {
+            $stmt = $conn->prepare('UPDATE sale SET cancel = 0 WHERE idSale = ?');
+            $stmt->bind_param("i", $id_sale);
+            if (!mysqli_stmt_execute($stmt)) {
+                $query_success = false;
+            }
+            mysqli_stmt_close($stmt);
+        }
+
         if ($query_success) {
             mysqli_commit($conn);
             $respuesta = array(
                 'respuesta' => 'exito',
-                'idBalance' => $idBalance
+                'idBalance' => $idBalance,
+                'activa' => 'true'
             );
         } else {
             mysqli_rollback($conn);

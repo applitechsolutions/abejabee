@@ -114,6 +114,7 @@ include_once 'funciones/bd_conexion.php';
                                                               <th>Documento No°</th>
                                                               <th>Monto</th>
                                                               <th>Saldo</th>
+                                                              <th>Anular</th>
                                                       </thead>
                                                       <tbody>
                                                       </tbody>
