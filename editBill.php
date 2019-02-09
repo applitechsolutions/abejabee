@@ -18,9 +18,9 @@ if (!filter_var($id, FILTER_VALIDATE_INT)) {
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                <i class="glyphicon glyphicon-tags"></i>
-                Ventas
-                <small>Complete el formulario para Imprimir la venta seleccionada</small>
+                <i class="fas fa-file-invoice"></i>
+                Facturas
+                <small>Complete el formulario para Editar la factura seleccionada</small>
             </h1>
         </section>
 
@@ -29,78 +29,16 @@ if (!filter_var($id, FILTER_VALIDATE_INT)) {
             <!-- Default box -->
             <div class="box box-default">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Imprimir Venta</h3>
+                    <h3 class="box-title">Editar Factura</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
                     <?php
-$sql = "SELECT dateEnd, totalSale,
-              (select sellerCode from seller where idSeller = S._idSeller) as sellercode,
-              (select name from town where idTown = C._idTown) as municipio,
-              (select name from village where idVillage = C._idVillage) as aldea,
-              (select name from deparment where idDeparment = C._idDeparment) as departamento,
-              C.customerCode, C.customerName, C.customerNit, C.customerAddress, C.customerTel
-              FROM sale S INNER JOIN customer C ON C.idCustomer = S._idCustomer WHERE idSale = $id";
+$sql = "SELECT dateEnd, total, codeSeller, town, codeCustomer, custName, custNit, address, mobile, serie, noBill
+              FROM bill WHERE idBill = $id";
 $resultado = $conn->query($sql);
-$sale = $resultado->fetch_assoc();
+$bill = $resultado->fetch_assoc();
 ?>
-
-                    <!-- MODAL CORRELATIVO -->
-                    <div class="modal fade" id="modal-correlative">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                    <h4 class="modal-title">
-                                        <i class="glyphicon glyphicon-print" aria-hidden="true"></i> Correlativo de
-                                        facturación</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <form role="form" id="form-correlative" name="form-correlative" method="post"
-                                        action="BLL/correlative.php">
-                                        <div class="row">
-                                            <?php
-try {
-    $sql = "SELECT * FROM correlative WHERE idCorrelative = 1";
-    $resultado = $conn->query($sql);
-    while ($correlative = $resultado->fetch_assoc()) {?>
-                                            <div class="form-group col-lg-6">
-                                                <span class="text-danger text-uppercase">*</span>
-                                                <label for="serieC">Serie</label>
-                                                <input type="text" class="form-control" id="serieC" name="serieC"
-                                                    value="<?php echo $correlative['serie']; ?>">
-                                            </div>
-                                            <div class="form-group col-lg-6">
-                                                <span class="text-danger text-uppercase">*</span>
-                                                <label for="last">Última factura ingresada</label>
-                                                <input type="text" class="form-control" id="last" name="last"
-                                                    value="<?php echo $correlative['last']; ?>">
-                                            </div>
-                                            <?php
-}
-} catch (Exception $e) {
-    echo "Error: " . $e->getMessage();
-}
-?>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <input type="hidden" name="correlative" value="factura">
-                                            <button type="submit" class="btn btn-info pull-left" id="crear-correlativo">
-                                                <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
-                                            <span class="text-warning w3-small w3-padding-small pull-left">*Debe llenar
-                                                los campos obligatorios</span>
-                                            <button id="correlativeClose" type="button"
-                                                class="btn btn-danger w3-round-medium pull-right"
-                                                data-dismiss="modal">Cerrar</button>
-                                        </div>
-                                </div>
-                                </form>
-                            </div>
-                        </div>
-                        <!-- /.modal-dialog -->
-                    </div>
 
                     <!-- MODAL IMPRIMIR -->
                     <div class="modal fade" id="modal-printS">
@@ -138,16 +76,10 @@ try {
                                 novalidate>
                                 <div class="box-body">
                                     <div class="row">
-                                        <?php
-try { $sql = "SELECT * FROM correlative WHERE idCorrelative = 1";
-    $resultado = $conn->query($sql);
-    while ($correlative = $resultado->fetch_assoc()) {?>
                                         <div class="form-group col-lg-1">
                                             <label for="serie">Serie</label>
-                                            <input type="hidden" class="form-control" id="serieS1" name="serieS"
-                                                value="<?php echo $correlative['serie']; ?>">
                                             <input type="text" class="form-control" id="serieS" name="serie"
-                                                value="<?php echo $correlative['serie']; ?>" disabled>
+                                                value="<?php echo $bill['serie']; ?>">
                                         </div>
 
                                         <div class="form-group col-lg-3 ">
@@ -155,12 +87,10 @@ try { $sql = "SELECT * FROM correlative WHERE idCorrelative = 1";
                                             <div class="input-group">
 
                                                 <input type="text" class="form-control" id="noBillS" name="noBill"
-                                                    value="<?php echo $correlative['last'] + 1; ?>" disabled>
-                                                <input type="hidden" class="form-control" id="noBillS1" name="noBillS"
-                                                    value="<?php echo $correlative['last'] + 1; ?>">
+                                                    value="<?php echo $bill['noBill']; ?>">
                                                 <div class="input-group-btn">
                                                     <button type="button" class="btn bg-info" data-toggle="modal"
-                                                        data-target="#modal-correlative">
+                                                        data-target="#modal-correlative" disabled>
                                                         <i class="glyphicon glyphicon-print" aria-hidden="true"></i>
                                                         Correlativo
                                                     </button>
@@ -168,12 +98,6 @@ try { $sql = "SELECT * FROM correlative WHERE idCorrelative = 1";
                                                 <!-- /btn-group -->
                                             </div>
                                         </div>
-                                        <?php
-}
-} catch (Exception $e) {
-    echo "Error: " . $e->getMessage();
-}
-?>
                                     </div>
                                     <br>
                                     <div class="row">
@@ -182,7 +106,7 @@ try { $sql = "SELECT * FROM correlative WHERE idCorrelative = 1";
                                                 <span class="text-danger text-uppercase">*</span>
                                                 <label>Código de vendedor</label>
                                                 <input type="text" class="form-control" id="sellerCode"
-                                                    name="sellerCode" value="<?php echo $sale['sellercode']; ?>"
+                                                    name="sellerCode" value="<?php echo $bill['codeSeller']; ?>"
                                                     autofocus>
                                             </div>
                                         </div>
@@ -192,7 +116,7 @@ try { $sql = "SELECT * FROM correlative WHERE idCorrelative = 1";
                                                 <span class="text-danger text-uppercase">*</span>
                                                 <label>Código del cliente</label>
                                                 <input type="text" class="form-control" id="customerCode"
-                                                    name="customerCode" value="<?php echo $sale['customerCode']; ?>">
+                                                    name="customerCode" value="<?php echo $bill['codeCustomer']; ?>">
                                             </div>
                                         </div>
 
@@ -201,7 +125,7 @@ try { $sql = "SELECT * FROM correlative WHERE idCorrelative = 1";
                                                 <span class="text-danger text-uppercase">*</span>
                                                 <label>Municipio</label>
                                                 <input type="text" class="form-control" id="municipio" name="municipio"
-                                                    value="<?php echo $sale['municipio']; ?>">
+                                                    value="<?php echo $bill['town']; ?>">
                                             </div>
                                         </div>
 
@@ -210,7 +134,7 @@ try { $sql = "SELECT * FROM correlative WHERE idCorrelative = 1";
                                                 <span class="text-danger text-uppercase">*</span>
                                                 <label>Teléfono</label>
                                                 <input type="text" class="form-control pull-right" id="customerTel"
-                                                    name="customerTel" value="<?php echo $sale['customerTel']; ?>">
+                                                    name="customerTel" value="<?php echo $bill['mobile']; ?>">
                                             </div>
                                         </div>
 
@@ -222,7 +146,7 @@ try { $sql = "SELECT * FROM correlative WHERE idCorrelative = 1";
                                                     <div class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
                                                     </div>
-                                                    <?php $dateEnd = date_create($sale['dateEnd']);?>
+                                                    <?php $dateEnd = date_create($bill['dateEnd']);?>
                                                     <input type="text" class="form-control pull-right datepicker"
                                                         id="datepicker2" name="dateSaleEnd"
                                                         value="<?php echo date_format($dateEnd, 'd/m/Y'); ?>">
@@ -236,7 +160,7 @@ try { $sql = "SELECT * FROM correlative WHERE idCorrelative = 1";
                                                 <span class="text-danger text-uppercase">*</span>
                                                 <label>Nombre del cliente</label>
                                                 <input type="text" class="form-control" id="customerName"
-                                                    name="customerName" value="<?php echo $sale['customerName']; ?>">
+                                                    name="customerName" value="<?php echo $bill['custName']; ?>">
                                             </div>
                                         </div>
 
@@ -245,7 +169,7 @@ try { $sql = "SELECT * FROM correlative WHERE idCorrelative = 1";
                                                 <span class="text-danger text-uppercase">*</span>
                                                 <label>NIT</label>
                                                 <input type="text" class="form-control" id="customerNit"
-                                                    name="customerNit" value="<?php echo $sale['customerNit']; ?>">
+                                                    name="customerNit" value="<?php echo $bill['custNit']; ?>">
                                             </div>
                                         </div>
 
@@ -254,8 +178,7 @@ try { $sql = "SELECT * FROM correlative WHERE idCorrelative = 1";
                                                 <span class="text-danger text-uppercase">*</span>
                                                 <label>Dirección</label>
                                                 <input type="text" class="form-control" id="customerAddress"
-                                                    name="customerAddress"
-                                                    value="<?php echo $sale['customerAddress'] . ' ' . $sale['aldea'] . ' ' . $sale['municipio'] . ' ' . $sale['departamento']; ?>">
+                                                    name="customerAddress" value="<?php echo $bill['address']; ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -297,49 +220,49 @@ try {
                                       (select price from priceSale where _idProduct = P.idProduct and _idPrice = 11) as pharma,
                                       (select price from priceSale where _idProduct = P.idProduct and _idPrice = 21) as business,
                                       (select price from priceSale where _idProduct = P.idProduct and _idPrice = 31) as bonus,
-                                      D.priceS, D.quantity, D.discount
-                                    from detailS D INNER JOIN product P ON D._idProduct = P.idProduct
-                                    where _idSale = $id";
+                                      D.priceB, D.quantity, D.discount
+                                    from detailB D INNER JOIN product P ON D._idProduct = P.idProduct
+                                    where _idBill = $id";
     $resultado = $conn->query($sql);
     $id_detalle = 0;
-    while ($detailS = $resultado->fetch_assoc()) {
-        $subtotal = ($detailS['priceS'] - $detailS['discount']) * $detailS['quantity'];?>
+    while ($detailB = $resultado->fetch_assoc()) {
+        $subtotal = ($detailB['priceB'] - $detailB['discount']) * $detailB['quantity'];?>
                                                 <tr id="detalleF">
-                                                    <td><img src="img/products/<?php echo $detailS['picture']; ?>"
+                                                    <td><img src="img/products/<?php echo $detailB['picture']; ?>"
                                                             width="80" onerror="this.src='img/products/notfound.jpg';">
                                                     </td>
                                                     <td><input class="idproducto_class" type="hidden"
-                                                            value="<?php echo $detailS['idProduct']; ?>">
+                                                            value="<?php echo $detailB['idProduct']; ?>">
                                                         <input class="id_detalle_class" type="hidden"
                                                             value="<?php echo $id_detalle; ?>">
-                                                        <?php echo $detailS['productName']; ?>
+                                                        <?php echo $detailB['productName']; ?>
                                                     </td>
                                                     <td>
-                                                        <?php echo $detailS['productCode']; ?>
+                                                        <?php echo $detailB['productCode']; ?>
                                                     </td>
                                                     <td>
-                                                        <?php echo $detailS['make']; ?>
+                                                        <?php echo $detailB['make']; ?>
                                                     </td>
                                                     <td>
-                                                        <?php echo $detailS['category']; ?>
+                                                        <?php echo $detailB['category']; ?>
                                                     </td>
                                                     <td>
-                                                        <?php echo $detailS['unity']; ?>
+                                                        <?php echo $detailB['unity']; ?>
                                                     </td>
-                                                    <td><input type="hidden" value="<?php echo $detailS['cost']; ?>">Q.
-                                                        <?php echo $detailS['cost']; ?>
+                                                    <td><input type="hidden" value="<?php echo $detailB['cost']; ?>">Q.
+                                                        <?php echo $detailB['cost']; ?>
                                                     </td>
                                                     <td><input class="precio_class" type="hidden"
-                                                            value="<?php echo $detailS['priceS']; ?>">Q.
-                                                        <?php echo $detailS['priceS']; ?>
+                                                            value="<?php echo $detailB['priceB']; ?>">Q.
+                                                        <?php echo $detailB['priceB']; ?>
                                                     </td>
                                                     <td><input class="cantidad_class" type="hidden"
-                                                            value="<?php echo $detailS['quantity']; ?>">
-                                                        <?php echo $detailS['quantity']; ?>
+                                                            value="<?php echo $detailB['quantity']; ?>">
+                                                        <?php echo $detailB['quantity']; ?>
                                                     </td>
                                                     <td><input class="descuento_class" type="hidden"
-                                                            value="<?php echo $detailS['discount']; ?>">Q.
-                                                        <?php echo $detailS['discount']; ?>
+                                                            value="<?php echo $detailB['discount']; ?>">Q.
+                                                        <?php echo $detailB['discount']; ?>
                                                     </td>
                                                     <td>Q.
                                                         <?php echo $subtotal; ?>
@@ -373,7 +296,7 @@ $id_detalle = $id_detalle + 1;
                                                         <span>
                                                             <h5 id="totalSale" class="text-bold">
                                                                 Q.
-                                                                <?php echo $sale['totalSale']; ?>
+                                                                <?php echo $bill['total']; ?>
                                                             </h5>
                                                         </span>
                                                     </span>
@@ -384,12 +307,12 @@ $id_detalle = $id_detalle + 1;
                                             <div class="form-group col-lg-7">
                                             </div>
                                             <div class="form-group col-lg-5">
-                                                <input type="hidden" id="factura" name="factura" value="nueva">
-                                                <input type="hidden" name="id_sale" value="<?php echo $id; ?>">
+                                                <input type="hidden" id="factura" name="factura" value="editar">
+                                                <input type="hidden" name="id_bill" value="<?php echo $id; ?>">
                                                 <input type="hidden" id="totalS" name="totalS"
-                                                    value="<?php echo $sale['totalSale']; ?>">
+                                                    value="<?php echo $bill['total']; ?>">
                                                 <button type="submit" class="btn btn-primary" id="crear-factura">
-                                                    <i class="fa fa-print" aria-hidden="true"></i> Imprimir
+                                                    <i class="fa fa-print" aria-hidden="true"></i> Editar
                                                     Factura</button>
                                                 <span class="text-warning"> *Debe llenar los campos obligatorios</span>
                                             </div>

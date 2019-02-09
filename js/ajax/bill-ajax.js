@@ -2,10 +2,16 @@ $(document).ready(function () {
 
     $('#form-factura').on('submit', function (e) {
         e.preventDefault();
-
+        var tipo = $('#factura').val();
+        var texto;
+        if (tipo == 'nueva') {
+            texto = "Crear una factura altera al correlativo actual";
+        }else if (tipo == "editar") {
+            texto = "Desea editar la factura actual, no se altera el correlativo";            
+        }
         swal({
             title: '¿Estás Seguro?',
-            text: "Crear una factura altera al correlativo actual",
+            text: texto,
             type: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -44,6 +50,10 @@ $(document).ready(function () {
                             changeReportL('factura.php?idBill=' + resultado.idBill);
                             swal.close();                            
                             $('#modal-printS').modal({backdrop: 'static', keyboard: false});
+                        }else if (resultado.proceso == 'editado') {
+                            changeReportL('factura.php?idBill=' + resultado.idBill);
+                            swal.close();                            
+                            $('#modal-printS').modal({backdrop: 'static', keyboard: false});
                         }
                     } else if (resultado.respuesta == 'vacio') {
                         swal({
@@ -66,6 +76,7 @@ $(document).ready(function () {
     $('.detalle_bill').on('click', function (e) {
         e.preventDefault();
         $("#detalles").find('tbody').html("");
+        $("#editarF").html("");
         var id = $(this).attr('data-id');
         var tipo = $(this).attr('data-tipo');
 
@@ -94,6 +105,10 @@ $(document).ready(function () {
                     nuevaFila += "</tr>";
                     $("#detalles").append(nuevaFila);
                 });
+                var btnEditar = "<a href='editBill.php?id=" + id + "' class='btn bg-green btn-lg btn-flat pull-left'>";
+                btnEditar += "<i class='fas fa-pen-square'></i> Editar Factura";
+                btnEditar += "</a>";
+                $("#editarF").append(btnEditar);
                 swal.close();
                 $('#modal-detailS').modal('show');
             },

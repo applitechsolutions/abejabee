@@ -76,6 +76,12 @@ include_once 'funciones/bd_conexion.php';
                                             <!-- /.box-body -->
                                         </div>
                                     </div>
+                                    <?php
+if ($_SESSION['rol'] == 1) {?>
+                                        <div id="editarF" class="modal-footer">
+                                        </div>
+                                        <?php
+}?>
                                 </div>
                             </div>
                             <!-- /.modal-content -->
