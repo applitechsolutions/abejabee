@@ -30,36 +30,38 @@ while ($sale = $resultado->fetch_assoc()) {
     $str = iconv('UTF-8', 'windows-1252', NumeroALetras::convertir($sale['total'], 'QUETZALES', 'CENTAVOS'));
 
     $pdf->AddPage();
-    $pdf->SetFont('Arial', '', 8);
+    $pdf->SetFont('Arial', '', 10);
 
-    $pdf->SetXY(20, 36);
+    $pdf->SetXY(20, 40);
 //primera linea de factura
     $cMuni = iconv('UTF-8', 'windows-1252', $sale['town']);
     $pdf->Cell(50, 3, $cMuni, 0, 0, 'L');
+    $pdf->SetFont('Arial', '', 8);
     $pdf->Cell(15);
     $cSeller = iconv('UTF-8', 'windows-1252', $sale['codeSeller']);
     $pdf->Cell(9, 3, $cSeller, 0, 0, 'L');
     $pdf->Cell(12);
     $cCode = iconv('UTF-8', 'windows-1252', $sale['codeCustomer']);
     $pdf->Cell(10, 3, $cCode, 0, 0, 'L');
+    $pdf->SetFont('Arial', '', 10);
     $pdf->Cell(22);
     $pdf->Cell(17, 3, date_format($fecha, 'd/m/Y'), 0, 1, 'L');
 
-    $pdf->SetXY(23, 42);
+    $pdf->SetXY(23, 46);
 //Nombre
     $cName = iconv('UTF-8', 'windows-1252', $sale['custName']);
     $pdf->Cell(120, 3, $cName, 0, 0, 'L');
 
-    $pdf->SetXY(17, 48);
+    $pdf->SetXY(17, 52);
 //NIT
     $pdf->Cell(30, 3, $sale['custNit'], 0, 0, 'L');
 
-    $pdf->SetXY(25, 54);
+    $pdf->SetXY(25, 58);
 //Direccion
     $cAddress = iconv('UTF-8', 'windows-1252', $sale['address']);
     $pdf->MultiCell(120, 3, $cAddress, 0, 'L', 0);
 
-    $pdf->SetXY(23, 70);
+    $pdf->SetXY(23, 74);
 //Telefono
     $pdf->Cell(30, 3, $sale['mobile'], 0, 0, 'L');
 
@@ -81,11 +83,11 @@ while ($sale = $resultado->fetch_assoc()) {
         $COD = iconv('UTF-8', 'windows-1252', $detailB['codigo']);
         $NOMBRE = iconv('UTF-8', 'windows-1252', $detailB['nombre']);
         $pdf->Cell(7);
-        $pdf->Cell(17, 3, $detailB['quantity'], 0, 0, 'L');
-        $pdf->Cell(15, 3, $COD, 0, 0, 'L');
-        $pdf->Cell(69, 3, $NOMBRE, 0, 0, 'C');
-        $pdf->Cell(21, 3, 'Q.' . $detailB['precio'], 0, 0, 'C');
-        $pdf->Cell(28, 3, $detailB['total'], 0, 1, 'C');
+        $pdf->Cell(17, 4, $detailB['quantity'], 0, 0, 'L');
+        $pdf->Cell(15, 4, $COD, 0, 0, 'L');
+        $pdf->Cell(69, 4, $NOMBRE, 0, 0, 'L');
+        $pdf->Cell(21, 4, 'Q.' . $detailB['precio'], 0, 0, 'C');
+        $pdf->Cell(28, 4, $detailB['total'], 0, 1, 'C');
     }
 
 //TOTAL-LETRAS
