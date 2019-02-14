@@ -2,7 +2,7 @@
     <div class="pull-right hidden-xs">
         <b>Version</b> 1.1.0
     </div>
-    <strong>Copyright &copy; 2018 - <?php echo date("Y"); ?> <a href="#">Applitech Solutions</a>.</strong> Todos Los
+    <strong>Copyright &copy; 2018 - <?php echo date("Y"); ?> <a href="#">Applitech Software Solutions</a>.</strong> Todos Los
     Derechos Reservados.
 </footer>
 
