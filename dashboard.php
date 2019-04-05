@@ -127,6 +127,47 @@
             <!-- /.box-header -->
             <div class="box-body">
               <div class="row">
+                <form role="form" id="form-DASH" name="form-DASH" method="post" action="BLL/dashTotalSales.php">
+                  <div class="col-md-offset-1 col-md-2">
+                    <div class="form-group">
+                      <span class="text-danger text-uppercase"></span>
+                      <label>Fecha Inicial</label>
+                      <div class="input-group date">
+                          <div class="input-group-addon">
+                              <i class="fa fa-calendar"></i>
+                          </div>
+                          <input type="text" class="form-control pull-right datepicker" id="datepicker" name="dateDASHS">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="form-group">
+                      <span class="text-danger text-uppercase"></span>
+                      <label>Fecha Final</label>
+                      <div class="input-group date">
+                          <div class="input-group-addon">
+                              <i class="fa fa-calendar"></i>
+                          </div>
+                          <input type="text" class="form-control pull-right datepicker" id="datepicker2" name="dateDASHE">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <button style="margin-top:27px;" type="submit" class="btn btn-primary pull-right" id="rpt4"><i class="fa fa-list-alt" aria-hidden="true"></i> Generar Total</button>
+                  </div>
+                  <div class="col-md-4 pull-left">
+                    <div class="info-box bg-secondary">
+                        <span class="info-box-icon"><i class="fas fa-money"></i></span>
+                        <div class="info-box-content">
+                          <span class="info-box-text">Total:</span>
+                          <span class="info-box-number"><label for="totalS" id="totalVentasDASH">0</label></span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="row">
                 <div class="col-md-8">
                   <p class="text-center">
                     <strong>Ventas:
@@ -423,6 +464,22 @@
   include_once 'templates/footer.php';
 ?>
 <script>
+
+//TOTAL DE VENTAS
+$('#form-DASH').on('submit', function (e) {
+  e.preventDefault();
+  $.ajax({
+    type: $(this).attr('method'),
+    data: datos,
+    url: $(this).attr('action'),
+    datatype: 'json',
+    success: function (response) {
+      
+    }
+  });  
+});
+
+
 // Get context with jQuery - using jQuery's .get() method.
 var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
 // This will get the first returned node in the jQuery collection.
