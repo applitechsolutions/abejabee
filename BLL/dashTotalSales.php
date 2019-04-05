@@ -7,7 +7,7 @@ $fechafinal = strtr($_POST['dateDASHE'], '/', '-');
 
 $fi = date('Y-m-d', strtotime($fechainicio));
 $ff = date('Y-m-d', strtotime($fechafinal));
-$result = $conn->query("SELECT SUM(totalSale) FROM sale WHERE state = 0 AND dateStart BETWEEN '$fi' AND '$ff'");
+$result = $conn->query("SELECT SUM(totalSale) as totalSale FROM sale WHERE state = 0 AND dateStart BETWEEN '$fi' AND '$ff'");
 $outp = array();
 $outp = $result->fetch_all(MYSQLI_ASSOC);
 

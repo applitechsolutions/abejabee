@@ -117,7 +117,7 @@
         <div class="col-md-12">
           <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title">Reporte anual de ventas</h3>
+              <h3 class="box-title">Reporte de ventas</h3>
   
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -126,6 +126,7 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
+            <h6>Total de ventas en un rango de fechas:</h6>
               <div class="row">
                 <form role="form" id="form-DASH" name="form-DASH" method="post" action="BLL/dashTotalSales.php">
                   <div class="col-md-offset-1 col-md-2">
@@ -167,6 +168,7 @@
                   </div>
                 </form>
               </div>
+              <h6>Ventas en el año en curso</h6>
               <div class="row">
                 <div class="col-md-8">
                   <p class="text-center">
@@ -464,20 +466,35 @@
   include_once 'templates/footer.php';
 ?>
 <script>
-
-//TOTAL DE VENTAS
-$('#form-DASH').on('submit', function (e) {
-  e.preventDefault();
-  $.ajax({
-    type: $(this).attr('method'),
-    data: datos,
-    url: $(this).attr('action'),
-    datatype: 'json',
-    success: function (response) {
-      
-    }
-  });  
+$(document).ready(function () {
+  $('#form-DASH').on('submit', function (e) {
+    e.preventDefault();
+    var datos = $(this).serializeArray();
+    $.ajax({
+      type: $(this).attr('method'),
+      data: datos,
+      url: $(this).attr('action'),
+      datatype: 'json',
+      success: function (data) {
+        console.log(data);
+        var totalDash = 0;
+        $.each(data, function (key, registro) {
+          totalDash = parseFloat(registro.totalSale);
+        });
+        $('#totalVentasDASH').html('Q.'+ totalDash.toFixed(2));
+      },
+      error: function (data) {
+          swal({
+              type: 'error',
+              title: 'Error',
+              text: 'Algo ha salido mal, intentalo más tarde',
+          })
+      }
+    });  
+  });
 });
+//TOTAL DE VENTAS
+
 
 
 // Get context with jQuery - using jQuery's .get() method.
