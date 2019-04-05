@@ -2,7 +2,7 @@ $(document).ready(function () {
 
     $('#form-SalesBySeller').on('submit', function (e) {
         e.preventDefault();
-        limpiarReportes()
+        limpiarReportes();
         
         var tabla = '<div class="box-body table-responsive no-padding">'+
             '<table id="registros" class="table table-bordered table-striped">'+
