@@ -59,15 +59,22 @@ $(document).ready(function () {
                 console.log(data);
                 var totalCom = 0;
                 $.each(data, function (key, registro) {
-                    var fecha1 = registro.fechapago;
-                    var fecha2 = registro.dateEnd;
-                    var date1 = new Date(fecha1);
-                    var date2 = new Date(fecha2);          
-                    var timeDiff = Math.abs(date2.getTime() - date1.getTime());
-                    var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
                     var sub = registro.quantity * (parseFloat(Math.round(registro.priceS * 100) / 100).toFixed(2) - parseFloat(Math.round(registro.discount * 100) / 100).toFixed(2));
-                    console.log((registro.s60/100));
-                    var comi = comision(diffDays, registro.marca, sub.toFixed(2), registro.s30, registro.s60, registro.s90, registro.o30, registro.o60, registro.sd30, registro.sd60, registro.sd90, registro.od30, registro.od60);
+                    if (registro.commissionS && registro.commissionO == 0) {
+                        var fecha1 = registro.fechapago;
+                        var fecha2 = registro.dateEnd;
+                        var date1 = new Date(fecha1);
+                        var date2 = new Date(fecha2);          
+                        var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+                        var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+                        var comi = comision(diffDays, registro.marca, sub.toFixed(2), registro.s30, registro.s60, registro.s90, registro.o30, registro.o60, registro.sd30, registro.sd60, registro.sd90, registro.od30, registro.od60);
+                    } else {
+                        if (registro.marca == 'SCHLENKER') {
+                            var comi = sub * (registro.commissionS / 100);
+                        } else {
+                            var comi = sub * (registro.commissionO / 100);
+                        }
+                    }
                     totalCom = parseFloat(totalCom) + parseFloat(comi);
                     var contenido = "<tr>";
                     contenido += "<td><input class='idVen' type='hidden' value='" + registro._idSeller + "'>" + convertDate(registro.dateStart); + "</td>";
@@ -79,7 +86,7 @@ $(document).ready(function () {
                     contenido += "<td>Q." + registro.priceS + "</td>";
                     contenido += "<td>Q." + registro.discount + "</td>";
                     contenido += "<td>Q." + sub.toFixed(2) + "</td>";
-                    contenido += "<td>Q." + comision(diffDays, registro.marca, sub.toFixed(2), registro.s30, registro.s60, registro.s90, registro.o30, registro.o60, registro.sd30, registro.sd60, registro.sd90, registro.od30, registro.od60) + "</td>";
+                    contenido += "<td>Q." + comi + "</td>";
                     contenido += '</tr>';
                     $(".contenidoRPT").append(contenido);
                 });
