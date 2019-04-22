@@ -331,6 +331,7 @@ include_once 'templates/header.php';
                                             <?php echo $bill['serie'] . ' ' . $bill['noBill']; ?>
                                         </td>
                                         <td>
+                                            <?php echo $bill['date']; ?>
                                             <?php if ($bill['date'] != '0000-00-00') {
                                                     echo date_format($dateB, 'd/m/y');
                                                 } else {
@@ -367,9 +368,9 @@ include_once 'templates/header.php';
                                                     data-id="<?php echo $bill['idBill']; ?>" data-tipo="listDetailB"><i
                                                         class="fa fa-info"></i> Detalles</button>
                                                 <!-- <button type="button" class="btn btn-primary btn-sm detalle_balance"
-                                                                                                    data-id="<?php
-                                                                                                                ?>" data-tipo="listBalance"><i
-                                                                                                        class="fa fa-balance-scale"></i> Balance</button> -->
+                                                                                                        data-id="<?php
+                                                                                                                    ?>" data-tipo="listBalance"><i
+                                                                                                            class="fa fa-balance-scale"></i> Balance</button> -->
                                                 <div class="btn-group">
                                                     <button type="button"
                                                         class="btn bg-teal-active btn-sm dropdown-toggle"
