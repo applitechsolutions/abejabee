@@ -5,14 +5,14 @@ include_once 'templates/header.php';
 
 <body class="hold-transition skin-blue sidebar-collapse sidebar-mini">
     <?php
-include_once 'templates/navBar.php';
-include_once 'templates/sideBar.php';
-include_once 'funciones/bd_conexion.php';
-$id = $_GET['id'];
-if (!filter_var($id, FILTER_VALIDATE_INT)) {
-    die("Error!");
-}
-?>
+    include_once 'templates/navBar.php';
+    include_once 'templates/sideBar.php';
+    include_once 'funciones/bd_conexion.php';
+    $id = $_GET['id'];
+    if (!filter_var($id, FILTER_VALIDATE_INT)) {
+        die("Error!");
+    }
+    ?>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -34,16 +34,16 @@ if (!filter_var($id, FILTER_VALIDATE_INT)) {
                 <!-- /.box-header -->
                 <div class="box-body">
                     <?php
-$sql = "SELECT dateEnd, totalSale,
+                    $sql = "SELECT dateEnd, totalSale,
               (select sellerCode from seller where idSeller = S._idSeller) as sellercode,
               (select name from town where idTown = C._idTown) as municipio,
               (select name from village where idVillage = C._idVillage) as aldea,
               (select name from deparment where idDeparment = C._idDeparment) as departamento,
               C.customerCode, C.customerName, C.customerNit, C.customerAddress, C.customerTel
               FROM sale S INNER JOIN customer C ON C.idCustomer = S._idCustomer WHERE idSale = $id";
-$resultado = $conn->query($sql);
-$sale = $resultado->fetch_assoc();
-?>
+                    $resultado = $conn->query($sql);
+                    $sale = $resultado->fetch_assoc();
+                    ?>
 
                     <!-- MODAL CORRELATIVO -->
                     <div class="modal fade" id="modal-correlative">
@@ -62,10 +62,10 @@ $sale = $resultado->fetch_assoc();
                                         action="BLL/correlative.php">
                                         <div class="row">
                                             <?php
-try {
-    $sql = "SELECT * FROM correlative WHERE idCorrelative = 1";
-    $resultado = $conn->query($sql);
-    while ($correlative = $resultado->fetch_assoc()) {?>
+                                            try {
+                                                $sql = "SELECT * FROM correlative WHERE idCorrelative = 1";
+                                                $resultado = $conn->query($sql);
+                                                while ($correlative = $resultado->fetch_assoc()) { ?>
                                             <div class="form-group col-lg-6">
                                                 <span class="text-danger text-uppercase">*</span>
                                                 <label for="serieC">Serie</label>
@@ -79,11 +79,11 @@ try {
                                                     value="<?php echo $correlative['last']; ?>">
                                             </div>
                                             <?php
-}
-} catch (Exception $e) {
-    echo "Error: " . $e->getMessage();
-}
-?>
+                                            }
+                                        } catch (Exception $e) {
+                                            echo "Error: " . $e->getMessage();
+                                        }
+                                        ?>
                                         </div>
                                         <div class="modal-footer">
                                             <input type="hidden" name="correlative" value="factura">
@@ -139,9 +139,10 @@ try {
                                 <div class="box-body">
                                     <div class="row">
                                         <?php
-try { $sql = "SELECT * FROM correlative WHERE idCorrelative = 1";
-    $resultado = $conn->query($sql);
-    while ($correlative = $resultado->fetch_assoc()) {?>
+                                        try {
+                                            $sql = "SELECT * FROM correlative WHERE idCorrelative = 1";
+                                            $resultado = $conn->query($sql);
+                                            while ($correlative = $resultado->fetch_assoc()) { ?>
                                         <div class="form-group col-lg-1">
                                             <label for="serie">Serie</label>
                                             <input type="hidden" class="form-control" id="serieS1" name="serieS"
@@ -169,11 +170,11 @@ try { $sql = "SELECT * FROM correlative WHERE idCorrelative = 1";
                                             </div>
                                         </div>
                                         <?php
-}
-} catch (Exception $e) {
-    echo "Error: " . $e->getMessage();
-}
-?>
+                                        }
+                                    } catch (Exception $e) {
+                                        echo "Error: " . $e->getMessage();
+                                    }
+                                    ?>
                                     </div>
                                     <br>
                                     <div class="row">
@@ -196,7 +197,7 @@ try { $sql = "SELECT * FROM correlative WHERE idCorrelative = 1";
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-3">
+                                        <div class="col-lg-2">
                                             <div class="form-group">
                                                 <span class="text-danger text-uppercase">*</span>
                                                 <label>Municipio</label>
@@ -213,8 +214,21 @@ try { $sql = "SELECT * FROM correlative WHERE idCorrelative = 1";
                                                     name="customerTel" value="<?php echo $sale['customerTel']; ?>">
                                             </div>
                                         </div>
-
-                                        <div class="col-lg-3">
+                                        <div class="col-lg-2">
+                                            <div class="form-group">
+                                                <span class="text-danger text-uppercase">*</span>
+                                                <label>Fecha</label>
+                                                <div class="input-group date">
+                                                    <div class="input-group-addon">
+                                                        <i class="fa fa-calendar"></i>
+                                                    </div>
+                                                    <input type="text" class="form-control pull-right datepicker"
+                                                        id="datepicker" name="date"
+                                                        value="<?php echo date('d/m/Y'); ?>">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2">
                                             <div class="form-group">
                                                 <span class="text-danger text-uppercase">*</span>
                                                 <label>Fecha de vencimiento</label>
@@ -222,7 +236,7 @@ try { $sql = "SELECT * FROM correlative WHERE idCorrelative = 1";
                                                     <div class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
                                                     </div>
-                                                    <?php $dateEnd = date_create($sale['dateEnd']);?>
+                                                    <?php $dateEnd = date_create($sale['dateEnd']); ?>
                                                     <input type="text" class="form-control pull-right datepicker"
                                                         id="datepicker2" name="dateSaleEnd"
                                                         value="<?php echo date_format($dateEnd, 'd/m/Y'); ?>">
@@ -288,8 +302,8 @@ try { $sql = "SELECT * FROM correlative WHERE idCorrelative = 1";
                                             </thead>
                                             <tbody>
                                                 <?php
-try {
-    $sql = "SELECT P.picture, P.idProduct, P.productName, P.productCode, P.cost,
+                                                try {
+                                                    $sql = "SELECT P.picture, P.idProduct, P.productName, P.productCode, P.cost,
                                       (select makeName from make where idMake = P._idMake and state = 0) as make,
                                       (select catName from category where idCategory = P._idCategory and state = 0) as category,
                                       (select unityName from unity where idUnity = P._idUnity and state = 0) as unity,
@@ -300,10 +314,10 @@ try {
                                       D.priceS, D.quantity, D.discount
                                     from detailS D INNER JOIN product P ON D._idProduct = P.idProduct
                                     where _idSale = $id";
-    $resultado = $conn->query($sql);
-    $id_detalle = 0;
-    while ($detailS = $resultado->fetch_assoc()) {
-        $subtotal = ($detailS['priceS'] - $detailS['discount']) * $detailS['quantity'];?>
+                                                    $resultado = $conn->query($sql);
+                                                    $id_detalle = 0;
+                                                    while ($detailS = $resultado->fetch_assoc()) {
+                                                        $subtotal = ($detailS['priceS'] - $detailS['discount']) * $detailS['quantity']; ?>
                                                 <tr id="detalleF">
                                                     <td><img src="img/products/<?php echo $detailS['picture']; ?>"
                                                             width="80" onerror="this.src='img/products/notfound.jpg';">
@@ -351,12 +365,12 @@ try {
                                                                 class="fa fa-remove"></i></a></td>
                                                 </tr>
                                                 <?php
-$id_detalle = $id_detalle + 1;
-    }
-} catch (Exception $e) {
-    echo "Error: " . $e->getMessage();
-}
-?>
+                                                        $id_detalle = $id_detalle + 1;
+                                                    }
+                                                } catch (Exception $e) {
+                                                    echo "Error: " . $e->getMessage();
+                                                }
+                                                ?>
                                             </tbody>
                                         </table>
                                     </div>
@@ -407,5 +421,5 @@ $id_detalle = $id_detalle + 1;
     <!-- /.content-wrapper -->
 
     <?php
-include_once 'templates/footer.php';
-?>
+    include_once 'templates/footer.php';
+    ?>

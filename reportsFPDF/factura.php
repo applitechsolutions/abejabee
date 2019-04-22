@@ -5,12 +5,10 @@ require "NumeroALetras.php";
 include_once '../funciones/bd_conexion.php';
 
 class PDF extends FPDF
-{
-
-} // FIN Class PDF
+{ } // FIN Class PDF
 
 try {
-    $sql = "SELECT dateEnd, total, codeSeller, town, codeCustomer, custName, custNit, address, mobile
+    $sql = "SELECT dateEnd, date, total, codeSeller, town, codeCustomer, custName, custNit, address, mobile
                     FROM bill WHERE idBill = $idBill";
     $resultado = $conn->query($sql);
 } catch (Exception $e) {
@@ -19,13 +17,14 @@ try {
 }
 
 while ($sale = $resultado->fetch_assoc()) {
+    $fechaF = date_create($sale['date']);
     $fecha = date_create($sale['dateEnd']);
 
     $pdf = new PDF('P', 'mm', array(163, 212));
-#Establecemos los márgenes izquierda, arriba y derecha:
+    #Establecemos los márgenes izquierda, arriba y derecha:
     $pdf->SetMargins(0, 0, 0);
 
-#Establecemos el margen inferior:
+    #Establecemos el margen inferior:
     $pdf->SetAutoPageBreak(true, 0);
     $str = iconv('UTF-8', 'windows-1252', NumeroALetras::convertir($sale['total'], 'QUETZALES', 'CENTAVOS'));
 
@@ -33,8 +32,8 @@ while ($sale = $resultado->fetch_assoc()) {
     $pdf->SetFont('Arial', '', 10);
 
     $pdf->SetXY(20, 40);
-//primera linea de factura
-    $cMuni = iconv('UTF-8', 'windows-1252', $sale['town']);
+    //primera linea de factura
+    $cMuni = iconv('UTF-8', 'windows-1252', $sale['town'] . ' ' . date_format($fechaF, 'd/m/Y'));
     $pdf->Cell(50, 3, $cMuni, 0, 0, 'L');
     $pdf->SetFont('Arial', '', 8);
     $pdf->Cell(15);
@@ -48,24 +47,24 @@ while ($sale = $resultado->fetch_assoc()) {
     $pdf->Cell(17, 3, date_format($fecha, 'd/m/Y'), 0, 1, 'L');
 
     $pdf->SetXY(23, 46);
-//Nombre
+    //Nombre
     $cName = iconv('UTF-8', 'windows-1252', $sale['custName']);
     $pdf->Cell(120, 3, $cName, 0, 0, 'L');
 
     $pdf->SetXY(17, 52);
-//NIT
+    //NIT
     $pdf->Cell(30, 3, $sale['custNit'], 0, 0, 'L');
 
     $pdf->SetXY(25, 58);
-//Direccion
+    //Direccion
     $cAddress = iconv('UTF-8', 'windows-1252', $sale['address']);
     $pdf->MultiCell(120, 3, $cAddress, 0, 'L', 0);
 
     $pdf->SetXY(23, 74);
-//Telefono
+    //Telefono
     $pdf->Cell(30, 3, $sale['mobile'], 0, 0, 'L');
 
-//DETALLE DE FACTURA
+    //DETALLE DE FACTURA
     $pdf->SetXY(0, 84);
     $pdf->SetFont('Arial', '', 10);
     try {
@@ -90,18 +89,18 @@ while ($sale = $resultado->fetch_assoc()) {
         $pdf->Cell(15, 4, $COD, 0, 0, 'L');
         if ($detailB['marca'] == 'SCHLENKER') {
             $pdf->Cell(69, 4, $DESC, 0, 0, 'L');
-        }else {
-            $pdf->Cell(69, 4, $NOMBRE, 0, 0, 'L');            
+        } else {
+            $pdf->Cell(69, 4, $NOMBRE, 0, 0, 'L');
         }
         $pdf->Cell(21, 4, 'Q.' . $detailB['precio'], 0, 0, 'C');
         $pdf->Cell(28, 4, $detailB['total'], 0, 1, 'C');
     }
 
-//TOTAL-LETRAS
+    //TOTAL-LETRAS
     $pdf->SetXY(26, 188);
     $pdf->MultiCell(85, 5, $str, 0, 'L', 0);
 
-//TOTAL
+    //TOTAL
     $pdf->SetXY(130, 192);
     $pdf->SetFont('Arial', 'B', 10);
     $pdf->Cell(28, 5, $sale['total'], 0, 0, 'L');

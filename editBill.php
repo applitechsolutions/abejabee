@@ -5,14 +5,14 @@ include_once 'templates/header.php';
 
 <body class="hold-transition skin-blue sidebar-collapse sidebar-mini">
     <?php
-include_once 'templates/navBar.php';
-include_once 'templates/sideBar.php';
-include_once 'funciones/bd_conexion.php';
-$id = $_GET['id'];
-if (!filter_var($id, FILTER_VALIDATE_INT)) {
-    die("Error!");
-}
-?>
+    include_once 'templates/navBar.php';
+    include_once 'templates/sideBar.php';
+    include_once 'funciones/bd_conexion.php';
+    $id = $_GET['id'];
+    if (!filter_var($id, FILTER_VALIDATE_INT)) {
+        die("Error!");
+    }
+    ?>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -34,11 +34,11 @@ if (!filter_var($id, FILTER_VALIDATE_INT)) {
                 <!-- /.box-header -->
                 <div class="box-body">
                     <?php
-$sql = "SELECT dateEnd, total, codeSeller, town, codeCustomer, custName, custNit, address, mobile, serie, noBill
+                    $sql = "SELECT dateEnd, date, total, codeSeller, town, codeCustomer, custName, custNit, address, mobile, serie, noBill
               FROM bill WHERE idBill = $id";
-$resultado = $conn->query($sql);
-$bill = $resultado->fetch_assoc();
-?>
+                    $resultado = $conn->query($sql);
+                    $bill = $resultado->fetch_assoc();
+                    ?>
 
                     <!-- MODAL IMPRIMIR -->
                     <div class="modal fade" id="modal-printS">
@@ -120,7 +120,7 @@ $bill = $resultado->fetch_assoc();
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-3">
+                                        <div class="col-lg-2">
                                             <div class="form-group">
                                                 <span class="text-danger text-uppercase">*</span>
                                                 <label>Municipio</label>
@@ -137,8 +137,22 @@ $bill = $resultado->fetch_assoc();
                                                     name="customerTel" value="<?php echo $bill['mobile']; ?>">
                                             </div>
                                         </div>
-
-                                        <div class="col-lg-3">
+                                        <div class="col-lg-2">
+                                            <div class="form-group">
+                                                <span class="text-danger text-uppercase">*</span>
+                                                <label>Fecha</label>
+                                                <div class="input-group date">
+                                                    <div class="input-group-addon">
+                                                        <i class="fa fa-calendar"></i>
+                                                    </div>
+                                                    <?php $date = date_create($bill['date']); ?>
+                                                    <input type="text" class="form-control pull-right datepicker"
+                                                        id="datepicker" name="date"
+                                                        value="<?php echo date_format($date, 'd/m/Y'); ?>">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2">
                                             <div class="form-group">
                                                 <span class="text-danger text-uppercase">*</span>
                                                 <label>Fecha de vencimiento</label>
@@ -146,7 +160,7 @@ $bill = $resultado->fetch_assoc();
                                                     <div class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
                                                     </div>
-                                                    <?php $dateEnd = date_create($bill['dateEnd']);?>
+                                                    <?php $dateEnd = date_create($bill['dateEnd']); ?>
                                                     <input type="text" class="form-control pull-right datepicker"
                                                         id="datepicker2" name="dateSaleEnd"
                                                         value="<?php echo date_format($dateEnd, 'd/m/Y'); ?>">
@@ -211,8 +225,8 @@ $bill = $resultado->fetch_assoc();
                                             </thead>
                                             <tbody>
                                                 <?php
-try {
-    $sql = "SELECT P.picture, P.idProduct, P.productName, P.productCode, P.cost,
+                                                try {
+                                                    $sql = "SELECT P.picture, P.idProduct, P.productName, P.productCode, P.cost,
                                       (select makeName from make where idMake = P._idMake and state = 0) as make,
                                       (select catName from category where idCategory = P._idCategory and state = 0) as category,
                                       (select unityName from unity where idUnity = P._idUnity and state = 0) as unity,
@@ -223,10 +237,10 @@ try {
                                       D.priceB, D.quantity, D.discount
                                     from detailB D INNER JOIN product P ON D._idProduct = P.idProduct
                                     where _idBill = $id";
-    $resultado = $conn->query($sql);
-    $id_detalle = 0;
-    while ($detailB = $resultado->fetch_assoc()) {
-        $subtotal = ($detailB['priceB'] - $detailB['discount']) * $detailB['quantity'];?>
+                                                    $resultado = $conn->query($sql);
+                                                    $id_detalle = 0;
+                                                    while ($detailB = $resultado->fetch_assoc()) {
+                                                        $subtotal = ($detailB['priceB'] - $detailB['discount']) * $detailB['quantity']; ?>
                                                 <tr id="detalleF">
                                                     <td><img src="img/products/<?php echo $detailB['picture']; ?>"
                                                             width="80" onerror="this.src='img/products/notfound.jpg';">
@@ -274,12 +288,12 @@ try {
                                                                 class="fa fa-remove"></i></a></td>
                                                 </tr>
                                                 <?php
-$id_detalle = $id_detalle + 1;
-    }
-} catch (Exception $e) {
-    echo "Error: " . $e->getMessage();
-}
-?>
+                                                        $id_detalle = $id_detalle + 1;
+                                                    }
+                                                } catch (Exception $e) {
+                                                    echo "Error: " . $e->getMessage();
+                                                }
+                                                ?>
                                             </tbody>
                                         </table>
                                     </div>
@@ -330,5 +344,5 @@ $id_detalle = $id_detalle + 1;
     <!-- /.content-wrapper -->
 
     <?php
-include_once 'templates/footer.php';
-?>
+    include_once 'templates/footer.php';
+    ?>

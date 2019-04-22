@@ -5,16 +5,16 @@ include_once 'templates/header.php';
 
 <body class="hold-transition skin-blue sidebar-collapse sidebar-mini">
     <?php
-include_once 'templates/navBar.php';
-include_once 'templates/sideBar.php';
-include_once 'funciones/bd_conexion.php';
-?>
+    include_once 'templates/navBar.php';
+    include_once 'templates/sideBar.php';
+    include_once 'funciones/bd_conexion.php';
+    ?>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-            <i class="fas fa-file-invoice"></i> Facturas
+                <i class="fas fa-file-invoice"></i> Facturas
                 <small>Listado de ventas activas.</small>
             </h1>
         </section>
@@ -77,11 +77,11 @@ include_once 'funciones/bd_conexion.php';
                                         </div>
                                     </div>
                                     <?php
-if ($_SESSION['rol'] == 1) {?>
-                                        <div id="editarF" class="modal-footer">
-                                        </div>
-                                        <?php
-}?>
+                                    if ($_SESSION['rol'] == 1) { ?>
+                                    <div id="editarF" class="modal-footer">
+                                    </div>
+                                    <?php
+                                } ?>
                                 </div>
                             </div>
                             <!-- /.modal-content -->
@@ -193,7 +193,7 @@ if ($_SESSION['rol'] == 1) {?>
                                                 <input type="hidden" id="totalB" name="totalB" value="0">
                                                 <input type="hidden" id="totalP" name="totalP" value="0">
                                                 <?php
-if ($_SESSION['rol'] == 1) {?>
+                                                if ($_SESSION['rol'] == 1) { ?>
                                                 <span class="text-warning pull-right"> *Debe llenar los campos
                                                     obligatorios
                                                 </span>
@@ -201,12 +201,12 @@ if ($_SESSION['rol'] == 1) {?>
                                                     id="crear-pago">
                                                     <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
                                                 <?php
-} elseif ($_SESSION['rol'] == 2) {?>
+                                            } elseif ($_SESSION['rol'] == 2) { ?>
                                                 <span class="text-warning pull-right"> *No tiene permisos para ingresar
                                                     pagos </span>
                                                 <?php
-}
-?>
+                                            }
+                                            ?>
                                             </div>
                                             <div class="box box-primary">
                                                 <div class="box-header">
@@ -300,6 +300,7 @@ if ($_SESSION['rol'] == 1) {?>
                                 <thead>
                                     <tr>
                                         <th>Factura No°</th>
+                                        <th>Fecha</th>
                                         <th>Código vendedor</th>
                                         <th>Código Cliente</th>
                                         <th>Cliente</th>
@@ -313,20 +314,24 @@ if ($_SESSION['rol'] == 1) {?>
                                 </thead>
                                 <tbody>
                                     <?php
-try {
-    $sql = "SELECT B.* FROM bill B ORDER BY B.noBill DESC";
-    $resultado = $conn->query($sql);
-} catch (Exception $e) {
-    $error = $e->getMessage();
-    echo $error;
-}
+                                    try {
+                                        $sql = "SELECT B.* FROM bill B ORDER BY B.noBill DESC";
+                                        $resultado = $conn->query($sql);
+                                    } catch (Exception $e) {
+                                        $error = $e->getMessage();
+                                        echo $error;
+                                    }
 
-while ($bill = $resultado->fetch_assoc()) {
-    $dateEnd = date_create($bill['dateEnd']);
-    ?>
+                                    while ($bill = $resultado->fetch_assoc()) {
+                                        $dateEnd = date_create($bill['dateEnd']);
+                                        $dateB = date_create($bill['date']);
+                                        ?>
                                     <tr>
-                                        <td>                                            
+                                        <td>
                                             <?php echo $bill['serie'] . ' ' . $bill['noBill']; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo date_format($dateB, 'd/m/y'); ?>
                                         </td>
                                         <td>
                                             <?php echo $bill['codeSeller']; ?>
@@ -358,8 +363,9 @@ while ($bill = $resultado->fetch_assoc()) {
                                                     data-id="<?php echo $bill['idBill']; ?>" data-tipo="listDetailB"><i
                                                         class="fa fa-info"></i> Detalles</button>
                                                 <!-- <button type="button" class="btn btn-primary btn-sm detalle_balance"
-                                                    data-id="<?php //echo $sale['idSale']; ?>" data-tipo="listBalance"><i
-                                                        class="fa fa-balance-scale"></i> Balance</button> -->
+                                                                                            data-id="<?php
+                                                                                                        ?>" data-tipo="listBalance"><i
+                                                                                                class="fa fa-balance-scale"></i> Balance</button> -->
                                                 <div class="btn-group">
                                                     <button type="button"
                                                         class="btn bg-teal-active btn-sm dropdown-toggle"
@@ -367,7 +373,8 @@ while ($bill = $resultado->fetch_assoc()) {
                                                         <span><i class="fa fa-print"></i> Imprimir</span>
                                                     </button>
                                                     <ul class="dropdown-menu">
-                                                        <li><a href="printSale.php?id=<?php echo $bill['_idSale']; ?>"> Factura</a>
+                                                        <li><a href="printSale.php?id=<?php echo $bill['_idSale']; ?>">
+                                                                Factura</a>
                                                         </li>
                                                         <li><a href="#"
                                                                 onclick="imprimir('guia',<?php echo $bill['_idSale']; ?>);">Guía</a>
@@ -378,7 +385,7 @@ while ($bill = $resultado->fetch_assoc()) {
                                         </td>
                                     </tr>
                                     <?php }
-?>
+                                ?>
                                 </tbody>
                                 <tfoot>
                                     <tr>
@@ -409,6 +416,6 @@ while ($bill = $resultado->fetch_assoc()) {
     <!-- /.content-wrapper -->
 
     <?php
-include_once 'templates/footer.php';
+    include_once 'templates/footer.php';
 
-?>
+    ?>

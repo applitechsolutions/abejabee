@@ -5,16 +5,16 @@ include_once 'templates/header.php';
 
 <body class="hold-transition skin-blue sidebar-collapse sidebar-mini">
     <?php
-include_once 'templates/navBar.php';
-include_once 'templates/sideBar.php';
-include_once 'funciones/bd_conexion.php';
-?>
+    include_once 'templates/navBar.php';
+    include_once 'templates/sideBar.php';
+    include_once 'funciones/bd_conexion.php';
+    ?>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-            <i class="fas fa-receipt"></i> Remisiones
+                <i class="fas fa-receipt"></i> Remisiones
                 <small>Listado de ventas activas con saldo pendiente de cancelar</small>
             </h1>
         </section>
@@ -76,11 +76,11 @@ include_once 'funciones/bd_conexion.php';
                                             <!-- /.box-body -->
                                         </div>
                                         <?php
-if ($_SESSION['rol'] == 1) {?>
+                                        if ($_SESSION['rol'] == 1) { ?>
                                         <div id="anularV" class="modal-footer">
                                         </div>
                                         <?php
-}?>
+                                    } ?>
 
                                     </div>
                                 </div>
@@ -101,6 +101,49 @@ if ($_SESSION['rol'] == 1) {?>
                                         </h4>
                                     </div>
                                     <div class="modal-body">
+                                        <form role="form" id="form-comision" name="form-comision" method="post"
+                                            action="BLL/sale.php">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <br>
+                                                    <h4 class=" alert-info">Comisiones personalizadas:</h4>
+                                                </div>
+                                                <div class="form-group col-md-2">
+                                                    <br>
+                                                    <span class="text-danger text-uppercase">*</span><label
+                                                        for="schlenker">Schlenker</label>
+                                                    <div class="input-group">
+                                                        <input type="number" min="0" step="1" max="100"
+                                                            class="form-control" id="schlenker" name="schlenker"
+                                                            placeholder="0">
+                                                        <span class="input-group-addon">%</span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-2">
+                                                    <br>
+                                                    <span class="text-danger text-uppercase">*</span><label
+                                                        for="otros">Otros</label>
+                                                    <div class="input-group">
+                                                        <input type="number" min="0" step="1" max="100"
+                                                            class="form-control" id="otros" name="otros"
+                                                            placeholder="0">
+                                                        <span class="input-group-addon">%</span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-2">
+                                                    <br>
+                                                    <input type="hidden" id="idSaleComi" name="idSale" value="0">
+                                                    <input type="hidden" name="venta" value="editarComision">
+                                                    <button type="submit" class="btn btn-app">
+                                                        <i class="fa fa-save"></i> Guardar
+                                                    </button>
+                                                </div>
+                                                <div class="alert alert-info alert-dismissible">
+                                                    <div id="days"></div>
+                                                    <p id="infoComi"></p>
+                                                </div>
+                                            </div>
+                                        </form>
                                         <form role="form" id="form-pay" name="form-pay" method="post"
                                             action="BLL/balance.php">
                                             <div class="row">
@@ -194,7 +237,7 @@ if ($_SESSION['rol'] == 1) {?>
                                                 <input type="hidden" id="totalB" name="totalB" value="0">
                                                 <input type="hidden" id="totalP" name="totalP" value="0">
                                                 <?php
-if ($_SESSION['rol'] == 1) {?>
+                                                if ($_SESSION['rol'] == 1) { ?>
                                                 <span class="text-warning pull-right"> *Debe llenar los campos
                                                     obligatorios
                                                 </span>
@@ -202,12 +245,12 @@ if ($_SESSION['rol'] == 1) {?>
                                                     id="crear-pago">
                                                     <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
                                                 <?php
-} elseif ($_SESSION['rol'] == 2) {?>
+                                            } elseif ($_SESSION['rol'] == 2) { ?>
                                                 <span class="text-warning pull-right"> *No tiene permisos para ingresar
                                                     pagos </span>
                                                 <?php
-}
-?>
+                                            }
+                                            ?>
                                             </div>
                                             <div class="box box-primary">
                                                 <div class="box-header">
@@ -314,27 +357,27 @@ if ($_SESSION['rol'] == 1) {?>
                                 </thead>
                                 <tbody>
                                     <?php
-try {
-    $sql = "SELECT S.*,
+                                    try {
+                                        $sql = "SELECT S.*,
                     (select concat(sellerFirstName, ' ', sellerLastName) from seller where idSeller = S._idSeller) as seller,
                     (select concat(customerCode, ' ', customerName) from customer where idCustomer = S._idCustomer) as customer
                     FROM sale S WHERE S.cancel = 0 AND S.state = 0 ORDER BY S.idSale DESC";
-    $resultado = $conn->query($sql);
-} catch (Exception $e) {
-    $error = $e->getMessage();
-    echo $error;
-}
+                                        $resultado = $conn->query($sql);
+                                    } catch (Exception $e) {
+                                        $error = $e->getMessage();
+                                        echo $error;
+                                    }
 
-while ($sale = $resultado->fetch_assoc()) {
-    $dateStar = date_create($sale['dateStart']);
-    $dateEnd = date_create($sale['dateEnd']);
-    ?>
+                                    while ($sale = $resultado->fetch_assoc()) {
+                                        $dateStar = date_create($sale['dateStart']);
+                                        $dateEnd = date_create($sale['dateEnd']);
+                                        ?>
                                     <tr>
                                         <td>
                                             <?php echo date_format($dateStar, 'd/m/y'); ?>
                                         </td>
                                         <td>
-                                                <?php echo $sale['noDeliver']; ?>
+                                            <?php echo $sale['noDeliver']; ?>
                                         </td>
                                         <td>
                                             <?php echo $sale['seller']; ?>
@@ -363,7 +406,9 @@ while ($sale = $resultado->fetch_assoc()) {
                                                     data-id="<?php echo $sale['idSale']; ?>" data-tipo="listDetailS"><i
                                                         class="fa fa-info"></i> Detalles</button>
                                                 <button type="button" class="btn btn-primary btn-sm detalle_balance"
-                                                    data-id="<?php echo $sale['idSale']; ?>" data-tipo="listBalance"><i
+                                                    data-id="<?php echo $sale['idSale']; ?>" data-tipo="listBalance"
+                                                    commissionS="<?php echo $sale['commissionS']; ?>"
+                                                    commissionO="<?php echo $sale['commissionO']; ?>"><i
                                                         class="fa fa-balance-scale"></i> Balance</button>
                                                 <div class="btn-group">
                                                     <button type="button"
@@ -372,14 +417,15 @@ while ($sale = $resultado->fetch_assoc()) {
                                                         <span><i class="fa fa-print"></i> Imprimir</span>
                                                     </button>
                                                     <ul class="dropdown-menu">
-                                                        <li><a href="printSale.php?id=<?php echo $sale['idSale']; ?>"> Factura</a>
+                                                        <li><a href="printSale.php?id=<?php echo $sale['idSale']; ?>">
+                                                                Factura</a>
                                                         </li>
                                                         <?php
-if ($_SESSION['rol'] == 1) {?>
+                                                            if ($_SESSION['rol'] == 1) { ?>
                                                         <li><a href="#"
                                                                 onclick="imprimir('remision',<?php echo $sale['idSale']; ?>);">Remision</a>
                                                         </li>
-                                                        <?php }?>
+                                                        <?php } ?>
                                                         <li><a href="#"
                                                                 onclick="imprimir('guia',<?php echo $sale['idSale']; ?>);">Guía</a>
                                                         </li>
@@ -389,7 +435,7 @@ if ($_SESSION['rol'] == 1) {?>
                                         </td>
                                     </tr>
                                     <?php }
-?>
+                                ?>
                                 </tbody>
                                 <tfoot>
                                     <tr>
@@ -420,6 +466,6 @@ if ($_SESSION['rol'] == 1) {?>
     <!-- /.content-wrapper -->
 
     <?php
-include_once 'templates/footer.php';
+    include_once 'templates/footer.php';
 
-?>
+    ?>

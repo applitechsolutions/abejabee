@@ -2,7 +2,8 @@
     <div class="pull-right hidden-xs">
         <b>Version</b> 1.1.0
     </div>
-    <strong>Copyright &copy; 2018 - <?php echo date("Y"); ?> <a href="#">Applitech Software Solutions</a>.</strong> Todos Los
+    <strong>Copyright &copy; 2018 - <?php echo date("Y"); ?> <a href="#">Applitech Software Solutions</a>.</strong>
+    Todos Los
     Derechos Reservados.
 </footer>
 
@@ -35,6 +36,8 @@ function convertDate(dateString) {
 <script src="js/demo.js">
 </script>
 <script src="js/sweetalert2.min.js">
+</script>
+<script src="js/moment.min.js">
 </script>
 <script src="js/raphael.min.js">
 </script>
@@ -75,6 +78,7 @@ function convertDate(dateString) {
 </script>
 <script src="js/select2.full.min.js">
 </script>
+<script src="https://cdn.datatables.net/plug-ins/1.10.19/sorting/datetime-moment.js"></script>
 
 
 <script>

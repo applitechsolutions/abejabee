@@ -10,12 +10,14 @@ if ($_POST['factura'] == 'nueva') {
     $codeCustomer = $_POST['customerCode'];
     $town = $_POST['municipio'];
     $mobile = $_POST['customerTel'];
+    $date = strtr($_POST['date'], '/', '-');
     $dateEnd = strtr($_POST['dateSaleEnd'], '/', '-');
     $custName = $_POST['customerName'];
     $custNit = $_POST['customerNit'];
     $address = $_POST['customerAddress'];
     $total = $_POST['totalS'];
 
+    $ff = date('Y-m-d', strtotime($date));
     $fv = date('Y-m-d', strtotime($dateEnd));
 
     $MyArray = json_decode($_POST['json']);
@@ -31,8 +33,8 @@ if ($_POST['factura'] == 'nueva') {
             $query_success = true;
 
             //Insert Bill
-            $stmt = $conn->prepare("INSERT INTO bill (_idSale, serie, noBill, codeSeller, codeCustomer, town, mobile, dateEnd, custName, custNit, address, total) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("issssssssssd", $idSale, $serie, $noBill, $codeSeller, $codeCustomer, $town, $mobile, $fv, $custName, $custNit, $address, $total);
+            $stmt = $conn->prepare("INSERT INTO bill (_idSale, serie, noBill, codeSeller, codeCustomer, town, mobile, date, dateEnd, custName, custNit, address, total) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("isssssssssssd", $idSale, $serie, $noBill, $codeSeller, $codeCustomer, $town, $mobile, $ff, $fv, $custName, $custNit, $address, $total);
             if (!mysqli_stmt_execute($stmt)) {
                 $query_success = false;
             }
@@ -95,12 +97,14 @@ if ($_POST['factura'] == 'editar') {
     $codeCustomer = $_POST['customerCode'];
     $town = $_POST['municipio'];
     $mobile = $_POST['customerTel'];
+    $date = strtr($_POST['date'], '/', '-');
     $dateEnd = strtr($_POST['dateSaleEnd'], '/', '-');
     $custName = $_POST['customerName'];
     $custNit = $_POST['customerNit'];
     $address = $_POST['customerAddress'];
     $total = $_POST['totalS'];
 
+    $ff = date('Y-m-d', strtotime($date));
     $fv = date('Y-m-d', strtotime($dateEnd));
 
     $MyArray = json_decode($_POST['json']);
@@ -116,8 +120,8 @@ if ($_POST['factura'] == 'editar') {
             $query_success = true;
 
             //Insert Bill
-            $stmt = $conn->prepare("UPDATE bill SET serie = ?, noBill = ?, codeSeller = ?, codeCustomer = ?, town = ?, mobile = ?, dateEnd = ?, custName = ?, custNit = ?, address = ?, total = ? WHERE idBill = ?");
-            $stmt->bind_param("ssssssssssdi", $serie, $noBill, $codeSeller, $codeCustomer, $town, $mobile, $fv, $custName, $custNit, $address, $total, $idBill);
+            $stmt = $conn->prepare("UPDATE bill SET serie = ?, noBill = ?, codeSeller = ?, codeCustomer = ?, town = ?, mobile = ?, date = ?, dateEnd = ?, custName = ?, custNit = ?, address = ?, total = ? WHERE idBill = ?");
+            $stmt->bind_param("sssssssssssdi", $serie, $noBill, $codeSeller, $codeCustomer, $town, $mobile, $ff, $fv, $custName, $custNit, $address, $total, $idBill);
             if (!mysqli_stmt_execute($stmt)) {
                 $query_success = false;
             }

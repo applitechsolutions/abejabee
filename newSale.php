@@ -89,21 +89,21 @@ try {
                     <form role="form" id="form-correlative-envio" name="form-correlative-envio" method="post" action="BLL/correlative.php">
                       <div class="row">
                         <?php
-  try {
-      $sql = "SELECT * FROM correlative WHERE idCorrelative = 21";
-      $resultado = $conn->query($sql);
-      while ($correlative = $resultado->fetch_assoc()) {?>
+try {
+    $sql = "SELECT * FROM correlative WHERE idCorrelative = 21";
+    $resultado = $conn->query($sql);
+    while ($correlative = $resultado->fetch_assoc()) {?>
                           <div class="form-group col-lg-8">
                             <span class="text-danger text-uppercase">*</span>
                             <label for="last">Última guía de GuateEx generada</label>
                             <input type="text" class="form-control" id="last" name="last" value="<?php echo $correlative['last']; ?>">
                           </div>
                           <?php
-  }
-  } catch (Exception $e) {
-      echo "Error: " . $e->getMessage();
-  }
-  ?>
+}
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+}
+?>
                       </div>
                       <div class="modal-footer">
                         <input type="hidden" name="correlative" value="envio">
@@ -247,7 +247,7 @@ try {
 
 
                         </div>
-                        <div class="box box-success collapsed-box" id="box">
+                        <div class="box box-success" id="box">
                           <div class="box-header with-border">
 
                             <h3 class="box-title">
@@ -306,7 +306,7 @@ while ($product = $resultado->fetch_assoc()) {
                                     </td>
                                     <td>
                                       <div class="margin">
-                                        <?php echo $product['productName']." ".$product['description']; ?>
+                                        <?php echo $product['productName'] . " " . $product['description']; ?>
                                       </div>
                                     </td>
                                     <td>
@@ -476,7 +476,7 @@ while ($product = $resultado->fetch_assoc()) {
                               <button type="submit" class="btn btn-primary" id="crear-venta">
                                 <i class="fa fa-floppy-o" aria-hidden="true"></i> Confirmar venta</button>
                             </div>
-                          </div>                 
+                          </div>
                         </div>
                         </form>
                         <!-- /.box-body -->
@@ -499,7 +499,7 @@ while ($product = $resultado->fetch_assoc()) {
                             <div class="box-body">
                               <div id="divreporteF" class="w3-rest">
                                 <iframe src="" style="width: 100%; height: 640px; min-width: 300px;"></iframe>
-                              </div>                              
+                              </div>
                             </div>
                             <!-- /.box-body -->
                           </div>
@@ -519,9 +519,9 @@ while ($product = $resultado->fetch_assoc()) {
                                   <input type="text" class="form-control" id="transport" name="transport" placeholder="Escriba un transporte" value="GuatEx" autofocus>
                                 </div>
                                 <?php
-                                  try { $sql = "SELECT * FROM correlative WHERE idCorrelative = 21";
-                                      $resultado = $conn->query($sql);
-                                      while ($correlative = $resultado->fetch_assoc()) {?>
+try { $sql = "SELECT * FROM correlative WHERE idCorrelative = 21";
+    $resultado = $conn->query($sql);
+    while ($correlative = $resultado->fetch_assoc()) {?>
                                   <div class="form-group col-md-6">
                                     <label for="noShipment">No. de envío</label>
                                     <div class="input-group">
@@ -538,11 +538,11 @@ while ($product = $resultado->fetch_assoc()) {
                                     </div>
                                   </div>
                                   <?php
-                                  }
-                                  } catch (Exception $e) {
-                                      echo "Error: " . $e->getMessage();
-                                  }
-                                  ?>
+}
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+}
+?>
                                     <div class="form-group col-md-6">
                                       <label for="noDeliver">No. de entrega</label>
                                       <input type="text" class="form-control" id="noDeliver" name="noDeliver" placeholder="Escriba un número de entrega">

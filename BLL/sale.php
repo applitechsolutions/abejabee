@@ -154,7 +154,7 @@ if ($_POST['venta'] == 'editar') {
             if ($monto == 0) {
                 $cancel = 1;
             }
-            
+
             //Update Sale
             $stmt = $conn->prepare("UPDATE sale SET  _idSeller = ?, _idCustomer = ?, totalSale = ?, advance = ?, dateStart = ?, dateEnd = ?, paymentMethod = ?, noDeliver = ?, note = ?, cancel = ? WHERE idSale = ?");
             $stmt->bind_param("iiddsssssii", $vendedor, $cliente, $total, $adelanto, $fc, $fv, $pago, $remision, $note, $cancel, $id_sale);
@@ -202,36 +202,36 @@ if ($_POST['venta'] == 'editar') {
                 $query_success = false;
             }
             while ($det = $resultado->fetch_assoc()) {
-                 //Update STORAGE
-                 $sql = 'SELECT idStorage, stock FROM storage WHERE _idProduct = ? AND _idCellar = 1';
-                 $stmt = mysqli_prepare($conn, $sql);
-                 mysqli_stmt_bind_param($stmt, 'i', $det['_idProduct']);
-                 if (!mysqli_stmt_execute($stmt)) {
-                 $query_success = false;
-                 }
-                 mysqli_stmt_bind_result($stmt, $idStorage, $storage);
-                 if (!mysqli_stmt_fetch($stmt)) {
-                 $idStorage = 0;
-                 }
-                 $stock = $storage + $det['quantity'];
-                 mysqli_stmt_close($stmt);
+                //Update STORAGE
+                $sql = 'SELECT idStorage, stock FROM storage WHERE _idProduct = ? AND _idCellar = 1';
+                $stmt = mysqli_prepare($conn, $sql);
+                mysqli_stmt_bind_param($stmt, 'i', $det['_idProduct']);
+                if (!mysqli_stmt_execute($stmt)) {
+                    $query_success = false;
+                }
+                mysqli_stmt_bind_result($stmt, $idStorage, $storage);
+                if (!mysqli_stmt_fetch($stmt)) {
+                    $idStorage = 0;
+                }
+                $stock = $storage + $det['quantity'];
+                mysqli_stmt_close($stmt);
 
-                 if ($idStorage > 0) {
-                     $stmt = $conn->prepare("UPDATE storage SET stock = ? WHERE idStorage = ?");
-                     $stmt->bind_param("ii", $stock, $idStorage);
-                     if (!mysqli_stmt_execute($stmt)) {
-                         $query_success = false;
-                     }
-                     mysqli_stmt_close($stmt);
-                 }else {
-                     $id_cellar = 1;
-                     $stmt = $conn->prepare("INSERT INTO storage (stock, _idProduct, _idCellar) VALUES (?, ?, ?)");
-                     $stmt->bind_param("iii", $det['quantity'], $det['_idProduct'], $id_cellar);
-                     if (!mysqli_stmt_execute($stmt)) {
-                         $query_success = false;
-                     }
-                     mysqli_stmt_close($stmt);
-                }                
+                if ($idStorage > 0) {
+                    $stmt = $conn->prepare("UPDATE storage SET stock = ? WHERE idStorage = ?");
+                    $stmt->bind_param("ii", $stock, $idStorage);
+                    if (!mysqli_stmt_execute($stmt)) {
+                        $query_success = false;
+                    }
+                    mysqli_stmt_close($stmt);
+                } else {
+                    $id_cellar = 1;
+                    $stmt = $conn->prepare("INSERT INTO storage (stock, _idProduct, _idCellar) VALUES (?, ?, ?)");
+                    $stmt->bind_param("iii", $det['quantity'], $det['_idProduct'], $id_cellar);
+                    if (!mysqli_stmt_execute($stmt)) {
+                        $query_success = false;
+                    }
+                    mysqli_stmt_close($stmt);
+                }
             }
 
             //Elimina el detailS inicial
@@ -240,7 +240,7 @@ if ($_POST['venta'] == 'editar') {
             if (!mysqli_stmt_execute($stmt)) {
                 $query_success = false;
             }
-            mysqli_stmt_close($stmt);                         
+            mysqli_stmt_close($stmt);
 
             foreach ($MyArray->detailS as $detail) {
                 //Insert DETAILS
@@ -429,6 +429,43 @@ if ($_POST['venta'] == 'editarShipment') {
                     'respuesta' => 'exito',
                     'idSale' => $id_registro,
                     'mensaje' => 'Envio generado correctamente!',
+                );
+            } else {
+                $respuesta = array(
+                    'respuesta' => 'error',
+                    'idSale' => $id_registro,
+                );
+            }
+            $stmt->close();
+            $conn->close();
+        }
+    } catch (Exception $e) {
+        echo 'Error: ' . $e . getMessage();
+    }
+    die(json_encode($respuesta));
+}
+
+if ($_POST['venta'] == 'editarComision') {
+
+    $schlenker = $_POST['schlenker'];
+    $otros = $_POST['otros'];
+    $idSale = $_POST['idSale'];
+
+    try {
+        if ($idSale == "" || $schlenker == "" || $otros == "") {
+            $respuesta = array(
+                'respuesta' => 'vacio',
+            );
+        } else {
+            $stmt = $conn->prepare("UPDATE sale set commissionS = ?, commissionO = ? WHERE idSale = ?");
+            $stmt->bind_param("iii", $schlenker, $otros, $idSale);
+            $stmt->execute();
+            $id_registro = $stmt->insert_id;
+            if ($stmt->affected_rows) {
+                $respuesta = array(
+                    'respuesta' => 'exito',
+                    'idSale' => $id_registro,
+                    'mensaje' => 'Comisiones modificadas correctamente!',
                 );
             } else {
                 $respuesta = array(
