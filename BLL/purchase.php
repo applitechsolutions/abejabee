@@ -18,11 +18,11 @@ if ($_POST['compra'] == 'nueva') {
                 'respuesta' => 'vacio'
             );
         } else {
-             /* Switch off auto commit to allow transactions*/
-             mysqli_autocommit($conn, false);
-             $query_success = true;
-            
-             //Insert Purchase
+            /* Switch off auto commit to allow transactions*/
+            mysqli_autocommit($conn, false);
+            $query_success = true;
+
+            //Insert Purchase
             $stmt = $conn->prepare("INSERT INTO purchase (datePurchase, _idProvider, noBill, serie, noDocument, totalPurchase) VALUES (?, ?, ?, ?, ?, ?)");
             $stmt->bind_param("sisssd", $fc, $proveedor, $factura, $serie, $documento, $total);
             if (!mysqli_stmt_execute($stmt)) {
@@ -47,11 +47,11 @@ if ($_POST['compra'] == 'nueva') {
                     $stmt = mysqli_prepare($conn, $sql);
                     mysqli_stmt_bind_param($stmt, 'i', $detail->idproduct);
                     if (!mysqli_stmt_execute($stmt)) {
-                    $query_success = false;
+                        $query_success = false;
                     }
                     mysqli_stmt_bind_result($stmt, $idStorage, $storage);
                     if (!mysqli_stmt_fetch($stmt)) {
-                    $idStorage = 0;
+                        $idStorage = 0;
                     }
                     $stock = $storage + $detail->cantdet;
                     mysqli_stmt_close($stmt);
@@ -63,7 +63,7 @@ if ($_POST['compra'] == 'nueva') {
                             $query_success = false;
                         }
                         mysqli_stmt_close($stmt);
-                    }else {
+                    } else {
                         $id_cellar = 1;
                         $stmt = $conn->prepare("INSERT INTO storage (stock, _idProduct, _idCellar) VALUES (?, ?, ?)");
                         $stmt->bind_param("iii", $detail->cantdet, $detail->idproduct, $id_cellar);
@@ -71,6 +71,7 @@ if ($_POST['compra'] == 'nueva') {
                             $query_success = false;
                         }
                         mysqli_stmt_close($stmt);
+                    }
                 }
                 if ($query_success) {
                     mysqli_commit($conn);
@@ -84,9 +85,8 @@ if ($_POST['compra'] == 'nueva') {
                         'respuesta' => 'error',
                         'idCompra' => $id_registro
                     );
-                }       
-            }         
-            }else {
+                }
+            } else {
                 $respuesta = array(
                     'respuesta' => 'error',
                     'idCompra' => $id_registro
@@ -94,10 +94,8 @@ if ($_POST['compra'] == 'nueva') {
             }
             $conn->close();
         }
-    } catch(Exception $e){
-        echo 'Error: '. $e.getMessage();
+    } catch (Exception $e) {
+        echo 'Error: ' . $e . getMessage();
     }
     die(json_encode($respuesta));
 }
-
-?>
