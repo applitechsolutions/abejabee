@@ -4,7 +4,7 @@ header("Content-Type: application/json; charset=UTF-8");
 
 $idSale = $_POST['id'];
 
-$result = $conn->query("SELECT S.commissionS, S.commissionO, (select s30 from commission where _idSeller = S._idSeller) as s30,
+$result = $conn->query("SELECT (select s30 from commission where _idSeller = S._idSeller) as s30,
         (select s60 from commission where _idSeller = S._idSeller) as s60, (select s90 from commission where _idSeller = S._idSeller) as s90,
         (select o30 from commission where _idSeller = S._idSeller) as o30, (select o60 from commission where _idSeller = S._idSeller) as o60,
         (select sd30 from commission where _idSeller = S._idSeller) as sd30, (select sd60 from commission where _idSeller = S._idSeller) as sd60,

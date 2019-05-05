@@ -101,64 +101,13 @@ include_once 'templates/header.php';
                                         </h4>
                                     </div>
                                     <div class="modal-body">
-                                        <form role="form" id="form-comision" name="form-comision" method="post"
-                                            action="BLL/sale.php">
-                                            <div class="row">
-                                                <div class="col-md-2">
-                                                    <br>
-                                                    <h4 class=" alert-info">Comisiones personalizadas:</h4>
-                                                </div>
-                                                <div class="form-group col-md-2">
-                                                    <br>
-                                                    <span class="text-danger text-uppercase">*</span><label
-                                                        for="schlenker">Schlenker</label>
-                                                    <div class="input-group">
-                                                        <input type="number" min="0" step="1" max="100"
-                                                            class="form-control" id="schlenker" name="schlenker"
-                                                            placeholder="0">
-                                                        <span class="input-group-addon">%</span>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group col-md-2">
-                                                    <br>
-                                                    <span class="text-danger text-uppercase">*</span><label
-                                                        for="otros">Otros</label>
-                                                    <div class="input-group">
-                                                        <input type="number" min="0" step="1" max="100"
-                                                            class="form-control" id="otros" name="otros"
-                                                            placeholder="0">
-                                                        <span class="input-group-addon">%</span>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group col-md-2">
-                                                    <br>
-                                                    <input type="hidden" id="idSaleComi" name="idSale" value="0">
-                                                    <input type="hidden" name="venta" value="editarComision">
-                                                    <button type="submit" class="btn btn-app">
-                                                        <i class="fa fa-save"></i> Guardar
-                                                    </button>
-                                                </div>
-                                                <div class="alert alert-info alert-dismissible">
-                                                    <div id="days"></div>
-                                                    <p id="infoComi"></p>
-                                                </div>
-                                            </div>
-                                        </form>
                                         <form role="form" id="form-pay" name="form-pay" method="post"
                                             action="BLL/balance.php">
                                             <div class="row">
-                                                <div class="col-md-4 pull-left">
-                                                    <div class="info-box bg-green">
-                                                        <span class="info-box-icon"><i class="fa fa-money"></i></span>
-                                                        <div class="info-box-content">
-                                                            <span class="info-box-text">Saldo actual:</span>
-                                                            <span class="info-box-number"><label for="totalB"
-                                                                    id="totalBal"></label></span>
-                                                        </div>
-                                                        <!-- /.info-box-content -->
-                                                    </div>
+                                                <div class="alert alert-info alert-dismissible col-md-5 pull-left">
+                                                    <div id="days"></div>
+                                                    <p id="infoComi"></p>
                                                 </div>
-
                                                 <div class="col-md-3 pull-left">
                                                     <div class="form-group">
                                                         <span class="text-danger text-uppercase">*</span>
@@ -184,14 +133,12 @@ include_once 'templates/header.php';
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-4 pull-left">
-                                                    <div class="info-box bg-yellow">
-                                                        <span class="info-box-icon"><i
-                                                                class="fa fa- fa-hourglass-half"></i></span>
+                                                    <div class="info-box bg-green">
+                                                        <span class="info-box-icon"><i class="fa fa-money"></i></span>
                                                         <div class="info-box-content">
-                                                            <span class="info-box-text">Pagos retenidos:</span>
-                                                            <span class="info-box-number"><label for="totalP"
-                                                                    id="totalPal">Q.
-                                                                    0.00</label></span>
+                                                            <span class="info-box-text">Saldo actual:</span>
+                                                            <span class="info-box-number"><label for="totalB"
+                                                                    id="totalBal"></label></span>
                                                         </div>
                                                         <!-- /.info-box-content -->
                                                     </div>
@@ -228,6 +175,22 @@ include_once 'templates/header.php';
                                                             name="noReceipt" placeholder="Escriba un número de recibo">
                                                     </div>
                                                 </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4 pull-left">
+                                                    <div class="info-box bg-yellow">
+                                                        <span class="info-box-icon"><i
+                                                                class="fa fa- fa-hourglass-half"></i></span>
+                                                        <div class="info-box-content">
+                                                            <span class="info-box-text">Pagos retenidos:</span>
+                                                            <span class="info-box-number"><label for="totalP"
+                                                                    id="totalPal">Q.
+                                                                    0.00</label></span>
+                                                        </div>
+                                                        <!-- /.info-box-content -->
+                                                    </div>
+                                                </div>
+
                                             </div>
 
                                             <!-- /.box-body -->
@@ -360,7 +323,8 @@ include_once 'templates/header.php';
                                     try {
                                         $sql = "SELECT S.*,
                     (select concat(sellerFirstName, ' ', sellerLastName) from seller where idSeller = S._idSeller) as seller,
-                    (select concat(customerCode, ' ', customerName) from customer where idCustomer = S._idCustomer) as customer
+                    (select concat(customerCode, ' ', customerName) from customer where idCustomer = S._idCustomer) as customer,
+                    (select SUM((priceS-discount)*quantity) from detailS WHERE (select _idMake from product where idProduct = _idProduct) = 171 AND _idSale = idSale) as schlenker
                     FROM sale S WHERE S.cancel = 0 AND S.state = 0 ORDER BY S.idSale DESC";
                                         $resultado = $conn->query($sql);
                                     } catch (Exception $e) {
@@ -371,6 +335,8 @@ include_once 'templates/header.php';
                                     while ($sale = $resultado->fetch_assoc()) {
                                         $dateStar = date_create($sale['dateStart']);
                                         $dateEnd = date_create($sale['dateEnd']);
+                                        $SchlenkerP = number_format(((100 * $sale['schlenker']) / $sale['totalSale']), 2);
+                                        $distribucionP = number_format((100 - $SchlenkerP), 2);
                                         ?>
                                     <tr>
                                         <td>
@@ -407,8 +373,9 @@ include_once 'templates/header.php';
                                                         class="fa fa-info"></i> Detalles</button>
                                                 <button type="button" class="btn btn-primary btn-sm detalle_balance"
                                                     data-id="<?php echo $sale['idSale']; ?>" data-tipo="listBalance"
-                                                    commissionS="<?php echo $sale['commissionS']; ?>"
-                                                    commissionO="<?php echo $sale['commissionO']; ?>"><i
+                                                    vendedor="<?php echo $sale['seller']; ?>"
+                                                    schlenkerP="<?php echo $SchlenkerP; ?>"
+                                                    distribucion="<?php echo $distribucionP; ?>"><i
                                                         class="fa fa-balance-scale"></i> Balance</button>
                                                 <div class="btn-group">
                                                     <button type="button"

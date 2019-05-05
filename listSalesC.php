@@ -96,50 +96,6 @@
                                           </h4>
                                       </div>
                                       <div class="modal-body">
-                                          <form role="form" id="form-comision" name="form-comision" method="post"
-                                              action="BLL/sale.php">
-                                              <div class="row">
-                                                  <div class="col-md-2">
-                                                      <br>
-                                                      <h4 class=" alert-info">Comisiones personalizadas:</h4>
-                                                  </div>
-                                                  <div class="form-group col-md-2">
-                                                      <br>
-                                                      <span class="text-danger text-uppercase">*</span><label
-                                                          for="schlenker">Schlenker</label>
-                                                      <div class="input-group">
-                                                          <input type="number" min="0" step="1" max="100"
-                                                              class="form-control" id="schlenker" name="schlenker"
-                                                              placeholder="0">
-                                                          <span class="input-group-addon">%</span>
-                                                      </div>
-                                                  </div>
-                                                  <div class="form-group col-md-2">
-                                                      <br>
-                                                      <span class="text-danger text-uppercase">*</span><label
-                                                          for="otros">Otros</label>
-                                                      <div class="input-group">
-                                                          <input type="number" min="0" step="1" max="100"
-                                                              class="form-control" id="otros" name="otros"
-                                                              placeholder="0">
-                                                          <span class="input-group-addon">%</span>
-                                                      </div>
-                                                  </div>
-                                                  <div class="form-group col-md-2">
-                                                      <br>
-                                                      <input type="hidden" id="idSaleComi" name="idSale" value="0">
-                                                      <input type="hidden" name="venta" value="editarComision">
-                                                      <button type="submit" class="btn btn-app">
-                                                          <i class="fa fa-save"></i> Guardar
-                                                      </button>
-                                                  </div>
-                                                  <div class="alert alert-info alert-dismissible">
-                                                      <div id="days"></div>
-                                                      <p id="infoComi"></p>
-                                                  </div>
-                                              </div>
-                                          </form>
-
                                           <!-- /.box-body -->
                                           <div class="box box-primary">
                                               <div class="box-header">
@@ -294,10 +250,8 @@
                                                       data-tipo="listDetailS"><i class="fa fa-info"></i>
                                                       Detalles</button>
                                                   <button type="button" class="btn btn-primary btn-sm detalle_balanceC"
-                                                      data-id="<?php echo $sale['idSale']; ?>" data-tipo="listBalance"
-                                                      commissionS="<?php echo $sale['commissionS']; ?>"
-                                                      commissionO="<?php echo $sale['commissionO']; ?>"><i
-                                                          class="fa fa-balance-scale"></i>
+                                                      data-id="<?php echo $sale['idSale']; ?>"
+                                                      data-tipo="listBalance"><i class="fa fa-balance-scale"></i>
                                                       Balance</button>
                                                   <div class="btn-group">
                                                       <button type="button"

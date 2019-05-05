@@ -470,58 +470,6 @@ $(document).ready(function () {
 
     });
 
-    $('#form-comision').on('submit', function (e) {
-        e.preventDefault();
-
-        var datos = $(this).serializeArray();
-
-        $.ajax({
-            type: $(this).attr('method'),
-            data: datos,
-            url: $(this).attr('action'),
-            dataType: 'json',
-            success: function (data) {
-                console.log(data);
-                var resultado = data;
-                if (resultado.respuesta == 'exito') {
-                    swal({
-                        position: 'top-end',
-                        type: 'success',
-                        title: '¡' + resultado.mensaje,
-                        showConfirmButton: false,
-                        timer: 1000
-                    })
-                } else if (resultado.respuesta == 'vacio') {
-                    swal({
-                        position: 'top-end',
-                        type: 'warning',
-                        title: 'Debes llenar los campos obligatorios :/',
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
-                } else if (resultado.respuesta == 'error') {
-                    swal({
-                        position: 'top-end',
-                        type: 'error',
-                        title: 'Algo salió mal, intenta de nuevo',
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
-                }
-            },
-            error: function (data) {
-                swal({
-                    position: 'top-end',
-                    type: 'error',
-                    title: 'Algo salió mal, intenta de nuevo',
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-            }
-        })
-
-    });
-
     $('.detalle_sale').on('click', function (e) {
         e.preventDefault();
         $("#detalles").find('tbody').html("");
@@ -582,8 +530,10 @@ $(document).ready(function () {
         $("#infoComi").html("");
         var id = $(this).attr('data-id');
         var tipo = $(this).attr('data-tipo');
-        var commissionS = $(this).attr('commissionS');
-        var commissionO = $(this).attr('commissionO');
+        var seller = $(this).attr('vendedor');
+        var schlenkerP = $(this).attr('schlenkerP');
+        var distribucionP = $(this).attr('distribucionP');
+
 
         swal({
             title: 'Cargando balance de saldos...'
@@ -647,13 +597,13 @@ $(document).ready(function () {
                                     $.each(data, function (key, registro) {
                                         
                                         if (diferencia <= registro.sd30 || diferencia <= registro.od30) {
-                                            $('#infoComi').append('Comisión por defecto:<br> Schlenker: '+ registro.s30 + '%, Otros: '+ registro.o30 + '%');
+                                            $('#infoComi').append(seller + '<br> Comisión base: Schlenker: '+ registro.s30 + '%, Otros: '+ registro.o30 + '%');
                                         }else if (diferencia > registro.sd30 && diferencia <= registro.sd60 || diferencia > registro.od30 && diferencia <= registro.od60) {
-                                            $('#infoComi').append('Comisión por defecto:<br> Schlenker: '+ registro.s60 + '%, Otros: '+ registro.o60 + '%');
+                                            $('#infoComi').append(seller + '<br> Comisión base: Schlenker: '+ registro.s60 + '%, Otros: '+ registro.o60 + '%');
                                         }else if (diferencia > registro.sd60 && diferencia <= registro.sd90 || diferencia > registro.od60 && diferencia <= registro.od90) {
-                                            $('#infoComi').append('Comisión por defecto:<br> Schlenker: '+ registro.s90 + '%, Otros: 0%');
+                                            $('#infoComi').append(seller + '<br> Comisión base: Schlenker: '+ registro.s90 + '%, Otros: 0%');
                                         }else{
-                                            $('#infoComi').append('Comisión por defecto:<br> Schlenker: 0%, Otros: 0%');
+                                            $('#infoComi').append(seller + '<br> Comisión base: Schlenker: 0%, Otros: 0%');
                                         }
                                     });
                                 },
@@ -701,9 +651,8 @@ $(document).ready(function () {
                 });
                 $("#totalPal").text('Q. ' + totalP.toFixed(2));
                 $("#totalP").val(totalP.toFixed(2));
-                $("#days").append("<h4><i class='icon fa fa-info'></i>" + diferencia + " Días Transcurridos</h4>");
-                $("#schlenker").val(commissionS);
-                $("#otros").val(commissionO);
+                $("#days").append("<h4><i class='icon fa fa-info'></i>" + diferencia + " Día(s) Transcurridos</h4>");
+
                 balance(id);
             },
             error: function (data) {
@@ -730,12 +679,8 @@ $(document).ready(function () {
         e.preventDefault();
         $("#detallesB").find('tbody').html("");
         $("#anuladosB").find('tbody').html("");
-        $("#days").html("");
-        $("#infoComi").html("");
         var id = $(this).attr('data-id');
-        var tipo = $(this).attr('data-tipo');
-        var commissionS = $(this).attr('commissionS');
-        var commissionO = $(this).attr('commissionO');
+        var tipo = $(this).attr('data-tipo');       
 
         swal({
             title: 'Cargando balance de saldos...'
@@ -749,13 +694,7 @@ $(document).ready(function () {
             url: 'BLL/' + tipo + '.php',
             success(data) {
                 console.log(data);
-                var bandera = 0;
-                var fecha2;
                 $.each(data, function (key, registro) {
-                    if (bandera == 0) {
-                        fecha2 = moment(registro.date);
-                        bandera = 1;
-                    }
                     if (registro.state == 2) {
                         var nuevaFila = "<tr>";
                         nuevaFila += "<td>" + convertDate(registro.date); + "</td>";
@@ -776,40 +715,6 @@ $(document).ready(function () {
 
                         nuevaFila += "<td>" + convertDate(registro.date); + "</td>";
                         if (tipo == 0) {
-                            var fecha1 = moment(registro.date);
-
-                            diferencia = fecha2.diff(fecha1, 'days');
-
-                            $.ajax({
-                                type: 'POST',
-                                data: {
-                                    'id': id
-                                },
-                                url: 'BLL/listCommissionP.php',
-                                success(data) {
-                                    console.log(data);       
-                                    var totalP = 0;
-                                    $.each(data, function (key, registro) {
-                                        
-                                        if (diferencia <= registro.sd30 || diferencia <= registro.od30) {
-                                            $('#infoComi').append('Comisión por defecto:<br> Schlenker: '+ registro.s30 + '%, Otros: '+ registro.o30 + '%');
-                                        }else if (diferencia > registro.sd30 && diferencia <= registro.sd60 || diferencia > registro.od30 && diferencia <= registro.od60) {
-                                            $('#infoComi').append('Comisión por defecto:<br> Schlenker: '+ registro.s60 + '%, Otros: '+ registro.o60 + '%');
-                                        }else if (diferencia > registro.sd60 && diferencia <= registro.sd90 || diferencia > registro.od60 && diferencia <= registro.od90) {
-                                            $('#infoComi').append('Comisión por defecto:<br> Schlenker: '+ registro.s90 + '%, Otros: 0%');
-                                        }else{
-                                            $('#infoComi').append('Comisión por defecto:<br> Schlenker: 0%, Otros: 0%');
-                                        }
-                                    });
-                                },
-                                error: function (data) {
-                                    swal({
-                                        type: 'error',
-                                        title: 'Error',
-                                        text: 'No se puede agregar al carrito',
-                                    })
-                                }
-                            });
                             nuevaFila += "<td><small>-</small></td>";
                             nuevaFila += "<td><small class='label label-danger'><i class='fa fa-database'></i> Saldo</small></td>";
                             nuevaFila += "<td><small>-</small></td>";
@@ -833,10 +738,6 @@ $(document).ready(function () {
                     }
                 });
                 swal.close();
-                $("#days").append("<h4><i class='icon fa fa-info'></i>" + diferencia + " Días Transcurridos</h4>");
-                $("#schlenker").val(commissionS);
-                $("#otros").val(commissionO);
-                $("#idSaleComi").val(id);
                 $('#modal-balance').modal('show');
             },
             error: function (data) {
