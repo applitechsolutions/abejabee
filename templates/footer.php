@@ -50,8 +50,8 @@ function convertDate(dateString) {
 </script>
 <script src="js/ajax/reports-ajax.js">
 </script>
-<script src="js/ajax/sale-ajax.js">
-</script>
+<!-- <script src="js/ajax/sale-ajax.js">
+</script> -->
 <script src="js/ajax/customer-ajax.js">
 </script>
 <script src="js/ajax/purchase-ajax.js">
