@@ -109,6 +109,8 @@ include_once 'templates/header.php';
                                                     <p id="infoComi"></p>
                                                 </div>
                                                 <div class="col-md-3 pull-left">
+                                                    <br>
+                                                    <br>
                                                     <div class="form-group">
                                                         <span class="text-danger text-uppercase">*</span>
                                                         <label>Fecha</label>
@@ -122,12 +124,14 @@ include_once 'templates/header.php';
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4 pull-left">
+                                                <div class="col-md-3 pull-left">
+                                                    <br>
+                                                    <br>
                                                     <div class="form-group">
                                                         <label for="noDocument">No. de documento</label>
                                                         <input type="text" class="form-control" id="noDocument"
                                                             name="noDocument"
-                                                            placeholder="Escriba un número de documento" autofocus>
+                                                            placeholder="Escriba un número de documento">
                                                     </div>
                                                 </div>
                                             </div>
@@ -143,18 +147,16 @@ include_once 'templates/header.php';
                                                         <!-- /.info-box-content -->
                                                     </div>
                                                 </div>
-                                                <div class="col-md-2 pull-right">
+                                                <div class="col-md-3">
+                                                    <br>
                                                     <div class="form-group">
-                                                        <span
-                                                            class="text-danger text-uppercase">*</span><label>Tipo</label>
-                                                        <label for="cheque">
-                                                            <input type="checkbox" id="cheque" name="cheque"
-                                                                class="minimal" value="0">
-                                                            Cheque
-                                                        </label>
+                                                        <label for="noReceipt">No. de recibo</label>
+                                                        <input type="text" class="form-control" id="noReceipt"
+                                                            name="noReceipt" placeholder="Escriba un número de recibo">
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3 pull-right">
+                                                <div class="col-md-3">
+                                                    <br>
                                                     <div class="form-group">
                                                         <span class="text-danger text-uppercase">*</span>
                                                         <label for="amount">Monto</label>
@@ -168,11 +170,16 @@ include_once 'templates/header.php';
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3 pull-right">
+                                                <div class="col-md-2">
+                                                    <br>
                                                     <div class="form-group">
-                                                        <label for="noReceipt">No. de recibo</label>
-                                                        <input type="text" class="form-control" id="noReceipt"
-                                                            name="noReceipt" placeholder="Escriba un número de recibo">
+                                                        <span
+                                                            class="text-danger text-uppercase">*</span><label>Tipo</label>
+                                                        <label for="cheque">
+                                                            <input type="checkbox" id="cheque" name="cheque"
+                                                                class="minimal" value="0">
+                                                            Cheque
+                                                        </label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -190,7 +197,34 @@ include_once 'templates/header.php';
                                                         <!-- /.info-box-content -->
                                                     </div>
                                                 </div>
-
+                                                <div class="col-md-3">
+                                                    <br>
+                                                    <div class="form-group">
+                                                        <span class="text-danger text-uppercase">*</span>
+                                                        <label for="amount">Comisión Schlenker</label>
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                %
+                                                            </span>
+                                                            <input type="number" id="comiS" name="comiS" placeholder="0"
+                                                                min="0" step="1" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <br>
+                                                    <div class="form-group">
+                                                        <span class="text-danger text-uppercase">*</span>
+                                                        <label for="amount">Comisión Distribución</label>
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                %
+                                                            </span>
+                                                            <input type="number" id="comiD" name="comiD" placeholder="0"
+                                                                min="0" step="1" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
 
                                             <!-- /.box-body -->
@@ -199,6 +233,8 @@ include_once 'templates/header.php';
                                                 <input type="hidden" id="idSale" name="idSale" value="0">
                                                 <input type="hidden" id="totalB" name="totalB" value="0">
                                                 <input type="hidden" id="totalP" name="totalP" value="0">
+                                                <input type="hidden" id="schlenkerP" name="schlenkerP" value="0">
+                                                <input type="hidden" id="distribucionP" name="distribucionP" value="0">
                                                 <?php
                                                 if ($_SESSION['rol'] == 1) { ?>
                                                 <span class="text-warning pull-right"> *Debe llenar los campos
@@ -230,6 +266,7 @@ include_once 'templates/header.php';
                                                                 <th>Recibo No°</th>
                                                                 <th>Tipo</th>
                                                                 <th>Documento No°</th>
+                                                                <th>Comisiones</th>
                                                                 <th>Monto</th>
                                                                 <th>Saldo</th>
                                                                 <th>Acciones</th>
@@ -375,7 +412,7 @@ include_once 'templates/header.php';
                                                     data-id="<?php echo $sale['idSale']; ?>" data-tipo="listBalance"
                                                     vendedor="<?php echo $sale['seller']; ?>"
                                                     schlenkerP="<?php echo $SchlenkerP; ?>"
-                                                    distribucion="<?php echo $distribucionP; ?>"><i
+                                                    distribucionP="<?php echo $distribucionP; ?>"><i
                                                         class="fa fa-balance-scale"></i> Balance</button>
                                                 <div class="btn-group">
                                                     <button type="button"

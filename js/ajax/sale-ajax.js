@@ -534,6 +534,7 @@ $(document).ready(function () {
         var schlenkerP = $(this).attr('schlenkerP');
         var distribucionP = $(this).attr('distribucionP');
 
+        console.log(schlenkerP + ' ' + distribucionP);
 
         swal({
             title: 'Cargando balance de saldos...'
@@ -550,6 +551,8 @@ $(document).ready(function () {
 
                 var totalP = 0;
                 var diferencia = 0;
+                $('#schlenkerP').val(schlenkerP);
+                $('#distribucionP').val(distribucionP);
                 $.each(data, function (key, registro) {
                     if (registro.state == 2) {
                         var nuevaFila = "<tr>";
@@ -598,12 +601,20 @@ $(document).ready(function () {
                                         
                                         if (diferencia <= registro.sd30 || diferencia <= registro.od30) {
                                             $('#infoComi').append(seller + '<br> Comisión base: Schlenker: '+ registro.s30 + '%, Otros: '+ registro.o30 + '%');
+                                            $('#comiS').val(registro.s30);
+                                            $('#comiD').val(registro.o30);
                                         }else if (diferencia > registro.sd30 && diferencia <= registro.sd60 || diferencia > registro.od30 && diferencia <= registro.od60) {
                                             $('#infoComi').append(seller + '<br> Comisión base: Schlenker: '+ registro.s60 + '%, Otros: '+ registro.o60 + '%');
+                                            $('#comiS').val(registro.s60);
+                                            $('#comiD').val(registro.o60);
                                         }else if (diferencia > registro.sd60 && diferencia <= registro.sd90 || diferencia > registro.od60 && diferencia <= registro.od90) {
                                             $('#infoComi').append(seller + '<br> Comisión base: Schlenker: '+ registro.s90 + '%, Otros: 0%');
+                                            $('#comiS').val(registro.s90);
+                                            $('#comiD').val('0');
                                         }else{
                                             $('#infoComi').append(seller + '<br> Comisión base: Schlenker: 0%, Otros: 0%');
+                                            $('#comiS').val('0');
+                                            $('#comiD').val('0');
                                         }
                                     });
                                 },
@@ -626,13 +637,15 @@ $(document).ready(function () {
                         }
                         if (tipo == 0) {
                             nuevaFila += "<td><small>-</small></td>";
+                            nuevaFila += "<td><small>-</small></td>";
                         } else if (tipo == 1) {
                             nuevaFila += "<td>" + registro.noDocument + "</td>";
+                            nuevaFila += "<td><p class='text-muted'><i>"+ registro.commissionS +"%_ Q"+ registro.totalS +"</i><br><i>"+ registro.commissionO +"%_ Q"+ registro.totalO +"</i></p></td>";
                         }
                         nuevaFila += "<td>Q." + registro.amount + "</td>";
                         nuevaFila += "<td>Q." + registro.balance + "</td>";
                         if (registro.cheque == 1 && registro.state == 1) {
-                            nuevaFila += "<td><a href='#' class='btn bg-maroon btn-flat margin' onclick='anularPago(" + id + "," + registro.idBalance + ")'><i class='fa fa-times-circle'></i></a><a href='#' class='btn bg-green btn-flat margin' onclick='confirmarPago(" + id + "," + registro.idBalance + ")'><i class='fa fa-check-square'></i></a></td>";
+                            nuevaFila += "<td><a href='#' class='btn bg-maroon btn-flat' style='margin-top: 10px;' onclick='anularPago(" + id + "," + registro.idBalance + ")'><i class='fa fa-times-circle'></i></a><a href='#' class='btn bg-green btn-flat' style='margin-top: 10px; margin-left: 3px;' onclick='confirmarPago(" + id + "," + registro.idBalance + ")'><i class='fa fa-check-square'></i></a></td>";
                         } else if (tipo == 1) {
                             nuevaFila += "<td><a href='#' class='btn bg-maroon btn-flat margin' onclick='anularPago(" + id + "," + registro.idBalance + ")'><i class='fa fa-times-circle'></i></a></td>";
                         }
@@ -718,6 +731,7 @@ $(document).ready(function () {
                             nuevaFila += "<td><small>-</small></td>";
                             nuevaFila += "<td><small class='label label-danger'><i class='fa fa-database'></i> Saldo</small></td>";
                             nuevaFila += "<td><small>-</small></td>";
+                            nuevaFila += "<td><small>-</small></td>";
                         } else if (tipo == 1) {
                             nuevaFila += "<td>" + registro.noReceipt + "</td>";
                             if (registro.cheque == 1) {
@@ -727,6 +741,7 @@ $(document).ready(function () {
                                 nuevaFila += "<td><small class='label label-primary'><i class='fa fa-credit-card'></i> Pago</small></td>";
                             }
                             nuevaFila += "<td>" + registro.noDocument + "</td>";
+                            nuevaFila += "<td><p class='text-muted'><i>"+ registro.commissionS +"%_ Q"+ registro.totalS +"</i><br><i>"+ registro.commissionO +"%_ Q"+ registro.totalO +"</i></p></td>";
                         }
                         nuevaFila += "<td>Q." + registro.amount + "</td>";
                         nuevaFila += "<td>Q." + registro.balance + "</td>";
