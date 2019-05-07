@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    $('#form-SalesBySeller').on('submit', function (e) {x
+    $('#form-SalesBySeller').on('submit', function (e) {
         e.preventDefault();
         limpiarReportes();
         
@@ -58,12 +58,13 @@ $(document).ready(function () {
                 var totalCom = 0;
                 $.each(data, function (key, registro) {
                     var totalComision = parseFloat(registro.totalS) + parseFloat(registro.totalO);
+                    totalCom = parseFloat(totalCom) + parseFloat(totalComision);
                     var contenido = "<tr>";
-                    contenido += "<td><input class='idVen' type='hidden' value='" + registro._idSeller + "'>" + convertDate(registro.dateStart); + "</td>";
+                    contenido += "<td>" + convertDate(registro.dateStart); + "</td>";
                     contenido += '<td>'+ registro.noDeliver +'</td>';
                     contenido += "<td>" + convertDate(registro.date) + "</td>";
-                    contenido += "<td>" + registro.noRecipe + "</td>";
-                    contenido += "<td>" + registro.paymentMethod + "</td>";
+                    contenido += "<td>" + registro.noReceipt + "</td>";
+                    contenido += "<td>" + registro.noDocument + "</td>";
                     contenido += "<td>Q." + registro.amount + "</td>";
                     contenido += "<td>Q." + registro.totalS + "</td>";
                     contenido += "<td>Q." + registro.totalO + "</td>";
@@ -744,8 +745,7 @@ function printReport1() {
 }
 
 function printReport2() {
-    
-    var idSeller = $('.idVen').val();
+    var idSeller = $("[name='sellerReporte']").val();
     var f1 = $("[name='dateSrpt2']").val();
     var f2 = $("[name='dateErpt2']").val();
     changeReport('salesBySeller.php?idVendedor='+idSeller+'&fecha1='+f1+'&fecha2='+f2);

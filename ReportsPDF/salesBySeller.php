@@ -12,26 +12,9 @@ $fi = date('Y-m-d', strtotime($fecha1));
 $ff = date('Y-m-d', strtotime($fecha2));
 
 try{
-    $sql = "SELECT S.*,
-    (select concat(sellerFirstName, ' ', sellerLastName) from seller where idSeller = S._idSeller) as seller,
-    (SELECT date FROM balance WHERE _idSale = S.idSale ORDER BY idBalance DESC LIMIT 1) as fechapago,
-    D.quantity, D.priceS, D.discount,
-    (SELECT productName FROM product WHERE idProduct = D._idProduct) as nombre,
-    (SELECT productCode FROM product WHERE idProduct = D._idProduct) as codigo,
-    (SELECT s30 FROM commission WHERE _idSeller = $idVendedor) as s30,
-    (SELECT s60 FROM commission WHERE _idSeller = $idVendedor) as s60,
-    (SELECT s90 FROM commission WHERE _idSeller = $idVendedor) as s90,
-    (SELECT o30 FROM commission WHERE _idSeller = $idVendedor) as o30,
-    (SELECT o60 FROM commission WHERE _idSeller = $idVendedor) as o60,
-    (SELECT sd30 FROM commission WHERE _idSeller = $idVendedor) as sd30,
-    (SELECT sd60 FROM commission WHERE _idSeller = $idVendedor) as sd60,
-    (SELECT sd90 FROM commission WHERE _idSeller = $idVendedor) as sd90,
-    (SELECT od30 FROM commission WHERE _idSeller = $idVendedor) as od30,
-    (SELECT od60 FROM commission WHERE _idSeller = $idVendedor) as od60,
-    (SELECT makeName FROM make WHERE idMake = (SELECT _idMake FROM product WHERE idProduct = D._idProduct)) as marca
-    FROM sale S 
-    INNER JOIN detailS D ON S.idSale = D._idSale
-    WHERE S.cancel = 1 AND S._idSeller = $idVendedor AND (SELECT date FROM balance WHERE _idSale = S.idSale ORDER BY idBalance DESC LIMIT 1) BETWEEN '$fi' AND '$ff' ORDER BY S.dateStart ASC";
+    $sql = "SELECT S.dateStart, S.noDeliver, B.noDocument, B.date, B.amount, B.noReceipt, B.totalS, B.totalO, (SELECT concat(sellerFirstName, ' ', sellerLastName) FROM seller WHERE idSeller = S._idSeller) as seller
+    FROM sale S INNER JOIN balance B ON S.idSale = B._idSale WHERE S.state = 0 AND B.balpay = 1 AND B.state = 0 AND 
+    B.date BETWEEN '$fi' AND '$ff' AND S._idSeller = $idVendedor ORDER BY B.date ASC;";
 
     $resultado = $conn->query($sql);
     $res = $conn->query($sql);
@@ -124,60 +107,32 @@ $pagina='
                             <th style="background-color: #1d2128; color: white">Fecha</th>
                             <th style="background-color: #1d2128; color: white">Remision No°</th>
                             <th style="background-color: #1d2128; color: white">Fecha de pago</th>
-                            <th style="background-color: #1d2128; color: white">Método de pago</th>
-                            <th style="background-color: #1d2128; color: white">Producto</th>
-                            <th style="background-color: #1d2128; color: white">Cantidad</th>
-                            <th style="background-color: #1d2128; color: white">Precio</th>
-                            <th style="background-color: #1d2128; color: white">Descuento</th>
-                            <th style="background-color: #1d2128; color: white">Subtotal</th>
+                            <th style="background-color: #1d2128; color: white">Recibo</th>
+                            <th style="background-color: #1d2128; color: white">Documento No°</th>
+                            <th style="background-color: #1d2128; color: white">Monto</th>
+                            <th style="background-color: #1d2128; color: white">Comisión SCH</th>
+                            <th style="background-color: #1d2128; color: white">Comisión Distribución</th>
                             <th style="background-color: #1d2128; color: white">Comisión</th>
                         </tr>
                     </thead>
                     <tbody class="w3-white">';
-            $subtotalComision = 0;
+            $totalComision = 0;
             while ($sale = $resultado->fetch_assoc()) {
-                $datetime1 = date_create($sale['fechapago']);
-                $datetime2 = date_create($sale['dateEnd']);
-                $interval = date_diff($datetime2, $datetime1);
-                $diferencia = $interval->format('%a');
-
-                $sub = $sale['quantity'] * ($sale['priceS'] - 
-                $sale['discount']);
-                $subtotal = $sub;
-                if ($sale['marca'] == 'SCHLENKER') {
-                    if ($diferencia <= $sale['sd30']) {
-                        $comision = $subtotal * ($sale['s30'] / 100);
-                    } else if ($diferencia > $sale['sd30'] && $diferencia <= $sale['sd60']) {
-                        $comision = $subtotal * ($sale['s60'] / 100);
-                    } else if ($diferencia > $sale['sd60'] && $diferencia <= $sale['sd90']) {
-                        $comision = $subtotal * ($sale['s90'] / 100);
-                    } else {
-                        $comision = 0;
-                    }
-                } else {
-                    if ($diferencia <= $sale['od30']) {
-                        $comision = $subtotal * ($sale['o30'] / 100);
-                    } else if ($diferencia > $sale['od30'] && $diferencia <= $sale['od60']) {
-                        $comision = $subtotal * ($sale['o60'] / 100);
-                    } else {
-                        $comision = 0;
-                    }
-                }
-                $subtotalComision += $comision;
+                $subtotal = $sale['totalS'] + $sale['totalO'];
+                $totalComision = $totalComision + $subtotal;
                 $dateStar = date_create($sale['dateStart']);
-                $fechapago = date_create($sale['fechapago']);
+                $fechapago = date_create($sale['date']);
                 $pagina.='
                         <tr>
                             <td>'.date_format($dateStar, 'd/m/y').'</td>
                             <td>'.$sale['noDeliver'].'</td>
                             <td>'.date_format($fechapago, 'd/m/y').'</td>
-                            <td>'.$sale['paymentMethod'].'</td>
-                            <td>'.$sale['codigo'].' '.$sale['nombre'].'</td>
-                            <td>'.$sale['quantity'].'</td>
-                            <td>Q. '.$sale['priceS'].'</td>
-                            <td>Q. '.$sale['discount'].'</td>
-                            <td>Q. '.$subtotal.'</td>
-                            <td>Q. '.number_format($comision, 2, '.', ',').'</td>
+                            <td>'.$sale['noReceipt'].'</td>
+                            <td>'.$sale['noDocument'].'</td>
+                            <td>Q.'.$sale['amount'].'</td>
+                            <td>Q. '.$sale['totalS'].'</td>
+                            <td>Q. '.$sale['totalO'].'</td>
+                            <td>Q. '.number_format($subtotal, 2, '.', ',').'</td>
                         </tr>';
                     }
         $pagina .= '</tbody>
@@ -189,9 +144,8 @@ $pagina='
                         <th></th>
                         <th></th>
                         <th></th>
-                        <th></th>
                         <th style="text-align: right;" colspan="2">Total Comisiones :</th>
-                        <td>Q. <small>'. number_format($subtotalComision, 2, '.', ',') .'</small></td>
+                        <td>Q. <small>'. number_format($totalComision, 2, '.', ',') .'</small></td>
                         </tr>
                     </tfoot>
                 </table>
