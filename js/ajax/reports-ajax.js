@@ -12,8 +12,10 @@ $(document).ready(function () {
                         '<th>Remision No°</th>'+
                         '<th>Fecha de pago</th>'+
                         '<th>Recibo</th>'+
-                        '<th>Documento No.</th>'+
+                        '<th>Documento No°</th>'+
                         '<th>Monto</th>'+
+                        '<th>Total SCH</th>'+
+                        '<th>Total Distribución</th>'+
                         '<th>Comisión</th>'+
                     '</tr>'+
                 '</thead>'+
@@ -24,8 +26,10 @@ $(document).ready(function () {
                         '<th>Remision No°</th>'+
                         '<th>Fecha de pago</th>'+
                         '<th>Recibo</th>'+
-                        '<th>Documento No.</th>'+
+                        '<th>Documento No°</th>'+
                         '<th>Monto</th>'+
+                        '<th>Total SCH</th>'+
+                        '<th>Total Distribución</th>'+
                         '<th>Comisión</th>'+
                     '</tr>'+
                 '</tfoot>'+
@@ -53,34 +57,17 @@ $(document).ready(function () {
                 console.log(data);
                 var totalCom = 0;
                 $.each(data, function (key, registro) {
-                    var sub = registro.quantity * (parseFloat(Math.round(registro.priceS * 100) / 100).toFixed(2) - parseFloat(Math.round(registro.discount * 100) / 100).toFixed(2));
-                    if (registro.commissionS && registro.commissionO == 0) {
-                        var fecha1 = registro.fechapago;
-                        var fecha2 = registro.dateEnd;
-                        var date1 = new Date(fecha1);
-                        var date2 = new Date(fecha2);          
-                        var timeDiff = Math.abs(date2.getTime() - date1.getTime());
-                        var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-                        var comi = comision(diffDays, registro.marca, sub.toFixed(2), registro.s30, registro.s60, registro.s90, registro.o30, registro.o60, registro.sd30, registro.sd60, registro.sd90, registro.od30, registro.od60);
-                    } else {
-                        if (registro.marca == 'SCHLENKER') {
-                            var comi = sub * (registro.commissionS / 100);
-                        } else {
-                            var comi = sub * (registro.commissionO / 100);
-                        }
-                    }
-                    totalCom = parseFloat(totalCom) + parseFloat(comi);
+                    var totalComision = parseFloat(registro.totalS) + parseFloat(registro.totalO);
                     var contenido = "<tr>";
                     contenido += "<td><input class='idVen' type='hidden' value='" + registro._idSeller + "'>" + convertDate(registro.dateStart); + "</td>";
                     contenido += '<td>'+ registro.noDeliver +'</td>';
-                    contenido += "<td>" + convertDate(registro.fechapago) + "</td>";
+                    contenido += "<td>" + convertDate(registro.date) + "</td>";
+                    contenido += "<td>" + registro.noRecipe + "</td>";
                     contenido += "<td>" + registro.paymentMethod + "</td>";
-                    contenido += "<td>" + registro.codigo +" " + registro.nombre + "</td>";
-                    contenido += "<td>" + registro.quantity + "</td>";
-                    contenido += "<td>Q." + registro.priceS + "</td>";
-                    contenido += "<td>Q." + registro.discount + "</td>";
-                    contenido += "<td>Q." + sub.toFixed(2) + "</td>";
-                    contenido += "<td>Q." + comi + "</td>";
+                    contenido += "<td>Q." + registro.amount + "</td>";
+                    contenido += "<td>Q." + registro.totalS + "</td>";
+                    contenido += "<td>Q." + registro.totalO + "</td>";
+                    contenido += "<td>Q." + totalComision.toFixed(2) + "</td>";
                     contenido += '</tr>';
                     $(".contenidoRPT").append(contenido);
                 });
