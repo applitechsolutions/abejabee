@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    $('#form-SalesBySeller').on('submit', function (e) {
+    $('#form-SalesBySeller').on('submit', function (e) {x
         e.preventDefault();
         limpiarReportes();
         
@@ -11,12 +11,9 @@ $(document).ready(function () {
                         '<th>Fecha</th>'+
                         '<th>Remision No°</th>'+
                         '<th>Fecha de pago</th>'+
-                        '<th>Método de pago</th>'+
-                        '<th>Producto</th>'+
-                        '<th>Cantidad</th>'+
-                        '<th>Precio</th>'+
-                        '<th>Descuento</th>'+
-                        '<th>Subtotal</th>'+
+                        '<th>Recibo</th>'+
+                        '<th>Documento No.</th>'+
+                        '<th>Monto</th>'+
                         '<th>Comisión</th>'+
                     '</tr>'+
                 '</thead>'+
@@ -26,12 +23,9 @@ $(document).ready(function () {
                         '<th>Fecha</th>'+
                         '<th>Remision No°</th>'+
                         '<th>Fecha de pago</th>'+
-                        '<th>Método de pago</th>'+
-                        '<th>Producto</th>'+
-                        '<th>Cantidad</th>'+
-                        '<th>Precio</th>'+
-                        '<th>Descuento</th>'+
-                        '<th>Subtotal</th>'+
+                        '<th>Recibo</th>'+
+                        '<th>Documento No.</th>'+
+                        '<th>Monto</th>'+
                         '<th>Comisión</th>'+
                     '</tr>'+
                 '</tfoot>'+

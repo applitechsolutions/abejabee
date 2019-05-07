@@ -47,7 +47,7 @@ if (isset($_POST['ingresar'])) {
                         $id_sale = $cheques['_idSale'];
                         //Update BALANCE
                         $state = 0;
-                        $stmt = $conn->prepare("UPDATE balance SET state = ? WHERE idBalance = ?");
+                        $stmt = $conn->prepare("UPDATE balance SET date = CURDATE(), state = ? WHERE idBalance = ?");
                         $stmt->bind_param("ii", $state, $idBalance);
                         if (!mysqli_stmt_execute($stmt)) {
                             $query_success = false;
