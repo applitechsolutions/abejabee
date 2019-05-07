@@ -112,6 +112,7 @@
                                                               <th>Recibo No°</th>
                                                               <th>Tipo</th>
                                                               <th>Documento No°</th>
+                                                              <th>Comisiones</th>
                                                               <th>Monto</th>
                                                               <th>Saldo</th>
                                                               <th>Anular</th>

@@ -8,12 +8,18 @@ if ($_POST['tipo'] == 'pago') {
     $amount = $_POST['amount'];
     $noReceipt = $_POST['noReceipt'];
     $totalB = $_POST['totalB'];
+    $comiS = $_POST['comiS'];
+    $comiD = $_POST['comiD'];
+    $schlenkerP = $_POST['schlenkerP'];
+    $distribucionP = $_POST['distribucionP'];
     $bal = 1;
     $new_totalB = $totalB - $amount;
+    $totalS = ($amount * ($schlenkerP / 100)) * ($comiS / 100);
+    $totalD = ($amount * ($distribucionP / 100)) * ($comiD / 100);
     $fc = date('Y-m-d', strtotime($dateB));
 
     try {
-        if ($id_sale == '' || $amount == '' || $dateB == '' || $new_totalB < 0) {
+        if ($id_sale == '' || $amount == '' || $dateB == '' || $new_totalB < 0 || $comiS == '' || $comiD == '') {
             $respuesta = array(
                 'respuesta' => 'vacio',
             );
@@ -21,8 +27,8 @@ if ($_POST['tipo'] == 'pago') {
             $cheque = 0;
             if (isset($_POST['cheque'])) {
                 $cheque = 1;
-                $stmt = $conn->prepare("INSERT INTO balance(_idSale, noDocument, date, balpay, amount, noReceipt, balance, cheque, state) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                $stmt->bind_param("issidsdii", $id_sale, $noDocument, $fc, $bal, $amount, $noReceipt, $totalB, $cheque, $cheque);
+                $stmt = $conn->prepare("INSERT INTO balance(_idSale, noDocument, date, balpay, amount, noReceipt, balance, cheque, state, commissionS, totalS, commissionO, totalO) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                $stmt->bind_param("issidsdiiidid", $id_sale, $noDocument, $fc, $bal, $amount, $noReceipt, $totalB, $cheque, $cheque, $comiS, $totalS, $comiD, $totalD);
                 $stmt->execute();
                 $id_registro = $stmt->insert_id;
                 if ($id_registro > 0) {
@@ -44,8 +50,8 @@ if ($_POST['tipo'] == 'pago') {
                 $stmt->close();
                 $conn->close();
             } else {
-                $stmt = $conn->prepare("INSERT INTO balance(_idSale, noDocument, date, balpay, amount, noReceipt, balance) VALUES (?, ?, ?, ?, ?, ?, ?)");
-                $stmt->bind_param("issidsd", $id_sale, $noDocument, $fc, $bal, $amount, $noReceipt, $new_totalB);
+                $stmt = $conn->prepare("INSERT INTO balance(_idSale, noDocument, date, balpay, amount, noReceipt, balance, commissionS, totalS, commissionO, totalO) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                $stmt->bind_param("issidsdidid", $id_sale, $noDocument, $fc, $bal, $amount, $noReceipt, $new_totalB, $comiS, $totalS, $comiD, $totalD);
                 $stmt->execute();
                 $id_registro = $stmt->insert_id;
                 if ($id_registro > 0) {
@@ -68,7 +74,6 @@ if ($_POST['tipo'] == 'pago') {
                 $conn->close();
             }
         }
-
     } catch (Exception $e) {
         echo 'Error: ' . $e . getMessage();
     }
@@ -107,10 +112,10 @@ if ($_POST['tipo'] == 'anular') {
             if ($bandera == 0) {
                 $nuevo_balance = $balance['amount'];
                 $bandera = 1;
-            }else{
+            } else {
                 if ($balance['state'] != 1) {
                     $nuevo_balance = $nuevo_balance - $balance['amount'];
-                }               
+                }
 
                 $stmt = $conn->prepare("UPDATE balance SET balance = ? WHERE idBalance = ?");
                 $stmt->bind_param("di", $nuevo_balance, $balance['idBalance']);
@@ -118,7 +123,7 @@ if ($_POST['tipo'] == 'anular') {
                     $query_success = false;
                 }
                 mysqli_stmt_close($stmt);
-            }           
+            }
         }
 
         if ($nuevo_balance > 0) {
@@ -182,10 +187,10 @@ if ($_POST['tipo'] == 'confirmar') {
             if ($bandera == 0) {
                 $nuevo_balance = $balance['amount'];
                 $bandera = 1;
-            }else{
+            } else {
                 if ($balance['state'] != 1) {
                     $nuevo_balance = $nuevo_balance - $balance['amount'];
-                }               
+                }
 
                 $stmt = $conn->prepare("UPDATE balance SET balance = ? WHERE idBalance = ?");
                 $stmt->bind_param("di", $nuevo_balance, $balance['idBalance']);
@@ -193,7 +198,7 @@ if ($_POST['tipo'] == 'confirmar') {
                     $query_success = false;
                 }
                 mysqli_stmt_close($stmt);
-            }           
+            }
         }
 
         if ($query_success) {
