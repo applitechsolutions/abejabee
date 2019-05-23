@@ -73,6 +73,8 @@ if ($_POST['compra'] == 'nueva') {
                         mysqli_stmt_close($stmt);
                     }
                 }
+
+
                 if ($query_success) {
                     mysqli_commit($conn);
                     $respuesta = array(

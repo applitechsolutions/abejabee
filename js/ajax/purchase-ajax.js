@@ -1,6 +1,6 @@
-$(document).ready(function () {
+$(document).ready(function() {
 
-    $('.agregar_producto').on('click', function (e) {
+    $('.agregar_producto').on('click', function(e) {
         e.preventDefault();
 
         var id = $(this).attr('data-id');
@@ -27,7 +27,7 @@ $(document).ready(function () {
                     console.log(data);
 
                     var nuevaFila = "<tr id='detalle'>";
-                    $.each(data, function (key, registro) {
+                    $.each(data, function(key, registro) {
                         var costo = $('#new_' + registro.idProduct + '_costo').val();
                         var cantidad = $('#new_' + registro.idProduct + '_cantidad').val();
                         var subtotal = costo * cantidad;
@@ -46,7 +46,7 @@ $(document).ready(function () {
                     nuevaFila += "</tr>";
                     $("#agregados").append(nuevaFila);
                 },
-                error: function (data) {
+                error: function(data) {
                     swal({
                         type: 'error',
                         title: 'Error',
@@ -57,7 +57,7 @@ $(document).ready(function () {
         }
     });
 
-    $('#form-purchase').on('submit', function (e) {
+    $('#form-purchase').on('submit', function(e) {
         e.preventDefault();
 
         swal({
@@ -73,9 +73,9 @@ $(document).ready(function () {
         var json = "";
         var i;
         for (i = 0; i < id_product.length; i++) {
-            json += ',{"idproduct":"' + id_product[i].value + '"'
-            json += ',"costodet":"' + costo_detalle[i].value + '"'
-            json += ',"cantdet":"' + cantidad_detalle[i].value + '"}'
+            json += ',{"idproduct":"' + id_product[i].value + '"';
+            json += ',"costodet":"' + costo_detalle[i].value + '"';
+            json += ',"cantdet":"' + cantidad_detalle[i].value + '"}';
         }
         obj = JSON.parse('{ "detailP" : [' + json.substr(1) + ']}');
         datos.push({ name: 'json', value: JSON.stringify(obj) });
@@ -85,7 +85,7 @@ $(document).ready(function () {
             data: datos,
             url: $(this).attr('action'),
             datatype: 'json',
-            success: function (data) {
+            success: function(data) {
                 console.log(data);
                 var resultado = JSON.parse(data);
                 if (resultado.respuesta == 'exito') {
@@ -95,8 +95,8 @@ $(document).ready(function () {
                         text: '¡Compra realizada correctamente!',
                         timer: 1500,
                         type: 'success'
-                    })
-                    setTimeout(function () {
+                    });
+                    setTimeout(function() {
                         imprimirP('compra', resultado.idCompra);
                     }, 1500);
                 } else if (resultado.respuesta == 'vacio') {
@@ -104,19 +104,19 @@ $(document).ready(function () {
                         type: 'warning',
                         title: 'Oops...',
                         text: 'Debe llenar todos los campos',
-                    })
+                    });
                 } else if (resultado.respuesta == 'error') {
                     swal({
                         type: 'error',
                         title: 'Error',
                         text: 'No se pudo guardar en la base de datos',
-                    })
+                    });
                 }
             }
-        })
+        });
     });
 
-    $('.detalle_purchase').on('click', function (e) {
+    $('.detalle_purchase').on('click', function(e) {
         e.preventDefault();
         $("#detalles").find('tbody').html("");
         var id = $(this).attr('data-id');
@@ -134,7 +134,7 @@ $(document).ready(function () {
             url: 'BLL/' + tipo + '.php',
             success(data) {
                 console.log(data);
-                $.each(data, function (key, registro) {
+                $.each(data, function(key, registro) {
                     var nuevaFila = "<tr>";
                     var sub = registro.quantity * parseFloat(Math.round(registro.costP * 100) / 100).toFixed(2);
                     nuevaFila += "<td><img src='img/products/" + registro.imagen + "'width='80' onerror='ImgError(this);'></td>";
@@ -149,7 +149,7 @@ $(document).ready(function () {
                 swal.close();
                 $('#modal-detail').modal('show');
             },
-            error: function (data) {
+            error: function(data) {
                 swal({
                     type: 'error',
                     title: 'Error',
