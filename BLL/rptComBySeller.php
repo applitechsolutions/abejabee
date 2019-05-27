@@ -15,10 +15,9 @@ $result = $conn->query("SELECT S.idSale, S.dateStart, S.paymentMethod,
     (SELECT makeName FROM make WHERE idMake = (SELECT _idMake FROM product WHERE idProduct = D._idProduct)) as marca,
     SUM(quantity) AS cantidad, SUM((priceS-discount)*quantity) AS subtotal
     FROM sale S INNER JOIN detailS D ON S.idSale = D._idSale
-    WHERE S._idSeller = $idSeller AND S.dateStart BETWEEN '$fi' AND '$ff' GROUP BY (SELECT idProduct FROM product WHERE idProduct = D._idProduct) ORDER BY S.dateStart ASC");
+    WHERE S._idSeller = $idSeller AND S.state = 0 AND S.dateStart BETWEEN '$fi' AND '$ff' GROUP BY (SELECT idProduct FROM product WHERE idProduct = D._idProduct) ORDER BY S.dateStart ASC");
+
 $outp = array();
 $outp = $result->fetch_all(MYSQLI_ASSOC);
 
 echo json_encode($outp);
-
-?>
