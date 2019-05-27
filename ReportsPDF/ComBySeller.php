@@ -19,19 +19,19 @@ try {
     (SELECT makeName FROM make WHERE idMake = (SELECT _idMake FROM product WHERE idProduct = D._idProduct)) as marca,
     SUM(quantity) AS cantidad, SUM((priceS-discount)*quantity) AS subtotal
     FROM sale S INNER JOIN detailS D ON S.idSale = D._idSale
-    WHERE S._idSeller = $idVendedor AND S.dateStart BETWEEN '$fi' AND '$ff' GROUP BY (SELECT idProduct FROM product WHERE idProduct = D._idProduct) ORDER BY S.dateStart ASC";
+    WHERE S._idSeller = $idVendedor AND S.state = 0 AND S.dateStart BETWEEN '$fi' AND '$ff' GROUP BY (SELECT idProduct FROM product WHERE idProduct = D._idProduct) ORDER BY S.dateStart ASC";
 
     $sql2 = "SELECT S.idSale,
     (SELECT concat(sellerFirstName, ' ', sellerLastName) from seller where idSeller = S._idSeller) as seller,
     (SELECT makeName FROM make WHERE idMake = (SELECT _idMake FROM product WHERE idProduct = D._idProduct)) as marca,
     SUM(quantity) AS cantidad, SUM((priceS-discount)*quantity) AS subtotal
     FROM sale S INNER JOIN detailS D ON S.idSale = D._idSale
-    WHERE S._idSeller = $idVendedor AND S.dateStart BETWEEN '$fi' AND '$ff' GROUP BY (SELECT makeName FROM make WHERE idMake = (SELECT _idMake FROM product WHERE idProduct = D._idProduct)) ORDER BY SUM((priceS-discount)*quantity) asc";
+    WHERE S._idSeller = $idVendedor AND S.state = 0 AND S.dateStart BETWEEN '$fi' AND '$ff' GROUP BY (SELECT makeName FROM make WHERE idMake = (SELECT _idMake FROM product WHERE idProduct = D._idProduct)) ORDER BY SUM((priceS-discount)*quantity) asc";
 
     $sql3 = "SELECT S.*, 
     (select concat(sellerFirstName, ' ', sellerLastName) from seller where idSeller = S._idSeller) as seller,
     (select concat(customerCode, ' ', customerName) from customer where idCustomer = S._idCustomer) as customer
-    FROM sale S WHERE S._idSeller = $idVendedor AND S.dateStart BETWEEN '$fi' AND '$ff' ORDER BY S.dateStart ASC";
+    FROM sale S WHERE S._idSeller = $idVendedor AND S.state = 0 AND S.dateStart BETWEEN '$fi' AND '$ff' ORDER BY S.dateStart ASC";
 
     $resultado = $conn->query($sql);
     $resultado2 = $conn->query($sql2);
@@ -152,7 +152,7 @@ while ($sale = $resultado->fetch_assoc()) {
                             <td>Q. ' . $sale['subtotal'] . '</td>
                         </tr>';
 }
-        $pagina .= '</tbody>
+$pagina .= '</tbody>
                 </table>
                 <br>
                 <h3>Ventas por Casa</h3>
@@ -173,7 +173,7 @@ while ($sale2 = $resultado2->fetch_assoc()) {
                             <td>Q. ' . $sale2['subtotal'] . '</td>
                         </tr>';
 }
-        $pagina .= '</tbody>
+$pagina .= '</tbody>
                 </table>
                 <br>
                 <h3>Ventas por Remisión</h3>
@@ -208,7 +208,7 @@ while ($sale3 = $resultado3->fetch_assoc()) {
                             <td>Q. ' . $sale3['totalSale'] . '</td>
                         </tr>';
 }
-        $pagina .= '</tbody>
+$pagina .= '</tbody>
                 </table>
             </div>
         </div>
