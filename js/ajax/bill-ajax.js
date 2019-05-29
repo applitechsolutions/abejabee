@@ -1,13 +1,13 @@
-$(document).ready(function () {
+$(document).ready(function() {
 
-    $('#form-factura').on('submit', function (e) {
+    $('#form-factura').on('submit', function(e) {
         e.preventDefault();
         var tipo = $('#factura').val();
         var texto;
         if (tipo == 'nueva') {
             texto = "Crear una factura altera al correlativo actual";
-        }else if (tipo == "editar") {
-            texto = "Desea editar la factura actual, no se altera el correlativo";            
+        } else if (tipo == "editar") {
+            texto = "Desea editar la factura actual, no se altera el correlativo";
         }
         swal({
             title: '¿Estás Seguro?',
@@ -42,18 +42,18 @@ $(document).ready(function () {
                 data: datos,
                 url: $(this).attr('action'),
                 datatype: 'json',
-                success: function (data) {
+                success: function(data) {
                     console.log(data);
                     var resultado = JSON.parse(data);
                     if (resultado.respuesta == 'exito') {
                         if (resultado.proceso == 'nuevo') {
                             changeReportL('factura.php?idBill=' + resultado.idBill);
-                            swal.close();                            
-                            $('#modal-printS').modal({backdrop: 'static', keyboard: false});
-                        }else if (resultado.proceso == 'editado') {
+                            swal.close();
+                            $('#modal-printS').modal({ backdrop: 'static', keyboard: false });
+                        } else if (resultado.proceso == 'editado') {
                             changeReportL('factura.php?idBill=' + resultado.idBill);
-                            swal.close();                            
-                            $('#modal-printS').modal({backdrop: 'static', keyboard: false});
+                            swal.close();
+                            $('#modal-printS').modal({ backdrop: 'static', keyboard: false });
                         }
                     } else if (resultado.respuesta == 'vacio') {
                         swal({
@@ -73,7 +73,16 @@ $(document).ready(function () {
         });
     });
 
-    $('.detalle_bill').on('click', function (e) {
+    $('.imprimir_bill').on('click', function(e) {
+        e.preventDefault();
+        console.log('XD');
+        var id = $(this).attr('data-id');
+        changeReportL('factura.php?idBill=' + id);
+        $('#modal-printS').modal({ backdrop: 'static', keyboard: false });
+
+    });
+
+    $('.detalle_bill').on('click', function(e) {
         e.preventDefault();
         $("#detalles").find('tbody').html("");
         $("#editarF").html("");
@@ -92,7 +101,7 @@ $(document).ready(function () {
             url: 'BLL/' + tipo + '.php',
             success(data) {
                 console.log(data);
-                $.each(data, function (key, registro) {
+                $.each(data, function(key, registro) {
                     var nuevaFila = "<tr>";
                     var sub = registro.quantity * (parseFloat(Math.round(registro.priceB * 100) / 100).toFixed(2) - parseFloat(Math.round(registro.discount * 100) / 100).toFixed(2));
                     nuevaFila += "<td><img src='img/products/" + registro.imagen + "'width='80' onerror='ImgError(this);'></td>";
@@ -112,7 +121,7 @@ $(document).ready(function () {
                 swal.close();
                 $('#modal-detailS').modal('show');
             },
-            error: function (data) {
+            error: function(data) {
                 swal({
                     type: 'error',
                     title: 'Error',

@@ -315,7 +315,7 @@ include_once 'templates/header.php';
                                 <tbody>
                                     <?php
                                     try {
-                                        $sql = "SELECT B.* FROM bill B ORDER BY B.noBill DESC";
+                                        $sql = "SELECT B.*, (select noDeliver from sale where idSale = B._idSale) as remision FROM bill B ORDER BY B.noBill DESC";
                                         $resultado = $conn->query($sql);
                                     } catch (Exception $e) {
                                         $error = $e->getMessage();
@@ -328,7 +328,14 @@ include_once 'templates/header.php';
                                         ?>
                                     <tr>
                                         <td>
-                                            <?php echo $bill['serie'] . ' ' . $bill['noBill']; ?>
+                                            Factura:
+                                            <h6><span
+                                                    class="label label-primary"><?php echo $bill['serie'] . ' ' . $bill['noBill']; ?></span>
+                                            </h6>
+                                            Remisión:
+                                            <h6><span
+                                                    class="label label-default"><?php echo $bill['remision']; ?></span>
+                                            </h6>
                                         </td>
                                         <td>
                                             <?php if ($bill['date'] != '0000-00-00') {
@@ -363,13 +370,12 @@ include_once 'templates/header.php';
                                         </td>
                                         <td>
                                             <div class="btn-group-vertical col-xs-8">
+                                                <button type="button" class="btn btn-primary btn-sm imprimir_bill"
+                                                    data-id="<?php echo $bill['idBill']; ?>"><i
+                                                        class="fas fa-search"></i> Previsualizar</button>
                                                 <button type="button" class="btn btn-success btn-sm detalle_bill"
                                                     data-id="<?php echo $bill['idBill']; ?>" data-tipo="listDetailB"><i
                                                         class="fa fa-info"></i> Detalles</button>
-                                                <!-- <button type="button" class="btn btn-primary btn-sm detalle_balance"
-                                                                                                            data-id="<?php
-                                                                                                                        ?>" data-tipo="listBalance"><i
-                                                                                                                class="fa fa-balance-scale"></i> Balance</button> -->
                                                 <div class="btn-group">
                                                     <button type="button"
                                                         class="btn bg-teal-active btn-sm dropdown-toggle"
@@ -378,7 +384,7 @@ include_once 'templates/header.php';
                                                     </button>
                                                     <ul class="dropdown-menu">
                                                         <li><a href="printSale.php?id=<?php echo $bill['_idSale']; ?>">
-                                                                Factura</a>
+                                                                Nueva Factura</a>
                                                         </li>
                                                         <li><a href="#"
                                                                 onclick="imprimir('guia',<?php echo $bill['_idSale']; ?>);">Guía</a>
