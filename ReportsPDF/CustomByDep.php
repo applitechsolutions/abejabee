@@ -19,9 +19,10 @@ FROM customer C INNER JOIN sale S ON C.idCustomer = S._idCustomer INNER JOIN bal
 WHERE _idRoute = $idRoute AND S.cancel = 0 AND S.state = 0 AND B.cheque = 1 AND B.state = 1 ORDER BY C.idCustomer ASC";
 
     $sql3 = "SELECT idCustomer, customerCode, customerName, customerTel, 
-(select Sum((SELECT balance FROM balance where _idSale = idSale order by idBalance desc limit 1)) as saldo
-from sale where _idCustomer = idCustomer and cancel = 0 and state = 0) as total
-FROM customer WHERE _idRoute = $idRut AND state = 0 AND (select Sum((SELECT balance FROM balance where _idSale = idSale order by idBalance desc limit 1)) IS NULL";
+    (select Sum((SELECT balance FROM balance where _idSale = idSale order by idBalance desc limit 1))
+    from sale where _idCustomer = idCustomer and cancel = 0 and state = 0) as total
+    FROM customer WHERE _idRoute = $idRoute AND state = 0 AND 
+    (select Sum((SELECT balance FROM balance where _idSale = idSale order by idBalance desc limit 1)) from sale where _idCustomer = idCustomer and cancel = 0 and state = 0) IS NULL";
 
     $resultado = $conn->query($sql);
     $resultadoCheques = $conn->query($sql2);
