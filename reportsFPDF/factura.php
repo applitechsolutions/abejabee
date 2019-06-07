@@ -29,20 +29,20 @@ while ($sale = $resultado->fetch_assoc()) {
     $str = iconv('UTF-8', 'windows-1252', NumeroALetras::convertir($sale['total'], 'QUETZALES', 'CENTAVOS'));
 
     $pdf->AddPage();
-    $pdf->SetFont('Arial', '', 10);
+    $pdf->SetFont('Arial', '', 11);
 
     $pdf->SetXY(20, 40);
     //primera linea de factura
     $cMuni = iconv('UTF-8', 'windows-1252', $sale['town'] . ' ' . date_format($fechaF, 'd/m/Y'));
     $pdf->Cell(50, 3, $cMuni, 0, 0, 'L');
-    $pdf->SetFont('Arial', '', 8);
+    $pdf->SetFont('Arial', '', 10);
     $pdf->Cell(15);
     $cSeller = iconv('UTF-8', 'windows-1252', $sale['codeSeller']);
     $pdf->Cell(9, 3, $cSeller, 0, 0, 'L');
     $pdf->Cell(12);
     $cCode = iconv('UTF-8', 'windows-1252', $sale['codeCustomer']);
     $pdf->Cell(10, 3, $cCode, 0, 0, 'L');
-    $pdf->SetFont('Arial', '', 10);
+    $pdf->SetFont('Arial', '', 11);
     $pdf->Cell(22);
     $pdf->Cell(17, 3, date_format($fecha, 'd/m/Y'), 0, 1, 'L');
 
@@ -66,7 +66,7 @@ while ($sale = $resultado->fetch_assoc()) {
 
     //DETALLE DE FACTURA
     $pdf->SetXY(0, 84);
-    $pdf->SetFont('Arial', '', 10);
+    $pdf->SetFont('Arial', '', 11);
     try {
         $sql = "SELECT D.quantity, TRUNCATE((D.priceB - D.discount) ,2) as precio,
     TRUNCATE((TRUNCATE((D.priceB - D.discount) ,2) * D.quantity) ,2) as total,
@@ -86,7 +86,7 @@ while ($sale = $resultado->fetch_assoc()) {
         $DESC = iconv('UTF-8', 'windows-1252', $detailB['descripcion']);
         $pdf->Cell(7);
         $pdf->Cell(17, 4, $detailB['quantity'], 0, 0, 'L');
-        $pdf->Cell(15, 4, $COD, 0, 0, 'L');
+        $pdf->Cell(19, 4, $COD, 0, 0, 'L');
         if ($detailB['marca'] == 'SCHLENKER') {
             $pdf->Cell(69, 4, $DESC, 0, 0, 'L');
         } else {
@@ -102,7 +102,7 @@ while ($sale = $resultado->fetch_assoc()) {
 
     //TOTAL
     $pdf->SetXY(130, 192);
-    $pdf->SetFont('Arial', 'B', 10);
+    $pdf->SetFont('Arial', 'B', 11);
     $pdf->Cell(28, 5, $sale['total'], 0, 0, 'L');
 }
 
