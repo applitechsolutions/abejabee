@@ -140,7 +140,7 @@ $(document).ready(function() {
                     type: 'error',
                     title: 'Error',
                     text: 'Ha ocurrido un error, intente más tarde :(',
-                })
+                });
             }
         });
     });

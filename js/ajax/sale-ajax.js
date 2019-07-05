@@ -1,7 +1,7 @@
-$(document).ready(function () {
+$(document).ready(function() {
     var bandera = 0;
 
-    $('.SelectPrice').on('change', function (e) {
+    $('.SelectPrice').on('change', function(e) {
         e.preventDefault();
 
         var id = $(this).attr('id-data');
@@ -16,7 +16,7 @@ $(document).ready(function () {
             url: 'BLL/product.php',
             success(data) {
                 console.log(data);
-                $.each(data, function (key, registro) {
+                $.each(data, function(key, registro) {
                     if (prec == 'users') {
                         $('#SelectPrecio' + registro.idProduct).val(registro.public);
                     } else if (prec == 'plus-square') {
@@ -31,7 +31,7 @@ $(document).ready(function () {
         })
     });
 
-    $('.agregar_productoS').on('click', function (e) {
+    $('.agregar_productoS').on('click', function(e) {
         e.preventDefault();
 
         var id = $(this).attr('data-id');
@@ -62,7 +62,7 @@ $(document).ready(function () {
                     console.log(data);
 
                     var nuevaFila = "<tr id='detalleS'>";
-                    $.each(data, function (key, registro) {
+                    $.each(data, function(key, registro) {
                         /* if (prec == 'users') {
                              var subtotal = (registro.public - descuento) * cantidad;
                              var precio = registro.public;
@@ -109,7 +109,7 @@ $(document).ready(function () {
                         timer: 1500
                     })
                 },
-                error: function (data) {
+                error: function(data) {
                     swal({
                         type: 'error',
                         title: 'Error',
@@ -120,7 +120,7 @@ $(document).ready(function () {
         }
     });
 
-    $('#form-sale').on('submit', function (e) {
+    $('#form-sale').on('submit', function(e) {
         e.preventDefault();
 
         swal({
@@ -150,7 +150,7 @@ $(document).ready(function () {
             data: datos,
             url: $(this).attr('action'),
             datatype: 'json',
-            success: function (data) {
+            success: function(data) {
                 console.log(data);
                 var resultado = JSON.parse(data);
                 if (resultado.respuesta == 'exito') {
@@ -195,7 +195,7 @@ $(document).ready(function () {
         })
     });
 
-    $('#form-envio').on('submit', function (e) {
+    $('#form-envio').on('submit', function(e) {
         e.preventDefault();
 
         var datos = $(this).serializeArray();
@@ -209,7 +209,7 @@ $(document).ready(function () {
             data: datos,
             url: $(this).attr('action'),
             datatype: 'json',
-            success: function (data) {
+            success: function(data) {
                 console.log(data);
                 var resultado = JSON.parse(data);
                 if (resultado.respuesta == 'exito') {
@@ -221,7 +221,7 @@ $(document).ready(function () {
                         title: '¡' + resultado.mensaje,
                         showConfirmButton: false,
                         timer: 1000
-                    })
+                    });
                 } else if (resultado.respuesta == 'vacio') {
                     swal({
                         type: 'warning',
@@ -239,7 +239,7 @@ $(document).ready(function () {
         })
     });
 
-    $('#form-pay').on('submit', function (e) {
+    $('#form-pay').on('submit', function(e) {
         e.preventDefault();
 
         var saldoT = $("#totalP").val();
@@ -265,7 +265,7 @@ $(document).ready(function () {
                 data: datos,
                 url: $(this).attr('action'),
                 datatype: 'json',
-                success: function (data) {
+                success: function(data) {
                     console.log(data);
                     var resultado = JSON.parse(data);
                     if (resultado.respuesta == 'exito') {
@@ -300,7 +300,7 @@ $(document).ready(function () {
         }
     });
 
-    $('#form-correlative').on('submit', function (e) {
+    $('#form-correlative').on('submit', function(e) {
         e.preventDefault();
 
         var datos = $(this).serializeArray();
@@ -310,7 +310,7 @@ $(document).ready(function () {
             data: datos,
             url: $(this).attr('action'),
             dataType: 'json',
-            success: function (data) {
+            success: function(data) {
                 console.log(data);
                 var resultado = data;
                 if (resultado.respuesta == 'exito') {
@@ -345,7 +345,7 @@ $(document).ready(function () {
                     })
                 }
             },
-            error: function (data) {
+            error: function(data) {
                 swal({
                     position: 'top-end',
                     type: 'error',
@@ -358,7 +358,7 @@ $(document).ready(function () {
 
     });
 
-    $('#form-correlative-guia').on('submit', function (e) {
+    $('#form-correlative-guia').on('submit', function(e) {
         e.preventDefault();
 
         var datos = $(this).serializeArray();
@@ -368,7 +368,7 @@ $(document).ready(function () {
             data: datos,
             url: $(this).attr('action'),
             dataType: 'json',
-            success: function (data) {
+            success: function(data) {
                 console.log(data);
                 var resultado = data;
                 if (resultado.respuesta == 'exito') {
@@ -401,7 +401,7 @@ $(document).ready(function () {
                     })
                 }
             },
-            error: function (data) {
+            error: function(data) {
                 swal({
                     position: 'top-end',
                     type: 'error',
@@ -414,7 +414,7 @@ $(document).ready(function () {
 
     });
 
-    $('#form-correlative-envio').on('submit', function (e) {
+    $('#form-correlative-envio').on('submit', function(e) {
         e.preventDefault();
 
         var datos = $(this).serializeArray();
@@ -424,7 +424,7 @@ $(document).ready(function () {
             data: datos,
             url: $(this).attr('action'),
             dataType: 'json',
-            success: function (data) {
+            success: function(data) {
                 console.log(data);
                 var resultado = data;
                 if (resultado.respuesta == 'exito') {
@@ -457,7 +457,7 @@ $(document).ready(function () {
                     })
                 }
             },
-            error: function (data) {
+            error: function(data) {
                 swal({
                     position: 'top-end',
                     type: 'error',
@@ -470,7 +470,7 @@ $(document).ready(function () {
 
     });
 
-    $('.detalle_sale').on('click', function (e) {
+    $('.detalle_sale').on('click', function(e) {
         e.preventDefault();
         $("#detalles").find('tbody').html("");
         $("#anularV").html("");
@@ -489,7 +489,7 @@ $(document).ready(function () {
             url: 'BLL/' + tipo + '.php',
             success(data) {
                 console.log(data);
-                $.each(data, function (key, registro) {
+                $.each(data, function(key, registro) {
                     var nuevaFila = "<tr>";
                     var sub = registro.quantity * (parseFloat(Math.round(registro.priceS * 100) / 100).toFixed(2) - parseFloat(Math.round(registro.discount * 100) / 100).toFixed(2));
                     nuevaFila += "<td><img src='img/products/" + registro.imagen + "'width='80' onerror='ImgError(this);'></td>";
@@ -512,7 +512,7 @@ $(document).ready(function () {
                 swal.close();
                 $('#modal-detailS').modal('show');
             },
-            error: function (data) {
+            error: function(data) {
                 swal({
                     type: 'error',
                     title: 'Error',
@@ -522,7 +522,7 @@ $(document).ready(function () {
         });
     });
 
-    $('.detalle_balance').on('click', function (e) {
+    $('.detalle_balance').on('click', function(e) {
         e.preventDefault();
         $("#detallesB").find('tbody').html("");
         $("#anuladosB").find('tbody').html("");
@@ -553,15 +553,14 @@ $(document).ready(function () {
                 var diferencia = 0;
                 $('#schlenkerP').val(schlenkerP);
                 $('#distribucionP').val(distribucionP);
-                $.each(data, function (key, registro) {
+                $.each(data, function(key, registro) {
                     if (registro.state == 2) {
                         var nuevaFila = "<tr>";
                         nuevaFila += "<td>" + convertDate(registro.date); + "</td>";
                         nuevaFila += "<td>" + registro.noReceipt + "</td>";
                         if (registro.cheque == 1) {
                             nuevaFila += "<td><small class='label label-warning'><i class='fa fa-bank'></i> Cheque</small></td>";
-                        }
-                        else {
+                        } else {
                             nuevaFila += "<td><small class='label label-primary'><i class='fa fa-credit-card'></i> Pago</small></td>";
                         }
                         nuevaFila += "<td>" + registro.noDocument + "</td>";
@@ -595,30 +594,30 @@ $(document).ready(function () {
                                 },
                                 url: 'BLL/listCommissionP.php',
                                 success(data) {
-                                    console.log(data);       
+                                    console.log(data);
                                     var totalP = 0;
-                                    $.each(data, function (key, registro) {
-                                        
+                                    $.each(data, function(key, registro) {
+
                                         if (diferencia <= registro.sd30 || diferencia <= registro.od30) {
-                                            $('#infoComi').append(seller + '<br> Comisión base: Schlenker: '+ registro.s30 + '%, Otros: '+ registro.o30 + '%');
+                                            $('#infoComi').append(seller + '<br> Comisión base: Schlenker: ' + registro.s30 + '%, Otros: ' + registro.o30 + '%');
                                             $('#comiS').val(registro.s30);
                                             $('#comiD').val(registro.o30);
-                                        }else if (diferencia > registro.sd30 && diferencia <= registro.sd60 || diferencia > registro.od30 && diferencia <= registro.od60) {
-                                            $('#infoComi').append(seller + '<br> Comisión base: Schlenker: '+ registro.s60 + '%, Otros: '+ registro.o60 + '%');
+                                        } else if (diferencia > registro.sd30 && diferencia <= registro.sd60 || diferencia > registro.od30 && diferencia <= registro.od60) {
+                                            $('#infoComi').append(seller + '<br> Comisión base: Schlenker: ' + registro.s60 + '%, Otros: ' + registro.o60 + '%');
                                             $('#comiS').val(registro.s60);
                                             $('#comiD').val(registro.o60);
-                                        }else if (diferencia > registro.sd60 && diferencia <= registro.sd90 || diferencia > registro.od60 && diferencia <= registro.od90) {
-                                            $('#infoComi').append(seller + '<br> Comisión base: Schlenker: '+ registro.s90 + '%, Otros: 0%');
+                                        } else if (diferencia > registro.sd60 && diferencia <= registro.sd90 || diferencia > registro.od60 && diferencia <= registro.od90) {
+                                            $('#infoComi').append(seller + '<br> Comisión base: Schlenker: ' + registro.s90 + '%, Otros: 0%');
                                             $('#comiS').val(registro.s90);
                                             $('#comiD').val('0');
-                                        }else{
+                                        } else {
                                             $('#infoComi').append(seller + '<br> Comisión base: Schlenker: 0%, Otros: 0%');
                                             $('#comiS').val('0');
                                             $('#comiD').val('0');
                                         }
                                     });
                                 },
-                                error: function (data) {
+                                error: function(data) {
                                     swal({
                                         type: 'error',
                                         title: 'Error',
@@ -630,8 +629,7 @@ $(document).ready(function () {
                         } else if (tipo == 1) {
                             if (registro.cheque == 1) {
                                 nuevaFila += "<td><small class='label label-warning'><i class='fa fa-bank'></i> Cheque</small></td>";
-                            }
-                            else {
+                            } else {
                                 nuevaFila += "<td><small class='label label-primary'><i class='fa fa-credit-card'></i> Pago</small></td>";
                             }
                         }
@@ -640,7 +638,7 @@ $(document).ready(function () {
                             nuevaFila += "<td><small>-</small></td>";
                         } else if (tipo == 1) {
                             nuevaFila += "<td>" + registro.noDocument + "</td>";
-                            nuevaFila += "<td><p class='text-muted'><i>"+ registro.commissionS +"%_ Q"+ registro.totalS +"</i><br><i>"+ registro.commissionO +"%_ Q"+ registro.totalO +"</i></p></td>";
+                            nuevaFila += "<td><p class='text-muted'><i>" + registro.commissionS + "%_ Q" + registro.totalS + "</i><br><i>" + registro.commissionO + "%_ Q" + registro.totalO + "</i></p></td>";
                         }
                         nuevaFila += "<td>Q." + registro.amount + "</td>";
                         nuevaFila += "<td>Q." + registro.balance + "</td>";
@@ -668,7 +666,7 @@ $(document).ready(function () {
 
                 balance(id);
             },
-            error: function (data) {
+            error: function(data) {
                 swal({
                     type: 'error',
                     title: 'Error',
@@ -678,22 +676,22 @@ $(document).ready(function () {
         });
     });
 
-    $('#cheque').on('ifChecked', function(event){
+    $('#cheque').on('ifChecked', function(event) {
         bandera = 1;
         console.log('true');
-      });
+    });
 
-    $('#cheque').on('ifUnchecked', function(event){
+    $('#cheque').on('ifUnchecked', function(event) {
         bandera = 0;
         console.log('false');
-      });
+    });
 
-    $('.detalle_balanceC').on('click', function (e) {
+    $('.detalle_balanceC').on('click', function(e) {
         e.preventDefault();
         $("#detallesB").find('tbody').html("");
         $("#anuladosB").find('tbody').html("");
         var id = $(this).attr('data-id');
-        var tipo = $(this).attr('data-tipo');       
+        var tipo = $(this).attr('data-tipo');
 
         swal({
             title: 'Cargando balance de saldos...'
@@ -707,15 +705,14 @@ $(document).ready(function () {
             url: 'BLL/' + tipo + '.php',
             success(data) {
                 console.log(data);
-                $.each(data, function (key, registro) {
+                $.each(data, function(key, registro) {
                     if (registro.state == 2) {
                         var nuevaFila = "<tr>";
                         nuevaFila += "<td>" + convertDate(registro.date); + "</td>";
                         nuevaFila += "<td>" + registro.noReceipt + "</td>";
                         if (registro.cheque == 1) {
                             nuevaFila += "<td><small class='label label-warning'><i class='fa fa-bank'></i> Cheque</small></td>";
-                        }
-                        else {
+                        } else {
                             nuevaFila += "<td><small class='label label-primary'><i class='fa fa-credit-card'></i> Pago</small></td>";
                         }
                         nuevaFila += "<td>" + registro.noDocument + "</td>";
@@ -736,12 +733,11 @@ $(document).ready(function () {
                             nuevaFila += "<td>" + registro.noReceipt + "</td>";
                             if (registro.cheque == 1) {
                                 nuevaFila += "<td><small class='label label-warning'><i class='fa fa-bank'></i> Cheque</small></td>";
-                            }
-                            else {
+                            } else {
                                 nuevaFila += "<td><small class='label label-primary'><i class='fa fa-credit-card'></i> Pago</small></td>";
                             }
                             nuevaFila += "<td>" + registro.noDocument + "</td>";
-                            nuevaFila += "<td><p class='text-muted'><i>"+ registro.commissionS +"%_ Q"+ registro.totalS +"</i><br><i>"+ registro.commissionO +"%_ Q"+ registro.totalO +"</i></p></td>";
+                            nuevaFila += "<td><p class='text-muted'><i>" + registro.commissionS + "%_ Q" + registro.totalS + "</i><br><i>" + registro.commissionO + "%_ Q" + registro.totalO + "</i></p></td>";
                         }
                         nuevaFila += "<td>Q." + registro.amount + "</td>";
                         nuevaFila += "<td>Q." + registro.balance + "</td>";
@@ -755,7 +751,7 @@ $(document).ready(function () {
                 swal.close();
                 $('#modal-balance').modal('show');
             },
-            error: function (data) {
+            error: function(data) {
                 swal({
                     type: 'error',
                     title: 'Error',
@@ -801,15 +797,14 @@ function confirmarPago(idSale, idBalance) {
                         success(data) {
                             console.log(data);
                             var totalP = 0;
-                            $.each(data, function (key, registro) {
+                            $.each(data, function(key, registro) {
                                 if (registro.state == 2) {
                                     var nuevaFila = "<tr>";
                                     nuevaFila += "<td>" + convertDate(registro.date); + "</td>";
                                     nuevaFila += "<td>" + registro.noReceipt + "</td>";
                                     if (registro.cheque == 1) {
                                         nuevaFila += "<td><small class='label label-warning'><i class='fa fa-bank'></i> Cheque</small></td>";
-                                    }
-                                    else {
+                                    } else {
                                         nuevaFila += "<td><small class='label label-primary'><i class='fa fa-credit-card'></i> Pago</small></td>";
                                     }
                                     nuevaFila += "<td>" + registro.noDocument + "</td>";
@@ -834,8 +829,7 @@ function confirmarPago(idSale, idBalance) {
                                     } else if (tipo == 1) {
                                         if (registro.cheque == 1) {
                                             nuevaFila += "<td><small class='label label-warning'><i class='fa fa-bank'></i> Cheque</small></td>";
-                                        }
-                                        else {
+                                        } else {
                                             nuevaFila += "<td><small class='label label-primary'><i class='fa fa-credit-card'></i> Pago</small></td>";
                                         }
                                     }
@@ -860,7 +854,7 @@ function confirmarPago(idSale, idBalance) {
                             $("#totalP").val(totalP.toFixed(2));
                             balance(idSale);
                         },
-                        error: function (data) {
+                        error: function(data) {
                             swal({
                                 type: 'error',
                                 title: 'Error',
@@ -915,15 +909,14 @@ function anularPago(idSale, idBalance) {
                         success(data) {
                             console.log(data);
                             var totalP = 0;
-                            $.each(data, function (key, registro) {
+                            $.each(data, function(key, registro) {
                                 if (registro.state == 2) {
                                     var nuevaFila = "<tr>";
                                     nuevaFila += "<td>" + convertDate(registro.date); + "</td>";
                                     nuevaFila += "<td>" + registro.noReceipt + "</td>";
                                     if (registro.cheque == 1) {
                                         nuevaFila += "<td><small class='label label-warning'><i class='fa fa-bank'></i> Cheque</small></td>";
-                                    }
-                                    else {
+                                    } else {
                                         nuevaFila += "<td><small class='label label-primary'><i class='fa fa-credit-card'></i> Pago</small></td>";
                                     }
                                     nuevaFila += "<td>" + registro.noDocument + "</td>";
@@ -948,8 +941,7 @@ function anularPago(idSale, idBalance) {
                                     } else if (tipo == 1) {
                                         if (registro.cheque == 1) {
                                             nuevaFila += "<td><small class='label label-warning'><i class='fa fa-bank'></i> Cheque</small></td>";
-                                        }
-                                        else {
+                                        } else {
                                             nuevaFila += "<td><small class='label label-primary'><i class='fa fa-credit-card'></i> Pago</small></td>";
                                         }
                                     }
@@ -974,7 +966,7 @@ function anularPago(idSale, idBalance) {
                             $("#totalP").val(totalP.toFixed(2));
                             balance(idSale);
                         },
-                        error: function (data) {
+                        error: function(data) {
                             swal({
                                 type: 'error',
                                 title: 'Error',
@@ -1019,17 +1011,14 @@ function anularSale(idSale) {
         json += ',"cantdet":"' + cantidad_detalle[i].value + '"}'
     }
     obj = JSON.parse('{ "detailNULL" : [' + json.substr(1) + ']}');
-    datos = Array(
-        { name: 'json', value: JSON.stringify(obj) },
-        { name: 'idSale', value: idSale }
-    );
+    datos = Array({ name: 'json', value: JSON.stringify(obj) }, { name: 'idSale', value: idSale });
 
     $.ajax({
         type: 'POST',
         data: datos,
         url: 'BLL/anularSale.php',
         datatype: 'json',
-        success: function (data) {
+        success: function(data) {
             console.log(data);
             resultado = JSON.parse(data);
             if (resultado.respuesta == 'exito') {
@@ -1040,7 +1029,7 @@ function anularSale(idSale) {
                     showConfirmButton: false,
                     timer: 1500
                 })
-                setTimeout(function () {
+                setTimeout(function() {
                     location.reload();
                 }, 3000);
             } else {
@@ -1071,9 +1060,9 @@ function generarFactura() {
     }).then(() => {
         var idSale = $("#idSale").val();
         setTimeout(function() {
-            window.location.href = 'printSale.php?id='+idSale;
+            window.location.href = 'printSale.php?id=' + idSale;
         }, 500);
-    });   
+    });
 }
 
 function imprimir(tipo, idSale) {
@@ -1093,9 +1082,9 @@ function imprimir(tipo, idSale) {
                 type: "GET",
                 url: 'BLL/correlativeGuia.php',
                 dataType: "json",
-                success: function (data) {
+                success: function(data) {
                     console.log(data);
-                    $.each(data, function (key, registro) {
+                    $.each(data, function(key, registro) {
                         var last = parseInt(registro.last) + parseInt(1);
                         updateCorrelativo('envio', 'A', last);
                         $.ajax({
@@ -1107,15 +1096,15 @@ function imprimir(tipo, idSale) {
                             },
                             url: 'BLL/sale.php',
                             datatype: 'json',
-                            success: function (data) {
+                            success: function(data) {
                                 console.log(data);
                                 var resultado = JSON.parse(data);
-                                if (resultado.respuesta == 'exito') { } else if (resultado.respuesta == 'vacio') { } else if (resultado.respuesta == 'error') { }
+                                if (resultado.respuesta == 'exito') {} else if (resultado.respuesta == 'vacio') {} else if (resultado.respuesta == 'error') {}
                             }
                         })
                     });
                 },
-                error: function (data) {
+                error: function(data) {
                     alert('error');
                 }
             });
@@ -1145,7 +1134,7 @@ function cancelSale(idSale) {
             console.log(data);
             var resultado = JSON.parse(data);
             if (resultado.respuesta == 'exito') {
-                setTimeout(function () {
+                setTimeout(function() {
                     location.reload();
                 }, 1500);
             } else {
@@ -1168,7 +1157,7 @@ function balance(idSale) {
         url: 'BLL/listBalanceT.php',
         success(data) {
             console.log(data);
-            $.each(data, function (key, registro) {
+            $.each(data, function(key, registro) {
                 $("#totalBal").text('Q. ' + registro.balance);
                 $("#totalB").val(parseFloat(registro.balance));
                 $("#idSale").val(idSale);
@@ -1180,7 +1169,7 @@ function balance(idSale) {
             swal.close();
             $('#modal-balance').modal('show');
         },
-        error: function (data) {
+        error: function(data) {
             swal({
                 type: 'error',
                 title: 'Error',
@@ -1201,7 +1190,7 @@ function updateCorrelativo(correlative, serie, last) {
         },
         url: 'BLL/correlative.php',
         dataType: 'json',
-        success: function (data) {
+        success: function(data) {
             console.log(data);
             var resultado = data;
             if (resultado.respuesta == 'exito') {
@@ -1224,7 +1213,7 @@ function updateCorrelativo(correlative, serie, last) {
                 })
             }
         },
-        error: function (data) {
+        error: function(data) {
             swal({
                 position: 'top-end',
                 type: 'error',
