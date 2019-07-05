@@ -48,7 +48,7 @@ if ($_POST['compra'] == 'nueva') {
                     //Update STORAGE
                     //Selecciona los STORAGES que pertenecen a este producto
                     try {
-                        $sql = "SELECT idStorage, stock, dateExp FROM storage WHERE _idProduct = ? AND _idCellar = 1";
+                        $sql = "SELECT idStorage, stock, dateExp FROM storage WHERE _idProduct = $detail->idproduct AND _idCellar = 1";
                         $resultado = $conn->query($sql);
                     } catch (Exception $e) {
                         $query_success = false;
