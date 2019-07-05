@@ -6,7 +6,8 @@ $(document).ready(function() {
         var id = $(this).attr('data-id');
         var costo = $('#new_' + id + '_costo').val();
         var cantidad = $('#new_' + id + '_cantidad').val();
-        if (isNaN(cantidad) || cantidad < 1 || isNaN(costo) || costo < 0) {
+        var dateV = $('#new_' + id + '_date').val();
+        if (isNaN(cantidad) || cantidad < 1 || isNaN(costo) || costo < 0 || dateV === "") {
             swal({
                 type: 'error',
                 title: 'Error',
@@ -30,8 +31,8 @@ $(document).ready(function() {
                     $.each(data, function(key, registro) {
                         var costo = $('#new_' + registro.idProduct + '_costo').val();
                         var cantidad = $('#new_' + registro.idProduct + '_cantidad').val();
+                        var dateExp = $('#new_' + registro.idProduct + '_date').val();
                         var subtotal = costo * cantidad;
-                        nuevaFila += "<td><img src='img/products/" + registro.picture + "'width='80' onerror='ImgError(this);'></td>";
                         nuevaFila += "<td><input class='idproducto_class' type='hidden' value='" + registro.idProduct + "'>" + registro.productName + "</td>";
                         nuevaFila += "<td>" + registro.productCode + "</td>";
                         nuevaFila += "<td>" + registro.make + "</td>";
@@ -39,6 +40,7 @@ $(document).ready(function() {
                         nuevaFila += "<td>" + registro.unity + "</td>";
                         nuevaFila += "<td><input class='costo_class' type='hidden' value='" + costo + "'>Q." + parseFloat(Math.round(costo * 100) / 100).toFixed(2) + "</td>";
                         nuevaFila += "<td><input class='cantidad_class' type='hidden' value='" + cantidad + "'>" + cantidad + "</td>";
+                        nuevaFila += "<td><input class='date_class' type='hidden' value='" + dateExp + "'>" + dateExp + "</td>";
                         nuevaFila += "<td>Q." + subtotal.toFixed(2) + "</td>";
                         nuevaFila += "<td><a id='quitar' onclick='eliminar(" + registro.idProduct + ");' data-id-detalle='" + registro.idProduct + "' class='btn bg-maroon btn-flat margin quitar_product'><i class='fa fa-remove'></i></a></td>";
                         updateTotal(cantidad, costo, 0);
