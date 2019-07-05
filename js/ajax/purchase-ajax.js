@@ -71,12 +71,14 @@ $(document).ready(function() {
         var id_product = document.getElementsByClassName("idproducto_class");
         var costo_detalle = document.getElementsByClassName("costo_class");
         var cantidad_detalle = document.getElementsByClassName("cantidad_class");
+        var dateExp_detalle = document.getElementsByClassName("date_class");
 
         var json = "";
         var i;
         for (i = 0; i < id_product.length; i++) {
             json += ',{"idproduct":"' + id_product[i].value + '"';
             json += ',"costodet":"' + costo_detalle[i].value + '"';
+            json += ',"dateExpdet":"' + dateExp_detalle[i].value + '"';
             json += ',"cantdet":"' + cantidad_detalle[i].value + '"}';
         }
         obj = JSON.parse('{ "detailP" : [' + json.substr(1) + ']}');
