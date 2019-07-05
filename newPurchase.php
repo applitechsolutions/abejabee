@@ -74,9 +74,7 @@ include_once 'funciones/bd_conexion.php';
                                         <table id="registros" class="table table-bordered table-striped product-add">
                                             <thead>
                                                 <tr>
-                                                    <th>Imagen</th>
-                                                    <th>Nombre</th>
-                                                    <th>Código</th>
+                                                    <th>Código/Nombre</th>
                                                     <th>Marca</th>
                                                     <th>Unidad</th>
                                                     <th>
@@ -85,6 +83,7 @@ include_once 'funciones/bd_conexion.php';
                                                     <th>
                                                         <span class="pull-right">Cant.</span>
                                                     </th>
+                                                    <th>Fecha de Vencimiento</th>
                                                     <th>Agregar</th>
                                                 </tr>
                                             </thead>
@@ -106,17 +105,8 @@ while ($product = $resultado->fetch_assoc()) {
     ?>
                                                 <tr id="catalogo">
                                                     <td>
-                                                        <img src="img/products/<?php echo $product['picture']; ?>"
-                                                            width="80" onerror="this.src='img/products/notfound.jpg';">
-                                                    </td>
-                                                    <td>
                                                         <div class="margin">
-                                                            <?php echo $product['productName']; ?>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="margin">
-                                                            <?php echo $product['productCode']; ?>
+                                                            <?php echo $product['productCode'] . ' / ' . $product['productName']; ?>
                                                         </div>
                                                     </td>
                                                     <td>
@@ -139,6 +129,9 @@ while ($product = $resultado->fetch_assoc()) {
                                                             name="cantidad" min="1" step="1" value="1" style="width: 60%;">
                                                     </td>
                                                     <td>
+                                                        <input type="text" class="form-control margin datepicker datepick" id="new_<?php echo $product['idProduct']; ?>_date" name="date" style="width: 70%;">
+                                                    </td>
+                                                    <td>
                                                         <input class="id_producto_agregar" type="hidden" value="<?php echo $product['idProduct']; ?>">
                                                         <a id="boton" href="#" cost="" data-id="<?php echo $product['idProduct']; ?>"
                                                             data-tipo="product" class="btn bg-green btn-lg margin agregar_producto">
@@ -151,13 +144,12 @@ while ($product = $resultado->fetch_assoc()) {
                                             </tbody>
                                             <tfoot>
                                                 <tr>
-                                                    <th>Imagen</th>
-                                                    <th>Nombre</th>
-                                                    <th>Código</th>
+                                                    <th>Código/Nombre</th>
                                                     <th>Marca</th>
                                                     <th>Unidad</th>
                                                     <th>Costo/u</th>
                                                     <th>Cantidad</th>
+                                                    <th>Fecha de Vencimiento</th>
                                                     <th>Agregar</th>
                                                 </tr>
                                             </tfoot>
@@ -252,7 +244,6 @@ try {
                                         <table id="agregados" class="table table-bordered table-striped">
                                             <thead>
                                                 <tr>
-                                                    <th>Imagen</th>
                                                     <th>Nombre</th>
                                                     <th>Código</th>
                                                     <th>Marca</th>
@@ -260,6 +251,7 @@ try {
                                                     <th>Unidad</th>
                                                     <th>Costo/u</th>
                                                     <th>Cantidad</th>
+                                                    <th>Fecha de Vencimiento</th>
                                                     <th>Subtotal</th>
                                                     <th>Quitar</th>
                                                 </tr>

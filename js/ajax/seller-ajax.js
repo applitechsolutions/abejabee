@@ -2,7 +2,7 @@ $(document).ready(function() {
 
     $('#form-vendedor').on('submit', function(e) {
         e.preventDefault();
-        
+
         var datos = $(this).serializeArray();
 
         $.ajax({
@@ -10,20 +10,20 @@ $(document).ready(function() {
             data: datos,
             url: $(this).attr('action'),
             dataType: 'json',
-            success: function(data){
+            success: function(data) {
                 console.log(data);
                 var resultado = data;
                 if (resultado.respuesta == 'exito') {
                     swal(
                         'Exito!',
-                        '¡'+resultado.mensaje,
+                        '¡' + resultado.mensaje,
                         'success'
-                      )
-                      if (resultado.proceso == 'nuevo') {
-                    setTimeout(function() {
-                        location.reload();
-                    }, 1500);
-                    } else if (resultado.proceso == 'editado'){
+                    )
+                    if (resultado.proceso == 'nuevo') {
+                        setTimeout(function() {
+                            location.reload();
+                        }, 1500);
+                    } else if (resultado.proceso == 'editado') {
                         setTimeout(function() {
                             window.location.href = 'listSellers.php';
                         }, 1500);
@@ -33,17 +33,17 @@ $(document).ready(function() {
                         type: 'warning',
                         title: 'Oops...',
                         text: 'Debe llenar todos los campos',
-                      })
-                }else if (resultado.respuesta == 'error'){
+                    })
+                } else if (resultado.respuesta == 'error') {
                     swal({
                         type: 'error',
                         title: 'Error',
                         text: 'No se pudo guardar en la base de datos',
-                      })
+                    })
                 }
             }
         })
-        
+
     });
 
     $('.borrar_vendedor').on('click', function(e) {
@@ -61,38 +61,38 @@ $(document).ready(function() {
             cancelButtonColor: '#d33',
             confirmButtonText: 'Sí, Eliminar!',
             cancelButtonText: 'Cancelar'
-          }).then((result) => {
-                $.ajax({
-                    type: 'POST',
-                    data: {
-                        'id': id,
-                        'reg-vendedor': 'eliminar'
-                    },
-                    url: 'BLL/'+tipo+'.php',
-                    success(data){
-                        console.log(data);
-                        var resultado = JSON.parse(data);
-                        if (resultado.respuesta == 'exito') {
-                            swal(
-                                'Eliminado!',
-                                'El vendedor ha sido borrado con exito.',
-                                'success'
-                              )
-                            jQuery('[data-id="'+resultado.id_eliminado+'"]').parents('tr').remove(); 
-                        }else {
-                            swal({
-                                type: 'error',
-                                title: 'Error!',
-                                text: 'No se pudo eliminar el vendedor.'
-                              })
-                        }
-                        
+        }).then((result) => {
+            $.ajax({
+                type: 'POST',
+                data: {
+                    'id': id,
+                    'reg-vendedor': 'eliminar'
+                },
+                url: 'BLL/' + tipo + '.php',
+                success(data) {
+                    console.log(data);
+                    var resultado = JSON.parse(data);
+                    if (resultado.respuesta == 'exito') {
+                        swal(
+                            'Eliminado!',
+                            'El vendedor ha sido borrado con exito.',
+                            'success'
+                        )
+                        jQuery('[data-id="' + resultado.id_eliminado + '"]').parents('tr').remove();
+                    } else {
+                        swal({
+                            type: 'error',
+                            title: 'Error!',
+                            text: 'No se pudo eliminar el vendedor.'
+                        })
                     }
-                });
+
+                }
             });
+        });
     });
 
-    $('.listarcomision').on('click', function (e) {
+    $('.listarcomision').on('click', function(e) {
         e.preventDefault();
         $('#contenido-comision').html("");
         $('#nombre-vendedor').html("");
@@ -102,8 +102,8 @@ $(document).ready(function() {
 
         swal({
             title: 'Cargando comisiones...'
-       });
-       swal.showLoading();
+        });
+        swal.showLoading();
         $.ajax({
             type: 'POST',
             data: {
@@ -112,8 +112,8 @@ $(document).ready(function() {
             url: 'BLL/' + tipo + '.php',
             success(data) {
                 console.log(data);
-                $.each(data, function (key, registro) {
-                    var nombredetalle = "<h3 class='box-title'>"+ registro.nombre +" "+ registro.apellido +"</h3>";  
+                $.each(data, function(key, registro) {
+                    var nombredetalle = "<h3 class='box-title'>" + registro.nombre + " " + registro.apellido + "</h3>";
                     $('#nombre-vendedor').append(nombredetalle);
                     var encabezado = "<th style='width: 10px; color: MidnightBlue;'><small>Propio</small></th>";
                     encabezado += "<th>" + registro.sd30 + "/d</th>";
@@ -121,7 +121,7 @@ $(document).ready(function() {
                     encabezado += "<th>" + registro.sd90 + "/d</th>";
                     encabezado += "<th style='width: 10px; color: MidnightBlue;'><small>Otros</small></th>";
                     encabezado += "<th>" + registro.od30 + "/d</th>";
-                    encabezado += "<th>" + registro.od60 + "/d</th>"; 
+                    encabezado += "<th>" + registro.od60 + "/d</th>";
                     $("#encabezado-comision").append(encabezado);
                     var nuevaFila = "<td></td>";
                     nuevaFila += "<td>" + registro.s30 + "%</td>";
@@ -135,7 +135,7 @@ $(document).ready(function() {
                 swal.close();
                 $('#modal-commission').modal('show');
             },
-            error: function (data) {
+            error: function(data) {
                 swal({
                     type: 'error',
                     title: 'Error',

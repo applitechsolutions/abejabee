@@ -28,6 +28,45 @@ include_once 'templates/header.php';
                         <div class="box-header">
                             <h3 class="box-title">Listado general de la existencia de productos</h3>
                         </div>
+
+                    <!-- MODAL DETALLE DE EXISTENCIAS -->
+                    <div class="modal fade" id="modal-expirado">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <h4 class="modal-title">Comisiones</h4>
+                                </div>
+                            <div class="modal-body">
+                                <div class="box box-success">
+                                    <div class="box">
+                                        <div id="nombre-vendedor" class="box-header">
+                                        
+                                        </div>
+                                        <!-- /.box-header -->
+                                        <div class="box-body no-padding">
+                                        <table id="comisiones" class="table table-striped">
+                                            <tr id="encabezado-comision">
+                                            
+                                            </tr>
+                                            <tr id="contenido-comision">
+                                            
+                                            </tr>
+                                        </table>
+                                        </div>
+                                        <!-- /.box-body -->
+                                    </div>
+                                    <!-- /.box -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+              <!-- /.modal-content -->
+            </div>
+                    <!-- MODAL DETALLE DE EXISTENCIAS -->
+
                         <!-- /.box-header -->
                         <div class="box-body table-responsive no-padding">
                             <table id="registros" class="table table-bordered table-striped">
@@ -137,6 +176,7 @@ include_once 'templates/header.php';
                                             <a class="btn bg-green btn-flat margin" href="newPurchase.php">
                                                 <i class="fa fa-shopping-cart"></i>
                                             </a>
+                                            <a href="#" data-id="" data-tipo="listarStock" class="btn bg-navy btn-flat margin listarStock"><i class="fas fa-archive"></i></a>
                                         </td>
                                     </tr>
                                     <?php }
