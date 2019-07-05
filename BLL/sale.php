@@ -63,35 +63,70 @@ if ($_POST['venta'] == 'nueva') {
                     mysqli_stmt_close($stmt);
 
                     //Update STORAGE
-                    $sql = 'SELECT idStorage, stock FROM storage WHERE _idProduct = ? AND _idCellar = 1';
-                    $stmt = mysqli_prepare($conn, $sql);
-                    mysqli_stmt_bind_param($stmt, 'i', $detail->idproduct);
-                    if (!mysqli_stmt_execute($stmt)) {
+                    //Selecciona los STORAGES que pertenecen a este producto ORDENADO POR dateExp ASCENDENTE
+                    try {
+                        $sql = "SELECT idStorage, stock, dateExp FROM storage WHERE _idProduct = $detail->idproduct AND _idCellar = 1 ORDER BY dateExp ASC";
+                        $resultado = $conn->query($sql);
+                    } catch (Exception $e) {
                         $query_success = false;
                     }
-                    mysqli_stmt_bind_result($stmt, $idStorage, $storage);
-                    if (!mysqli_stmt_fetch($stmt)) {
-                        $query_success = false;
-                    }
-                    $stock = $storage - $detail->cantdet;
-                    mysqli_stmt_close($stmt);
+                    $bandera = 0;
+                    $cantDatail = $detail->cantdet;
+                    while ($storage = $resultado->fetch_assoc()) {
+                        //Si el primer stock que encuentra es menor a la cantidad que esta comprando entonces actualiza ese STOCK
+                        if ($bandera == 0) {
+                            if ($storage['stock'] > $cantDatail) {
+                                $stock = $storage['stock'] - $cantDatail;
 
-                    if ($idStorage > 0) {
-                        $stmt = $conn->prepare("UPDATE storage SET stock = ? WHERE idStorage = ?");
-                        $stmt->bind_param("ii", $stock, $idStorage);
-                        if (!mysqli_stmt_execute($stmt)) {
-                            $query_success = false;
+                                $stmt = $conn->prepare("UPDATE storage SET stock = ? WHERE idStorage = ?");
+                                $stmt->bind_param("ii", $stock, $storage['idStorage']);
+                                if (!mysqli_stmt_execute($stmt)) {
+                                    $query_success = false;
+                                }
+                                mysqli_stmt_close($stmt);
+                                $bandera = 1;
+                            } else if ($storage['stock'] <= $cantDatail) {
+
+                                $cantDatail = $cantDatail - $storage['stock'];
+
+                                $stmt = $conn->prepare("DELETE FROM storage WHERE idStorage = ?");
+                                $stmt->bind_param("i", $storage['idStorage']);
+                                if (!mysqli_stmt_execute($stmt)) {
+                                    $query_success = false;
+                                }
+                                mysqli_stmt_close($stmt);
+                            }
                         }
-                        mysqli_stmt_close($stmt);
-                    } else {
-                        $id_cellar = 1;
-                        $stmt = $conn->prepare("INSERT INTO storage (stock, _idProduct, _idCellar) VALUES (?, ?, ?)");
-                        $stmt->bind_param("iii", $detail->cantdet, $detail->idproduct, $id_cellar);
-                        if (!mysqli_stmt_execute($stmt)) {
-                            $query_success = false;
-                        }
-                        mysqli_stmt_close($stmt);
                     }
+                    // $sql = 'SELECT idStorage, stock FROM storage WHERE _idProduct = ? AND _idCellar = 1';
+                    // $stmt = mysqli_prepare($conn, $sql);
+                    // mysqli_stmt_bind_param($stmt, 'i', $detail->idproduct);
+                    // if (!mysqli_stmt_execute($stmt)) {
+                    //     $query_success = false;
+                    // }
+                    // mysqli_stmt_bind_result($stmt, $idStorage, $storage);
+                    // if (!mysqli_stmt_fetch($stmt)) {
+                    //     $query_success = false;
+                    // }
+                    // $stock = $storage - $detail->cantdet;
+                    // mysqli_stmt_close($stmt);
+
+                    // if ($idStorage > 0) {
+                    //     $stmt = $conn->prepare("UPDATE storage SET stock = ? WHERE idStorage = ?");
+                    //     $stmt->bind_param("ii", $stock, $idStorage);
+                    //     if (!mysqli_stmt_execute($stmt)) {
+                    //         $query_success = false;
+                    //     }
+                    //     mysqli_stmt_close($stmt);
+                    // } else {
+                    //     $id_cellar = 1;
+                    //     $stmt = $conn->prepare("INSERT INTO storage (stock, _idProduct, _idCellar) VALUES (?, ?, ?)");
+                    //     $stmt->bind_param("iii", $detail->cantdet, $detail->idproduct, $id_cellar);
+                    //     if (!mysqli_stmt_execute($stmt)) {
+                    //         $query_success = false;
+                    //     }
+                    //     mysqli_stmt_close($stmt);
+                    // }
                 }
                 if ($query_success) {
                     mysqli_commit($conn);

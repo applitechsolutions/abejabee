@@ -80,6 +80,8 @@ if ($_POST['compra'] == 'nueva') {
                         }
                         mysqli_stmt_close($stmt);
                     }
+
+                    //ASI SE HACIA ANTES AL STORAGE XD
                     // $sql = 'SELECT idStorage, stock, dateExp FROM storage WHERE _idProduct = ? AND _idCellar = 1';
                     // $stmt = mysqli_prepare($conn, $sql);
                     // mysqli_stmt_bind_param($stmt, 'i', $detail->idproduct);
