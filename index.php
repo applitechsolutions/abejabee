@@ -30,35 +30,29 @@ include_once 'templates/header.php';
                         </div>
 
                     <!-- MODAL DETALLE DE EXISTENCIAS -->
-                    <div class="modal fade" id="modal-expirado">
+                    <div class="modal fade" id="modal-stock">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                     </button>
-                                    <h4 class="modal-title">Comisiones</h4>
+                                    <h4 class="modal-title">Existencia de Productos</h4>
                                 </div>
-                            <div class="modal-body">
-                                <div class="box box-success">
-                                    <div class="box">
-                                        <div id="nombre-vendedor" class="box-header">
-                                        
-                                        </div>
-                                        <!-- /.box-header -->
-                                        <div class="box-body no-padding">
-                                        <table id="comisiones" class="table table-striped">
-                                            <tr id="encabezado-comision">
-                                            
-                                            </tr>
-                                            <tr id="contenido-comision">
-                                            
-                                            </tr>
+                                <div class="modal-body">
+                                    <div class="box-body table-responsive no-padding">
+                                        <table id="expiracion" class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Existencia</th>
+                                                    <th>Fecha de Vencimiento</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="contenidoExp">
+                                            </tbody>
                                         </table>
-                                        </div>
-                                        <!-- /.box-body -->
                                     </div>
-                                    <!-- /.box -->
+                                    <!-- /.box-body -->
                                 </div>
                             </div>
                         </div>
@@ -87,7 +81,8 @@ include_once 'templates/header.php';
                                 <tbody>
                                     <?php
                   try {
-                    $sql = "SELECT P.idProduct, P.productName, P.productCode, P.cost, P.minStock, P.picture, S.stock,
+                    $sql = "SELECT P.idProduct, P.productName, P.productCode, P.cost, P.minStock, P.picture,
+                    (select SUM(stock) from storage where _idProduct = P.idProduct and _idCellar = 1) as stock,
                     (select makeName from make where idMake = P._idMake and state = 0) as make,
                     (select catName from category where idCategory = P._idCategory and state = 0) as category,
                     (select unityName from unity where idUnity = P._idUnity and state = 0) as unity,
@@ -95,7 +90,7 @@ include_once 'templates/header.php';
                     (select price from priceSale where _idProduct = P.idProduct and _idPrice = 11) as pharma,
                     (select price from priceSale where _idProduct = P.idProduct and _idPrice = 21) as business,
                     (select price from priceSale where _idProduct = P.idProduct and _idPrice = 31) as bonus
-                    FROM storage S INNER JOIN product P ON P.idProduct = S._idProduct WHERE P.state = 0 ORDER BY P.productCode ASC";
+                    FROM product P WHERE P.state = 0 ORDER BY P.productCode ASC";
                     $resultado = $conn->query($sql);
                   } catch (Exception $e) {
                     $error = $e->getMessage();
@@ -176,7 +171,7 @@ include_once 'templates/header.php';
                                             <a class="btn bg-green btn-flat margin" href="newPurchase.php">
                                                 <i class="fa fa-shopping-cart"></i>
                                             </a>
-                                            <a href="#" data-id="" data-tipo="listarStock" class="btn bg-navy btn-flat margin listarStock"><i class="fas fa-archive"></i></a>
+                                            <a href="#" data-id="<?php echo $product['idProduct'] ?>" data-tipo="listStorage" class="btn bg-navy btn-flat margin listarStock"><i class="fas fa-archive"></i></a>
                                         </td>
                                     </tr>
                                     <?php }
