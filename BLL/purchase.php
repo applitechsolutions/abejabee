@@ -34,6 +34,9 @@ if ($_POST['compra'] == 'nueva') {
             if ($id_registro > 0) {
 
                 foreach ($MyArray->detailP as $detail) {
+                    $fecha_vencimiento = strtr($detail->dateExpdet, '/', '-');
+                    $fv = date('Y-m-d', strtotime($fecha_vencimiento));
+
                     //Insert DETAILS
                     $stmt = $conn->prepare("INSERT INTO detailP (_idPurchase, _idProduct, quantity, costP) VALUES (?, ?, ?, ?)");
                     $stmt->bind_param("iiid", $id_registro, $detail->idproduct, $detail->cantdet, $detail->costodet);
@@ -43,35 +46,52 @@ if ($_POST['compra'] == 'nueva') {
                     mysqli_stmt_close($stmt);
 
                     //Update STORAGE
-                    $sql = 'SELECT idStorage, stock FROM storage WHERE _idProduct = ? AND _idCellar = 1';
-                    $stmt = mysqli_prepare($conn, $sql);
-                    mysqli_stmt_bind_param($stmt, 'i', $detail->idproduct);
-                    if (!mysqli_stmt_execute($stmt)) {
+                    //Selecciona los STORAGES que pertenecen a este producto
+                    try {
+                        $sql = "SELECT idStorage, stock, dateExp FROM storage WHERE _idProduct = ? AND _idCellar = 1";
+                        $resultado = $conn->query($sql);
+                    } catch (Exception $e) {
                         $query_success = false;
                     }
-                    mysqli_stmt_bind_result($stmt, $idStorage, $storage);
-                    if (!mysqli_stmt_fetch($stmt)) {
-                        $idStorage = 0;
-                    }
-                    $stock = $storage + $detail->cantdet;
-                    mysqli_stmt_close($stmt);
+                    // Esta es una bandera para condicionar si encuentra una fecha de vencimiento igual a la que esta ingresando
+                    $fecha_existe = 0;
+                    while ($storage = $resultado->fetch_assoc()) {
+                        //Busca si existe un registro con la misma fecha de vencimiento
 
-                    if ($idStorage > 0) {
-                        $stmt = $conn->prepare("UPDATE storage SET stock = ? WHERE idStorage = ?");
-                        $stmt->bind_param("ii", $stock, $idStorage);
-                        if (!mysqli_stmt_execute($stmt)) {
-                            $query_success = false;
+                        if ($storage['dateExp'] == $fv) {
+                            $fecha_existe = 1;
+                            $stock = $storage['stock'] + $detail->cantdet;
+
+                            $stmt = $conn->prepare("UPDATE storage SET stock = ? WHERE idStorage = ?");
+                            $stmt->bind_param("ii", $stock, $storage['idStorage']);
+                            if (!mysqli_stmt_execute($stmt)) {
+                                $query_success = false;
+                            }
+                            mysqli_stmt_close($stmt);
                         }
-                        mysqli_stmt_close($stmt);
-                    } else {
+                    }
+
+                    if ($fecha_existe == 0) {
                         $id_cellar = 1;
-                        $stmt = $conn->prepare("INSERT INTO storage (stock, _idProduct, _idCellar) VALUES (?, ?, ?)");
-                        $stmt->bind_param("iii", $detail->cantdet, $detail->idproduct, $id_cellar);
+                        $stmt = $conn->prepare("INSERT INTO storage (dateExp, stock, _idProduct, _idCellar) VALUES (?, ?, ?, ?)");
+                        $stmt->bind_param("siii", $fv, $detail->cantdet, $detail->idproduct, $id_cellar);
                         if (!mysqli_stmt_execute($stmt)) {
                             $query_success = false;
                         }
                         mysqli_stmt_close($stmt);
                     }
+                    // $sql = 'SELECT idStorage, stock, dateExp FROM storage WHERE _idProduct = ? AND _idCellar = 1';
+                    // $stmt = mysqli_prepare($conn, $sql);
+                    // mysqli_stmt_bind_param($stmt, 'i', $detail->idproduct);
+                    // if (!mysqli_stmt_execute($stmt)) {
+                    //     $query_success = false;
+                    // }
+                    // mysqli_stmt_bind_result($stmt, $idStorage, $storage);
+                    // if (!mysqli_stmt_fetch($stmt)) {
+                    //     $idStorage = 0;
+                    // }
+                    // $stock = $storage + $detail->cantdet;
+                    // mysqli_stmt_close($stmt);
                 }
 
 
