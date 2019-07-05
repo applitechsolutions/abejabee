@@ -26,7 +26,7 @@ $(document).ready(function() {
                     nombreproducto = "<h3 class='box-title'>" + registro.code + " " + registro.name + "</h3>";
                     var nuevaFila = "<tr>";
                     nuevaFila += "<td>" + registro.stock + "</td>";
-                    nuevaFila += "<td>" + registro.dateExp + "</td>";
+                    nuevaFila += "<td>" + convertirDate(registro.dateExp) + "</td>";
                     nuevaFila += "</tr>";
                     $("#contenidoExp").append(nuevaFila);
                 });
@@ -45,3 +45,14 @@ $(document).ready(function() {
 
     });
 });
+
+function convertirDate(dateString) {
+
+    if (dateString === null) {
+        return dateString;
+    } else {
+        var p = dateString.split(/\D/g)
+        return [p[2], p[1], p[0]].join("-");
+    }
+
+}
