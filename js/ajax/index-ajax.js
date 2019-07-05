@@ -3,6 +3,7 @@ $(document).ready(function() {
 
         e.preventDefault();
         $('#contenidoExp').html("");
+        $('#nombre-producto').html("");
 
         var id = $(this).attr('data-id');
         var tipo = $(this).attr('data-tipo');
@@ -20,15 +21,16 @@ $(document).ready(function() {
             url: "BLL/" + tipo + ".php",
             success: function(data) {
                 console.log(data);
+                var nombreproducto;
                 $.each(data, function(key, registro) {
-                    var nombredetalle = "<h3 class='box-title'>" + registro.nombre + " " + registro.apellido + "</h3>";
-                    $('#nombre-vendedor').append(nombredetalle);
+                    nombreproducto = "<h3 class='box-title'>" + registro.code + " " + registro.name + "</h3>";
                     var nuevaFila = "<tr>";
                     nuevaFila += "<td>" + registro.stock + "</td>";
                     nuevaFila += "<td>" + registro.dateExp + "</td>";
                     nuevaFila += "</tr>";
                     $("#contenidoExp").append(nuevaFila);
                 });
+                $('#nombre-producto').append(nombreproducto);
                 swal.close();
                 $('#modal-stock').modal('show');
             },

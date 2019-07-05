@@ -4,7 +4,10 @@
     
     $idProduct = $_POST['id'];
 
-    $result = $conn->query("SELECT stock, dateExp FROM storage WHERE _idProduct = $idProduct AND _idCellar = 1;");
+    $result = $conn->query("SELECT S.stock, S.dateExp, 
+    (SELECT productName FROM product WHERE idProduct = S._idProduct) as name,
+    (SELECT productCode FROM product WHERE idProduct = S._idProduct) as code
+    FROM storage S WHERE S._idProduct = $idProduct AND S._idCellar = 1;");
     $outp = array();
     $outp = $result->fetch_all(MYSQLI_ASSOC);
 

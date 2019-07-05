@@ -40,19 +40,24 @@ include_once 'templates/header.php';
                                     <h4 class="modal-title">Existencia de Productos</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <div class="box-body table-responsive no-padding">
-                                        <table id="expiracion" class="table table-bordered table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>Existencia</th>
-                                                    <th>Fecha de Vencimiento</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="contenidoExp">
-                                            </tbody>
-                                        </table>
+                                    <div class="box">
+                                        <div id="nombre-producto" class="box-header">
+                                
+                                        </div>
+                                        <div class="box-body table-responsive no-padding">
+                                            <table id="expiracion" class="table table-bordered table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Existencia</th>
+                                                        <th>Fecha de Vencimiento</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="contenidoExp">
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- /.box-body -->
                                     </div>
-                                    <!-- /.box-body -->
                                 </div>
                             </div>
                         </div>
