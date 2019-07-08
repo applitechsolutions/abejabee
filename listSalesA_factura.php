@@ -317,7 +317,7 @@ include_once 'templates/header.php';
                                                 Remisión:
                                                 <h6><span class="label label-default"><?php echo $bill['remision']; ?></span>
                                                     <?php if ($bill['cancel'] == 49) { ?>
-                                                        <span class="label label-danger"><i class="fas fa-hand-holding-usd"></i></span>
+                                                        <span class="label label-success"><i class="fas fa-hand-holding-usd"></i></span>
                                                     <?php } else if ($bill['cancel'] == 48) { ?>
                                                         <span class="label label-warning"><i class="fas fa-clock"></i></span>
                                                     <?php } ?>
