@@ -73,7 +73,7 @@ if ($_POST['venta'] == 'nueva') {
                     $bandera = 0;
                     $cantDatail = $detail->cantdet;
                     while ($storage = $resultado->fetch_assoc()) {
-                        //Si el primer stock que encuentra es menor a la cantidad que esta comprando entonces actualiza ese STOCK
+                        //Si el primer stock que encuentra es mayor a la cantidad que esta comprando entonces actualiza ese STOCK
                         if ($bandera == 0) {
                             if ($storage['stock'] > $cantDatail) {
                                 $stock = $storage['stock'] - $cantDatail;
@@ -86,7 +86,7 @@ if ($_POST['venta'] == 'nueva') {
                                 mysqli_stmt_close($stmt);
                                 $bandera = 1;
                             } else if ($storage['stock'] <= $cantDatail) {
-
+                                // Sino a la cantidad que esta comprando le resta ese stock y elimina el que es menor o igual
                                 $cantDatail = $cantDatail - $storage['stock'];
 
                                 $stmt = $conn->prepare("DELETE FROM storage WHERE idStorage = ?");
@@ -232,40 +232,35 @@ if ($_POST['venta'] == 'editar') {
             //Regresa todo el stock inicial
             try {
                 $sql = "SELECT _idProduct, quantity FROM detailS WHERE _idSale = $id_sale;";
-                $resultado = $conn->query($sql);
+                $resultado1 = $conn->query($sql);
             } catch (Exception $e) {
                 $query_success = false;
             }
-            while ($det = $resultado->fetch_assoc()) {
+            while ($det = $resultado1->fetch_assoc()) {
+                $detidProduct = $det['_idProduct'];
                 //Update STORAGE
-                $sql = 'SELECT idStorage, stock FROM storage WHERE _idProduct = ? AND _idCellar = 1';
-                $stmt = mysqli_prepare($conn, $sql);
-                mysqli_stmt_bind_param($stmt, 'i', $det['_idProduct']);
-                if (!mysqli_stmt_execute($stmt)) {
+                //Selecciona los STORAGES que pertenecen a este producto
+                try {
+                    $sql = "SELECT idStorage, stock, dateExp FROM storage WHERE _idProduct = $detidProduct AND _idCellar = 1 ORDER BY dateExp ASC";
+                    $resultado2 = $conn->query($sql);
+                } catch (Exception $e) {
                     $query_success = false;
                 }
-                mysqli_stmt_bind_result($stmt, $idStorage, $storage);
-                if (!mysqli_stmt_fetch($stmt)) {
-                    $idStorage = 0;
-                }
-                $stock = $storage + $det['quantity'];
-                mysqli_stmt_close($stmt);
+                // Esta es una bandera para condicionar que actualiza el primer registro del listado
+                $primer_registro = 0;
+                while ($storage = $resultado2->fetch_assoc()) {
 
-                if ($idStorage > 0) {
-                    $stmt = $conn->prepare("UPDATE storage SET stock = ? WHERE idStorage = ?");
-                    $stmt->bind_param("ii", $stock, $idStorage);
-                    if (!mysqli_stmt_execute($stmt)) {
-                        $query_success = false;
+                    if ($primer_registro == 0) {
+                        $primer_registro = 1;
+                        $stock = $storage['stock'] + $det['quantity'];
+
+                        $stmt = $conn->prepare("UPDATE storage SET stock = ? WHERE idStorage = ?");
+                        $stmt->bind_param("ii", $stock, $storage['idStorage']);
+                        if (!mysqli_stmt_execute($stmt)) {
+                            $query_success = false;
+                        }
+                        mysqli_stmt_close($stmt);
                     }
-                    mysqli_stmt_close($stmt);
-                } else {
-                    $id_cellar = 1;
-                    $stmt = $conn->prepare("INSERT INTO storage (stock, _idProduct, _idCellar) VALUES (?, ?, ?)");
-                    $stmt->bind_param("iii", $det['quantity'], $det['_idProduct'], $id_cellar);
-                    if (!mysqli_stmt_execute($stmt)) {
-                        $query_success = false;
-                    }
-                    mysqli_stmt_close($stmt);
                 }
             }
 
@@ -287,34 +282,40 @@ if ($_POST['venta'] == 'editar') {
                 mysqli_stmt_close($stmt);
 
                 //Update STORAGE
-                $sql = 'SELECT idStorage, stock FROM storage WHERE _idProduct = ? AND _idCellar = 1';
-                $stmt = mysqli_prepare($conn, $sql);
-                mysqli_stmt_bind_param($stmt, 'i', $detail->idproduct);
-                if (!mysqli_stmt_execute($stmt)) {
+                //Selecciona los STORAGES que pertenecen a este producto ORDENADO POR dateExp ASCENDENTE
+                try {
+                    $sql = "SELECT idStorage, stock, dateExp FROM storage WHERE _idProduct = $detail->idproduct AND _idCellar = 1 ORDER BY dateExp ASC";
+                    $resultado = $conn->query($sql);
+                } catch (Exception $e) {
                     $query_success = false;
                 }
-                mysqli_stmt_bind_result($stmt, $idStorage, $storage);
-                if (!mysqli_stmt_fetch($stmt)) {
-                    $query_success = false;
-                }
-                $stock = $storage - $detail->cantdet;
-                mysqli_stmt_close($stmt);
+                $bandera = 0;
+                $cantDatail = $detail->cantdet;
+                while ($storage = $resultado->fetch_assoc()) {
+                    //Si el primer stock que encuentra es mayor a la cantidad que esta comprando entonces actualiza ese STOCK
+                    if ($bandera == 0) {
+                        if ($storage['stock'] > $cantDatail) {
+                            $stock = $storage['stock'] - $cantDatail;
 
-                if ($idStorage > 0) {
-                    $stmt = $conn->prepare("UPDATE storage SET stock = ? WHERE idStorage = ?");
-                    $stmt->bind_param("ii", $stock, $idStorage);
-                    if (!mysqli_stmt_execute($stmt)) {
-                        $query_success = false;
+                            $stmt = $conn->prepare("UPDATE storage SET stock = ? WHERE idStorage = ?");
+                            $stmt->bind_param("ii", $stock, $storage['idStorage']);
+                            if (!mysqli_stmt_execute($stmt)) {
+                                $query_success = false;
+                            }
+                            mysqli_stmt_close($stmt);
+                            $bandera = 1;
+                        } else if ($storage['stock'] <= $cantDatail) {
+                            // Sino a la cantidad que esta comprando le resta ese stock y elimina el que es menor o igual
+                            $cantDatail = $cantDatail - $storage['stock'];
+
+                            $stmt = $conn->prepare("DELETE FROM storage WHERE idStorage = ?");
+                            $stmt->bind_param("i", $storage['idStorage']);
+                            if (!mysqli_stmt_execute($stmt)) {
+                                $query_success = false;
+                            }
+                            mysqli_stmt_close($stmt);
+                        }
                     }
-                    mysqli_stmt_close($stmt);
-                } else {
-                    $id_cellar = 1;
-                    $stmt = $conn->prepare("INSERT INTO storage (stock, _idProduct, _idCellar) VALUES (?, ?, ?)");
-                    $stmt->bind_param("iii", $detail->cantdet, $detail->idproduct, $id_cellar);
-                    if (!mysqli_stmt_execute($stmt)) {
-                        $query_success = false;
-                    }
-                    mysqli_stmt_close($stmt);
                 }
             }
             if ($query_success) {
@@ -335,7 +336,7 @@ if ($_POST['venta'] == 'editar') {
             $conn->close();
         }
     } catch (Exception $e) {
-        echo 'Error: ' . $e . getMessage();
+        echo 'Error: ' . $e .   getMessage();
     }
     die(json_encode($respuesta));
 }
