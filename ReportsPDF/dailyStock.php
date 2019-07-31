@@ -8,13 +8,13 @@ $fecha1 = strtr($_GET['fecha1'], '/', '-');
 $fi = date('Y-m-d', strtotime($fecha1));
 
 try {
-    $sql = "SELECT P.idProduct, P.productName, P.productCode, P.cost, P.minStock, P.picture, S.stock,
+    $sql = "SELECT P.idProduct, P.productName, P.productCode, P.cost, P.minStock, P.picture, (select sum(stock) from storage where _idProduct = P.idProduct AND _idCellar = 1) as stock,
     (select SUM(quantity) from detailP DP INNER JOIN purchase PU ON DP._idPurchase = PU.idPurchase where _idProduct = P.idProduct AND PU.datePurchase > '$fi' AND PU.datePurchase <= CURDATE()) as compras,
-    (select SUM(quantity) from detailS DS INNER JOIN sale S ON DS._idSale = S.idSale where _idProduct = P.idProduct AND S.dateStart > '$fi' AND S.dateStart <= CURDATE() AND state = 0) as ventas,
+    (select SUM(quantity) from detailS DS INNER JOIN sale S ON DS._idSale = S.idSale where _idProduct = P.idProduct AND S.dateStart > '$fi' AND S.dateStart <= CURDATE() AND S.state = 0) as ventas,
     (select makeName from make where idMake = P._idMake and state = 0) as make,
     (select catName from category where idCategory = P._idCategory and state = 0) as category,
     (select unityName from unity where idUnity = P._idUnity and state = 0) as unity
-    FROM storage S INNER JOIN product P ON P.idProduct = S._idProduct WHERE P.state = 0 ORDER BY P.productCode";
+    FROM product P WHERE P.state = 0 ORDER BY P.productCode";
 
     $resultado = $conn->query($sql);
 } catch (Exception $e) {
@@ -138,5 +138,3 @@ $mpdf = new mPDF('utf-8', 'LETTER', 0, '', 10, 10, 10, 10, 0, 0); //se define el
 $mpdf->WriteHTML($pagina); //se escribe la variable pagina
 
 $mpdf->Output($file, 'I'); //Se crea el documento pdf y se muestra en el navegador
-
-?>
