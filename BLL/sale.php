@@ -262,6 +262,15 @@ if ($_POST['venta'] == 'editar') {
                         mysqli_stmt_close($stmt);
                     }
                 }
+                if ($primer_registro == 0) {
+                    $id_cellar = 1;
+                    $stmt = $conn->prepare("INSERT INTO storage (stock, _idProduct, _idCellar) VALUES (?, ?, ?)");
+                    $stmt->bind_param("iii", $det['quantity'], $detidProduct, $id_cellar);
+                    if (!mysqli_stmt_execute($stmt)) {
+                        $query_success = false;
+                    }
+                    mysqli_stmt_close($stmt);
+                }
             }
 
             //Elimina el detailS inicial

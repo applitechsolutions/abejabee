@@ -19,27 +19,31 @@ try {
     foreach ($MyArray->detailNULL as $detail) {
 
         //Update STORAGE
-        $sql = 'SELECT idStorage, stock FROM storage WHERE _idProduct = ? AND _idCellar = 1';
-        $stmt = mysqli_prepare($conn, $sql);
-        mysqli_stmt_bind_param($stmt, 'i', $detail->idproduct);
-        if (!mysqli_stmt_execute($stmt)) {
+        //Selecciona los STORAGES que pertenecen a este producto
+        try {
+            $sql = "SELECT idStorage, stock, dateExp FROM storage WHERE _idProduct = $detail->idproduct AND _idCellar = 1 ORDER BY dateExp ASC";
+            $resultado2 = $conn->query($sql);
+        } catch (Exception $e) {
             $query_success = false;
         }
-        mysqli_stmt_bind_result($stmt, $idStorage, $storage);
-        if (!mysqli_stmt_fetch($stmt)) {
-            $idStorage = 0;
-        }
-        $stock = $storage + $detail->cantdet;
-        mysqli_stmt_close($stmt);
+        // Esta es una bandera para condicionar que actualiza el primer registro del listado
+        $primer_registro = 0;
+        while ($storage = $resultado2->fetch_assoc()) {
 
-        if ($idStorage > 0) {
-            $stmt = $conn->prepare("UPDATE storage SET stock = ? WHERE idStorage = ?");
-            $stmt->bind_param("ii", $stock, $idStorage);
-            if (!mysqli_stmt_execute($stmt)) {
-                $query_success = false;
+            if ($primer_registro == 0) {
+                $primer_registro = 1;
+                $stock = $storage['stock'] + $detail->cantdet;
+
+                $stmt = $conn->prepare("UPDATE storage SET stock = ? WHERE idStorage = ?");
+                $stmt->bind_param("ii", $stock, $storage['idStorage']);
+                if (!mysqli_stmt_execute($stmt)) {
+                    $query_success = false;
+                }
+                mysqli_stmt_close($stmt);
             }
-            mysqli_stmt_close($stmt);
-        } else {
+        }
+
+        if ($primer_registro == 0) {
             $id_cellar = 1;
             $stmt = $conn->prepare("INSERT INTO storage (stock, _idProduct, _idCellar) VALUES (?, ?, ?)");
             $stmt->bind_param("iii", $detail->cantdet, $detail->idproduct, $id_cellar);
@@ -65,5 +69,3 @@ try {
     echo 'Error: ' . $e . getMessage();
 }
 die(json_encode($respuesta));
-
-?>
