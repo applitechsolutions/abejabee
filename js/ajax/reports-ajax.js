@@ -617,6 +617,132 @@ $(document).ready(function() {
 
         });
     });
+
+    $('#form-stateCustomer').on('submit', function(e) {
+        e.preventDefault();
+        limpiarReportes();
+
+        var tabla = '<div class="row"><div class="col-lg-12">' +
+            '<div class="box box-solid">' +
+            '<div class="box-header with-border">' +
+            '<i class="fa fa-user-circle"></i>' +
+            '<h3 class="box-title">Información del cliente</h3>' +
+            '</div>' +
+            '<!-- /.box-header -->' +
+            '<div class="box-body">' +
+            '<dl class="dl-horizontal">' +
+            '<dt>Código / Nombre</dt>' +
+            '<dd id="codeName"></dd>' +
+            '<dt>Ruta</dt>' +
+            '<dd id="route"></dd>' +
+            '<dt>Teléfono / Nit </dt>' +
+            '<dd id="telNit"></dd>' +
+            '<dt>Dirección</dt>' +
+            '<dd id="direction"></dd>' +
+            '<dt>Dueño / Encargado </dt>' +
+            '<dd id="owner"></dd>' +
+            '</dd>' +
+            '</dl>' +
+            '</div>' +
+            '<!-- /.box-body -->' +
+            '</div>' +
+            '</div></div>' +
+            '<div class="box-body table-responsive no-padding">' +
+            '<table id="registros" class="table table-bordered table-striped">' +
+            '<thead>' +
+            '<tr>' +
+            '<th>Fecha</th>' +
+            '<th>No. de remisión</th>' +
+            '<th>Vendedor</th>' +
+            '<th>Fecha de vencimiento</th>' +
+            '<th>Anticipo</th>' +
+            '<th>Total</th>' +
+            '<th>Abono</th>' +
+            '<th>Saldo</th>' +
+            '</tr>' +
+            '</thead>' +
+            '<tbody class="contenidoRPT7"></tbody>' +
+            '<tfoot>' +
+            '<tr>' +
+            '<th>Fecha</th>' +
+            '<th>No. de remisión</th>' +
+            '<th>Vendedor</th>' +
+            '<th>Fecha de vencimiento</th>' +
+            '<th>Anticipo</th>' +
+            '<th>Total</th>' +
+            '<th>Abono</th>' +
+            '<th>Saldo</th>' +
+            '</tr>' +
+            '</tfoot>' +
+            '</table>' +
+            '</div><div class="row">' +
+            '<button type="button" onclick="printReport7()" class="btn bg-teal-active btn-md"><i class="fa fa-print"></i>' +
+            ' Imprimir</button>' +
+            '</div>';
+
+        $("#listadoReporte7").append(tabla);
+
+        var datos = $(this).serializeArray();
+
+        swal({
+            title: 'Generando el reporte...'
+        });
+
+        swal.showLoading();
+
+        $.ajax({
+            type: $(this).attr('method'),
+            data: datos,
+            url: $(this).attr('action'),
+            datatype: 'json',
+            success: function(data) {
+                console.log(data);
+                if (data.length == 0) {
+                    $('#codeName').text('No hay ventas registradas con el cliente seleccionado');
+                }
+                $.each(data, function(key, registro) {
+                    var saldo = 0;
+                    $('#codeName').text(registro.customerCode + ' ' + registro.customerName);
+                    $('#route').text(registro.route);
+                    $('#telNit').text(registro.customerTel + ' / ' + registro.customerNit);
+                    $('#direction').text(registro.customerAddress + ', ' + registro.deparment);
+                    $('#owner').text(registro.owner + ' ' + registro.inCharge);
+                    var contenido = "<tr>";
+                    contenido += "<td>" + convertDate(registro.dateStart) + "</td>";
+                    contenido += "<td>" + registro.noDeliver + "</td>";
+                    contenido += "<td>" + registro.seller + "</td>";
+                    contenido += "<td>" + convertDate(registro.dateEnd) + "</td>";
+                    contenido += "<td>Q." + registro.advance + "</td>";
+                    contenido += "<td>Q." + registro.totalSale + "</td>";
+                    if (registro.abono == null) {
+                        contenido += "<td>-</td>";
+                        saldo = parseFloat(registro.saldo);
+                    } else {
+                        contenido += "<td>Q." + registro.abono + "</td>";
+                        saldo = parseFloat(registro.saldo) - parseFloat(registro.abono);
+                    }
+                    if (saldo > 0) {
+                        contenido += "<td class='text-danger'><b>Q." + saldo.toFixed(2) + "</b></td>";
+                    } else {
+                        contenido += "<td class='text-success'>Q." + saldo.toFixed(2) + "</td>";
+                    }
+                    contenido += '</tr>';
+                    $(".contenidoRPT7").append(contenido);
+                });
+                swal.close();
+                funciones();
+            },
+            error: function(error, data) {
+                console.log(error.responseText);
+                swal({
+                    type: 'error',
+                    title: 'Error',
+                    text: 'Algo ha salido mal, intentalo más tarde',
+                });
+            }
+
+        });
+    });
 });
 
 function limpiarReportes() {
@@ -629,6 +755,7 @@ function limpiarReportes() {
     $("#listadoReporte5").html("");
     $("#listadoReporte6").html("");
     $("#listadoReporte6-5").html("");
+    $("#listadoReporte7").html("");
 }
 
 function listarDetallerpt2(idv) {
@@ -795,6 +922,12 @@ function printReport6() {
     var idProducto = $("[name='prodReporte']").val();
     var f1 = $("[name='dateSrpt6']").val();
     changeReport('stockByProduct.php?idProducto=' + idProducto + '&fecha1=' + f1);
+    $('#modal-reporte').modal('show');
+}
+
+function printReport7() {
+    var idCustomer = $("[name='idCustomer']").val();
+    changeReport('stateByCustomer.php?idCustomer=' + idCustomer);
     $('#modal-reporte').modal('show');
 }
 

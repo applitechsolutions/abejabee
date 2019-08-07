@@ -85,6 +85,9 @@ include_once 'funciones/bd_conexion.php';
                                         <a href="#tab_8" data-toggle="tab"><i class="fab fa-opencart"></i> Compras y
                                             ventas por producto</a>
                                     </li>
+                                    <li>
+                                        <a href="#tab_9" data-toggle="tab"><i class="fa fa-balance-scale"></i> Estado de cuenta por cliente</a>
+                                    </li>
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane" id="tab_1">
@@ -560,6 +563,77 @@ include_once 'funciones/bd_conexion.php';
                                                         <!-- TABLA DEL LISTADO DE REPORTES -->
                                                         <!-- TABLA DEL LISTADO DE REPORTES -->
                                                             <div id="listadoReporte6-5" class="modal-body">
+                                                            </div>
+                                                        <!-- TABLA DEL LISTADO DE REPORTES -->
+                                                    </form>
+                                                </div>
+                                                <!-- /.box-body -->
+                                                <!-- /.box -->
+                                            </section>
+                                            <!-- /.content -->
+                                        </div>
+                                    </div>
+                                    <!-- /.tab-pane -->
+                                    <div class="tab-pane" id="tab_9">
+                                        <div class="row">
+                                            <!-- Main content -->
+                                            <section class="content">
+                                                <!-- Default box -->
+                                                <h4 class="box-title"> Información del cliente y estado de cuenta actual</h4>
+                                                <div class="box-body">
+                                                    <form role="form" id="form-stateCustomer" name="form-stateCustomer"
+                                                        method="post" action="BLL/rptstateByCustomer.php">
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <span class="text-danger text-uppercase">*</span>
+                                                                    <label>Cliente</label>
+                                                                    <select id="idCustomer" name="idCustomer"
+                                                                        class="form-control select2"
+                                                                        style="width: 100%;">
+                                                                        <option value="" disabled selected>Seleccione un cliente</option>
+                                        <!-- CONSULTA PHP -->
+                                            <?php
+                                                try {
+                                                    $sql = "SELECT idCustomer, customerCode, customerName FROM customer WHERE state = 0 ORDER BY customerCode ASC";
+                                                    $resultado = $conn->query($sql);
+                                                    while ($customer = $resultado->fetch_assoc()) {
+                                            ?>
+                                        <!-- CONSULTA PHP -->
+                                                                        <option
+                                                                            value="<?php echo $customer['idCustomer']; ?>">
+                                                                            <?php echo $customer['customerCode'] . " " . $customer['customerName']; ?>
+                                                                        </option>
+                                        <!-- FIN PHP -->
+                                            <?php
+                                                    }
+                                                } catch (Exception $e) {
+                                                    echo "Error: " . $e->getMessage();
+                                                }
+                                            ?>
+                                        <!-- FIN PHP -->
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /.box-body -->
+                                                        <div class="box-footer">
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <button type="submit"
+                                                                        class="btn btn-primary pull-right" id="rpt1">
+                                                                        <i class="fa fa-list-alt"
+                                                                            aria-hidden="true"></i>
+                                                                        Generar Listado</button>
+                                                                </div>
+                                                                <div class="col-md-3 pull-right">
+                                                                </div>
+
+                                                            </div>
+                                                        <!-- TABLA DEL LISTADO DE REPORTES -->
+                                                            <div id="listadoReporte7" class="modal-body">
                                                             </div>
                                                         <!-- TABLA DEL LISTADO DE REPORTES -->
                                                     </form>
