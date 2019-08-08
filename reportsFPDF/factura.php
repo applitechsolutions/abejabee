@@ -28,22 +28,22 @@ while ($sale = $resultado->fetch_assoc()) {
     $pdf->SetAutoPageBreak(true, 0);
     $str = iconv('UTF-8', 'windows-1252', NumeroALetras::convertir($sale['total'], 'QUETZALES', 'CENTAVOS'));
 
-    $pdf->AddFont('MicrosoftYaHei', '', 'Microsoft YaHei.php');
+    $pdf->AddFont('MicrosoftYaHeiUILight', '', 'MicrosoftYaHeiUILight-02.php');
     $pdf->AddPage();
-    $pdf->SetFont('MicrosoftYaHei', '', 12);
+    $pdf->SetFont('MicrosoftYaHeiUILight', '', 12);
 
     $pdf->SetXY(20, 40);
     //primera linea de factura
     $cMuni = iconv('UTF-8', 'windows-1252', $sale['town'] . ' ' . date_format($fechaF, 'd/m/Y'));
     $pdf->Cell(50, 3, $cMuni, 0, 0, 'L');
-    $pdf->SetFont('MicrosoftYaHei', '', 10);
+    $pdf->SetFont('MicrosoftYaHeiUILight', '', 10);
     $pdf->Cell(15);
     $cSeller = iconv('UTF-8', 'windows-1252', $sale['codeSeller']);
     $pdf->Cell(9, 3, $cSeller, 0, 0, 'L');
     $pdf->Cell(12);
     $cCode = iconv('UTF-8', 'windows-1252', $sale['codeCustomer']);
     $pdf->Cell(10, 3, $cCode, 0, 0, 'L');
-    $pdf->SetFont('MicrosoftYaHei', '', 11);
+    $pdf->SetFont('MicrosoftYaHeiUILight', '', 11);
     $pdf->Cell(22);
     $pdf->Cell(17, 3, date_format($fecha, 'd/m/Y'), 0, 1, 'L');
 
@@ -67,7 +67,7 @@ while ($sale = $resultado->fetch_assoc()) {
 
     //DETALLE DE FACTURA
     $pdf->SetXY(0, 84);
-    $pdf->SetFont('MicrosoftYaHei', '', 12);
+    $pdf->SetFont('MicrosoftYaHeiUILight', '', 12);
     try {
         $sql = "SELECT D.quantity, TRUNCATE((D.priceB - D.discount) ,2) as precio,
     TRUNCATE((TRUNCATE((D.priceB - D.discount) ,2) * D.quantity) ,2) as total,
@@ -103,7 +103,7 @@ while ($sale = $resultado->fetch_assoc()) {
 
     //TOTAL
     $pdf->SetXY(130, 192);
-    $pdf->SetFont('MicrosoftYaHei', '', 12);
+    $pdf->SetFont('MicrosoftYaHeiUILight', '', 12);
     $pdf->Cell(28, 5, $sale['total'], 0, 0, 'L');
 }
 
