@@ -15,7 +15,7 @@ try{
     (SELECT balance FROM balance where _idSale = S.idSale order by idBalance desc limit 1) END as mora60,
     CASE WHEN DATEDIFF(curdate(), S.dateEnd) > 89 THEN 
     (SELECT balance FROM balance where _idSale = S.idSale order by idBalance desc limit 1) END as mora90
-    FROM sale S WHERE cancel = 0 AND DATEDIFF(curdate(), S.dateEnd) > 29";
+    FROM sale S WHERE cancel = 0 AND state = 0 AND DATEDIFF(curdate(), S.dateEnd) > 29";
 
     $resultado = $conn->query($sql);
 } catch (Exception $e){
@@ -104,4 +104,3 @@ $mpdf = new mPDF('utf-8', 'A4-L', 0, '', 10, 10, 10, 10, 0, 0);//se define el ta
 $mpdf->WriteHTML($pagina); //se escribe la variable pagina
 
 $mpdf->Output($file, 'I'); //Se crea el documento pdf y se muestra en el navegador
-?>
