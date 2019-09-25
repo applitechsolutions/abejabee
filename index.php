@@ -87,16 +87,32 @@ include_once 'templates/header.php';
                             <tbody>
                                 <?php
                                 try {
-                                    $sql = "SELECT P.idProduct, P.productName, P.productCode, P.cost, P.minStock, P.picture,
-                    (select SUM(stock) from storage where _idProduct = P.idProduct and _idCellar = 1) as stock,
-                    (select makeName from make where idMake = P._idMake and state = 0) as make,
-                    (select catName from category where idCategory = P._idCategory and state = 0) as category,
-                    (select unityName from unity where idUnity = P._idUnity and state = 0) as unity,
-                    (select price from priceSale where _idProduct = P.idProduct and _idPrice = 1) as public,
-                    (select price from priceSale where _idProduct = P.idProduct and _idPrice = 11) as pharma,
-                    (select price from priceSale where _idProduct = P.idProduct and _idPrice = 21) as business,
-                    (select price from priceSale where _idProduct = P.idProduct and _idPrice = 31) as bonus
-                    FROM product P WHERE P.state = 0 ORDER BY P.productCode ASC";
+                                    if ($_SESSION['rol'] == 1) {
+                                        $sql = "SELECT P.idProduct, P.productName, P.productCode, P.cost, P.minStock, P.picture,
+                                        (select SUM(stock) from storage where _idProduct = P.idProduct and _idCellar = 1) as stock,
+                                        (select makeName from make where idMake = P._idMake and state = 0) as make,
+                                        (select catName from category where idCategory = P._idCategory and state = 0) as category,
+                                        (select unityName from unity where idUnity = P._idUnity and state = 0) as unity,
+                                        (select price from priceSale where _idProduct = P.idProduct and _idPrice = 1) as public,
+                                        (select price from priceSale where _idProduct = P.idProduct and _idPrice = 11) as pharma,
+                                        (select price from priceSale where _idProduct = P.idProduct and _idPrice = 21) as business,
+                                        (select price from priceSale where _idProduct = P.idProduct and _idPrice = 31) as bonus
+                                        FROM product P WHERE P.state = 0 ORDER BY P.productCode ASC";
+                                    } else {
+                                        $sql = "SELECT P.idProduct, P.productName, P.productCode, P.cost, P.minStock, P.picture,
+                                        (select SUM(stock) from storage where _idProduct = P.idProduct and _idCellar = 1) as stock,
+                                        (select makeName from make where idMake = P._idMake and state = 0) as make,
+                                        (select catName from category where idCategory = P._idCategory and state = 0) as category,
+                                        (select unityName from unity where idUnity = P._idUnity and state = 0) as unity,
+                                        (select price from priceSale where _idProduct = P.idProduct and _idPrice = 1) as public,
+                                        (select price from priceSale where _idProduct = P.idProduct and _idPrice = 11) as pharma,
+                                        (select price from priceSale where _idProduct = P.idProduct and _idPrice = 21) as business,
+                                        (select price from priceSale where _idProduct = P.idProduct and _idPrice = 31) as bonus
+                                        FROM product P WHERE (select makeName from make where idMake = P._idMake and state = 0) != 'SCHLENKER' AND
+                                        (select makeName from make where idMake = P._idMake and state = 0) != 'DIFPER' AND
+                                        (select makeName from make where idMake = P._idMake and state = 0) != 'PFIZER' AND
+                                        P.state = 0 ORDER BY P.productCode ASC";
+                                    }
                                     $resultado = $conn->query($sql);
                                 } catch (Exception $e) {
                                     $error = $e->getMessage();
@@ -152,16 +168,16 @@ include_once 'templates/header.php';
                                                 <li>
                                                     <small>Actual:</small>
                                                     <?php
-                                                    if ($product['minStock'] == $product['stock']) { ?>
+                                                        if ($product['minStock'] == $product['stock']) { ?>
                                                         <span class="label label-warning"><?php echo $product['stock']; ?>
                                                             <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                                                         </span><?php
-                                                            } else if ($product['minStock'] > $product['stock']) { ?>
+                                                                    } else if ($product['minStock'] > $product['stock']) { ?>
                                                         <span class="label label-danger"><?php echo $product['stock']; ?> <i class="fa fa-exclamation" aria-hidden="true"></i>
                                                         </span><?php
-                                                            } else { ?>
+                                                                    } else { ?>
                                                         <span class="label label-primary"><?php echo $product['stock']; ?></span><?php
-                                                                                                                                } ?>
+                                                                                                                                        } ?>
                                                 </li>
                                             </ul>
                                         </td>
