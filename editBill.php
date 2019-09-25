@@ -276,24 +276,6 @@ include_once 'templates/header.php';
                                             <div class="form-group col-lg-7">
                                             </div>
                                             <div class="form-group col-lg-5">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon">
-                                                        <span class="text-danger text-uppercase">*</span>
-                                                        <label for="totalSale" class="control-label">Total:</label>
-                                                        <span>
-                                                            <h5 id="totalSale" class="text-bold">
-                                                                Q.
-                                                                <input type="number" step="0.01" id="totalS" name="totalS" value="<?php echo $bill['total']; ?>">
-                                                            </h5>
-                                                        </span>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="form-group col-lg-7">
-                                            </div>
-                                            <div class="form-group col-lg-5">
                                                 <input type="hidden" id="factura" name="factura" value="editar">
                                                 <input type="hidden" name="id_bill" value="<?php echo $id; ?>">
                                                 <button type="submit" class="btn btn-primary" id="crear-factura">

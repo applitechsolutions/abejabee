@@ -15,7 +15,6 @@ if ($_POST['factura'] == 'nueva') {
     $custName = $_POST['customerName'];
     $custNit = $_POST['customerNit'];
     $address = $_POST['customerAddress'];
-    $total = $_POST['totalS'];
 
     $ff = date('Y-m-d', strtotime($date));
     $fv = date('Y-m-d', strtotime($dateEnd));
@@ -23,7 +22,7 @@ if ($_POST['factura'] == 'nueva') {
     $MyArray = json_decode($_POST['json']);
 
     try {
-        if ($serie == "" || $noBill == "" || $total == "0" || $MyArray == null) {
+        if ($serie == "" || $noBill == "" || $MyArray == null) {
             $respuesta = array(
                 'respuesta' => 'vacio',
             );
@@ -32,9 +31,11 @@ if ($_POST['factura'] == 'nueva') {
             mysqli_autocommit($conn, false);
             $query_success = true;
 
+            $totalBill = 0;
+
             //Insert Bill
             $stmt = $conn->prepare("INSERT INTO bill (_idSale, serie, noBill, codeSeller, codeCustomer, town, mobile, date, dateEnd, custName, custNit, address, total) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("isssssssssssd", $idSale, $serie, $noBill, $codeSeller, $codeCustomer, $town, $mobile, $ff, $fv, $custName, $custNit, $address, $total);
+            $stmt->bind_param("isssssssssssd", $idSale, $serie, $noBill, $codeSeller, $codeCustomer, $town, $mobile, $ff, $fv, $custName, $custNit, $address, $totalBill);
             if (!mysqli_stmt_execute($stmt)) {
                 $query_success = false;
             }
@@ -44,6 +45,9 @@ if ($_POST['factura'] == 'nueva') {
             if ($id_registro > 0) {
 
                 foreach ($MyArray->detailS as $detail) {
+                    // Calcular el total de la factura
+                    $totalBill = $totalBill + (($detail->precio_det - $detail->descudet) * $detail->cantdet);
+
                     //Insert DETAILS
                     $stmt = $conn->prepare("INSERT INTO detailB(_idBill, _idProduct, quantity, description, priceB, discount) VALUES (?, ?, ?, ?, ?, ?)");
                     $stmt->bind_param("iiisdd", $id_registro, $detail->idproduct, $detail->cantdet, $detail->descripcion_det, $detail->precio_det, $detail->descudet);
@@ -52,6 +56,13 @@ if ($_POST['factura'] == 'nueva') {
                     }
                     mysqli_stmt_close($stmt);
                 }
+
+                $stmt = $conn->prepare("UPDATE bill set total = ? WHERE idBill = ?");
+                $stmt->bind_param("di", $totalBill, $id_registro);
+                if (!mysqli_stmt_execute($stmt)) {
+                    $query_success = false;
+                }
+                mysqli_stmt_close($stmt);
 
                 $stmt = $conn->prepare("UPDATE correlative set serie = ?, last = ? WHERE idCorrelative = 1");
                 $stmt->bind_param("si", $serie, $noBill);
@@ -102,7 +113,6 @@ if ($_POST['factura'] == 'editar') {
     $custName = $_POST['customerName'];
     $custNit = $_POST['customerNit'];
     $address = $_POST['customerAddress'];
-    $total = $_POST['totalS'];
 
     $ff = date('Y-m-d', strtotime($date));
     $fv = date('Y-m-d', strtotime($dateEnd));
@@ -110,7 +120,7 @@ if ($_POST['factura'] == 'editar') {
     $MyArray = json_decode($_POST['json']);
 
     try {
-        if ($serie == "" || $noBill == "" || $total == "0" || $MyArray == null) {
+        if ($serie == "" || $noBill == "" || $MyArray == null) {
             $respuesta = array(
                 'respuesta' => 'vacio',
             );
@@ -119,9 +129,11 @@ if ($_POST['factura'] == 'editar') {
             mysqli_autocommit($conn, false);
             $query_success = true;
 
+            $totalBill = 0;
+
             //Insert Bill
             $stmt = $conn->prepare("UPDATE bill SET serie = ?, noBill = ?, codeSeller = ?, codeCustomer = ?, town = ?, mobile = ?, date = ?, dateEnd = ?, custName = ?, custNit = ?, address = ?, total = ? WHERE idBill = ?");
-            $stmt->bind_param("sssssssssssdi", $serie, $noBill, $codeSeller, $codeCustomer, $town, $mobile, $ff, $fv, $custName, $custNit, $address, $total, $idBill);
+            $stmt->bind_param("sssssssssssdi", $serie, $noBill, $codeSeller, $codeCustomer, $town, $mobile, $ff, $fv, $custName, $custNit, $address, $totalBill, $idBill);
             if (!mysqli_stmt_execute($stmt)) {
                 $query_success = false;
             }
@@ -138,6 +150,9 @@ if ($_POST['factura'] == 'editar') {
                 mysqli_stmt_close($stmt);
 
                 foreach ($MyArray->detailS as $detail) {
+                    // Calcular el total de la factura
+                    $totalBill = $totalBill + (($detail->precio_det - $detail->descudet) * $detail->cantdet);
+
                     //Insert DETAILS
                     $stmt = $conn->prepare("INSERT INTO detailB(_idBill, _idProduct, quantity, description, priceB, discount) VALUES (?, ?, ?, ?, ?, ?)");
                     $stmt->bind_param("iiisdd", $idBill, $detail->idproduct, $detail->cantdet, $detail->descripcion_det, $detail->precio_det, $detail->descudet);
@@ -146,6 +161,13 @@ if ($_POST['factura'] == 'editar') {
                     }
                     mysqli_stmt_close($stmt);
                 }
+
+                $stmt = $conn->prepare("UPDATE bill set total = ? WHERE idBill = ?");
+                $stmt->bind_param("di", $totalBill, $idBill);
+                if (!mysqli_stmt_execute($stmt)) {
+                    $query_success = false;
+                }
+                mysqli_stmt_close($stmt);
 
                 if ($query_success) {
                     mysqli_commit($conn);
