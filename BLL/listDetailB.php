@@ -4,7 +4,7 @@
     
     $idBill = $_POST['id'];
 
-    $result = $conn->query("SELECT _idProduct, quantity, priceB, discount,
+    $result = $conn->query("SELECT _idProduct, quantity, priceB, discount, description,
     (SELECT productName FROM product WHERE idProduct = D._idProduct) as nombre,
     (SELECT productCode FROM product WHERE idProduct = D._idProduct) as codigo,
     (SELECT picture FROM product WHERE idProduct = D._idProduct) as imagen
@@ -13,4 +13,3 @@
     $outp = $result->fetch_all(MYSQLI_ASSOC);
 
 echo json_encode($outp);
-?>

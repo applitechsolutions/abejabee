@@ -45,8 +45,8 @@ if ($_POST['factura'] == 'nueva') {
 
                 foreach ($MyArray->detailS as $detail) {
                     //Insert DETAILS
-                    $stmt = $conn->prepare("INSERT INTO detailB(_idBill, _idProduct, quantity, priceB, discount) VALUES (?, ?, ?, ?, ?)");
-                    $stmt->bind_param("iiidd", $id_registro, $detail->idproduct, $detail->cantdet, $detail->precio_det, $detail->descudet);
+                    $stmt = $conn->prepare("INSERT INTO detailB(_idBill, _idProduct, quantity, description, priceB, discount) VALUES (?, ?, ?, ?, ?, ?)");
+                    $stmt->bind_param("iiisdd", $id_registro, $detail->idproduct, $detail->cantdet, $detail->descripcion_det, $detail->precio_det, $detail->descudet);
                     if (!mysqli_stmt_execute($stmt)) {
                         $query_success = false;
                     }
@@ -139,8 +139,8 @@ if ($_POST['factura'] == 'editar') {
 
                 foreach ($MyArray->detailS as $detail) {
                     //Insert DETAILS
-                    $stmt = $conn->prepare("INSERT INTO detailB(_idBill, _idProduct, quantity, priceB, discount) VALUES (?, ?, ?, ?, ?)");
-                    $stmt->bind_param("iiidd", $idBill, $detail->idproduct, $detail->cantdet, $detail->precio_det, $detail->descudet);
+                    $stmt = $conn->prepare("INSERT INTO detailB(_idBill, _idProduct, quantity, description, priceB, discount) VALUES (?, ?, ?, ?, ?, ?)");
+                    $stmt->bind_param("iiisdd", $idBill, $detail->idproduct, $detail->cantdet, $detail->descripcion_det, $detail->precio_det, $detail->descudet);
                     if (!mysqli_stmt_execute($stmt)) {
                         $query_success = false;
                     }

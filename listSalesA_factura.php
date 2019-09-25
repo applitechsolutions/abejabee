@@ -252,7 +252,7 @@ include_once 'templates/header.php';
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <button onclick="recargarPagina();" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                         <h4 class="modal-title">
@@ -325,10 +325,10 @@ include_once 'templates/header.php';
                                             </td>
                                             <td>
                                                 <?php if ($bill['date'] != '0000-00-00') {
-                                                    echo date_format($dateB, 'd/m/y');
-                                                } else {
-                                                    echo 'No disponible';
-                                                } ?>
+                                                        echo date_format($dateB, 'd/m/y');
+                                                    } else {
+                                                        echo 'No disponible';
+                                                    } ?>
                                             </td>
                                             <td>
                                                 <?php echo $bill['codeSeller']; ?>

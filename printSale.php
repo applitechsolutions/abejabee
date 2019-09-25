@@ -58,32 +58,29 @@ include_once 'templates/header.php';
                                         facturación</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <form role="form" id="form-correlative" name="form-correlative" method="post"
-                                        action="BLL/correlative.php">
+                                    <form role="form" id="form-correlative" name="form-correlative" method="post" action="BLL/correlative.php">
                                         <div class="row">
                                             <?php
                                             try {
                                                 $sql = "SELECT * FROM correlative WHERE idCorrelative = 1";
                                                 $resultado = $conn->query($sql);
                                                 while ($correlative = $resultado->fetch_assoc()) { ?>
-                                            <div class="form-group col-lg-6">
-                                                <span class="text-danger text-uppercase">*</span>
-                                                <label for="serieC">Serie</label>
-                                                <input type="text" class="form-control" id="serieC" name="serieC"
-                                                    value="<?php echo $correlative['serie']; ?>">
-                                            </div>
-                                            <div class="form-group col-lg-6">
-                                                <span class="text-danger text-uppercase">*</span>
-                                                <label for="last">Última factura ingresada</label>
-                                                <input type="text" class="form-control" id="last" name="last"
-                                                    value="<?php echo $correlative['last']; ?>">
-                                            </div>
+                                                    <div class="form-group col-lg-6">
+                                                        <span class="text-danger text-uppercase">*</span>
+                                                        <label for="serieC">Serie</label>
+                                                        <input type="text" class="form-control" id="serieC" name="serieC" value="<?php echo $correlative['serie']; ?>">
+                                                    </div>
+                                                    <div class="form-group col-lg-6">
+                                                        <span class="text-danger text-uppercase">*</span>
+                                                        <label for="last">Última factura ingresada</label>
+                                                        <input type="text" class="form-control" id="last" name="last" value="<?php echo $correlative['last']; ?>">
+                                                    </div>
                                             <?php
+                                                }
+                                            } catch (Exception $e) {
+                                                echo "Error: " . $e->getMessage();
                                             }
-                                        } catch (Exception $e) {
-                                            echo "Error: " . $e->getMessage();
-                                        }
-                                        ?>
+                                            ?>
                                         </div>
                                         <div class="modal-footer">
                                             <input type="hidden" name="correlative" value="factura">
@@ -91,9 +88,7 @@ include_once 'templates/header.php';
                                                 <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
                                             <span class="text-warning w3-small w3-padding-small pull-left">*Debe llenar
                                                 los campos obligatorios</span>
-                                            <button id="correlativeClose" type="button"
-                                                class="btn btn-danger w3-round-medium pull-right"
-                                                data-dismiss="modal">Cerrar</button>
+                                            <button id="correlativeClose" type="button" class="btn btn-danger w3-round-medium pull-right" data-dismiss="modal">Cerrar</button>
                                         </div>
                                 </div>
                                 </form>
@@ -107,8 +102,7 @@ include_once 'templates/header.php';
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <button onclick="recargarPagina();" type="button" class="close" data-dismiss="modal"
-                                        aria-label="Close">
+                                    <button onclick="recargarPagina();" type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                     <h4 class="modal-title">
@@ -121,8 +115,7 @@ include_once 'templates/header.php';
                                         </div>
                                         <!-- /.box-header -->
                                         <div id="divreporteL" class="w3-rest">
-                                            <iframe src=""
-                                                style="width: 100%; height: 700px; min-width: 300px;"></iframe>
+                                            <iframe src="" style="width: 100%; height: 700px; min-width: 300px;"></iframe>
                                         </div>
                                         <!-- /.box-body -->
                                     </div>
@@ -134,8 +127,7 @@ include_once 'templates/header.php';
 
                     <div class="row">
                         <div class="col-md-12">
-                            <form role="form" id="form-factura" name="form-factura" method="post" action="BLL/bill.php"
-                                novalidate>
+                            <form role="form" id="form-factura" name="form-factura" method="post" action="BLL/bill.php" novalidate>
                                 <div class="box-body">
                                     <div class="row">
                                         <?php
@@ -143,38 +135,33 @@ include_once 'templates/header.php';
                                             $sql = "SELECT * FROM correlative WHERE idCorrelative = 1";
                                             $resultado = $conn->query($sql);
                                             while ($correlative = $resultado->fetch_assoc()) { ?>
-                                        <div class="form-group col-lg-1">
-                                            <label for="serie">Serie</label>
-                                            <input type="hidden" class="form-control" id="serieS1" name="serieS"
-                                                value="<?php echo $correlative['serie']; ?>">
-                                            <input type="text" class="form-control" id="serieS" name="serie"
-                                                value="<?php echo $correlative['serie']; ?>" disabled>
-                                        </div>
-
-                                        <div class="form-group col-lg-3 ">
-                                            <label for="noBill">No. de factura</label>
-                                            <div class="input-group">
-
-                                                <input type="text" class="form-control" id="noBillS" name="noBill"
-                                                    value="<?php echo $correlative['last'] + 1; ?>" disabled>
-                                                <input type="hidden" class="form-control" id="noBillS1" name="noBillS"
-                                                    value="<?php echo $correlative['last'] + 1; ?>">
-                                                <div class="input-group-btn">
-                                                    <button type="button" class="btn bg-info" data-toggle="modal"
-                                                        data-target="#modal-correlative">
-                                                        <i class="glyphicon glyphicon-print" aria-hidden="true"></i>
-                                                        Correlativo
-                                                    </button>
+                                                <div class="form-group col-lg-1">
+                                                    <label for="serie">Serie</label>
+                                                    <input type="hidden" class="form-control" id="serieS1" name="serieS" value="<?php echo $correlative['serie']; ?>">
+                                                    <input type="text" class="form-control" id="serieS" name="serie" value="<?php echo $correlative['serie']; ?>" disabled>
                                                 </div>
-                                                <!-- /btn-group -->
-                                            </div>
-                                        </div>
+
+                                                <div class="form-group col-lg-3 ">
+                                                    <label for="noBill">No. de factura</label>
+                                                    <div class="input-group">
+
+                                                        <input type="text" class="form-control" id="noBillS" name="noBill" value="<?php echo $correlative['last'] + 1; ?>" disabled>
+                                                        <input type="hidden" class="form-control" id="noBillS1" name="noBillS" value="<?php echo $correlative['last'] + 1; ?>">
+                                                        <div class="input-group-btn">
+                                                            <button type="button" class="btn bg-info" data-toggle="modal" data-target="#modal-correlative">
+                                                                <i class="glyphicon glyphicon-print" aria-hidden="true"></i>
+                                                                Correlativo
+                                                            </button>
+                                                        </div>
+                                                        <!-- /btn-group -->
+                                                    </div>
+                                                </div>
                                         <?php
+                                            }
+                                        } catch (Exception $e) {
+                                            echo "Error: " . $e->getMessage();
                                         }
-                                    } catch (Exception $e) {
-                                        echo "Error: " . $e->getMessage();
-                                    }
-                                    ?>
+                                        ?>
                                     </div>
                                     <br>
                                     <div class="row">
@@ -182,9 +169,7 @@ include_once 'templates/header.php';
                                             <div class="form-group">
                                                 <span class="text-danger text-uppercase">*</span>
                                                 <label>Código de vendedor</label>
-                                                <input type="text" class="form-control" id="sellerCode"
-                                                    name="sellerCode" value="<?php echo $sale['sellercode']; ?>"
-                                                    autofocus>
+                                                <input type="text" class="form-control" id="sellerCode" name="sellerCode" value="<?php echo $sale['sellercode']; ?>" autofocus>
                                             </div>
                                         </div>
 
@@ -192,8 +177,7 @@ include_once 'templates/header.php';
                                             <div class="form-group">
                                                 <span class="text-danger text-uppercase">*</span>
                                                 <label>Código del cliente</label>
-                                                <input type="text" class="form-control" id="customerCode"
-                                                    name="customerCode" value="<?php echo $sale['customerCode']; ?>">
+                                                <input type="text" class="form-control" id="customerCode" name="customerCode" value="<?php echo $sale['customerCode']; ?>">
                                             </div>
                                         </div>
 
@@ -201,8 +185,7 @@ include_once 'templates/header.php';
                                             <div class="form-group">
                                                 <span class="text-danger text-uppercase">*</span>
                                                 <label>Municipio</label>
-                                                <input type="text" class="form-control" id="municipio" name="municipio"
-                                                    value="<?php echo $sale['municipio']; ?>">
+                                                <input type="text" class="form-control" id="municipio" name="municipio" value="<?php echo $sale['municipio']; ?>">
                                             </div>
                                         </div>
 
@@ -210,8 +193,7 @@ include_once 'templates/header.php';
                                             <div class="form-group">
                                                 <span class="text-danger text-uppercase">*</span>
                                                 <label>Teléfono</label>
-                                                <input type="text" class="form-control pull-right" id="customerTel"
-                                                    name="customerTel" value="<?php echo $sale['customerTel']; ?>">
+                                                <input type="text" class="form-control pull-right" id="customerTel" name="customerTel" value="<?php echo $sale['customerTel']; ?>">
                                             </div>
                                         </div>
                                         <div class="col-lg-2">
@@ -222,9 +204,7 @@ include_once 'templates/header.php';
                                                     <div class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
                                                     </div>
-                                                    <input type="text" class="form-control pull-right datepicker"
-                                                        id="datepicker" name="date"
-                                                        value="<?php echo date('d/m/Y'); ?>">
+                                                    <input type="text" class="form-control pull-right datepicker" id="datepicker" name="date" value="<?php echo date('d/m/Y'); ?>">
                                                 </div>
                                             </div>
                                         </div>
@@ -237,9 +217,7 @@ include_once 'templates/header.php';
                                                         <i class="fa fa-calendar"></i>
                                                     </div>
                                                     <?php $dateEnd = date_create($sale['dateEnd']); ?>
-                                                    <input type="text" class="form-control pull-right datepicker"
-                                                        id="datepicker2" name="dateSaleEnd"
-                                                        value="<?php echo date_format($dateEnd, 'd/m/Y'); ?>">
+                                                    <input type="text" class="form-control pull-right datepicker" id="datepicker2" name="dateSaleEnd" value="<?php echo date_format($dateEnd, 'd/m/Y'); ?>">
                                                 </div>
                                             </div>
                                         </div>
@@ -249,8 +227,7 @@ include_once 'templates/header.php';
                                             <div class="form-group">
                                                 <span class="text-danger text-uppercase">*</span>
                                                 <label>Nombre del cliente</label>
-                                                <input type="text" class="form-control" id="customerName"
-                                                    name="customerName" value="<?php echo $sale['customerName']; ?>">
+                                                <input type="text" class="form-control" id="customerName" name="customerName" value="<?php echo $sale['customerName']; ?>">
                                             </div>
                                         </div>
 
@@ -258,8 +235,7 @@ include_once 'templates/header.php';
                                             <div class="form-group">
                                                 <span class="text-danger text-uppercase">*</span>
                                                 <label>NIT</label>
-                                                <input type="text" class="form-control" id="customerNit"
-                                                    name="customerNit" value="<?php echo $sale['customerNit']; ?>">
+                                                <input type="text" class="form-control" id="customerNit" name="customerNit" value="<?php echo $sale['customerNit']; ?>">
                                             </div>
                                         </div>
 
@@ -267,9 +243,7 @@ include_once 'templates/header.php';
                                             <div class="form-group">
                                                 <span class="text-danger text-uppercase">*</span>
                                                 <label>Dirección</label>
-                                                <input type="text" class="form-control" id="customerAddress"
-                                                    name="customerAddress"
-                                                    value="<?php echo $sale['customerAddress'] . ' ' . $sale['aldea'] . ' ' . $sale['municipio'] . ' ' . $sale['departamento']; ?>">
+                                                <input type="text" class="form-control" id="customerAddress" name="customerAddress" value="<?php echo $sale['customerAddress'] . ' ' . $sale['aldea'] . ' ' . $sale['municipio'] . ' ' . $sale['departamento']; ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -287,23 +261,22 @@ include_once 'templates/header.php';
                                             <thead>
                                                 <tr>
                                                     <th>Imagen</th>
-                                                    <th>Nombre</th>
+                                                    <th style="min-width:360px">Nombre</th>
                                                     <th>Código</th>
                                                     <th>Marca</th>
                                                     <th>Categoría</th>
                                                     <th>Unidad</th>
                                                     <th>Costo/u</th>
-                                                    <th>Precio</th>
+                                                    <th>Precio Q.</th>
                                                     <th>Cantidad</th>
-                                                    <th>Descuento</th>
-                                                    <th>Subtotal</th>
+                                                    <th>Descuento Q.</th>
                                                     <th>Quitar</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
                                                 try {
-                                                    $sql = "SELECT P.picture, P.idProduct, P.productName, P.productCode, P.cost,
+                                                    $sql = "SELECT P.picture, P.idProduct, P.productName, P.productCode, P.cost, P.description,
                                       (select makeName from make where idMake = P._idMake and state = 0) as make,
                                       (select catName from category where idCategory = P._idCategory and state = 0) as category,
                                       (select unityName from unity where idUnity = P._idUnity and state = 0) as unity,
@@ -318,52 +291,40 @@ include_once 'templates/header.php';
                                                     $id_detalle = 0;
                                                     while ($detailS = $resultado->fetch_assoc()) {
                                                         $subtotal = ($detailS['priceS'] - $detailS['discount']) * $detailS['quantity']; ?>
-                                                <tr id="detalleF">
-                                                    <td><img src="img/products/<?php echo $detailS['picture']; ?>"
-                                                            width="80" onerror="this.src='img/products/notfound.jpg';">
-                                                    </td>
-                                                    <td><input class="idproducto_class" type="hidden"
-                                                            value="<?php echo $detailS['idProduct']; ?>">
-                                                        <input class="id_detalle_class" type="hidden"
-                                                            value="<?php echo $id_detalle; ?>">
-                                                        <?php echo $detailS['productName']; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $detailS['productCode']; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $detailS['make']; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $detailS['category']; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $detailS['unity']; ?>
-                                                    </td>
-                                                    <td><input type="hidden" value="<?php echo $detailS['cost']; ?>">Q.
-                                                        <?php echo $detailS['cost']; ?>
-                                                    </td>
-                                                    <td><input class="precio_class" type="hidden"
-                                                            value="<?php echo $detailS['priceS']; ?>">Q.
-                                                        <?php echo $detailS['priceS']; ?>
-                                                    </td>
-                                                    <td><input class="cantidad_class" type="hidden"
-                                                            value="<?php echo $detailS['quantity']; ?>">
-                                                        <?php echo $detailS['quantity']; ?>
-                                                    </td>
-                                                    <td><input class="descuento_class" type="hidden"
-                                                            value="<?php echo $detailS['discount']; ?>">Q.
-                                                        <?php echo $detailS['discount']; ?>
-                                                    </td>
-                                                    <td>Q.
-                                                        <?php echo $subtotal; ?>
-                                                    </td>
-                                                    <td><a id="quitar"
-                                                            onclick="eliminarDetalle_Factura(<?php echo $id_detalle; ?>);"
-                                                            data-id-detalle="<?php echo $id_detalle; ?>"
-                                                            class="btn bg-maroon btn-flat margin quitar_product"><i
-                                                                class="fa fa-remove"></i></a></td>
-                                                </tr>
+                                                        <tr id="detalleF">
+                                                            <td><img src="img/products/<?php echo $detailS['picture']; ?>" width="80" onerror="this.src='img/products/notfound.jpg';">
+                                                            </td>
+                                                            <td><input class="idproducto_class" type="hidden" value="<?php echo $detailS['idProduct']; ?>">
+                                                                <input class="id_detalle_class" type="hidden" value="<?php echo $id_detalle; ?>">
+                                                                <?php if ($detailS['make'] == 'SCHLENKER') { ?>
+                                                                    <input type="text" class="form-control description_class" value="<?php echo $detailS['description']; ?>">
+                                                                <?php } else { ?>
+                                                                    <input type="text" class="form-control description_class" value="<?php echo $detailS['productName']; ?>">
+                                                                <?php } ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $detailS['productCode']; ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $detailS['make']; ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $detailS['category']; ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $detailS['unity']; ?>
+                                                            </td>
+                                                            <td><input type="hidden" value="<?php echo $detailS['cost']; ?>">Q.
+                                                                <?php echo $detailS['cost']; ?>
+                                                            </td>
+                                                            <td><input type="number" step="0.01" class="form-control precio_class" value="<?php echo $detailS['priceS']; ?>">
+                                                            </td>
+                                                            <td><input type="number" step="0.01" class="form-control cantidad_class" value="<?php echo $detailS['quantity']; ?>">
+                                                            </td>
+                                                            <td><input type="number" step="0.01" class="form-control descuento_class" value="<?php echo $detailS['discount']; ?>">
+                                                            </td>
+                                                            <td><a id="quitar" onclick="eliminarDetalle_Factura(<?php echo $id_detalle; ?>);" data-id-detalle="<?php echo $id_detalle; ?>" class="btn bg-maroon btn-flat margin quitar_product"><i class="fa fa-remove"></i></a></td>
+                                                        </tr>
                                                 <?php
                                                         $id_detalle = $id_detalle + 1;
                                                     }
@@ -387,7 +348,7 @@ include_once 'templates/header.php';
                                                         <span>
                                                             <h5 id="totalSale" class="text-bold">
                                                                 Q.
-                                                                <?php echo $sale['totalSale']; ?>
+                                                                <input type="number" step="0.01" id="totalS" name="totalS" value="<?php echo $sale['totalSale']; ?>">
                                                             </h5>
                                                         </span>
                                                     </span>
@@ -400,8 +361,6 @@ include_once 'templates/header.php';
                                             <div class="form-group col-lg-5">
                                                 <input type="hidden" id="factura" name="factura" value="nueva">
                                                 <input type="hidden" name="id_sale" value="<?php echo $id; ?>">
-                                                <input type="hidden" id="totalS" name="totalS"
-                                                    value="<?php echo $sale['totalSale']; ?>">
                                                 <button type="submit" class="btn btn-primary" id="crear-factura">
                                                     <i class="fa fa-print" aria-hidden="true"></i> Imprimir
                                                     Factura</button>

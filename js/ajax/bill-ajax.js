@@ -22,6 +22,7 @@ $(document).ready(function() {
             var datos = $(this).serializeArray();
 
             var id_product = document.getElementsByClassName("idproducto_class");
+            var descripcion_detalle = document.getElementsByClassName("description_class");
             var precio_detalle = document.getElementsByClassName("precio_class");
             var cantidad_detalle = document.getElementsByClassName("cantidad_class");
             var descuento_detalle = document.getElementsByClassName("descuento_class");
@@ -30,6 +31,7 @@ $(document).ready(function() {
             var i;
             for (i = 0; i < id_product.length; i++) {
                 json += ',{"idproduct":"' + id_product[i].value + '"'
+                json += ',"descripcion_det":"' + descripcion_detalle[i].value + '"'
                 json += ',"precio_det":"' + precio_detalle[i].value + '"'
                 json += ',"cantdet":"' + cantidad_detalle[i].value + '"'
                 json += ',"descudet":"' + descuento_detalle[i].value + '"}'
@@ -105,7 +107,7 @@ $(document).ready(function() {
                     var nuevaFila = "<tr>";
                     var sub = registro.quantity * (parseFloat(Math.round(registro.priceB * 100) / 100).toFixed(2) - parseFloat(Math.round(registro.discount * 100) / 100).toFixed(2));
                     nuevaFila += "<td><img src='img/products/" + registro.imagen + "'width='80' onerror='ImgError(this);'></td>";
-                    nuevaFila += "<td><input class='idproducto_class' type='hidden' value='" + registro._idProduct + "'>" + registro.nombre + "</td>";
+                    nuevaFila += "<td><input class='idproducto_class' type='hidden' value='" + registro._idProduct + "'>" + registro.nombre + "<hr>" + registro.description + "</td>";
                     nuevaFila += "<td>" + registro.codigo + "</td>";
                     nuevaFila += "<td><input class='cantidad_class' type='hidden' value='" + registro.quantity + "'>" + registro.quantity + "</td>";
                     nuevaFila += "<td>Q." + registro.priceB + "</td>";

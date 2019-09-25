@@ -69,7 +69,7 @@ while ($sale = $resultado->fetch_assoc()) {
     $pdf->SetXY(0, 84);
     $pdf->SetFont('MicrosoftYaHeiUILight', '', 12);
     try {
-        $sql = "SELECT D.quantity, TRUNCATE((D.priceB - D.discount) ,2) as precio,
+        $sql = "SELECT D.quantity, D.description, TRUNCATE((D.priceB - D.discount) ,2) as precio,
     TRUNCATE((TRUNCATE((D.priceB - D.discount) ,2) * D.quantity) ,2) as total,
     (select productCode from product where idProduct = D._idProduct) as codigo,
     (select productName from product where idProduct = D._idProduct) as nombre,
@@ -85,13 +85,18 @@ while ($sale = $resultado->fetch_assoc()) {
         $COD = iconv('UTF-8', 'windows-1252', $detailB['codigo']);
         $NOMBRE = iconv('UTF-8', 'windows-1252', $detailB['nombre']);
         $DESC = iconv('UTF-8', 'windows-1252', $detailB['descripcion']);
+        $DESCRIPTION = iconv('UTF-8', 'windows-1252', $detailB['description']);
         $pdf->Cell(7);
         $pdf->Cell(17, 4, $detailB['quantity'], 0, 0, 'L');
         $pdf->Cell(19, 4, $COD, 0, 0, 'L');
-        if ($detailB['marca'] == 'SCHLENKER') {
-            $pdf->Cell(69, 4, $DESC, 0, 0, 'L');
+        if ($DESCRIPTION == '') {
+            if ($detailB['marca'] == 'SCHLENKER') {
+                $pdf->Cell(69, 4, $DESC, 0, 0, 'L');
+            } else {
+                $pdf->Cell(69, 4, $NOMBRE, 0, 0, 'L');
+            }
         } else {
-            $pdf->Cell(69, 4, $NOMBRE, 0, 0, 'L');
+            $pdf->Cell(69, 4, $DESCRIPTION, 0, 0, 'L');
         }
         $pdf->Cell(21, 4, 'Q.' . $detailB['precio'], 0, 0, 'C');
         $pdf->Cell(28, 4, $detailB['total'], 0, 1, 'C');
