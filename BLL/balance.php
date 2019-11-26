@@ -39,7 +39,7 @@ if ($_POST['tipo'] == 'pago') {
                         'mensaje' => 'Pago ingresado con correctamente!',
                         'idSale' => $id_sale,
                         'new_totalB' => $new_totalB,
-                        'cheque' => $cheque
+                        'cheque' => $cheque,
                     );
                 } else {
                     $respuesta = array(
@@ -62,7 +62,7 @@ if ($_POST['tipo'] == 'pago') {
                         'mensaje' => 'Pago ingresado con correctamente!',
                         'idSale' => $id_sale,
                         'new_totalB' => $new_totalB,
-                        'cheque' => $cheque
+                        'cheque' => $cheque,
                     );
                 } else {
                     $respuesta = array(
@@ -140,7 +140,7 @@ if ($_POST['tipo'] == 'anular') {
             $respuesta = array(
                 'respuesta' => 'exito',
                 'idBalance' => $idBalance,
-                'activa' => 'true'
+                'activa' => 'true',
             );
         } else {
             mysqli_rollback($conn);
@@ -166,8 +166,9 @@ if ($_POST['tipo'] == 'confirmar') {
         $query_success = true;
 
         //Update BALANCE
+
         $state = 0;
-        $stmt = $conn->prepare("UPDATE balance SET state = ? WHERE idBalance = ?");
+        $stmt = $conn->prepare("UPDATE balance SET date = CURDATE(), state = ? WHERE idBalance = ?");
         $stmt->bind_param("ii", $state, $idBalance);
         if (!mysqli_stmt_execute($stmt)) {
             $query_success = false;
@@ -205,7 +206,7 @@ if ($_POST['tipo'] == 'confirmar') {
             mysqli_commit($conn);
             $respuesta = array(
                 'respuesta' => 'exito',
-                'idBalance' => $idBalance
+                'idBalance' => $idBalance,
             );
         } else {
             mysqli_rollback($conn);

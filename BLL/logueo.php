@@ -34,9 +34,9 @@ if (isset($_POST['ingresar'])) {
                         'permiso' => $permiso_log,
                     );
 
-                    //Selecciona CHEQUES ATRASADOS EN 20 DIAS O MAS.
+                    //Selecciona CHEQUES ATRASADOS EN 10 DIAS O MAS.
                     try {
-                        $sql = "SELECT B.idBalance, B._idSale FROM balance B WHERE DATE_ADD(B.date, INTERVAL 20 DAY) <= CURDATE() AND state = 1";
+                        $sql = "SELECT B.idBalance, B._idSale FROM balance B WHERE DATE_ADD(B.date, INTERVAL 10 DAY) <= CURDATE() AND state = 1";
                         $resultado = $conn->query($sql);
                     } catch (Exception $e) {
                         $query_success = false;
