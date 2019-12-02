@@ -89,6 +89,14 @@ include_once 'funciones/bd_conexion.php';
                                         <a href="#tab_9" data-toggle="tab"><i class="fa fa-balance-scale"></i> Estado de
                                             cuenta por cliente</a>
                                     </li>
+                                    <li>
+                                        <a href="#tab_10" data-toggle="tab"><i class="fas fa-search-dollar"></i> Ventas
+                                            por producto</a>
+                                    </li>
+                                    <li>
+                                        <a href="#tab_11" data-toggle="tab"><i class="fas fa-hand-holding-usd"></i>
+                                            Total cobrado por vendedor </a>
+                                    </li>
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane" id="tab_1">
@@ -643,6 +651,175 @@ try {
                                                             <div id="listadoReporte7" class="modal-body">
                                                             </div>
                                                             <!-- TABLA DEL LISTADO DE REPORTES -->
+                                                    </form>
+                                                </div>
+                                                <!-- /.box-body -->
+                                                <!-- /.box -->
+                                            </section>
+                                            <!-- /.content -->
+                                        </div>
+                                    </div>
+                                    <!-- /.tab-pane -->
+                                    <div class="tab-pane" id="tab_10">
+                                        <div class="row">
+                                            <!-- Main content -->
+                                            <section class="content">
+                                                <!-- Default box -->
+                                                <h4 class="box-title">Listado del total de ventas por producto en un
+                                                    rango de tiempo</h4>
+                                                <div class="box-body">
+                                                    <form role="form" id="form-SalesByProduct"
+                                                        name="form-SalesByProduct" method="post"
+                                                        action="BLL/rptSalesByProduct.php">
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <span class="text-danger text-uppercase">*</span>
+                                                                    <label>Fecha Inicial</label>
+                                                                    <div class="input-group date">
+                                                                        <div class="input-group-addon">
+                                                                            <i class="fa fa-calendar"></i>
+                                                                        </div>
+                                                                        <input type="text"
+                                                                            class="form-control pull-right datepicker"
+                                                                            id="datepicker7" name="dateSrpt8">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <span class="text-danger text-uppercase">*</span>
+                                                                    <label>Fecha Final</label>
+                                                                    <div class="input-group date">
+                                                                        <div class="input-group-addon">
+                                                                            <i class="fa fa-calendar"></i>
+                                                                        </div>
+                                                                        <input type="text"
+                                                                            class="form-control pull-right datepicker"
+                                                                            id="datepicker8" name="dateErpt8">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /.box-body -->
+                                                        <div class="box-footer">
+                                                            <button type="submit" class="btn btn-primary pull-right"
+                                                                id="rpt10">
+                                                                <i class="fa fa-list-alt" aria-hidden="true"></i>
+                                                                Generar Listado</button>
+                                                        </div>
+                                                        <!-- TABLA DEL LISTADO DE REPORTES -->
+                                                        <div id="listadoReporte8" class="modal-body">
+                                                        </div>
+                                                        <!-- TABLA DEL LISTADO DE REPORTES -->
+                                                    </form>
+                                                </div>
+                                                <!-- /.box-body -->
+                                                <!-- /.box -->
+                                            </section>
+                                            <!-- /.content -->
+                                        </div>
+                                    </div>
+                                    <!-- /.tab-pane -->
+                                    <div class="tab-pane" id="tab_11">
+                                        <div class="row">
+                                            <!-- Main content -->
+                                            <section class="content">
+                                                <!-- Default box -->
+
+                                                <h4 class="box-title">Total cobrado por vendedor en un rango de tiempo
+                                                </h4>
+                                                <div class="box-body">
+                                                    <form role="form" id="form-TotalCollected"
+                                                        name="form-TotalCollected" method="post"
+                                                        action="BLL/rptTotalCollected.php">
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <span class="text-danger text-uppercase">*</span>
+                                                                    <label>Vendedor</label>
+                                                                    <select id="sellerReporte9" name="sellerReporte9"
+                                                                        class="form-control select2"
+                                                                        style="width: 100%;">
+                                                                        <option value="" disabled selected>Seleccione a
+                                                                            un
+                                                                            vendedor</option>
+                                                                        <!-- PHP CONSULTA -->
+                                                                        <?php
+try {
+    $sql = "SELECT * FROM seller where state = 0";
+    $resultado = $conn->query($sql);
+    while ($seller_route = $resultado->fetch_assoc()) {
+        ?>
+                                                                        <!-- PHP CONSULTA -->
+                                                                        <option
+                                                                            value="<?php echo $seller_route['idSeller']; ?>">
+                                                                            <?php echo $seller_route['sellerFirstName'] . " " . $seller_route['sellerLastName']; ?>
+                                                                        </option>
+                                                                        <!-- FIN PHP -->
+                                                                        <?php
+}
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+}
+?>
+                                                                        <!-- FIN PHP -->
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <span class="text-danger text-uppercase">*</span>
+                                                                    <label>Fecha Inicial</label>
+                                                                    <div class="input-group date">
+                                                                        <div class="input-group-addon">
+                                                                            <i class="fa fa-calendar"></i>
+                                                                        </div>
+                                                                        <input type="text"
+                                                                            class="form-control pull-right datepicker"
+                                                                            id="datepicker9" name="dateSrpt9">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <span class="text-danger text-uppercase">*</span>
+                                                                    <label>Fecha Final</label>
+                                                                    <div class="input-group date">
+                                                                        <div class="input-group-addon">
+                                                                            <i class="fa fa-calendar"></i>
+                                                                        </div>
+                                                                        <input type="text"
+                                                                            class="form-control pull-right datepicker"
+                                                                            id="datepicker10" name="dateErpt9">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <br>
+                                                        <div class="col-md-4 pull-left">
+                                                            <div class="info-box bg-green">
+                                                                <span class="info-box-icon"><i
+                                                                        class="fas fa-hand-holding-usd"></i></span>
+                                                                <div class="info-box-content">
+                                                                    <span class="info-box-text">Total:</span>
+                                                                    <span class="info-box-number"><label for="totalS"
+                                                                            id="totalCobrado">0</label></span>
+                                                                </div>
+                                                                <!-- /.info-box-content -->
+                                                            </div>
+                                                        </div>
+                                                        <!-- /.box-body -->
+                                                        <div class="box-footer">
+                                                            <button type="submit" class="btn btn-primary pull-right"
+                                                                id="rpt11">
+                                                                <i class="fa fa-list-alt" aria-hidden="true"></i>
+                                                                Generar Total</button>
+                                                        </div>
+                                                        <!-- TABLA DEL LISTADO DE REPORTES -->
+                                                        <div id="listadoReporte9" class="modal-body">
+                                                        </div>
+                                                        <!-- TABLA DEL LISTADO DE REPORTES -->
                                                     </form>
                                                 </div>
                                                 <!-- /.box-body -->

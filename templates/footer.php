@@ -45,6 +45,8 @@ function convertDate(dateString) {
 </script>
 <script src="js/Chart.min.js">
 </script>
+<script src="js/bootstrap-notify.min">
+</script>
 <!-- AJAX FOR SCHLENKER PHARMA -->
 <script src="js/ajax/index-ajax.js">
 </script>
@@ -104,10 +106,11 @@ $(document).ready(function() {
         return $state;
     }
 
-    $('#datepicker, #datepicker5, #datepicker6, #datepicker6').datepicker({
-        format: 'dd/mm/yyyy',
-        autoclose: true
-    });
+    $('#datepicker, #datepicker5, #datepicker6, #datepicker7, #datepicker8, #datepicker9, #datepicker10')
+        .datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true
+        });
 
     $('.datepick').datepicker({
         format: 'dd/mm/yyyy',
