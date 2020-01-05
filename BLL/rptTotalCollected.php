@@ -9,7 +9,7 @@ $fechafinal = strtr($_POST['dateErpt9'], '/', '-');
 $fi = date('Y-m-d', strtotime($fechainicio));
 $ff = date('Y-m-d', strtotime($fechafinal));
 
-$result = $conn->query("SELECT SUM(amount) as total FROM balance B INNER JOIN sale S ON B._idSale = S.idSale WHERE S.state = 0 AND B.state = 0 AND B.balpay = 1 AND S._idSeller = $idSeller");
+$result = $conn->query("SELECT SUM(amount) as total FROM balance B INNER JOIN sale S ON B._idSale = S.idSale WHERE S.state = 0 AND B.state = 0 AND B.balpay = 1 AND S._idSeller = $idSeller AND B.date BETWEEN '$fi' AND '$ff'");
 
 $outp = array();
 $outp = $result->fetch_all(MYSQLI_ASSOC);
