@@ -60,8 +60,12 @@ $(document).ready(function () {
                     var totalComision = parseFloat(registro.totalS) + parseFloat(registro.totalO);
                     totalCom = parseFloat(totalCom) + parseFloat(totalComision);
                     var contenido = "<tr>";
-                    contenido += "<td>" + convertDate(registro.dateStart); + "</td>";
-                    contenido += '<td>' + registro.noDeliver + '</td>';
+                    contenido += "<td>" + convertDate(registro.dateStart) + "</td>";
+                    if (registro.type == 0) {
+                        contenido += '<td>' + registro.noDeliver + ' Dist.' + '</td>';
+                    } else {
+                        contenido += '<td>' + registro.noDeliver + ' Schl.' + '</td>';
+                    }
                     contenido += "<td>" + convertDate(registro.date) + "</td>";
                     contenido += "<td>" + registro.noReceipt + "</td>";
                     contenido += "<td>" + registro.noDocument + "</td>";
@@ -116,7 +120,11 @@ $(document).ready(function () {
                     contenido += "<td>" + registro.route + "</td>";
                     contenido += "<td>" + registro.seller + "</td>";
                     contenido += "<td>" + registro.customer + "</td>";
-                    contenido += '<td>' + registro.noDeliver + '</td>';
+                    if (registro.type == 0) {
+                        contenido += '<td>' + registro.noDeliver + ' Dist.' + '</td>';
+                    } else {
+                        contenido += '<td>' + registro.noDeliver + ' Schl.' + '</td>';
+                    }
                     contenido += "<td>Q." + registro.advance + "</td>";
                     contenido += "<td>Q." + registro.totalSale + "</td>";
                     contenido += "<td>" + convertDate(registro.dateStart); + "</td>";
@@ -363,7 +371,11 @@ $(document).ready(function () {
                 $.each(data, function (key, registro) {
                     var contenido = "<tr>";
                     contenido += "<td>" + convertDate(registro.dateStart); + "</td>";
-                    contenido += "<td>" + registro.noDeliver + "</td>";
+                    if (registro.type == 0) {
+                        contenido += '<td>' + registro.noDeliver + ' Dist.' + '</td>';
+                    } else {
+                        contenido += '<td>' + registro.noDeliver + ' Schl.' + '</td>';
+                    }
                     contenido += "<td>" + registro.customer + "</td>";
                     contenido += "<td>" + convertDate(registro.dateEnd); + "</td>";
                     contenido += "<td>" + registro.paymentMethod + "</td>";
@@ -595,7 +607,11 @@ $(document).ready(function () {
                     totalV = parseInt(totalV) + parseInt(registro.quantity);
                     var contenido = "<tr>";
                     contenido += "<td>" + convertDate(registro.dateStart) + "</td>";
-                    contenido += "<td>" + registro.noDeliver + "</td>";
+                    if (registro.type == 0) {
+                        contenido += '<td>' + registro.noDeliver + ' Dist.' + '</td>';
+                    } else {
+                        contenido += '<td>' + registro.noDeliver + ' Schl.' + '</td>';
+                    }
                     contenido += "<td>" + registro.note + "</td>";
                     contenido += "<td>Q." + registro.price + "</td>";
                     contenido += "<td>" + registro.quantity + "</td>";
@@ -709,7 +725,11 @@ $(document).ready(function () {
                     $('#owner').text(registro.owner + ' ' + registro.inCharge);
                     var contenido = "<tr>";
                     contenido += "<td>" + convertDate(registro.dateStart) + "</td>";
-                    contenido += "<td>" + registro.noDeliver + "</td>";
+                    if (registro.type == 0) {
+                        contenido += '<td>' + registro.noDeliver + ' Dist.' + '</td>';
+                    } else {
+                        contenido += '<td>' + registro.noDeliver + ' Schl.' + '</td>';
+                    }
                     contenido += "<td>" + registro.seller + "</td>";
                     contenido += "<td>" + convertDate(registro.dateEnd) + "</td>";
                     contenido += "<td>Q." + registro.advance + "</td>";

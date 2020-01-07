@@ -239,8 +239,13 @@ while ($sale = $resultado->fetch_assoc()) {
                                           <td>
                                               <?php echo date_format($dateStar, 'd/m/y'); ?>
                                           </td>
-                                          <td>
+                                          <td class="text-center">
                                               <?php echo $sale['noDeliver']; ?>
+                                              <?php if ($sale['type'] == 0) {?>
+                                              <span class="badge bg-light-blue">Dist.</span>
+                                              <?php } else {?>
+                                              <span class="badge bg-purple">Schl.</span>
+                                              <?php }?>
                                           </td>
                                           <td>
                                               <?php echo $sale['seller']; ?>

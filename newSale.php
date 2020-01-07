@@ -5,10 +5,10 @@ include_once 'templates/header.php';
 
 <body class="hold-transition skin-blue sidebar-collapse sidebar-mini">
     <?php
-  include_once 'templates/navBar.php';
-  include_once 'templates/sideBar.php';
-  include_once 'funciones/bd_conexion.php';
-  ?>
+include_once 'templates/navBar.php';
+include_once 'templates/sideBar.php';
+include_once 'funciones/bd_conexion.php';
+?>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -47,10 +47,10 @@ include_once 'templates/header.php';
                                         method="post" action="BLL/correlative.php">
                                         <div class="row">
                                             <?php
-                      try {
-                        $sql = "SELECT * FROM correlative WHERE idCorrelative = 11";
-                        $resultado = $conn->query($sql);
-                        while ($correlative = $resultado->fetch_assoc()) { ?>
+try {
+    $sql = "SELECT * FROM correlative WHERE idCorrelative = 11";
+    $resultado = $conn->query($sql);
+    while ($correlative = $resultado->fetch_assoc()) {?>
                                             <div class="form-group col-lg-8">
                                                 <span class="text-danger text-uppercase">*</span>
                                                 <label for="last">Última guía de remision ingresada</label>
@@ -58,11 +58,11 @@ include_once 'templates/header.php';
                                                     value="<?php echo $correlative['last']; ?>">
                                             </div>
                                             <?php
-                        }
-                      } catch (Exception $e) {
-                        echo "Error: " . $e->getMessage();
-                      }
-                      ?>
+}
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+}
+?>
                                         </div>
                                         <div class="modal-footer">
                                             <input type="hidden" name="correlative" value="guia">
@@ -98,10 +98,10 @@ include_once 'templates/header.php';
                                         method="post" action="BLL/correlative.php">
                                         <div class="row">
                                             <?php
-                      try {
-                        $sql = "SELECT * FROM correlative WHERE idCorrelative = 21";
-                        $resultado = $conn->query($sql);
-                        while ($correlative = $resultado->fetch_assoc()) { ?>
+try {
+    $sql = "SELECT * FROM correlative WHERE idCorrelative = 21";
+    $resultado = $conn->query($sql);
+    while ($correlative = $resultado->fetch_assoc()) {?>
                                             <div class="form-group col-lg-8">
                                                 <span class="text-danger text-uppercase">*</span>
                                                 <label for="last">Última guía de GuateEx generada</label>
@@ -109,11 +109,11 @@ include_once 'templates/header.php';
                                                     value="<?php echo $correlative['last']; ?>">
                                             </div>
                                             <?php
-                        }
-                      } catch (Exception $e) {
-                        echo "Error: " . $e->getMessage();
-                      }
-                      ?>
+}
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+}
+?>
                                         </div>
                                         <div class="modal-footer">
                                             <input type="hidden" name="correlative" value="envio">
@@ -187,10 +187,10 @@ include_once 'templates/header.php';
                                                         </div>
                                                     </div>
                                                     <?php
-                          try {
-                            $sql = "SELECT * FROM correlative WHERE idCorrelative = 11";
-                            $resultado = $conn->query($sql);
-                            while ($correlative = $resultado->fetch_assoc()) { ?>
+try {
+    $sql = "SELECT * FROM correlative WHERE idCorrelative = 11";
+    $resultado = $conn->query($sql);
+    while ($correlative = $resultado->fetch_assoc()) {?>
                                                     <div class="form-group col-lg-3">
                                                         <label for="noRemi">No. de Guía de remision</label>
                                                         <div class="input-group">
@@ -213,11 +213,22 @@ include_once 'templates/header.php';
                                                         </div>
                                                     </div>
                                                     <?php
-                            }
-                          } catch (Exception $e) {
-                            echo "Error: " . $e->getMessage();
-                          }
-                          ?>
+}
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+}
+?>
+                                                    <div class="col-lg-3">
+                                                        <div class="form-group">
+                                                            <span class="text-danger text-uppercase">*</span>
+                                                            <label>Tipo de venta</label>
+                                                            <select id="typeS" name="typeS" class="form-control select2"
+                                                                style="width: 100%;" value="0">
+                                                                <option value="0">Distribución</option>
+                                                                <option value="1">Schlenker</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
                                                 </div>
 
                                                 <div class="row">
@@ -230,20 +241,20 @@ include_once 'templates/header.php';
                                                                 value="0">
                                                                 <option value="" selected>Seleccione un cliente</option>
                                                                 <?php
-                                try {
-                                  $sql = "SELECT idCustomer, customerName, customerCode FROM customer WHERE state = 0";
-                                  $resultado = $conn->query($sql);
-                                  while ($client_sale = $resultado->fetch_assoc()) { ?>
+try {
+    $sql = "SELECT idCustomer, customerName, customerCode FROM customer WHERE state = 0";
+    $resultado = $conn->query($sql);
+    while ($client_sale = $resultado->fetch_assoc()) {?>
                                                                 <option
                                                                     value="<?php echo $client_sale['idCustomer']; ?>">
                                                                     <?php echo $client_sale['customerCode'] . " " . $client_sale['customerName']; ?>
                                                                 </option>
                                                                 <?php
-                                  }
-                                } catch (Exception $e) {
-                                  echo "Error: " . $e->getMessage();
-                                }
-                                ?>
+}
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+}
+?>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -258,19 +269,19 @@ include_once 'templates/header.php';
                                                                 <option value="" selected>Seleccione un vendedor
                                                                 </option>
                                                                 <?php
-                                try {
-                                  $sql = "SELECT idSeller, sellerCode, sellerFirstName, sellerLastName FROM seller WHERE state = 0";
-                                  $resultado = $conn->query($sql);
-                                  while ($seller_sale = $resultado->fetch_assoc()) { ?>
+try {
+    $sql = "SELECT idSeller, sellerCode, sellerFirstName, sellerLastName FROM seller WHERE state = 0";
+    $resultado = $conn->query($sql);
+    while ($seller_sale = $resultado->fetch_assoc()) {?>
                                                                 <option value="<?php echo $seller_sale['idSeller']; ?>">
                                                                     <?php echo $seller_sale['sellerCode'] . " " . $seller_sale['sellerFirstName'] . " " . $seller_sale['sellerLastName']; ?>
                                                                 </option>
                                                                 <?php
-                                  }
-                                } catch (Exception $e) {
-                                  echo "Error: " . $e->getMessage();
-                                }
-                                ?>
+}
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+}
+?>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -316,8 +327,8 @@ include_once 'templates/header.php';
                                                         </thead>
                                                         <tbody>
                                                             <?php
-                              try {
-                                $sql = "SELECT idProduct, productName, productCode, cost, description, picture, (select sum(stock) from storage where _idProduct = P.idProduct AND _idCellar = 1) as stock,
+try {
+    $sql = "SELECT idProduct, productName, productCode, cost, description, picture, (select sum(stock) from storage where _idProduct = P.idProduct AND _idCellar = 1) as stock,
     (select makeName from make where idMake = P._idMake and state = 0) as make,
     (select catName from category where idCategory = P._idCategory and state = 0) as category,
     (select unityName from unity where idUnity = P._idUnity and state = 0) as unity,
@@ -326,14 +337,14 @@ include_once 'templates/header.php';
     (select price from priceSale where _idProduct = P.idProduct and _idPrice = 21) as business,
     (select price from priceSale where _idProduct = P.idProduct and _idPrice = 31) as bonus
     FROM product P WHERE state = 0 AND (select sum(stock) from storage where _idProduct = P.idProduct AND _idCellar = 1) > 0 ORDER BY productCode ASC";
-                                $resultado = $conn->query($sql);
-                              } catch (Exception $e) {
-                                $error = $e->getMessage();
-                                echo $error;
-                              }
+    $resultado = $conn->query($sql);
+} catch (Exception $e) {
+    $error = $e->getMessage();
+    echo $error;
+}
 
-                              while ($product = $resultado->fetch_assoc()) {
-                                ?>
+while ($product = $resultado->fetch_assoc()) {
+    ?>
                                                             <tr id="catalogo">
                                                                 <td>
                                                                     <img src="img/products/<?php echo $product['picture']; ?>"
@@ -429,7 +440,7 @@ include_once 'templates/header.php';
                                                                 </td>
                                                             </tr>
                                                             <?php }
-                              ?>
+?>
                                                         </tbody>
                                                         <tfoot>
                                                             <tr>
@@ -595,10 +606,10 @@ include_once 'templates/header.php';
                                                                         value="GuatEx" autofocus>
                                                                 </div>
                                                                 <?php
-                                try {
-                                  $sql = "SELECT * FROM correlative WHERE idCorrelative = 21";
-                                  $resultado = $conn->query($sql);
-                                  while ($correlative = $resultado->fetch_assoc()) { ?>
+try {
+    $sql = "SELECT * FROM correlative WHERE idCorrelative = 21";
+    $resultado = $conn->query($sql);
+    while ($correlative = $resultado->fetch_assoc()) {?>
                                                                 <div class="form-group col-md-6">
                                                                     <label for="noShipment">No. de envío</label>
                                                                     <div class="input-group">
@@ -622,11 +633,11 @@ include_once 'templates/header.php';
                                                                     </div>
                                                                 </div>
                                                                 <?php
-                                  }
-                                } catch (Exception $e) {
-                                  echo "Error: " . $e->getMessage();
-                                }
-                                ?>
+}
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+}
+?>
                                                                 <div class="form-group col-md-6">
                                                                     <label for="noDeliver">No. de entrega</label>
                                                                     <input type="text" class="form-control"
@@ -679,5 +690,5 @@ include_once 'templates/header.php';
     <!-- /.content-wrapper -->
 
     <?php
-  include_once 'templates/footer.php';
-  ?>
+include_once 'templates/footer.php';
+?>

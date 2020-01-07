@@ -5,10 +5,10 @@ include_once 'templates/header.php';
 
 <body class="hold-transition skin-blue sidebar-collapse sidebar-mini">
     <?php
-    include_once 'templates/navBar.php';
-    include_once 'templates/sideBar.php';
-    include_once 'funciones/bd_conexion.php';
-    ?>
+include_once 'templates/navBar.php';
+include_once 'templates/sideBar.php';
+include_once 'funciones/bd_conexion.php';
+?>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -76,11 +76,11 @@ include_once 'templates/header.php';
                                             <!-- /.box-body -->
                                         </div>
                                         <?php
-                                        if ($_SESSION['rol'] == 1) { ?>
+if ($_SESSION['rol'] == 1) {?>
                                         <div id="anularV" class="modal-footer">
                                         </div>
                                         <?php
-                                    } ?>
+}?>
 
                                     </div>
                                 </div>
@@ -236,7 +236,7 @@ include_once 'templates/header.php';
                                                 <input type="hidden" id="schlenkerP" name="schlenkerP" value="0">
                                                 <input type="hidden" id="distribucionP" name="distribucionP" value="0">
                                                 <?php
-                                                if ($_SESSION['rol'] == 1) { ?>
+if ($_SESSION['rol'] == 1) {?>
                                                 <span class="text-warning pull-right"> *Debe llenar los campos
                                                     obligatorios
                                                 </span>
@@ -244,12 +244,12 @@ include_once 'templates/header.php';
                                                     id="crear-pago">
                                                     <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
                                                 <?php
-                                            } elseif ($_SESSION['rol'] == 2) { ?>
+} elseif ($_SESSION['rol'] == 2) {?>
                                                 <span class="text-warning pull-right"> *No tiene permisos para ingresar
                                                     pagos </span>
                                                 <?php
-                                            }
-                                            ?>
+}
+?>
                                             </div>
                                             <div class="box box-primary">
                                                 <div class="box-header">
@@ -357,30 +357,35 @@ include_once 'templates/header.php';
                                 </thead>
                                 <tbody>
                                     <?php
-                                    try {
-                                        $sql = "SELECT S.*,
+try {
+    $sql = "SELECT S.*,
                     (select concat(sellerFirstName, ' ', sellerLastName) from seller where idSeller = S._idSeller) as seller,
                     (select concat(customerCode, ' ', customerName) from customer where idCustomer = S._idCustomer) as customer,
                     (select SUM((priceS-discount)*quantity) from detailS WHERE (select _idMake from product where idProduct = _idProduct) = 171 AND _idSale = idSale) as schlenker
                     FROM sale S WHERE S.cancel = 0 AND S.state = 0 ORDER BY S.idSale DESC";
-                                        $resultado = $conn->query($sql);
-                                    } catch (Exception $e) {
-                                        $error = $e->getMessage();
-                                        echo $error;
-                                    }
+    $resultado = $conn->query($sql);
+} catch (Exception $e) {
+    $error = $e->getMessage();
+    echo $error;
+}
 
-                                    while ($sale = $resultado->fetch_assoc()) {
-                                        $dateStar = date_create($sale['dateStart']);
-                                        $dateEnd = date_create($sale['dateEnd']);
-                                        $SchlenkerP = number_format(((100 * $sale['schlenker']) / $sale['totalSale']), 2);
-                                        $distribucionP = number_format((100 - $SchlenkerP), 2);
-                                        ?>
+while ($sale = $resultado->fetch_assoc()) {
+    $dateStar = date_create($sale['dateStart']);
+    $dateEnd = date_create($sale['dateEnd']);
+    $SchlenkerP = number_format(((100 * $sale['schlenker']) / $sale['totalSale']), 2);
+    $distribucionP = number_format((100 - $SchlenkerP), 2);
+    ?>
                                     <tr>
                                         <td>
                                             <?php echo date_format($dateStar, 'd/m/y'); ?>
                                         </td>
-                                        <td>
+                                        <td class="text-center">
                                             <?php echo $sale['noDeliver']; ?>
+                                            <?php if ($sale['type'] == 0) {?>
+                                            <span class="badge bg-light-blue">Dist.</span>
+                                            <?php } else {?>
+                                            <span class="badge bg-purple">Schl.</span>
+                                            <?php }?>
                                         </td>
                                         <td>
                                             <?php echo $sale['seller']; ?>
@@ -425,11 +430,11 @@ include_once 'templates/header.php';
                                                                 Factura</a>
                                                         </li>
                                                         <?php
-                                                            if ($_SESSION['rol'] == 1) { ?>
+if ($_SESSION['rol'] == 1) {?>
                                                         <li><a href="#"
                                                                 onclick="imprimir('remision',<?php echo $sale['idSale']; ?>);">Remision</a>
                                                         </li>
-                                                        <?php } ?>
+                                                        <?php }?>
                                                         <li><a href="#"
                                                                 onclick="imprimir('guia',<?php echo $sale['idSale']; ?>);">Guía</a>
                                                         </li>
@@ -439,7 +444,7 @@ include_once 'templates/header.php';
                                         </td>
                                     </tr>
                                     <?php }
-                                ?>
+?>
                                 </tbody>
                                 <tfoot>
                                     <tr>
@@ -470,6 +475,6 @@ include_once 'templates/header.php';
     <!-- /.content-wrapper -->
 
     <?php
-    include_once 'templates/footer.php';
+include_once 'templates/footer.php';
 
-    ?>
+?>

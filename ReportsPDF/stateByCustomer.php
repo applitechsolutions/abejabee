@@ -9,7 +9,7 @@ $idCustomer = $_GET['idCustomer'];
 try {
     $sql = "SELECT idCustomer, customerCode, customerName, customerTel, customerNit, customerAddress, owner, inCharge,
     (SELECT name FROM deparment where idDeparment = C._idDeparment) as deparment,
-    (SELECT routeName FROM route WHERE idRoute = C._idRoute) as route, S.noDeliver, S.dateStart, S.advance, S.dateEnd, S.cancel, S.totalSale,
+    (SELECT routeName FROM route WHERE idRoute = C._idRoute) as route, S.noDeliver, S.dateStart, S.advance, S.dateEnd, S.type, S.cancel, S.totalSale,
     (SELECT concat(sellerFirstName, ' ', sellerLastName) FROM seller where idSeller = S._idSeller) as seller,
     (SELECT balance FROM balance WHERE _idSale = idSale ORDER BY idBalance DESC LIMIT 1) AS saldo,
     (SELECT SUM(amount) FROM balance WHERE _idSale = idSale AND cheque = 1 AND state = 1) AS abono
@@ -90,10 +90,15 @@ while ($cliente = $resultado->fetch_assoc()) {
         $abono = $cliente['abono'];
         $saldo = $cliente['saldo'] - $cliente['abono'];
     }
+    if ($cliente['type'] == 0) {
+        $type = 'Dist.';
+    } else {
+        $type = 'Schl.';
+    }
     $pagina .= '
                         <tr>
                         <td>' . date_format($dateStart, 'd/m/y') . '</td>
-                        <td>' . $cliente['noDeliver'] . '</td>
+                        <td>' . $cliente['noDeliver'] . ' ' . $type . '</td>
                         <td>' . $cliente['seller'] . '</td>
                         <td>' . date_format($dateEnd, 'd/m/y') . '</td>
                         <td>' . 'Q.' . $cliente['advance'] . '</td>

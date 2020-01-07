@@ -11,6 +11,7 @@ if ($_POST['venta'] == 'nueva') {
     $total = $_POST['totalS'];
     $remision = $_POST['noRemi'];
     $note = $_POST['note'];
+    $type = $_POST['typeS'];
     $fc = date('Y-m-d', strtotime($fecha_venta));
     $fv = date('Y-m-d', strtotime($fecha_venc));
 
@@ -34,8 +35,8 @@ if ($_POST['venta'] == 'nueva') {
             }
 
             //Insert Sale
-            $stmt = $conn->prepare("INSERT INTO sale (_idSeller, _idCustomer, totalSale, advance, dateStart, dateEnd, paymentMethod, noDeliver, note, cancel) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("iiddsssssi", $vendedor, $cliente, $total, $adelanto, $fc, $fv, $pago, $remision, $note, $cancel);
+            $stmt = $conn->prepare("INSERT INTO sale (_idSeller, _idCustomer, totalSale, advance, dateStart, dateEnd, paymentMethod, noDeliver, note, type, cancel) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("iiddsssssii", $vendedor, $cliente, $total, $adelanto, $fc, $fv, $pago, $remision, $note, $type, $cancel);
             if (!mysqli_stmt_execute($stmt)) {
                 $query_success = false;
             }
@@ -168,6 +169,7 @@ if ($_POST['venta'] == 'editar') {
     $total = $_POST['totalS'];
     $remision = $_POST['noRemi'];
     $note = $_POST['note'];
+    $type = $_POST['typeS'];
     $fc = date('Y-m-d', strtotime($fecha_venta));
     $fv = date('Y-m-d', strtotime($fecha_venc));
 
@@ -191,8 +193,8 @@ if ($_POST['venta'] == 'editar') {
             }
 
             //Update Sale
-            $stmt = $conn->prepare("UPDATE sale SET  _idSeller = ?, _idCustomer = ?, totalSale = ?, advance = ?, dateStart = ?, dateEnd = ?, paymentMethod = ?, noDeliver = ?, note = ?, cancel = ? WHERE idSale = ?");
-            $stmt->bind_param("iiddsssssii", $vendedor, $cliente, $total, $adelanto, $fc, $fv, $pago, $remision, $note, $cancel, $id_sale);
+            $stmt = $conn->prepare("UPDATE sale SET  _idSeller = ?, _idCustomer = ?, totalSale = ?, advance = ?, dateStart = ?, dateEnd = ?, paymentMethod = ?, noDeliver = ?, note = ?, type = ?, cancel = ? WHERE idSale = ?");
+            $stmt->bind_param("iiddsssssiii", $vendedor, $cliente, $total, $adelanto, $fc, $fv, $pago, $remision, $note, $type, $cancel, $id_sale);
             if (!mysqli_stmt_execute($stmt)) {
                 $query_success = false;
             }

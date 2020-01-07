@@ -1,5 +1,5 @@
 <?php
-include ('pdfclass/mpdf.php');//Se importa la librería de PDF
+include 'pdfclass/mpdf.php'; //Se importa la librería de PDF
 include_once '../funciones/bd_conexion.php';
 
 //Se indica lo que se va a imprimir en formato HTML
@@ -11,15 +11,15 @@ $fecha2 = strtr($_GET['fecha2'], '/', '-');
 $fi = date('Y-m-d', strtotime($fecha1));
 $ff = date('Y-m-d', strtotime($fecha2));
 
-try{
-    $sql = "SELECT S.dateStart, S.noDeliver, B.noDocument, B.date, B.amount, B.noReceipt, B.totalS, B.totalO, (SELECT concat(sellerFirstName, ' ', sellerLastName) FROM seller WHERE idSeller = S._idSeller) as seller
-    FROM sale S INNER JOIN balance B ON S.idSale = B._idSale WHERE S.state = 0 AND B.balpay = 1 AND B.state = 0 AND 
+try {
+    $sql = "SELECT S.dateStart, S.noDeliver, S.type, B.noDocument, B.date, B.amount, B.noReceipt, B.totalS, B.totalO, (SELECT concat(sellerFirstName, ' ', sellerLastName) FROM seller WHERE idSeller = S._idSeller) as seller
+    FROM sale S INNER JOIN balance B ON S.idSale = B._idSale WHERE S.state = 0 AND B.balpay = 1 AND B.state = 0 AND
     B.date BETWEEN '$fi' AND '$ff' AND S._idSeller = $idVendedor ORDER BY B.date ASC;";
 
     $resultado = $conn->query($sql);
     $res = $conn->query($sql);
-} catch (Exception $e){
-    $error= $e->getMessage();
+} catch (Exception $e) {
+    $error = $e->getMessage();
     echo $error;
 }
 
@@ -34,7 +34,8 @@ $dia2 = strftime("%d", strtotime($ff));
 $mes2 = strftime("%B", strtotime($ff));
 $year2 = strftime("%Y", strtotime($ff));
 
-function mes($mes){
+function mes($mes)
+{
     if ($mes == 'January') {
         $mes = 'enero';
     } else if ($mes == 'February') {
@@ -65,11 +66,12 @@ function mes($mes){
 }
 
 if ($year1 == $year2) {
-    $mensaje = 'Del '.$dia1.' de '.mes($mes1).' al '.$dia2.' de '.mes($mes2).' del '.$year1;
-} else $mensaje = 'Del '.$dia1.' de '.mes($mes1).' del '.$year1.' al '.$dia2.' de '.mes($mes2).' del '.$year2;
+    $mensaje = 'Del ' . $dia1 . ' de ' . mes($mes1) . ' al ' . $dia2 . ' de ' . mes($mes2) . ' del ' . $year1;
+} else {
+    $mensaje = 'Del ' . $dia1 . ' de ' . mes($mes1) . ' del ' . $year1 . ' al ' . $dia2 . ' de ' . mes($mes2) . ' del ' . $year2;
+}
 
-
-$pagina='
+$pagina = '
 <!DOCTYPE html>
 <html>
     <head>
@@ -83,21 +85,21 @@ $pagina='
                 <div class="login-logo w3-center w3-light-grey w3-round-medium">
                     <div class="image">
                     <img src="../img/Schlenker.jpeg" class="w3-round-medium" alt="Login Image">
-                    </div>      
+                    </div>
                 </div>
                 <!-- title row -->
                 <div class="row">
                     <div class="col-xs-12">
                     <h2 class="page-header">
                         <i class="fa fa-globe"></i> Schlenker, Pharma.
-                        <small class="pull-right w3-right">Fecha: '.date("d/m/Y").'</small>
+                        <small class="pull-right w3-right">Fecha: ' . date("d/m/Y") . '</small>
                     </h2>
                     </div>
                     <!-- /.col -->
                 </div>
                 <div style="text-align: center;">
-                    <h3>Ventas realizadas por '. $vendedor .'</h3>
-                    <h4>'.$mensaje.'</h4>
+                    <h3>Ventas realizadas por ' . $vendedor . '</h3>
+                    <h4>' . $mensaje . '</h4>
                 </div>
             </div>
             <div id="contenido">
@@ -116,26 +118,31 @@ $pagina='
                         </tr>
                     </thead>
                     <tbody class="w3-white">';
-            $totalComision = 0;
-            while ($sale = $resultado->fetch_assoc()) {
-                $subtotal = $sale['totalS'] + $sale['totalO'];
-                $totalComision = $totalComision + $subtotal;
-                $dateStar = date_create($sale['dateStart']);
-                $fechapago = date_create($sale['date']);
-                $pagina.='
+$totalComision = 0;
+while ($sale = $resultado->fetch_assoc()) {
+    $subtotal = $sale['totalS'] + $sale['totalO'];
+    $totalComision = $totalComision + $subtotal;
+    $dateStar = date_create($sale['dateStart']);
+    $fechapago = date_create($sale['date']);
+    if ($sale['type'] == 0) {
+        $type = 'Dist.';
+    } else {
+        $type = 'Schl.';
+    }
+    $pagina .= '
                         <tr>
-                            <td>'.date_format($dateStar, 'd/m/y').'</td>
-                            <td>'.$sale['noDeliver'].'</td>
-                            <td>'.date_format($fechapago, 'd/m/y').'</td>
-                            <td>'.$sale['noReceipt'].'</td>
-                            <td>'.$sale['noDocument'].'</td>
-                            <td>Q.'.$sale['amount'].'</td>
-                            <td>Q. '.$sale['totalS'].'</td>
-                            <td>Q. '.$sale['totalO'].'</td>
-                            <td>Q. '.number_format($subtotal, 2, '.', ',').'</td>
+                            <td>' . date_format($dateStar, 'd/m/y') . '</td>
+                            <td>' . $sale['noDeliver'] . ' ' . $type . '</td>
+                            <td>' . date_format($fechapago, 'd/m/y') . '</td>
+                            <td>' . $sale['noReceipt'] . '</td>
+                            <td>' . $sale['noDocument'] . '</td>
+                            <td>Q.' . $sale['amount'] . '</td>
+                            <td>Q. ' . $sale['totalS'] . '</td>
+                            <td>Q. ' . $sale['totalO'] . '</td>
+                            <td>Q. ' . number_format($subtotal, 2, '.', ',') . '</td>
                         </tr>';
-                    }
-        $pagina .= '</tbody>
+}
+$pagina .= '</tbody>
                     <tfoot>
                         <tr>
                         <th></th>
@@ -145,7 +152,7 @@ $pagina='
                         <th></th>
                         <th></th>
                         <th style="text-align: right;" colspan="2">Total Comisiones :</th>
-                        <td>Q. <small>'. number_format($totalComision, 2, '.', ',') .'</small></td>
+                        <td>Q. <small>' . number_format($totalComision, 2, '.', ',') . '</small></td>
                         </tr>
                     </tfoot>
                 </table>
@@ -154,12 +161,9 @@ $pagina='
     </body>
 </html>';
 
-    
+$file = "VentasporVendedor.pdf"; //Se nombra el archivo
 
-    $file = "VentasporVendedor.pdf"; //Se nombra el archivo
+$mpdf = new mPDF('utf-8', 'LETTER', 0, '', 10, 10, 10, 10, 0, 0); //se define el tamaño de pagina y los margenes
+$mpdf->WriteHTML($pagina); //se escribe la variable pagina
 
-    $mpdf = new mPDF('utf-8', 'LETTER', 0, '', 10, 10, 10, 10, 0, 0);//se define el tamaño de pagina y los margenes
-    $mpdf->WriteHTML($pagina); //se escribe la variable pagina
-
-    $mpdf->Output($file, 'I'); //Se crea el documento pdf y se muestra en el navegador
-?>
+$mpdf->Output($file, 'I'); //Se crea el documento pdf y se muestra en el navegador

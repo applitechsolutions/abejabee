@@ -13,7 +13,7 @@ try {
     P.noBill, P.serie, noDocument, D.costP, D.quantity
     FROM `detailp` D INNER JOIN purchase P ON D._idPurchase = p.idPurchase where D._idProduct = $product AND P.datePurchase >= '$fi'";
 
-    $sqlV = "SELECT S.dateStart, S.noDeliver, S.note, (D.priceS - D.discount) as price, D.quantity,
+    $sqlV = "SELECT S.dateStart, S.noDeliver, S.note, S.type, (D.priceS - D.discount) as price, D.quantity,
     (select stock from storage WHERE _idProduct = D._idProduct) as stock
     FROM `details` D INNER JOIN sale S ON D._idSale = S.idSale WHERE D._idProduct = $product AND S.dateStart >= '$fi' AND S.state = 0";
 
@@ -190,10 +190,15 @@ $pagina .= '</tbody>
 while ($stockV = $resultadoV->fetch_assoc()) {
     $dateS = date_create($stockV['dateStart']);
     $totalV = $totalV + $stockV['quantity'];
+    if ($stockV['type'] == 0) {
+        $type = 'Dist.';
+    } else {
+        $type = 'Schl.';
+    }
     $pagina .= '
                         <tr>
                             <td>' . date_format($dateS, 'd/m/y') . '</td>
-                            <td>' . $stockV['noDeliver'] . '</td>
+                            <td>' . $stockV['noDeliver'] . ' ' . $type . '</td>
                             <td>' . $stockV['note'] . '</td>
                             <td>Q. ' . $stockV['price'] . '</td>
                             <td>' . $stockV['quantity'] . '</td>

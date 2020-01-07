@@ -28,7 +28,7 @@ try {
     FROM sale S INNER JOIN detailS D ON S.idSale = D._idSale
     WHERE S._idSeller = $idVendedor AND S.state = 0 AND S.dateStart BETWEEN '$fi' AND '$ff' GROUP BY (SELECT makeName FROM make WHERE idMake = (SELECT _idMake FROM product WHERE idProduct = D._idProduct)) ORDER BY SUM((priceS-discount)*quantity) asc";
 
-    $sql3 = "SELECT S.*, 
+    $sql3 = "SELECT S.*,
     (select concat(sellerFirstName, ' ', sellerLastName) from seller where idSeller = S._idSeller) as seller,
     (select concat(customerCode, ' ', customerName) from customer where idCustomer = S._idCustomer) as customer
     FROM sale S WHERE S._idSeller = $idVendedor AND S.state = 0 AND S.dateStart BETWEEN '$fi' AND '$ff' ORDER BY S.dateStart ASC";
@@ -195,9 +195,15 @@ $pagina .= '</tbody>
 while ($sale3 = $resultado3->fetch_assoc()) {
     $dateStart = date_create($sale3['dateStart']);
     $dateEnd = date_create($sale3['dateEnd']);
+    if ($sale3['type'] == 0) {
+        $type = 'Dist.';
+    } else {
+        $type = 'Schl.';
+    }
     $pagina .= '
                         <tr>
                             <td>' . date_format($dateStart, 'd/m/y') . '</td>
+                            <td>' . $sale3['noDeliver'] . ' ' . $type . '</td>
                             <td>' . $sale3['noDeliver'] . '</td>
                             <td>' . $sale3['customer'] . '</td>
                             <td>' . date_format($dateEnd, 'd/m/y') . '</td>
