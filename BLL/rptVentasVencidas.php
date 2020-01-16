@@ -9,11 +9,11 @@ $result = $conn->query("SELECT
     S.idSale, S.noDeliver, S.advance, S.totalSale, S.dateStart, S.dateEnd, S.noShipment, S.type,
     DATEDIFF(curdate(), S.dateEnd) as days,
     CASE WHEN DATEDIFF(curdate(), S.dateEnd) > 29 AND DATEDIFF(curdate(), S.dateEnd) < 60 THEN
-    (SELECT balance FROM balance where _idSale = S.idSale order by idBalance desc limit 1) END as mora30,
+    (SELECT balance FROM balance where _idSale = S.idSale AND state != 2 order by idBalance desc limit 1) END as mora30,
     CASE WHEN DATEDIFF(curdate(), S.dateEnd) > 59 AND DATEDIFF(curdate(), S.dateEnd) < 90 THEN
-    (SELECT balance FROM balance where _idSale = S.idSale order by idBalance desc limit 1) END as mora60,
+    (SELECT balance FROM balance where _idSale = S.idSale AND state != 2 order by idBalance desc limit 1) END as mora60,
     CASE WHEN DATEDIFF(curdate(), S.dateEnd) > 89 THEN
-    (SELECT balance FROM balance where _idSale = S.idSale order by idBalance desc limit 1) END as mora90
+    (SELECT balance FROM balance where _idSale = S.idSale AND state != 2 order by idBalance desc limit 1) END as mora90
     FROM sale S WHERE cancel = 0 AND state = 0 AND DATEDIFF(curdate(), S.dateEnd) > 29");
 $outp = array();
 $outp = $result->fetch_all(MYSQLI_ASSOC);

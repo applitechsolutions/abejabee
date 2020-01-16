@@ -1,9 +1,9 @@
 <?php
 
-/*$conn = new mysqli('localhost', 'root', '', 'localdb');
+/*$conn = new mysqli('localhost', 'root', '', 'schlenkerdb');
 
 if ($conn->connect_error) {
-    echo $error->$conn->connect_error;
+echo $error->$conn->connect_error;
 }*/
 
 $connectstr_dbhost = '';
