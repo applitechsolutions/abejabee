@@ -1,7 +1,7 @@
-$(document).ready(function() {
+$(document).ready(function () {
     var bandera = 0;
 
-    $('.SelectPrice').on('change', function(e) {
+    $('.SelectPrice').on('change', function (e) {
         e.preventDefault();
 
         var id = $(this).attr('id-data');
@@ -16,7 +16,7 @@ $(document).ready(function() {
             url: 'BLL/product.php',
             success(data) {
                 console.log(data);
-                $.each(data, function(key, registro) {
+                $.each(data, function (key, registro) {
                     if (prec == 'users') {
                         $('#SelectPrecio' + registro.idProduct).val(registro.public);
                     } else if (prec == 'plus-square') {
@@ -31,7 +31,7 @@ $(document).ready(function() {
         })
     });
 
-    $('.agregar_productoS').on('click', function(e) {
+    $('.agregar_productoS').on('click', function (e) {
         e.preventDefault();
 
         var id = $(this).attr('data-id');
@@ -62,7 +62,7 @@ $(document).ready(function() {
                     console.log(data);
 
                     var nuevaFila = "<tr id='detalleS'>";
-                    $.each(data, function(key, registro) {
+                    $.each(data, function (key, registro) {
                         /* if (prec == 'users') {
                              var subtotal = (registro.public - descuento) * cantidad;
                              var precio = registro.public;
@@ -109,7 +109,7 @@ $(document).ready(function() {
                         timer: 1500
                     })
                 },
-                error: function(data) {
+                error: function (data) {
                     swal({
                         type: 'error',
                         title: 'Error',
@@ -120,7 +120,7 @@ $(document).ready(function() {
         }
     });
 
-    $('#form-sale').on('submit', function(e) {
+    $('#form-sale').on('submit', function (e) {
         e.preventDefault();
 
         swal({
@@ -143,14 +143,17 @@ $(document).ready(function() {
             json += ',"descudet":"' + descuento_detalle[i].value + '"}'
         }
         obj = JSON.parse('{ "detailS" : [' + json.substr(1) + ']}');
-        datos.push({ name: 'json', value: JSON.stringify(obj) });
+        datos.push({
+            name: 'json',
+            value: JSON.stringify(obj)
+        });
 
         $.ajax({
             type: $(this).attr('method'),
             data: datos,
             url: $(this).attr('action'),
             datatype: 'json',
-            success: function(data) {
+            success: function (data) {
                 console.log(data);
                 var resultado = JSON.parse(data);
                 if (resultado.respuesta == 'exito') {
@@ -195,7 +198,7 @@ $(document).ready(function() {
         })
     });
 
-    $('#form-envio').on('submit', function(e) {
+    $('#form-envio').on('submit', function (e) {
         e.preventDefault();
 
         var datos = $(this).serializeArray();
@@ -209,7 +212,7 @@ $(document).ready(function() {
             data: datos,
             url: $(this).attr('action'),
             datatype: 'json',
-            success: function(data) {
+            success: function (data) {
                 console.log(data);
                 var resultado = JSON.parse(data);
                 if (resultado.respuesta == 'exito') {
@@ -239,7 +242,7 @@ $(document).ready(function() {
         })
     });
 
-    $('#form-pay').on('submit', function(e) {
+    $('#form-pay').on('submit', function (e) {
         e.preventDefault();
 
         var saldoT = $("#totalP").val();
@@ -265,7 +268,7 @@ $(document).ready(function() {
                 data: datos,
                 url: $(this).attr('action'),
                 datatype: 'json',
-                success: function(data) {
+                success: function (data) {
                     console.log(data);
                     var resultado = JSON.parse(data);
                     if (resultado.respuesta == 'exito') {
@@ -300,7 +303,7 @@ $(document).ready(function() {
         }
     });
 
-    $('#form-correlative').on('submit', function(e) {
+    $('#form-correlative').on('submit', function (e) {
         e.preventDefault();
 
         var datos = $(this).serializeArray();
@@ -310,7 +313,7 @@ $(document).ready(function() {
             data: datos,
             url: $(this).attr('action'),
             dataType: 'json',
-            success: function(data) {
+            success: function (data) {
                 console.log(data);
                 var resultado = data;
                 if (resultado.respuesta == 'exito') {
@@ -345,7 +348,7 @@ $(document).ready(function() {
                     })
                 }
             },
-            error: function(data) {
+            error: function (data) {
                 swal({
                     position: 'top-end',
                     type: 'error',
@@ -358,7 +361,7 @@ $(document).ready(function() {
 
     });
 
-    $('#form-correlative-guia').on('submit', function(e) {
+    $('#form-correlative-guia').on('submit', function (e) {
         e.preventDefault();
 
         var datos = $(this).serializeArray();
@@ -368,7 +371,7 @@ $(document).ready(function() {
             data: datos,
             url: $(this).attr('action'),
             dataType: 'json',
-            success: function(data) {
+            success: function (data) {
                 console.log(data);
                 var resultado = data;
                 if (resultado.respuesta == 'exito') {
@@ -401,7 +404,7 @@ $(document).ready(function() {
                     })
                 }
             },
-            error: function(data) {
+            error: function (data) {
                 swal({
                     position: 'top-end',
                     type: 'error',
@@ -414,7 +417,7 @@ $(document).ready(function() {
 
     });
 
-    $('#form-correlative-envio').on('submit', function(e) {
+    $('#form-correlative-envio').on('submit', function (e) {
         e.preventDefault();
 
         var datos = $(this).serializeArray();
@@ -424,7 +427,7 @@ $(document).ready(function() {
             data: datos,
             url: $(this).attr('action'),
             dataType: 'json',
-            success: function(data) {
+            success: function (data) {
                 console.log(data);
                 var resultado = data;
                 if (resultado.respuesta == 'exito') {
@@ -457,7 +460,7 @@ $(document).ready(function() {
                     })
                 }
             },
-            error: function(data) {
+            error: function (data) {
                 swal({
                     position: 'top-end',
                     type: 'error',
@@ -470,7 +473,7 @@ $(document).ready(function() {
 
     });
 
-    $('.detalle_sale').on('click', function(e) {
+    $('.detalle_sale').on('click', function (e) {
         e.preventDefault();
         $("#detalles").find('tbody').html("");
         $("#anularV").html("");
@@ -489,7 +492,7 @@ $(document).ready(function() {
             url: 'BLL/' + tipo + '.php',
             success(data) {
                 console.log(data);
-                $.each(data, function(key, registro) {
+                $.each(data, function (key, registro) {
                     var nuevaFila = "<tr>";
                     var sub = registro.quantity * (parseFloat(Math.round(registro.priceS * 100) / 100).toFixed(2) - parseFloat(Math.round(registro.discount * 100) / 100).toFixed(2));
                     nuevaFila += "<td><img src='img/products/" + registro.imagen + "'width='80' onerror='ImgError(this);'></td>";
@@ -512,7 +515,7 @@ $(document).ready(function() {
                 swal.close();
                 $('#modal-detailS').modal('show');
             },
-            error: function(data) {
+            error: function (data) {
                 swal({
                     type: 'error',
                     title: 'Error',
@@ -522,7 +525,7 @@ $(document).ready(function() {
         });
     });
 
-    $('.detalle_balance').on('click', function(e) {
+    $('.detalle_balance').on('click', function (e) {
         e.preventDefault();
         $("#detallesB").find('tbody').html("");
         $("#anuladosB").find('tbody').html("");
@@ -553,7 +556,7 @@ $(document).ready(function() {
                 var diferencia = 0;
                 $('#schlenkerP').val(schlenkerP);
                 $('#distribucionP').val(distribucionP);
-                $.each(data, function(key, registro) {
+                $.each(data, function (key, registro) {
                     if (registro.state == 2) {
                         var nuevaFila = "<tr>";
                         nuevaFila += "<td>" + convertDate(registro.date); + "</td>";
@@ -596,7 +599,7 @@ $(document).ready(function() {
                                 success(data) {
                                     console.log(data);
                                     var totalP = 0;
-                                    $.each(data, function(key, registro) {
+                                    $.each(data, function (key, registro) {
 
                                         if (diferencia <= registro.sd30 || diferencia <= registro.od30) {
                                             $('#infoComi').append(seller + '<br> Comisión base: Schlenker: ' + registro.s30 + '%, Otros: ' + registro.o30 + '%');
@@ -617,7 +620,7 @@ $(document).ready(function() {
                                         }
                                     });
                                 },
-                                error: function(data) {
+                                error: function (data) {
                                     swal({
                                         type: 'error',
                                         title: 'Error',
@@ -666,7 +669,7 @@ $(document).ready(function() {
 
                 balance(id);
             },
-            error: function(data) {
+            error: function (data) {
                 swal({
                     type: 'error',
                     title: 'Error',
@@ -676,17 +679,17 @@ $(document).ready(function() {
         });
     });
 
-    $('#cheque').on('ifChecked', function(event) {
+    $('#cheque').on('ifChecked', function (event) {
         bandera = 1;
         console.log('true');
     });
 
-    $('#cheque').on('ifUnchecked', function(event) {
+    $('#cheque').on('ifUnchecked', function (event) {
         bandera = 0;
         console.log('false');
     });
 
-    $('.detalle_balanceC').on('click', function(e) {
+    $('.detalle_balanceC').on('click', function (e) {
         e.preventDefault();
         $("#detallesB").find('tbody').html("");
         $("#anuladosB").find('tbody').html("");
@@ -705,7 +708,7 @@ $(document).ready(function() {
             url: 'BLL/' + tipo + '.php',
             success(data) {
                 console.log(data);
-                $.each(data, function(key, registro) {
+                $.each(data, function (key, registro) {
                     if (registro.state == 2) {
                         var nuevaFila = "<tr>";
                         nuevaFila += "<td>" + convertDate(registro.date); + "</td>";
@@ -751,13 +754,147 @@ $(document).ready(function() {
                 swal.close();
                 $('#modal-balance').modal('show');
             },
-            error: function(data) {
+            error: function (data) {
                 swal({
                     type: 'error',
                     title: 'Error',
                     text: 'No se puede agregar al carrito',
                 })
             }
+        });
+    });
+
+    $('#button-stateCustomer').on('click', function (e) {
+        e.preventDefault();
+        $("#listadoReporte7").html("");
+
+        if ($('#customerS').val() === '') {
+            swal({
+                type: 'error',
+                title: 'Error',
+                text: 'Seleccione un cliente, No hay ningun cliente seleccionado',
+            });
+            return;
+        }
+
+        var tabla = '<div class="row"><div class="col-lg-12">' +
+            '<div class="box box-solid">' +
+            '<div class="box-header with-border">' +
+            '<i class="fa fa-user-circle"></i>' +
+            '<h3 class="box-title">Información del cliente</h3>' +
+            '</div>' +
+            '<!-- /.box-header -->' +
+            '<div class="box-body">' +
+            '<dl class="dl-horizontal">' +
+            '<dt>Código / Nombre</dt>' +
+            '<dd id="codeName"></dd>' +
+            '<dt>Ruta</dt>' +
+            '<dd id="route"></dd>' +
+            '<dt>Teléfono / Nit </dt>' +
+            '<dd id="telNit"></dd>' +
+            '<dt>Dirección</dt>' +
+            '<dd id="direction"></dd>' +
+            '<dt>Dueño / Encargado </dt>' +
+            '<dd id="owner"></dd>' +
+            '</dd>' +
+            '</dl>' +
+            '</div>' +
+            '<!-- /.box-body -->' +
+            '</div>' +
+            '</div></div>' +
+            '<div class="box-body table-responsive no-padding">' +
+            '<table id="registros" class="table table-bordered table-striped">' +
+            '<thead>' +
+            '<tr>' +
+            '<th>Fecha</th>' +
+            '<th>No. de remisión</th>' +
+            '<th>Vendedor</th>' +
+            '<th>Anticipo</th>' +
+            '<th>Total</th>' +
+            '<th>Abono</th>' +
+            '<th>Saldo</th>' +
+            '</tr>' +
+            '</thead>' +
+            '<tbody class="contenidoRPT7"></tbody>' +
+            '<tfoot>' +
+            '<tr>' +
+            '<th>Fecha</th>' +
+            '<th>No. de remisión</th>' +
+            '<th>Vendedor</th>' +
+            '<th>Anticipo</th>' +
+            '<th>Total</th>' +
+            '<th>Abono</th>' +
+            '<th>Saldo</th>' +
+            '</tr>' +
+            '</tfoot>' +
+            '</table>' +
+            '</div>';
+
+        $("#listadoReporte7").append(tabla);
+
+        var datos = $(this).serializeArray();
+
+        swal({
+            title: 'Generando el reporte...'
+        });
+
+        swal.showLoading();
+
+        $.ajax({
+            type: 'POST',
+            data: {
+                'idCustomer': $('#customerS').val()
+            },
+            url: 'BLL/rptstateByCustomer.php',
+            success: function (data) {
+                console.log(data);
+                if (data.length == 0) {
+                    $('#codeName').text('No hay ventas registradas con el cliente seleccionado');
+                }
+                $.each(data, function (key, registro) {
+                    var saldo = 0;
+                    $('#codeName').text(registro.customerCode + ' ' + registro.customerName);
+                    $('#route').text(registro.route);
+                    $('#telNit').text(registro.customerTel + ' / ' + registro.customerNit);
+                    $('#direction').text(registro.customerAddress + ', ' + registro.deparment);
+                    $('#owner').text(registro.owner + ' ' + registro.inCharge);
+                    var contenido = "<tr>";
+                    contenido += "<td>" + convertDate(registro.dateStart) + "</td>";
+                    if (registro.type == 0) {
+                        contenido += '<td>' + registro.noDeliver + ' Dist.' + '</td>';
+                    } else {
+                        contenido += '<td>' + registro.noDeliver + ' Schl.' + '</td>';
+                    }
+                    contenido += "<td>" + registro.seller + "</td>";
+                    contenido += "<td>Q." + registro.advance + "</td>";
+                    contenido += "<td>Q." + registro.totalSale + "</td>";
+                    if (registro.abono == null) {
+                        contenido += "<td>-</td>";
+                        saldo = parseFloat(registro.saldo);
+                    } else {
+                        contenido += "<td>Q." + registro.abono + "</td>";
+                        saldo = parseFloat(registro.saldo) - parseFloat(registro.abono);
+                    }
+                    if (saldo > 0) {
+                        contenido += "<td class='text-danger'><b>Q." + saldo.toFixed(2) + "</b></td>";
+                    } else {
+                        contenido += "<td class='text-success'>Q." + saldo.toFixed(2) + "</td>";
+                    }
+                    contenido += '</tr>';
+                    $(".contenidoRPT7").append(contenido);
+                });
+                swal.close();
+                funciones();
+            },
+            error: function (error, data) {
+                console.log(error.responseText);
+                swal({
+                    type: 'error',
+                    title: 'Error',
+                    text: 'Algo ha salido mal, intentalo más tarde',
+                });
+            }
+
         });
     });
 });
@@ -797,7 +934,7 @@ function confirmarPago(idSale, idBalance) {
                         success(data) {
                             console.log(data);
                             var totalP = 0;
-                            $.each(data, function(key, registro) {
+                            $.each(data, function (key, registro) {
                                 if (registro.state == 2) {
                                     var nuevaFila = "<tr>";
                                     nuevaFila += "<td>" + convertDate(registro.date); + "</td>";
@@ -854,7 +991,7 @@ function confirmarPago(idSale, idBalance) {
                             $("#totalP").val(totalP.toFixed(2));
                             balance(idSale);
                         },
-                        error: function(data) {
+                        error: function (data) {
                             swal({
                                 type: 'error',
                                 title: 'Error',
@@ -909,7 +1046,7 @@ function anularPago(idSale, idBalance) {
                         success(data) {
                             console.log(data);
                             var totalP = 0;
-                            $.each(data, function(key, registro) {
+                            $.each(data, function (key, registro) {
                                 if (registro.state == 2) {
                                     var nuevaFila = "<tr>";
                                     nuevaFila += "<td>" + convertDate(registro.date); + "</td>";
@@ -966,7 +1103,7 @@ function anularPago(idSale, idBalance) {
                             $("#totalP").val(totalP.toFixed(2));
                             balance(idSale);
                         },
-                        error: function(data) {
+                        error: function (data) {
                             swal({
                                 type: 'error',
                                 title: 'Error',
@@ -1011,14 +1148,20 @@ function anularSale(idSale) {
         json += ',"cantdet":"' + cantidad_detalle[i].value + '"}'
     }
     obj = JSON.parse('{ "detailNULL" : [' + json.substr(1) + ']}');
-    datos = Array({ name: 'json', value: JSON.stringify(obj) }, { name: 'idSale', value: idSale });
+    datos = Array({
+        name: 'json',
+        value: JSON.stringify(obj)
+    }, {
+        name: 'idSale',
+        value: idSale
+    });
 
     $.ajax({
         type: 'POST',
         data: datos,
         url: 'BLL/anularSale.php',
         datatype: 'json',
-        success: function(data) {
+        success: function (data) {
             console.log(data);
             resultado = JSON.parse(data);
             if (resultado.respuesta == 'exito') {
@@ -1029,7 +1172,7 @@ function anularSale(idSale) {
                     showConfirmButton: false,
                     timer: 1500
                 })
-                setTimeout(function() {
+                setTimeout(function () {
                     location.reload();
                 }, 3000);
             } else {
@@ -1059,7 +1202,7 @@ function generarFactura() {
         cancelButtonText: 'Cancelar'
     }).then(() => {
         var idSale = $("#idSale").val();
-        setTimeout(function() {
+        setTimeout(function () {
             window.location.href = 'printSale.php?id=' + idSale;
         }, 500);
     });
@@ -1082,9 +1225,9 @@ function imprimir(tipo, idSale) {
                 type: "GET",
                 url: 'BLL/correlativeGuia.php',
                 dataType: "json",
-                success: function(data) {
+                success: function (data) {
                     console.log(data);
-                    $.each(data, function(key, registro) {
+                    $.each(data, function (key, registro) {
                         var last = parseInt(registro.last) + parseInt(1);
                         updateCorrelativo('envio', 'A', last);
                         $.ajax({
@@ -1096,7 +1239,7 @@ function imprimir(tipo, idSale) {
                             },
                             url: 'BLL/sale.php',
                             datatype: 'json',
-                            success: function(data) {
+                            success: function (data) {
                                 console.log(data);
                                 var resultado = JSON.parse(data);
                                 if (resultado.respuesta == 'exito') {} else if (resultado.respuesta == 'vacio') {} else if (resultado.respuesta == 'error') {}
@@ -1104,7 +1247,7 @@ function imprimir(tipo, idSale) {
                         })
                     });
                 },
-                error: function(data) {
+                error: function (data) {
                     alert('error');
                 }
             });
@@ -1134,7 +1277,7 @@ function cancelSale(idSale) {
             console.log(data);
             var resultado = JSON.parse(data);
             if (resultado.respuesta == 'exito') {
-                setTimeout(function() {
+                setTimeout(function () {
                     location.reload();
                 }, 1500);
             } else {
@@ -1157,7 +1300,7 @@ function balance(idSale) {
         url: 'BLL/listBalanceT.php',
         success(data) {
             console.log(data);
-            $.each(data, function(key, registro) {
+            $.each(data, function (key, registro) {
                 $("#totalBal").text('Q. ' + registro.balance);
                 $("#totalB").val(parseFloat(registro.balance));
                 $("#idSale").val(idSale);
@@ -1169,7 +1312,7 @@ function balance(idSale) {
             swal.close();
             $('#modal-balance').modal('show');
         },
-        error: function(data) {
+        error: function (data) {
             swal({
                 type: 'error',
                 title: 'Error',
@@ -1190,7 +1333,7 @@ function updateCorrelativo(correlative, serie, last) {
         },
         url: 'BLL/correlative.php',
         dataType: 'json',
-        success: function(data) {
+        success: function (data) {
             console.log(data);
             var resultado = data;
             if (resultado.respuesta == 'exito') {
@@ -1213,7 +1356,7 @@ function updateCorrelativo(correlative, serie, last) {
                 })
             }
         },
-        error: function(data) {
+        error: function (data) {
             swal({
                 position: 'top-end',
                 type: 'error',

@@ -105,15 +105,22 @@ $pagina = '
                     </thead>
                     <tbody class="w3-white">';
 while ($stock = $resultado->fetch_assoc()) {
-    if ($stock['ventas'] != null && $stock['compras'] != null) {
-        $inv = $stock['stock'] + $stock['ventas'] - $stock['compras'];
-    } else if ($stock['ventas'] != null && $stock['compras'] == null) {
-        $inv = $stock['stock'] + $stock['ventas'];
-    } else if ($stock['ventas'] == null && $stock['compras'] != null) {
-        $inv = $stock['stock'] - $stock['compras'];
-    } else {
-        $inv = $stock['stock'];
+    $inv = 0;
+    $stockActual = 0;
+    $ventas = 0;
+    $compras = 0;
+
+    if ($stock['stock'] != null) {
+        $stockActual = $stock['stock'];
     }
+    if ($stock['ventas'] != null) {
+        $ventas = $stock['ventas'];
+    }
+    if ($stock['compras'] != null) {
+        $compras = $stock['compras'];
+    }
+    $inv = $stockActual + $ventas - $compras;
+
     $pagina .= '
                         <tr>
                             <td>' . $stock['productCode'] . '</td>

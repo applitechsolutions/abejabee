@@ -402,7 +402,7 @@ $(document).ready(function () {
 
     $('#form-dailyStock').on('submit', function (e) {
         e.preventDefault();
-        limpiarReportes()
+        limpiarReportes();
 
         var tabla = '<div class="box-body table-responsive no-padding">' +
             '<table id="registros" class="table table-bordered table-striped">' +
@@ -450,18 +450,24 @@ $(document).ready(function () {
             url: $(this).attr('action'),
             datatype: 'json',
             success: function (data) {
-                console.log(data);
+                // console.log(data);
 
                 $.each(data, function (key, registro) {
-                    if (registro.ventas != null && registro.compras != null) {
-                        var stock = parseInt(registro.stock) + parseInt(registro.ventas) - parseInt(registro.compras);
-                    } else if (registro.ventas != null && registro.compras == null) {
-                        var stock = parseInt(registro.stock) + parseInt(registro.ventas);
-                    } else if (registro.ventas == null && registro.compras != null) {
-                        var stock = parseInt(registro.stock) - parseInt(registro.compras);
-                    } else {
-                        var stock = registro.stock;;
+                    var stock = 0;
+                    var stockActual = 0;
+                    var ventas = 0;
+                    var compras = 0;
+                    if (registro.stock != null) {
+                        stockActual = registro.stock;
                     }
+                    if (registro.ventas != null) {
+                        ventas = registro.ventas;
+                    }
+                    if (registro.compras != null) {
+                        compras = registro.compras;
+                    }
+                    stock = parseInt(stockActual) + parseInt(ventas) - parseInt(compras);
+
                     var contenido = "<tr>";
                     contenido += "<td>" + registro.productCode + "</td>";
                     contenido += "<td>" + registro.productName + "</td>";

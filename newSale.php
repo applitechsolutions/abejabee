@@ -30,6 +30,37 @@ include_once 'funciones/bd_conexion.php';
                 <!-- /.box-header -->
                 <div class="box-body">
 
+                    <!-- MODAL IMPRIMIR -->
+                    <div class="modal fade" id="modal-account">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <h4 class="modal-title">
+                                        <li class="fas fa-user-check"></li> Estado de cuenta del cliente
+                                    </h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="box box-info">
+                                        <div class="box-header">
+                                        </div>
+                                        <!-- /.box-header -->
+                                        <div class="modal-body">
+                                            <!-- TABLA DEL LISTADO DE REPORTES -->
+                                            <div id="listadoReporte7" class="modal-body">
+                                            </div>
+                                            <!-- TABLA DEL LISTADO DE REPORTES -->
+                                        </div>
+                                        <!-- /.box-body -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+
                     <!-- /.modal-REMISION -->
                     <div class="modal fade" id="modal-remi">
                         <div class="modal-dialog">
@@ -258,8 +289,13 @@ try {
                                                             </select>
                                                         </div>
                                                     </div>
-
-                                                    <div class="col-lg-5">
+                                                    <div class="col-lg-1">
+                                                        <a id="button-stateCustomer" class="btn btn-app"
+                                                            data-toggle="modal" data-target="#modal-account">
+                                                            <i class="fa fa-user-circle"></i> Cuenta
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-lg-3">
                                                         <div class="form-group">
                                                             <span class="text-danger text-uppercase">*</span>
                                                             <label>Vendedor</label>
