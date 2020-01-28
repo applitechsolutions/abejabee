@@ -12,10 +12,12 @@ class PDF extends FPDF
 try {
     $sql = "SELECT dateStart, dateEnd, totalSale, noDeliver, paymentMethod, note, type,
                     (select sellerCode from seller where idSeller = S._idSeller) as sellercode,
+                    (select CONCAT(sellerFirstName, ' ', sellerLastName) from seller where idSeller = S._idSeller) as sellername,
+                    (select sellerMobile from seller where idSeller = S._idSeller) as sellermobile,
                     (select name from town where idTown = C._idTown) as municipio,
                     (select name from village where idVillage = C._idVillage) as aldea,
                     (select name from deparment where idDeparment = C._idDeparment) as departamento,
-                    C.customerCode, C.customerName, C.customerNit, C.customerAddress, C.customerTel
+                    C.customerCode, C.customerName, C.customerNit, C.customerAddress, C.customerTel, C.inCharge
                     FROM sale S INNER JOIN customer C ON C.idCustomer = S._idCustomer WHERE idSale = $idSale";
     $resultado = $conn->query($sql);
 } catch (Exception $e) {
@@ -48,15 +50,18 @@ while ($sale = $resultado->fetch_assoc()) {
     }
 
     $pdf->SetFont('Arial', 'B', 10);
-    $pdf->Rect(10, 42, 90, 32);
+    $pdf->Rect(10, 42, 90, 45);
     $pdf->SetXY(13, 44);
     $pdf->Cell(15, 4, 'Cliente:', 0, 0, 'L');
     $pdf->SetFont('Arial', '', 10);
     $Ccode = iconv('UTF-8', 'windows-1252', $sale['customerCode']);
+    $CName = iconv('UTF-8', 'windows-1252', $sale['customerName']);
+    $CinCharge = iconv('UTF-8', 'windows-1252', $sale['inCharge']);
     $pdf->Cell(10, 4, $Ccode, 0, 1, 'L');
     $pdf->Cell(13);
-    $CName = iconv('UTF-8', 'windows-1252', $sale['customerName']);
     $pdf->Cell(120, 4, $CName, 0, 1, 'L');
+    $pdf->Cell(13);
+    $pdf->Cell(120, 4, $CinCharge, 0, 1, 'L');
     $pdf->Cell(13);
     $CAddress = iconv('UTF-8', 'windows-1252', $sale['customerAddress'] . ' ' . $sale['aldea'] . ' ' . $sale['municipio'] . ' ' . $sale['departamento']);
     $pdf->MultiCell(90, 4, $CAddress, 0, 'L', 0);
@@ -65,7 +70,7 @@ while ($sale = $resultado->fetch_assoc()) {
     $pdf->Cell(13);
     $pdf->Cell(30, 4, $sale['customerNit'], 0, 0, 'L');
 
-    $pdf->Rect(101, 42, 99, 32);
+    $pdf->Rect(101, 42, 99, 45);
     $pdf->Rect(101, 42, 50, 14);
     $pdf->SetFont('Arial', 'B', 10);
     $pdf->SetXY(101, 44);
@@ -81,18 +86,22 @@ while ($sale = $resultado->fetch_assoc()) {
     $pdf->SetXY(151, 50);
     $pdf->SetFont('Arial', '', 10);
     $pdf->Cell(15, 4, date_format($fecha, 'd/m/Y'), 0, 1, 'L');
-    $pdf->Rect(101, 56, 50, 9);
+    // $pdf->Rect(101, 56, 50, 9);
     $pdf->SetFont('Arial', 'B', 10);
     $pdf->SetXY(101, 58);
     $pdf->Cell(15, 4, 'Vendedor:', 0, 0, 'L');
     $pdf->SetFont('Arial', '', 10);
     $pdf->Cell(5);
     $sellerC = iconv('UTF-8', 'windows-1252', $sale['sellercode']);
+    $sellerN = iconv('UTF-8', 'windows-1252', $sale['sellername']);
     $pdf->Cell(15, 4, $sellerC, 0, 0, 'L');
-    $pdf->Rect(101, 65, 50, 9);
-    $pdf->SetFont('Arial', 'B', 10);
-    $pdf->SetXY(101, 67);
-    $pdf->Cell(15, 4, 'Refer.:', 0, 0, 'L');
+    // $pdf->Rect(101, 65, 50, 9);
+    $pdf->SetFont('Arial', '', 10);
+    $pdf->SetXY(101, 64);
+    $pdf->Cell(15, 4, $sellerN, 0, 0, 'L');
+    $pdf->SetFont('Arial', '', 10);
+    $pdf->SetXY(101, 70);
+    $pdf->Cell(15, 4, $sale['sellermobile'], 0, 0, 'L');
     $pdf->Rect(151, 56, 49, 9);
     $pdf->SetFont('Arial', 'B', 10);
     $pdf->SetXY(151, 58);
@@ -101,14 +110,14 @@ while ($sale = $resultado->fetch_assoc()) {
     $payment = iconv('UTF-8', 'windows-1252', $sale['paymentMethod']);
     $pdf->Cell(9);
     $pdf->Cell(15, 4, $payment, 0, 0, 'L');
-    $pdf->Rect(151, 65, 49, 9);
-    $pdf->SetFont('Arial', 'B', 10);
-    $envio = iconv('UTF-8', 'windows-1252', 'Envío:');
-    $pdf->SetXY(151, 67);
-    $pdf->Cell(15, 4, $envio, 0, 0, 'L');
+    // $pdf->Rect(151, 65, 49, 9);
+    // $pdf->SetFont('Arial', 'B', 10);
+    // $envio = iconv('UTF-8', 'windows-1252', 'Envío:');
+    // $pdf->SetXY(151, 67);
+    // $pdf->Cell(15, 4, $envio, 0, 0, 'L');
 
 //DETALLE DE FACTURA
-    $pdf->SetXY(10, 77);
+    $pdf->SetXY(10, 90);
     $pdf->SetFont('Arial', 'B', 10);
     $codigo = iconv('UTF-8', 'windows-1252', 'Código Producto');
     $descrip = iconv('UTF-8', 'windows-1252', 'Descripción del producto');
@@ -131,9 +140,9 @@ while ($sale = $resultado->fetch_assoc()) {
         $error = $e->getMessage();
         echo $error;
     }
-    $pdf->SetXY(0, 84);
+    $pdf->SetXY(0, 97);
     $pdf->SetFont('Arial', '', 10);
-    $Contador = 82;
+    $Contador = 95;
     while ($detailS = $resultado->fetch_assoc()) {
         $COD = iconv('UTF-8', 'windows-1252', $detailS['codigo']);
         $NOMBRE = iconv('UTF-8', 'windows-1252', $detailS['nombre']);
