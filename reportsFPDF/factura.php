@@ -32,7 +32,7 @@ while ($sale = $resultado->fetch_assoc()) {
     $pdf->AddPage();
     $pdf->SetFont('MicrosoftYaHeiUILight', '', 12);
 
-    $pdf->SetXY(35, 48);
+    $pdf->SetXY(28, 42);
     //primera linea de factura
     $cMuni = iconv('UTF-8', 'windows-1252', $sale['town'] . ' ' . date_format($fechaF, 'd/m/Y'));
     $pdf->Cell(51, 5, $cMuni, 0, 0, 'L');
@@ -47,26 +47,26 @@ while ($sale = $resultado->fetch_assoc()) {
     $pdf->Cell(22);
     $pdf->Cell(22, 5, date_format($fecha, 'd/m/Y'), 0, 1, 'L');
 
-    $pdf->SetXY(29, 54);
+    $pdf->SetXY(22, 48);
     //Nombre
     $cName = iconv('UTF-8', 'windows-1252', $sale['custName']);
     $pdf->Cell(172, 5, $cName, 0, 0, 'L');
 
-    $pdf->SetXY(23, 65);
+    $pdf->SetXY(16, 59);
     //NIT
     $pdf->Cell(50, 5, $sale['custNit'], 0, 0, 'L');
 
-    $pdf->SetXY(30, 70);
+    $pdf->SetXY(23, 64);
     //Direccion
     $cAddress = iconv('UTF-8', 'windows-1252', $sale['address']);
     $pdf->MultiCell(171, 5, $cAddress, 0, 'L', 0);
 
-    $pdf->SetXY(29, 88);
+    $pdf->SetXY(23, 82);
     //Telefono
     $pdf->Cell(50, 5, $sale['mobile'], 0, 0, 'L');
 
     //DETALLE DE FACTURA
-    $pdf->SetXY(0, 102);
+    $pdf->SetXY(0, 96);
     $pdf->SetFont('MicrosoftYaHeiUILight', '', 12);
     try {
         $sql = "SELECT D.quantity, D.description, TRUNCATE((D.priceB - D.discount) ,2) as precio,
@@ -86,28 +86,28 @@ while ($sale = $resultado->fetch_assoc()) {
         $NOMBRE = iconv('UTF-8', 'windows-1252', $detailB['nombre']);
         $DESC = iconv('UTF-8', 'windows-1252', $detailB['descripcion']);
         $DESCRIPTION = iconv('UTF-8', 'windows-1252', $detailB['description']);
-        $pdf->Cell(15);
+        $pdf->Cell(7);
         $pdf->Cell(18, 5, $detailB['quantity'], 0, 0, 'C');
         $pdf->Cell(18, 5, $COD, 0, 0, 'L');
         if ($DESCRIPTION == '') {
             if ($detailB['marca'] == 'SCHLENKER') {
-                $pdf->Cell(96, 5, $DESC, 0, 0, 'L');
+                $pdf->Cell(103, 5, $DESC, 0, 0, 'L');
             } else {
-                $pdf->Cell(96, 5, $NOMBRE, 0, 0, 'L');
+                $pdf->Cell(103, 5, $NOMBRE, 0, 0, 'L');
             }
         } else {
-            $pdf->Cell(96, 5, $DESCRIPTION, 0, 0, 'L');
+            $pdf->Cell(103, 5, $DESCRIPTION, 0, 0, 'L');
         }
         $pdf->Cell(23, 5, 'Q.' . $detailB['precio'], 0, 0, 'C');
         $pdf->Cell(30, 5, $detailB['total'], 0, 1, 'C');
     }
 
     //TOTAL-LETRAS
-    $pdf->SetXY(15, 242);
+    $pdf->SetXY(10, 248);
     $pdf->MultiCell(132, 5, $str, 0, 'L', 0);
 
     //TOTAL
-    $pdf->SetXY(173, 248);
+    $pdf->SetXY(178, 254);
     $pdf->SetFont('MicrosoftYaHeiUILight', '', 12);
     $pdf->Cell(30, 5, $sale['total'], 0, 0, 'L');
 }
