@@ -102,7 +102,7 @@ if ($_SESSION['rol'] == 1) {?>
                                     </div>
                                     <div class="modal-body">
                                         <form role="form" id="form-pay" name="form-pay" method="post"
-                                            action="BLL/balance.php">
+                                            action="BLL/balance.php" autocomplete="off">
                                             <div class="row">
                                                 <div class="alert alert-info alert-dismissible col-md-5 pull-left">
                                                     <div id="days"></div>
@@ -120,7 +120,7 @@ if ($_SESSION['rol'] == 1) {?>
                                                             </div>
                                                             <input type="text"
                                                                 class="form-control pull-right datepicker"
-                                                                id="datepicker" name="dateB" autocomplete="false">
+                                                                id="datepicker" name="dateB">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -232,6 +232,7 @@ if ($_SESSION['rol'] == 1) {?>
                                                 <input type="hidden" name="tipo" value="pago">
                                                 <input type="hidden" id="idSale" name="idSale" value="0">
                                                 <input type="hidden" id="idSeller" name="idSeller" value="0">
+                                                <input type="hidden" id="dateStart" name="dateStart" value="0">
                                                 <input type="hidden" id="totalB" name="totalB" value="0">
                                                 <input type="hidden" id="totalP" name="totalP" value="0">
                                                 <input type="hidden" id="schlenkerP" name="schlenkerP" value="0">

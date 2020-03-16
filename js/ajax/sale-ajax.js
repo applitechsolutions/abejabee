@@ -663,6 +663,7 @@ $(document).ready(function() {
 						if (tipo == 0) {
 							var d = new Date();
 							var fecha1 = moment(registro.date);
+							$('#dateStart').val(fecha1);
 							var fecha2 = moment(d);
 
 							diferencia = fecha2.diff(fecha1, 'days');
@@ -1074,7 +1075,7 @@ $(document).ready(function() {
 	});
 
 	$('#datepicker').change(function() {
-        if ($('#days').length == 0) {
+		if ($('#days').length == 0) {
 			return;
 		}
 		swal();
@@ -1083,13 +1084,16 @@ $(document).ready(function() {
 		$('#infoComi').html('');
 		var id = $('#idSale').val();
 		var seller = $('#idSeller').val();
-		var d = new Date();
+		var dateStart = $('#dateStart').val();
+
+		var d = new Date(dateStart);
 		var datepicker = moment($('#datepicker').val(), 'DD-MM-YYYY').format(
 			'MM-DD-YYYY'
 		);
 		var date = new Date(datepicker);
-		var fecha1 = moment(date);
-		var fecha2 = moment(d);
+
+		var fecha1 = moment(d);
+		var fecha2 = moment(date);
 
 		diferencia = fecha2.diff(fecha1, 'days');
 
