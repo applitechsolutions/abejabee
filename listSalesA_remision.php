@@ -120,7 +120,7 @@ if ($_SESSION['rol'] == 1) {?>
                                                             </div>
                                                             <input type="text"
                                                                 class="form-control pull-right datepicker"
-                                                                id="datepicker" name="dateB">
+                                                                id="datepicker" name="dateB" autocomplete="false">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -231,6 +231,7 @@ if ($_SESSION['rol'] == 1) {?>
                                             <div class="modal-footer">
                                                 <input type="hidden" name="tipo" value="pago">
                                                 <input type="hidden" id="idSale" name="idSale" value="0">
+                                                <input type="hidden" id="idSeller" name="idSeller" value="0">
                                                 <input type="hidden" id="totalB" name="totalB" value="0">
                                                 <input type="hidden" id="totalP" name="totalP" value="0">
                                                 <input type="hidden" id="schlenkerP" name="schlenkerP" value="0">
