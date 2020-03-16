@@ -734,7 +734,7 @@ try {
                                                         name="form-TotalCollected" method="post"
                                                         action="BLL/rptTotalCollected.php">
                                                         <div class="row">
-                                                            <div class="col-md-6">
+                                                            <div class="col-md-3">
                                                                 <div class="form-group">
                                                                     <span class="text-danger text-uppercase">*</span>
                                                                     <label>Vendedor</label>
@@ -764,6 +764,18 @@ try {
 }
 ?>
                                                                         <!-- FIN PHP -->
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <span class="text-danger text-uppercase">*</span>
+                                                                    <label>Tipo de venta</label>
+                                                                    <select id="typeS" name="typeS"
+                                                                        class="form-control select2"
+                                                                        style="width: 100%;" value="0">
+                                                                        <option value="0">Distribución</option>
+                                                                        <option value="1">Schlenker</option>
                                                                     </select>
                                                                 </div>
                                                             </div>
