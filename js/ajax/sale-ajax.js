@@ -1,7 +1,7 @@
-$(document).ready(function() {
+$(document).ready(function () {
 	var bandera = 0;
 
-	$('.SelectPrice').on('change', function(e) {
+	$('.SelectPrice').on('change', function (e) {
 		e.preventDefault();
 
 		var id = $(this).attr('id-data');
@@ -16,7 +16,7 @@ $(document).ready(function() {
 			url: 'BLL/product.php',
 			success(data) {
 				console.log(data);
-				$.each(data, function(key, registro) {
+				$.each(data, function (key, registro) {
 					if (prec == 'users') {
 						$('#SelectPrecio' + registro.idProduct).val(registro.public);
 					} else if (prec == 'plus-square') {
@@ -31,7 +31,7 @@ $(document).ready(function() {
 		});
 	});
 
-	$('.agregar_productoS').on('click', function(e) {
+	$('.agregar_productoS').on('click', function (e) {
 		e.preventDefault();
 
 		var id = $(this).attr('data-id');
@@ -70,7 +70,7 @@ $(document).ready(function() {
 					console.log(data);
 
 					var nuevaFila = "<tr id='detalleS'>";
-					$.each(data, function(key, registro) {
+					$.each(data, function (key, registro) {
 						/* if (prec == 'users') {
                              var subtotal = (registro.public - descuento) * cantidad;
                              var precio = registro.public;
@@ -155,7 +155,7 @@ $(document).ready(function() {
 						timer: 1500
 					});
 				},
-				error: function(data) {
+				error: function (data) {
 					swal({
 						type: 'error',
 						title: 'Error',
@@ -166,7 +166,7 @@ $(document).ready(function() {
 		}
 	});
 
-	$('#form-sale').on('submit', function(e) {
+	$('#form-sale').on('submit', function (e) {
 		e.preventDefault();
 
 		swal({
@@ -199,7 +199,7 @@ $(document).ready(function() {
 			data: datos,
 			url: $(this).attr('action'),
 			datatype: 'json',
-			success: function(data) {
+			success: function (data) {
 				console.log(data);
 				var resultado = JSON.parse(data);
 				if (resultado.respuesta == 'exito') {
@@ -244,7 +244,7 @@ $(document).ready(function() {
 		});
 	});
 
-	$('#form-envio').on('submit', function(e) {
+	$('#form-envio').on('submit', function (e) {
 		e.preventDefault();
 
 		var datos = $(this).serializeArray();
@@ -258,7 +258,7 @@ $(document).ready(function() {
 			data: datos,
 			url: $(this).attr('action'),
 			datatype: 'json',
-			success: function(data) {
+			success: function (data) {
 				console.log(data);
 				var resultado = JSON.parse(data);
 				if (resultado.respuesta == 'exito') {
@@ -288,7 +288,7 @@ $(document).ready(function() {
 		});
 	});
 
-	$('#form-pay').on('submit', function(e) {
+	$('#form-pay').on('submit', function (e) {
 		e.preventDefault();
 
 		var saldoT = $('#totalP').val();
@@ -314,7 +314,7 @@ $(document).ready(function() {
 				data: datos,
 				url: $(this).attr('action'),
 				datatype: 'json',
-				success: function(data) {
+				success: function (data) {
 					console.log(data);
 					var resultado = JSON.parse(data);
 					if (resultado.respuesta == 'exito') {
@@ -349,7 +349,7 @@ $(document).ready(function() {
 		}
 	});
 
-	$('#form-correlative').on('submit', function(e) {
+	$('#form-correlative').on('submit', function (e) {
 		e.preventDefault();
 
 		var datos = $(this).serializeArray();
@@ -359,7 +359,7 @@ $(document).ready(function() {
 			data: datos,
 			url: $(this).attr('action'),
 			dataType: 'json',
-			success: function(data) {
+			success: function (data) {
 				console.log(data);
 				var resultado = data;
 				if (resultado.respuesta == 'exito') {
@@ -394,7 +394,7 @@ $(document).ready(function() {
 					});
 				}
 			},
-			error: function(data) {
+			error: function (data) {
 				swal({
 					position: 'top-end',
 					type: 'error',
@@ -406,7 +406,7 @@ $(document).ready(function() {
 		});
 	});
 
-	$('#form-correlative-guia').on('submit', function(e) {
+	$('#form-correlative-guia').on('submit', function (e) {
 		e.preventDefault();
 
 		var datos = $(this).serializeArray();
@@ -416,7 +416,7 @@ $(document).ready(function() {
 			data: datos,
 			url: $(this).attr('action'),
 			dataType: 'json',
-			success: function(data) {
+			success: function (data) {
 				console.log(data);
 				var resultado = data;
 				if (resultado.respuesta == 'exito') {
@@ -449,7 +449,7 @@ $(document).ready(function() {
 					});
 				}
 			},
-			error: function(data) {
+			error: function (data) {
 				swal({
 					position: 'top-end',
 					type: 'error',
@@ -461,7 +461,7 @@ $(document).ready(function() {
 		});
 	});
 
-	$('#form-correlative-envio').on('submit', function(e) {
+	$('#form-correlative-envio').on('submit', function (e) {
 		e.preventDefault();
 
 		var datos = $(this).serializeArray();
@@ -471,7 +471,7 @@ $(document).ready(function() {
 			data: datos,
 			url: $(this).attr('action'),
 			dataType: 'json',
-			success: function(data) {
+			success: function (data) {
 				console.log(data);
 				var resultado = data;
 				if (resultado.respuesta == 'exito') {
@@ -504,7 +504,7 @@ $(document).ready(function() {
 					});
 				}
 			},
-			error: function(data) {
+			error: function (data) {
 				swal({
 					position: 'top-end',
 					type: 'error',
@@ -516,7 +516,7 @@ $(document).ready(function() {
 		});
 	});
 
-	$('.detalle_sale').on('click', function(e) {
+	$('.detalle_sale').on('click', function (e) {
 		e.preventDefault();
 		$('#detalles')
 			.find('tbody')
@@ -537,7 +537,7 @@ $(document).ready(function() {
 			url: 'BLL/' + tipo + '.php',
 			success(data) {
 				console.log(data);
-				$.each(data, function(key, registro) {
+				$.each(data, function (key, registro) {
 					var nuevaFila = '<tr>';
 					var sub =
 						registro.quantity *
@@ -582,7 +582,7 @@ $(document).ready(function() {
 				swal.close();
 				$('#modal-detailS').modal('show');
 			},
-			error: function(data) {
+			error: function (data) {
 				swal({
 					type: 'error',
 					title: 'Error',
@@ -592,7 +592,7 @@ $(document).ready(function() {
 		});
 	});
 
-	$('.detalle_balance').on('click', function(e) {
+	$('.detalle_balance').on('click', function (e) {
 		e.preventDefault();
 		$('#detallesB')
 			.find('tbody')
@@ -610,8 +610,6 @@ $(document).ready(function() {
 
 		$('#idSeller').val(seller);
 
-		console.log(schlenkerP + ' ' + distribucionP);
-
 		swal({
 			title: 'Cargando balance de saldos...'
 		});
@@ -623,18 +621,16 @@ $(document).ready(function() {
 			},
 			url: 'BLL/' + tipo + '.php',
 			success(data) {
-				console.log(data);
-
 				var totalP = 0;
 				var diferencia = 0;
 				$('#schlenkerP').val(schlenkerP);
 				$('#distribucionP').val(distribucionP);
-				$.each(data, function(key, registro) {
+				$.each(data, function (key, registro) {
 					if (registro.state == 2) {
 						var nuevaFila = '<tr>';
 						nuevaFila += '<td>' + convertDate(registro.date);
 						+'</td>';
-						nuevaFila += '<td>' + registro.noReceipt + '</td>';
+						nuevaFila += '<td>' + registro.noReceipt + '<br>' + registro._idSeller + '</td>';
 						if (registro.cheque == 1) {
 							nuevaFila +=
 								"<td><small class='label label-warning'><i class='fa fa-bank'></i> Cheque</small></td>";
@@ -658,7 +654,7 @@ $(document).ready(function() {
 						if (tipo == 0) {
 							nuevaFila += '<td><small>-</small></td>';
 						} else if (tipo == 1) {
-							nuevaFila += '<td>' + registro.noReceipt + '</td>';
+							nuevaFila += '<td>' + registro.noReceipt + '<br>' + registro._idSeller + '</td>';
 						}
 						if (tipo == 0) {
 							var d = new Date();
@@ -677,18 +673,18 @@ $(document).ready(function() {
 								success(data) {
 									console.log(data);
 									var totalP = 0;
-									$.each(data, function(key, registro) {
+									$.each(data, function (key, registro) {
 										if (
 											diferencia <= registro.sd30 ||
 											diferencia <= registro.od30
 										) {
 											$('#infoComi').append(
 												seller +
-													'<br> Comisión base: Schlenker: ' +
-													registro.s30 +
-													'%, Otros: ' +
-													registro.o30 +
-													'%'
+												'<br> Comisión base: Schlenker: ' +
+												registro.s30 +
+												'%, Otros: ' +
+												registro.o30 +
+												'%'
 											);
 											$('#comiS').val(registro.s30);
 											$('#comiD').val(registro.o30);
@@ -700,11 +696,11 @@ $(document).ready(function() {
 										) {
 											$('#infoComi').append(
 												seller +
-													'<br> Comisión base: Schlenker: ' +
-													registro.s60 +
-													'%, Otros: ' +
-													registro.o60 +
-													'%'
+												'<br> Comisión base: Schlenker: ' +
+												registro.s60 +
+												'%, Otros: ' +
+												registro.o60 +
+												'%'
 											);
 											$('#comiS').val(registro.s60);
 											$('#comiD').val(registro.o60);
@@ -716,9 +712,9 @@ $(document).ready(function() {
 										) {
 											$('#infoComi').append(
 												seller +
-													'<br> Comisión base: Schlenker: ' +
-													registro.s90 +
-													'%, Otros: 0%'
+												'<br> Comisión base: Schlenker: ' +
+												registro.s90 +
+												'%, Otros: 0%'
 											);
 											$('#comiS').val(registro.s90);
 											$('#comiD').val('0');
@@ -731,7 +727,7 @@ $(document).ready(function() {
 										}
 									});
 								},
-								error: function(data) {
+								error: function (data) {
 									swal({
 										type: 'error',
 										title: 'Error',
@@ -751,7 +747,7 @@ $(document).ready(function() {
 							}
 						}
 						if (tipo == 0) {
-							nuevaFila += '<td><small>-</small></td>';
+							nuevaFila += '<td><small></small></td>';
 							nuevaFila += '<td><small>-</small></td>';
 						} else if (tipo == 1) {
 							nuevaFila += '<td>' + registro.noDocument + '</td>';
@@ -804,13 +800,13 @@ $(document).ready(function() {
 				$('#totalP').val(totalP.toFixed(2));
 				$('#days').append(
 					"<h4><i class='icon fa fa-info'></i>" +
-						diferencia +
-						' Día(s) Transcurridos</h4>'
+					diferencia +
+					' Día(s) Transcurridos</h4>'
 				);
 
 				balance(id);
 			},
-			error: function(data) {
+			error: function (data) {
 				swal({
 					type: 'error',
 					title: 'Error',
@@ -820,17 +816,17 @@ $(document).ready(function() {
 		});
 	});
 
-	$('#cheque').on('ifChecked', function(event) {
+	$('#cheque').on('ifChecked', function (event) {
 		bandera = 1;
 		console.log('true');
 	});
 
-	$('#cheque').on('ifUnchecked', function(event) {
+	$('#cheque').on('ifUnchecked', function (event) {
 		bandera = 0;
 		console.log('false');
 	});
 
-	$('.detalle_balanceC').on('click', function(e) {
+	$('.detalle_balanceC').on('click', function (e) {
 		e.preventDefault();
 		$('#detallesB')
 			.find('tbody')
@@ -853,12 +849,12 @@ $(document).ready(function() {
 			url: 'BLL/' + tipo + '.php',
 			success(data) {
 				console.log(data);
-				$.each(data, function(key, registro) {
+				$.each(data, function (key, registro) {
 					if (registro.state == 2) {
 						var nuevaFila = '<tr>';
 						nuevaFila += '<td>' + convertDate(registro.date);
 						+'</td>';
-						nuevaFila += '<td>' + registro.noReceipt + '</td>';
+						nuevaFila += '<td>' + registro.noReceipt + '<br>' + registro._idSeller + '</td>';
 						if (registro.cheque == 1) {
 							nuevaFila +=
 								"<td><small class='label label-warning'><i class='fa fa-bank'></i> Cheque</small></td>";
@@ -883,7 +879,7 @@ $(document).ready(function() {
 							nuevaFila += '<td><small>-</small></td>';
 							nuevaFila += '<td><small>-</small></td>';
 						} else if (tipo == 1) {
-							nuevaFila += '<td>' + registro.noReceipt + '</td>';
+							nuevaFila += '<td>' + registro.noReceipt + '<br>' + registro._idSeller + '</td>';
 							if (registro.cheque == 1) {
 								nuevaFila +=
 									"<td><small class='label label-warning'><i class='fa fa-bank'></i> Cheque</small></td>";
@@ -920,7 +916,7 @@ $(document).ready(function() {
 				swal.close();
 				$('#modal-balance').modal('show');
 			},
-			error: function(data) {
+			error: function (data) {
 				swal({
 					type: 'error',
 					title: 'Error',
@@ -930,7 +926,7 @@ $(document).ready(function() {
 		});
 	});
 
-	$('#button-stateCustomer').on('click', function(e) {
+	$('#button-stateCustomer').on('click', function (e) {
 		e.preventDefault();
 		$('#listadoReporte7').html('');
 
@@ -1013,14 +1009,14 @@ $(document).ready(function() {
 				idCustomer: $('#customerS').val()
 			},
 			url: 'BLL/rptstateByCustomer.php',
-			success: function(data) {
+			success: function (data) {
 				console.log(data);
 				if (data.length == 0) {
 					$('#codeName').text(
 						'No hay ventas registradas con el cliente seleccionado'
 					);
 				}
-				$.each(data, function(key, registro) {
+				$.each(data, function (key, registro) {
 					var saldo = 0;
 					$('#codeName').text(
 						registro.customerCode + ' ' + registro.customerName
@@ -1063,7 +1059,7 @@ $(document).ready(function() {
 				swal.close();
 				funciones();
 			},
-			error: function(error, data) {
+			error: function (error, data) {
 				console.log(error.responseText);
 				swal({
 					type: 'error',
@@ -1074,7 +1070,7 @@ $(document).ready(function() {
 		});
 	});
 
-	$('#datepicker').change(function() {
+	$('#datepicker').change(function () {
 		if ($('#days').length == 0) {
 			return;
 		}
@@ -1106,15 +1102,15 @@ $(document).ready(function() {
 			success(data) {
 				console.log(data);
 				var totalP = 0;
-				$.each(data, function(key, registro) {
+				$.each(data, function (key, registro) {
 					if (diferencia <= registro.sd30 || diferencia <= registro.od30) {
 						$('#infoComi').append(
 							seller +
-								'<br> Comisión base: Schlenker: ' +
-								registro.s30 +
-								'%, Otros: ' +
-								registro.o30 +
-								'%'
+							'<br> Comisión base: Schlenker: ' +
+							registro.s30 +
+							'%, Otros: ' +
+							registro.o30 +
+							'%'
 						);
 						$('#comiS').val(registro.s30);
 						$('#comiD').val(registro.o30);
@@ -1124,11 +1120,11 @@ $(document).ready(function() {
 					) {
 						$('#infoComi').append(
 							seller +
-								'<br> Comisión base: Schlenker: ' +
-								registro.s60 +
-								'%, Otros: ' +
-								registro.o60 +
-								'%'
+							'<br> Comisión base: Schlenker: ' +
+							registro.s60 +
+							'%, Otros: ' +
+							registro.o60 +
+							'%'
 						);
 						$('#comiS').val(registro.s60);
 						$('#comiD').val(registro.o60);
@@ -1138,9 +1134,9 @@ $(document).ready(function() {
 					) {
 						$('#infoComi').append(
 							seller +
-								'<br> Comisión base: Schlenker: ' +
-								registro.s90 +
-								'%, Otros: 0%'
+							'<br> Comisión base: Schlenker: ' +
+							registro.s90 +
+							'%, Otros: 0%'
 						);
 						$('#comiS').val(registro.s90);
 						$('#comiD').val('0');
@@ -1154,12 +1150,12 @@ $(document).ready(function() {
 				});
 				$('#days').append(
 					"<h4><i class='icon fa fa-info'></i>" +
-						diferencia +
-						' Día(s) Transcurridos</h4>'
+					diferencia +
+					' Día(s) Transcurridos</h4>'
 				);
 				swal.close();
 			},
-			error: function(data) {
+			error: function (data) {
 				swal({
 					type: 'error',
 					title: 'Error',
@@ -1208,12 +1204,12 @@ function confirmarPago(idSale, idBalance) {
 						success(data) {
 							console.log(data);
 							var totalP = 0;
-							$.each(data, function(key, registro) {
+							$.each(data, function (key, registro) {
 								if (registro.state == 2) {
 									var nuevaFila = '<tr>';
 									nuevaFila += '<td>' + convertDate(registro.date);
 									+'</td>';
-									nuevaFila += '<td>' + registro.noReceipt + '</td>';
+									nuevaFila += '<td>' + registro.noReceipt + '<br>' + registro._idSeller + '</td>';
 									if (registro.cheque == 1) {
 										nuevaFila +=
 											"<td><small class='label label-warning'><i class='fa fa-bank'></i> Cheque</small></td>";
@@ -1235,9 +1231,9 @@ function confirmarPago(idSale, idBalance) {
 									nuevaFila += '<td>' + convertDate(registro.date);
 									+'</td>';
 									if (tipo == 0) {
-										nuevaFila += '<td><small>-</small></td>';
+										nuevaFila += '<td><small></small></td>';
 									} else if (tipo == 1) {
-										nuevaFila += '<td>' + registro.noReceipt + '</td>';
+										nuevaFila += '<td>' + registro.noReceipt + '<br>' + registro._idSeller + '</td>';
 									}
 									if (tipo == 0) {
 										nuevaFila +=
@@ -1252,7 +1248,7 @@ function confirmarPago(idSale, idBalance) {
 										}
 									}
 									if (tipo == 0) {
-										nuevaFila += '<td><small>-</small></td>';
+										nuevaFila += '<td><small></small></td>';
 									} else if (tipo == 1) {
 										nuevaFila += '<td>' + registro.noDocument + '</td>';
 									}
@@ -1298,7 +1294,7 @@ function confirmarPago(idSale, idBalance) {
 							$('#totalP').val(totalP.toFixed(2));
 							balance(idSale);
 						},
-						error: function(data) {
+						error: function (data) {
 							swal({
 								type: 'error',
 								title: 'Error',
@@ -1356,12 +1352,12 @@ function anularPago(idSale, idBalance) {
 						success(data) {
 							console.log(data);
 							var totalP = 0;
-							$.each(data, function(key, registro) {
+							$.each(data, function (key, registro) {
 								if (registro.state == 2) {
 									var nuevaFila = '<tr>';
 									nuevaFila += '<td>' + convertDate(registro.date);
 									+'</td>';
-									nuevaFila += '<td>' + registro.noReceipt + '</td>';
+									nuevaFila += '<td>' + registro.noReceipt + '<br>' + registro._idSeller + '</td>';
 									if (registro.cheque == 1) {
 										nuevaFila +=
 											"<td><small class='label label-warning'><i class='fa fa-bank'></i> Cheque</small></td>";
@@ -1383,9 +1379,9 @@ function anularPago(idSale, idBalance) {
 									nuevaFila += '<td>' + convertDate(registro.date);
 									+'</td>';
 									if (tipo == 0) {
-										nuevaFila += '<td><small>-</small></td>';
+										nuevaFila += '<td><small></td>';
 									} else if (tipo == 1) {
-										nuevaFila += '<td>' + registro.noReceipt + '</td>';
+										nuevaFila += '<td>' + registro.noReceipt + '<br>' + registro._idSeller + '</td>';
 									}
 									if (tipo == 0) {
 										nuevaFila +=
@@ -1400,7 +1396,7 @@ function anularPago(idSale, idBalance) {
 										}
 									}
 									if (tipo == 0) {
-										nuevaFila += '<td><small>-</small></td>';
+										nuevaFila += '<td><small></small></td>';
 									} else if (tipo == 1) {
 										nuevaFila += '<td>' + registro.noDocument + '</td>';
 									}
@@ -1446,7 +1442,7 @@ function anularPago(idSale, idBalance) {
 							$('#totalP').val(totalP.toFixed(2));
 							balance(idSale);
 						},
-						error: function(data) {
+						error: function (data) {
 							swal({
 								type: 'error',
 								title: 'Error',
@@ -1507,7 +1503,7 @@ function anularSale(idSale) {
 		data: datos,
 		url: 'BLL/anularSale.php',
 		datatype: 'json',
-		success: function(data) {
+		success: function (data) {
 			console.log(data);
 			resultado = JSON.parse(data);
 			if (resultado.respuesta == 'exito') {
@@ -1518,7 +1514,7 @@ function anularSale(idSale) {
 					showConfirmButton: false,
 					timer: 1500
 				});
-				setTimeout(function() {
+				setTimeout(function () {
 					location.reload();
 				}, 3000);
 			} else {
@@ -1548,7 +1544,7 @@ function generarFactura() {
 		cancelButtonText: 'Cancelar'
 	}).then(() => {
 		var idSale = $('#idSale').val();
-		setTimeout(function() {
+		setTimeout(function () {
 			window.location.href = 'printSale.php?id=' + idSale;
 		}, 500);
 	});
@@ -1570,9 +1566,9 @@ function imprimir(tipo, idSale) {
 				type: 'GET',
 				url: 'BLL/correlativeGuia.php',
 				dataType: 'json',
-				success: function(data) {
+				success: function (data) {
 					console.log(data);
-					$.each(data, function(key, registro) {
+					$.each(data, function (key, registro) {
 						var last = parseInt(registro.last) + parseInt(1);
 						updateCorrelativo('envio', 'A', last);
 						$.ajax({
@@ -1584,7 +1580,7 @@ function imprimir(tipo, idSale) {
 							},
 							url: 'BLL/sale.php',
 							datatype: 'json',
-							success: function(data) {
+							success: function (data) {
 								console.log(data);
 								var resultado = JSON.parse(data);
 								if (resultado.respuesta == 'exito') {
@@ -1595,7 +1591,7 @@ function imprimir(tipo, idSale) {
 						});
 					});
 				},
-				error: function(data) {
+				error: function (data) {
 					alert('error');
 				}
 			});
@@ -1625,7 +1621,7 @@ function cancelSale(idSale) {
 			console.log(data);
 			var resultado = JSON.parse(data);
 			if (resultado.respuesta == 'exito') {
-				setTimeout(function() {
+				setTimeout(function () {
 					location.reload();
 				}, 1500);
 			} else {
@@ -1648,7 +1644,7 @@ function balance(idSale) {
 		url: 'BLL/listBalanceT.php',
 		success(data) {
 			console.log(data);
-			$.each(data, function(key, registro) {
+			$.each(data, function (key, registro) {
 				$('#totalBal').text('Q. ' + registro.balance);
 				$('#totalB').val(parseFloat(registro.balance));
 				$('#idSale').val(idSale);
@@ -1660,7 +1656,7 @@ function balance(idSale) {
 			swal.close();
 			$('#modal-balance').modal('show');
 		},
-		error: function(data) {
+		error: function (data) {
 			swal({
 				type: 'error',
 				title: 'Error',
@@ -1680,7 +1676,7 @@ function updateCorrelativo(correlative, serie, last) {
 		},
 		url: 'BLL/correlative.php',
 		dataType: 'json',
-		success: function(data) {
+		success: function (data) {
 			console.log(data);
 			var resultado = data;
 			if (resultado.respuesta == 'exito') {
@@ -1702,7 +1698,7 @@ function updateCorrelativo(correlative, serie, last) {
 				});
 			}
 		},
-		error: function(data) {
+		error: function (data) {
 			swal({
 				position: 'top-end',
 				type: 'error',
@@ -1717,24 +1713,24 @@ function updateCorrelativo(correlative, serie, last) {
 function changeReportF(report) {
 	$('#divreporteF').html(
 		'<iframe src="reportsFPDF/' +
-			report +
-			'" style="width: 100%; min-width: 300px; height: 640px"></iframe>'
+		report +
+		'" style="width: 100%; min-width: 300px; height: 640px"></iframe>'
 	);
 }
 
 function changeReportE(report) {
 	$('#divreporteE').html(
 		'<iframe src="reportsFPDF/' +
-			report +
-			'" style="width: 100%; min-width: 300px; height: 390px"></iframe>'
+		report +
+		'" style="width: 100%; min-width: 300px; height: 390px"></iframe>'
 	);
 }
 
 function changeReportL(report) {
 	$('#divreporteL').html(
 		'<iframe src="reportsFPDF/' +
-			report +
-			'" style="width: 100%; min-width: 300px; height: 600px"></iframe>'
+		report +
+		'" style="width: 100%; min-width: 300px; height: 600px"></iframe>'
 	);
 }
 

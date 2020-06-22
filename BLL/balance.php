@@ -12,6 +12,7 @@ if ($_POST['tipo'] == 'pago') {
     $comiD = $_POST['comiD'];
     $schlenkerP = $_POST['schlenkerP'];
     $distribucionP = $_POST['distribucionP'];
+    $vendedor = $_POST['sellerS'];
     $bal = 1;
     $new_totalB = $totalB - $amount;
     $totalS = ($amount * ($schlenkerP / 100)) * ($comiS / 100);
@@ -19,7 +20,7 @@ if ($_POST['tipo'] == 'pago') {
     $fc = date('Y-m-d', strtotime($dateB));
 
     try {
-        if ($id_sale == '' || $amount == '' || $dateB == '' || $new_totalB < 0 || $comiS == '' || $comiD == '') {
+        if ($id_sale == '' || $amount == '' || $dateB == '' || $new_totalB < 0 || $comiS == '' || $comiD == '' || $vendedor == "") {
             $respuesta = array(
                 'respuesta' => 'vacio',
             );
@@ -27,8 +28,8 @@ if ($_POST['tipo'] == 'pago') {
             $cheque = 0;
             if (isset($_POST['cheque'])) {
                 $cheque = 1;
-                $stmt = $conn->prepare("INSERT INTO balance(_idSale, noDocument, date, balpay, amount, noReceipt, balance, cheque, state, commissionS, totalS, commissionO, totalO) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                $stmt->bind_param("issidsdiiidid", $id_sale, $noDocument, $fc, $bal, $amount, $noReceipt, $totalB, $cheque, $cheque, $comiS, $totalS, $comiD, $totalD);
+                $stmt = $conn->prepare("INSERT INTO balance(_idSale, noDocument, date, balpay, amount, noReceipt, balance, cheque, state, commissionS, totalS, commissionO, totalO, _idSeller) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                $stmt->bind_param("issidsdiiididi", $id_sale, $noDocument, $fc, $bal, $amount, $noReceipt, $totalB, $cheque, $cheque, $comiS, $totalS, $comiD, $totalD, $vendedor);
                 $stmt->execute();
                 $id_registro = $stmt->insert_id;
                 if ($id_registro > 0) {
@@ -50,8 +51,8 @@ if ($_POST['tipo'] == 'pago') {
                 $stmt->close();
                 $conn->close();
             } else {
-                $stmt = $conn->prepare("INSERT INTO balance(_idSale, noDocument, date, balpay, amount, noReceipt, balance, commissionS, totalS, commissionO, totalO) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                $stmt->bind_param("issidsdidid", $id_sale, $noDocument, $fc, $bal, $amount, $noReceipt, $new_totalB, $comiS, $totalS, $comiD, $totalD);
+                $stmt = $conn->prepare("INSERT INTO balance(_idSale, noDocument, date, balpay, amount, noReceipt, balance, commissionS, totalS, commissionO, totalO, _idSeller) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                $stmt->bind_param("issidsdididi", $id_sale, $noDocument, $fc, $bal, $amount, $noReceipt, $new_totalB, $comiS, $totalS, $comiD, $totalD, $vendedor);
                 $stmt->execute();
                 $id_registro = $stmt->insert_id;
                 if ($id_registro > 0) {

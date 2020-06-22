@@ -1,91 +1,97 @@
-<footer class="main-footer">
-    <div class="pull-right hidden-xs">
-        <b>Version</b> 1.1.0
     </div>
-    <strong>Copyright &copy; 2018 - <?php echo date("Y"); ?> <a href="#">Applitech Software Solutions</a>.</strong>
-    Todos Los
-    Derechos Reservados.
-</footer>
+    <!-- /.\VUE -->
+
+    <footer class="main-footer">
+        <div class="pull-right hidden-xs">
+            <b>Version</b> 1.1.0
+        </div>
+        <strong>Copyright &copy; 2018 - <?php echo date("Y"); ?> <a href="#">Applitech Software Solutions</a>.</strong>
+        Todos Los
+        Derechos Reservados.
+    </footer>
 
 
-</div>
-<!-- ./wrapper -->
+    </div>
+    <!-- ./wrapper -->
 
-<!-- jQuery 3 -->
-<script src="js/jquery.min.js">
-</script>
-<!-- Bootstrap 3.3.7 -->
-<script src="js/bootstrap.min.js">
-</script>
-<!-- SlimScroll -->
-<script src="js/jquery.slimscroll.min.js">
-</script>
-<!-- FastClick -->
-<script src="js/fastclick.js">
-</script>
-<!-- AdminLTE App -->
-<script src="js/adminlte.min.js">
-</script>
+    <!-- jQuery 3 -->
+    <script src="js/jquery.min.js">
+    </script>
+    <!-- Bootstrap 3.3.7 -->
+    <script src="js/bootstrap.min.js">
+    </script>
+    <!-- SlimScroll -->
+    <script src="js/jquery.slimscroll.min.js">
+    </script>
+    <!-- FastClick -->
+    <script src="js/fastclick.js">
+    </script>
+    <!-- AdminLTE App -->
+    <script src="js/adminlte.min.js">
+    </script>
 
-<script>
+    <script>
 function convertDate(dateString) {
     var p = dateString.split(/\D/g)
     return [p[2], p[1], p[0]].join("/")
 }
-</script>
-<script src="js/demo.js">
-</script>
-<script src="js/sweetalert2.min.js">
-</script>
-<script src="js/moment.min.js">
-</script>
-<script src="js/raphael.min.js">
-</script>
-<script src="js/morris.min.js">
-</script>
-<script src="js/Chart.min.js">
-</script>
-<script src="js/bootstrap-notify.min">
-</script>
-<!-- AJAX FOR SCHLENKER PHARMA -->
-<script src="js/ajax/index-ajax.js">
-</script>
-<script src="js/ajax/bill-ajax.js">
-</script>
-<script src="js/ajax/reports-ajax.js">
-</script>
-<script src="js/ajax/sale-ajax.js">
-</script>
-<script src="js/ajax/customer-ajax.js">
-</script>
-<script src="js/ajax/purchase-ajax.js">
-</script>
-<script src="js/ajax/route-ajax.js">
-</script>
-<script src="js/ajax/product-ajax.js">
-</script>
-<script src="js/ajax/seller-ajax.js">
-</script>
-<script src="js/ajax/provider-ajax.js">
-</script>
-<script src="js/ajax/user-ajax.js">
-</script>
-<script src="js/ajax/login.js">
-</script>
-<script src="js/jquery.dataTables.min.js">
-</script>
-<script src="js/dataTables.bootstrap.min.js">
-</script>
-<script src="js/bootstrap-datepicker.min.js">
-</script>
-<script src="js/icheck.min.js">
-</script>
-<script src="js/select2.full.min.js">
-</script>
-<script src="https://cdn.datatables.net/plug-ins/1.10.19/sorting/datetime-moment.js"></script>
+    </script>
+    <script src="js/demo.js">
+    </script>
+    <script src="js/sweetalert2.min.js">
+    </script>
+    <script src="js/moment.min.js">
+    </script>
+    <script src="js/raphael.min.js">
+    </script>
+    <script src="js/morris.min.js">
+    </script>
+    <script src="js/Chart.min.js">
+    </script>
+    <script src="js/bootstrap-notify.min">
+    </script>
+    <!-- AJAX FOR SCHLENKER PHARMA -->
+    <script src="js/ajax/index-ajax.js">
+    </script>
+    <script src="js/ajax/bill-ajax.js">
+    </script>
+    <script src="js/ajax/reports-ajax.js">
+    </script>
+    <script src="js/ajax/sale-ajax.js">
+    </script>
+    <script src="js/ajax/customer-ajax.js">
+    </script>
+    <script src="js/ajax/purchase-ajax.js">
+    </script>
+    <script src="js/ajax/route-ajax.js">
+    </script>
+    <script src="js/ajax/product-ajax.js">
+    </script>
+    <script src="js/ajax/seller-ajax.js">
+    </script>
+    <script src="js/ajax/provider-ajax.js">
+    </script>
+    <script src="js/ajax/user-ajax.js">
+    </script>
+    <script src="js/ajax/login.js">
+    </script>
+    <script src="js/jquery.dataTables.min.js">
+    </script>
+    <script src="js/dataTables.bootstrap.min.js">
+    </script>
+    <script src="js/bootstrap-datepicker.min.js">
+    </script>
+    <!-- idioma ESPÑOL Datepicker -->
+    <script src='https://cdn.jsdelivr.net/bootstrap.datepicker-fork/1.3.0/js/locales/bootstrap-datepicker.es.js'>
+    </script>
+    <!-- idioma ESPÑOL Datepicker -->
+    <script src="js/icheck.min.js">
+    </script>
+    <script src="js/select2.full.min.js">
+    </script>
+    <script src="https://cdn.datatables.net/plug-ins/1.10.19/sorting/datetime-moment.js"></script>
 
-
-<script>
+    <script>
 $(document).ready(function() {
 
     $('.sidebar-menu').tree()
@@ -106,31 +112,38 @@ $(document).ready(function() {
         return $state;
     }
 
+    $.fn.datepicker.defaults.language = 'es';
+
     $('#datepicker, #datepicker5, #datepicker6, #datepicker7, #datepicker8, #datepicker9, #datepicker10')
         .datepicker({
             format: 'dd/mm/yyyy',
-            autoclose: true
-        });
+            autoclose: true,
+        })
+        .datepicker('setDate', moment(new Date()).format('DD/MM/YYYY'));
 
     $('.datepick').datepicker({
-        format: 'dd/mm/yyyy',
-        autoclose: true
-    });
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+        })
+        .datepicker('setDate', moment(new Date()).format('DD/MM/YYYY'));
 
     $('#datepicker2').datepicker({
-        format: 'dd/mm/yyyy',
-        autoclose: true
-    });
+            format: 'dd/mm/yyyy',
+            autoclose: true
+        })
+        .datepicker('setDate', moment(new Date()).format('DD/MM/YYYY'));
 
     $('#datepicker3').datepicker({
-        format: 'dd/mm/yyyy',
-        autoclose: true
-    });
+            format: 'dd/mm/yyyy',
+            autoclose: true
+        })
+        .datepicker('setDate', moment(new Date()).format('DD/MM/YYYY'));
 
     $('#datepicker4').datepicker({
-        format: 'dd/mm/yyyy',
-        autoclose: true
-    });
+            format: 'dd/mm/yyyy',
+            autoclose: true
+        })
+        .datepicker('setDate', moment(new Date()).format('DD/MM/YYYY'));
 
     //iCheck for checkbox and radio inputs
     $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
@@ -200,7 +213,7 @@ function changeReport(report) {
     $('#divreporte').html('<iframe src="ReportsPDF/' + report +
         '" style="width: 100%; min-width: 300px; height: 810px"></iframe>');
 }
-</script>
-</body>
+    </script>
+    </body>
 
-</html>
+    </html>

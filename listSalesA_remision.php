@@ -130,8 +130,7 @@ if ($_SESSION['rol'] == 1) {?>
                                                     <div class="form-group">
                                                         <label for="noDocument">No. de documento</label>
                                                         <input type="text" class="form-control" id="noDocument"
-                                                            name="noDocument"
-                                                            placeholder="Escriba un número de documento">
+                                                            name="noDocument" placeholder="Escriba un número">
                                                     </div>
                                                 </div>
                                             </div>
@@ -152,7 +151,7 @@ if ($_SESSION['rol'] == 1) {?>
                                                     <div class="form-group">
                                                         <label for="noReceipt">No. de recibo</label>
                                                         <input type="text" class="form-control" id="noReceipt"
-                                                            name="noReceipt" placeholder="Escriba un número de recibo">
+                                                            name="noReceipt" placeholder="Escriba un número">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
@@ -237,14 +236,34 @@ if ($_SESSION['rol'] == 1) {?>
                                                 <input type="hidden" id="totalP" name="totalP" value="0">
                                                 <input type="hidden" id="schlenkerP" name="schlenkerP" value="0">
                                                 <input type="hidden" id="distribucionP" name="distribucionP" value="0">
+                                                <div class="col-lg-6">
+                                                    <select id="sellerS" name="sellerS" class="form-control select2"
+                                                        style="width: 100%;" value="0">
+                                                        <option value="" selected>Seleccione un vendedor
+                                                        </option>
+                                                        <?php
+try {
+    $sql = "SELECT idSeller, sellerCode, sellerFirstName, sellerLastName FROM seller WHERE state = 0";
+    $resultado = $conn->query($sql);
+    while ($seller_sale = $resultado->fetch_assoc()) {?>
+                                                        <option value="<?php echo $seller_sale['idSeller']; ?>">
+                                                            <?php echo $seller_sale['sellerCode'] . " " . $seller_sale['sellerFirstName'] . " " . $seller_sale['sellerLastName']; ?>
+                                                        </option>
+                                                        <?php
+}
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+}
+?>
+                                                    </select>
+                                                </div>
                                                 <?php
 if ($_SESSION['rol'] == 1) {?>
-                                                <span class="text-warning pull-right"> *Debe llenar los campos
+                                                <button type="submit" class="btn btn-primary" id="crear-pago">
+                                                    <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+                                                <span class="text-warning"> *Debe llenar los campos
                                                     obligatorios
                                                 </span>
-                                                <button type="submit" class="btn btn-primary pull-right"
-                                                    id="crear-pago">
-                                                    <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
                                                 <?php
 } elseif ($_SESSION['rol'] == 2) {?>
                                                 <span class="text-warning pull-right"> *No tiene permisos para ingresar
