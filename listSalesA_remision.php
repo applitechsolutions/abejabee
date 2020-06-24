@@ -437,6 +437,7 @@ while ($sale = $resultado->fetch_assoc()) {
                                                 <button type="button" class="btn btn-primary btn-sm detalle_balance"
                                                     data-id="<?php echo $sale['idSale']; ?>" data-tipo="listBalance"
                                                     vendedor="<?php echo $sale['seller']; ?>"
+                                                    idVendedor="<?php echo $sale['_idSeller']; ?>"
                                                     schlenkerP="<?php echo $SchlenkerP; ?>"
                                                     distribucionP="<?php echo $distribucionP; ?>"><i
                                                         class="fa fa-balance-scale"></i> Balance</button>

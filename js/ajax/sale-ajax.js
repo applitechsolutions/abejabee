@@ -605,10 +605,13 @@ $(document).ready(function () {
 		var id = $(this).attr('data-id');
 		var tipo = $(this).attr('data-tipo');
 		var seller = $(this).attr('vendedor');
+		var idSeller = $(this).attr('idVendedor');
 		var schlenkerP = $(this).attr('schlenkerP');
 		var distribucionP = $(this).attr('distribucionP');
 
 		$('#idSeller').val(seller);
+		$('#sellerS').val(idSeller); // Select the option with a value of '1'
+		$('#sellerS').trigger('change'); // Notify any JS components that the value changed
 
 		swal({
 			title: 'Cargando balance de saldos...'
