@@ -180,6 +180,15 @@ try {
                                                                 <i class="fa fa-list-alt" aria-hidden="true"></i>
                                                                 Generar Listado</button>
                                                         </div>
+                                                        <h5>Comisiones por cobros</h5>
+                                                        <h6>Funciona a partir del 24/06/2020</h6>
+                                                        <!-- TABLA DEL LISTADO DE REPORTES -->
+                                                        <div id="listadoReporte2-1" class="modal-body">
+                                                        </div>
+                                                        <!-- TABLA DEL LISTADO DE REPORTES -->
+                                                        <hr>
+                                                        <h5>Comisiones génerales</h5>
+                                                        <h6>Funciona antes del 24/06/2020</h6>
                                                         <!-- TABLA DEL LISTADO DE REPORTES -->
                                                         <div id="listadoReporte2" class="modal-body">
                                                         </div>

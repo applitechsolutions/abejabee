@@ -23,6 +23,17 @@ try {
     echo $error;
 }
 
+try {
+    $sql = "SELECT S.dateStart, S.noDeliver, S.type, B.noDocument, B.date, B.amount, B.noReceipt, B.totalS, B.totalO, (SELECT concat(sellerFirstName, ' ', sellerLastName) FROM seller WHERE idSeller = S._idSeller) as seller
+    FROM sale S INNER JOIN balance B ON S.idSale = B._idSale WHERE S.state = 0 AND B.balpay = 1 AND B.state = 0 AND
+    B.date BETWEEN '$fi' AND '$ff' AND B._idSeller = $idVendedor ORDER BY B.date ASC;";
+
+    $resultado2 = $conn->query($sql);
+} catch (Exception $e) {
+    $error = $e->getMessage();
+    echo $error;
+}
+
 while ($nombre = $res->fetch_assoc()) {
     $vendedor = $nombre['seller'];
 }
@@ -103,6 +114,64 @@ $pagina = '
                 </div>
             </div>
             <div id="contenido">
+                                                                    <h5>Comisiones por cobros</h5>
+                                                        <h6>Funciona a partir del 24/06/2020</h6>
+                <table class="w3-table-all">
+                    <thead style="background-color: black;">
+                        <tr>
+                            <th style="background-color: #1d2128; color: white">Fecha</th>
+                            <th style="background-color: #1d2128; color: white">Remision No°</th>
+                            <th style="background-color: #1d2128; color: white">Fecha de pago</th>
+                            <th style="background-color: #1d2128; color: white">Recibo</th>
+                            <th style="background-color: #1d2128; color: white">Documento No°</th>
+                            <th style="background-color: #1d2128; color: white">Monto</th>
+                            <th style="background-color: #1d2128; color: white">Comisión SCH</th>
+                            <th style="background-color: #1d2128; color: white">Comisión Distribución</th>
+                            <th style="background-color: #1d2128; color: white">Comisión</th>
+                        </tr>
+                    </thead>
+                    <tbody class="w3-white">';
+$totalComision = 0;
+while ($sale = $resultado2->fetch_assoc()) {
+    $subtotal = $sale['totalS'] + $sale['totalO'];
+    $totalComision = $totalComision + $subtotal;
+    $dateStar = date_create($sale['dateStart']);
+    $fechapago = date_create($sale['date']);
+    if ($sale['type'] == 0) {
+        $type = 'Dist.';
+    } else {
+        $type = 'Schl.';
+    }
+    $pagina .= '
+                        <tr>
+                            <td>' . date_format($dateStar, 'd/m/y') . '</td>
+                            <td>' . $sale['noDeliver'] . ' ' . $type . '</td>
+                            <td>' . date_format($fechapago, 'd/m/y') . '</td>
+                            <td>' . $sale['noReceipt'] . '</td>
+                            <td>' . $sale['noDocument'] . '</td>
+                            <td>Q.' . $sale['amount'] . '</td>
+                            <td>Q. ' . $sale['totalS'] . '</td>
+                            <td>Q. ' . $sale['totalO'] . '</td>
+                            <td>Q. ' . number_format($subtotal, 2, '.', ',') . '</td>
+                        </tr>';
+}
+$pagina .= '</tbody>
+                    <tfoot>
+                        <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th style="text-align: right;" colspan="2">Total Comisiones :</th>
+                        <td>Q. <small>' . number_format($totalComision, 2, '.', ',') . '</small></td>
+                        </tr>
+                    </tfoot>
+                    </table>
+                    <hr>
+                <h5>Comisiones génerales</h5>
+                <h6>Funciona antes del 24/06/2020</h6>
                 <table class="w3-table-all">
                     <thead style="background-color: black;">
                         <tr>

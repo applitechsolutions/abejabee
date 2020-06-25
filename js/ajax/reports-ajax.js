@@ -1,5 +1,5 @@
-$(document).ready(function() {
-	$('#form-SalesBySeller').on('submit', function(e) {
+$(document).ready(function () {
+	$('#form-SalesBySeller').on('submit', function (e) {
 		e.preventDefault();
 		limpiarReportes();
 
@@ -37,8 +37,41 @@ $(document).ready(function() {
 			'</div><div class="row"><button type="button" onclick="printReport2()" class="btn bg-teal-active btn-md"><i class="fa fa-print"></i>' +
 			' Imprimir</button>' +
 			'</div><div class="row"><div class="form-group col-lg-6 pull-right"><div class="input-group"><span class="input-group-addon"><span class="text-danger text-uppercase">*</span><label for="totalComision" class="control-label">Total:</label><span><h5 id="totalComision" class="text-bold">Q.0.00</h5></span></span></div></div></div>';
+		var tabla2 =
+			'<div class="box-body table-responsive no-padding">' +
+			'<table id="registros2" class="table table-bordered table-striped">' +
+			'<thead>' +
+			'<tr>' +
+			'<th>Fecha</th>' +
+			'<th>Remision No°</th>' +
+			'<th>Fecha de pago</th>' +
+			'<th>Recibo</th>' +
+			'<th>Documento No°</th>' +
+			'<th>Monto</th>' +
+			'<th>Total SCH</th>' +
+			'<th>Total Distribución</th>' +
+			'<th>Comisión</th>' +
+			'</tr>' +
+			'</thead>' +
+			'<tbody class="contenidoRPT2"></tbody>' +
+			'<tfoot>' +
+			'<tr>' +
+			'<th>Fecha</th>' +
+			'<th>Remision No°</th>' +
+			'<th>Fecha de pago</th>' +
+			'<th>Recibo</th>' +
+			'<th>Documento No°</th>' +
+			'<th>Monto</th>' +
+			'<th>Total SCH</th>' +
+			'<th>Total Distribución</th>' +
+			'<th>Comisión</th>' +
+			'</tr>' +
+			'</tfoot>' +
+			'</table>' +
+			'</div><div class="row"><div class="form-group col-lg-6 pull-right"><div class="input-group"><span class="input-group-addon"><span class="text-danger text-uppercase">*</span><label for="totalComision" class="control-label">Total:</label><span><h5 id="totalComision2" class="text-bold">Q.0.00</h5></span></span></div></div></div>';
 
 		$('#listadoReporte2').append(tabla);
+		$('#listadoReporte2-1').append(tabla2);
 
 		var datos = $(this).serializeArray();
 
@@ -49,14 +82,55 @@ $(document).ready(function() {
 		swal.showLoading();
 
 		$.ajax({
+			type: 'POST',
+			data: datos,
+			url: 'BLL/rptSalesBySeller2.php',
+			datatype: 'json',
+			success: function (data) {
+				console.log(data);
+				var totalCom = 0;
+				$.each(data, function (key, registro) {
+					var totalComision =
+						parseFloat(registro.totalS) + parseFloat(registro.totalO);
+					totalCom = parseFloat(totalCom) + parseFloat(totalComision);
+					let contenido = '<tr>';
+					contenido += '<td>' + convertDate(registro.dateStart) + '</td>';
+					if (registro.type == 0) {
+						contenido += '<td>' + registro.noDeliver + ' Dist.' + '</td>';
+					} else {
+						contenido += '<td>' + registro.noDeliver + ' Schl.' + '</td>';
+					}
+					contenido += '<td>' + convertDate(registro.date) + '</td>';
+					contenido += '<td>' + registro.noReceipt + '</td>';
+					contenido += '<td>' + registro.noDocument + '</td>';
+					contenido += '<td>Q.' + registro.amount + '</td>';
+					contenido += '<td>Q.' + registro.totalS + '</td>';
+					contenido += '<td>Q.' + registro.totalO + '</td>';
+					contenido += '<td>Q.' + totalComision.toFixed(2) + '</td>';
+					contenido += '</tr>';
+					$('.contenidoRPT2').append(contenido);
+				});
+				$('#totalComision2').html('Q.' + totalCom.toFixed(2));
+				swal.close();
+				funciones2();
+			},
+			error: function (data) {
+				swal({
+					type: 'error',
+					title: 'Error',
+					text: 'Algo ha salido mal, intentalo más tarde'
+				});
+			}
+		});
+		$.ajax({
 			type: $(this).attr('method'),
 			data: datos,
 			url: $(this).attr('action'),
 			datatype: 'json',
-			success: function(data) {
+			success: function (data) {
 				console.log(data);
 				var totalCom = 0;
-				$.each(data, function(key, registro) {
+				$.each(data, function (key, registro) {
 					var totalComision =
 						parseFloat(registro.totalS) + parseFloat(registro.totalO);
 					totalCom = parseFloat(totalCom) + parseFloat(totalComision);
@@ -81,7 +155,7 @@ $(document).ready(function() {
 				swal.close();
 				funciones();
 			},
-			error: function(data) {
+			error: function (data) {
 				swal({
 					type: 'error',
 					title: 'Error',
@@ -91,7 +165,7 @@ $(document).ready(function() {
 		});
 	});
 
-	$('#form-rpt1').on('submit', function(e) {
+	$('#form-rpt1').on('submit', function (e) {
 		e.preventDefault();
 
 		limpiarReportes();
@@ -114,9 +188,9 @@ $(document).ready(function() {
 			data: datos,
 			url: $(this).attr('action'),
 			datatype: 'json',
-			success: function(data) {
+			success: function (data) {
 				console.log(data);
-				$.each(data, function(key, registro) {
+				$.each(data, function (key, registro) {
 					var contenido = '<tr>';
 					contenido += '<td>' + registro.route + '</td>';
 					contenido += '<td>' + registro.seller + '</td>';
@@ -143,7 +217,7 @@ $(document).ready(function() {
 				swal.close();
 				funciones();
 			},
-			error: function(data) {
+			error: function (data) {
 				swal({
 					type: 'error',
 					title: 'Error',
@@ -153,7 +227,7 @@ $(document).ready(function() {
 		});
 	});
 
-	$('#form-rptCustomByDep').on('submit', function(e) {
+	$('#form-rptCustomByDep').on('submit', function (e) {
 		e.preventDefault();
 
 		limpiarReportes();
@@ -177,9 +251,9 @@ $(document).ready(function() {
 			data: datos,
 			url: $(this).attr('action'),
 			datatype: 'json',
-			success: function(data) {
+			success: function (data) {
 				console.log(data);
-				$.each(data, function(key, registro) {
+				$.each(data, function (key, registro) {
 					var contenido = '<tr>';
 					contenido += '<td>' + registro.customerCode + '</td>';
 					contenido += '<td>' + registro.customerName + '</td>';
@@ -206,7 +280,7 @@ $(document).ready(function() {
 				swal.close();
 				funciones();
 			},
-			error: function(data) {
+			error: function (data) {
 				swal({
 					type: 'error',
 					title: 'Error',
@@ -216,7 +290,7 @@ $(document).ready(function() {
 		});
 	});
 
-	$('#form-ComBySeller').on('submit', function(e) {
+	$('#form-ComBySeller').on('submit', function (e) {
 		e.preventDefault();
 		limpiarReportes();
 
@@ -318,10 +392,10 @@ $(document).ready(function() {
 			data: datos,
 			url: $(this).attr('action'),
 			datatype: 'json',
-			success: function(data) {
+			success: function (data) {
 				console.log(data);
 				var totalCom = 0;
-				$.each(data, function(key, registro) {
+				$.each(data, function (key, registro) {
 					totalCom = parseFloat(totalCom) + parseFloat(registro.subtotal);
 					var contenido = '<tr>';
 					contenido += '<td>' + convertDate(registro.dateStart);
@@ -340,7 +414,7 @@ $(document).ready(function() {
 				swal.close();
 				funciones();
 			},
-			error: function(data) {
+			error: function (data) {
 				swal({
 					type: 'error',
 					title: 'Error',
@@ -354,9 +428,9 @@ $(document).ready(function() {
 			data: datos,
 			url: 'BLL/rptSalesByMake.php',
 			datatype: 'json',
-			success: function(data) {
+			success: function (data) {
 				console.log(data);
-				$.each(data, function(key, registro) {
+				$.each(data, function (key, registro) {
 					var contenido = '<tr>';
 					contenido += '<td>' + registro.marca + '</td>';
 					contenido += '<td>' + registro.cantidad + '</td>';
@@ -367,7 +441,7 @@ $(document).ready(function() {
 				swal.close();
 				funciones2();
 			},
-			error: function(data) {
+			error: function (data) {
 				swal({
 					type: 'error',
 					title: 'Error',
@@ -381,9 +455,9 @@ $(document).ready(function() {
 			data: datos,
 			url: 'BLL/rptSalesByRem.php',
 			datatype: 'json',
-			success: function(data) {
+			success: function (data) {
 				console.log(data);
-				$.each(data, function(key, registro) {
+				$.each(data, function (key, registro) {
 					var contenido = '<tr>';
 					contenido += '<td>' + convertDate(registro.dateStart);
 					+'</td>';
@@ -406,7 +480,7 @@ $(document).ready(function() {
 				swal.close();
 				funciones3();
 			},
-			error: function(data) {
+			error: function (data) {
 				swal({
 					type: 'error',
 					title: 'Error',
@@ -416,7 +490,7 @@ $(document).ready(function() {
 		});
 	});
 
-	$('#form-dailyStock').on('submit', function(e) {
+	$('#form-dailyStock').on('submit', function (e) {
 		e.preventDefault();
 		limpiarReportes();
 
@@ -466,10 +540,10 @@ $(document).ready(function() {
 			data: datos,
 			url: $(this).attr('action'),
 			datatype: 'json',
-			success: function(data) {
+			success: function (data) {
 				// console.log(data);
 
-				$.each(data, function(key, registro) {
+				$.each(data, function (key, registro) {
 					var stock = 0;
 					var stockActual = 0;
 					var ventas = 0;
@@ -499,7 +573,7 @@ $(document).ready(function() {
 				swal.close();
 				funciones();
 			},
-			error: function(data) {
+			error: function (data) {
 				swal({
 					type: 'error',
 					title: 'Error',
@@ -509,7 +583,7 @@ $(document).ready(function() {
 		});
 	});
 
-	$('#form-stockByProd').on('submit', function(e) {
+	$('#form-stockByProd').on('submit', function (e) {
 		e.preventDefault();
 		limpiarReportes();
 
@@ -587,10 +661,10 @@ $(document).ready(function() {
 			data: datos,
 			url: $(this).attr('action'),
 			datatype: 'json',
-			success: function(data) {
+			success: function (data) {
 				console.log(data);
 				var totalC = 0;
-				$.each(data, function(key, registro) {
+				$.each(data, function (key, registro) {
 					totalC = parseInt(totalC) + parseInt(registro.quantity);
 					var contenido = '<tr>';
 					contenido += '<td>' + convertDate(registro.datePurchase) + '</td>';
@@ -607,7 +681,7 @@ $(document).ready(function() {
 				swal.close();
 				funciones();
 			},
-			error: function(data) {
+			error: function (data) {
 				swal({
 					type: 'error',
 					title: 'Error',
@@ -621,11 +695,11 @@ $(document).ready(function() {
 			data: datos,
 			url: 'BLL/rptstockByProductV.php',
 			datatype: 'json',
-			success: function(data) {
+			success: function (data) {
 				console.log(data);
 				var actTotal;
 				var totalV = 0;
-				$.each(data, function(key, registro) {
+				$.each(data, function (key, registro) {
 					actTotal = registro.stock;
 					totalV = parseInt(totalV) + parseInt(registro.quantity);
 					var contenido = '<tr>';
@@ -646,7 +720,7 @@ $(document).ready(function() {
 				swal.close();
 				funciones2();
 			},
-			error: function(data) {
+			error: function (data) {
 				swal({
 					type: 'error',
 					title: 'Error',
@@ -656,7 +730,7 @@ $(document).ready(function() {
 		});
 	});
 
-	$('#form-stateCustomer').on('submit', function(e) {
+	$('#form-stateCustomer').on('submit', function (e) {
 		e.preventDefault();
 		limpiarReportes();
 
@@ -734,14 +808,14 @@ $(document).ready(function() {
 			data: datos,
 			url: $(this).attr('action'),
 			datatype: 'json',
-			success: function(data) {
+			success: function (data) {
 				console.log(data);
 				if (data.length == 0) {
 					$('#codeName').text(
 						'No hay ventas registradas con el cliente seleccionado'
 					);
 				}
-				$.each(data, function(key, registro) {
+				$.each(data, function (key, registro) {
 					var saldo = 0;
 					$('#codeName').text(
 						registro.customerCode + ' ' + registro.customerName
@@ -785,7 +859,7 @@ $(document).ready(function() {
 				swal.close();
 				funciones();
 			},
-			error: function(error, data) {
+			error: function (error, data) {
 				console.log(error.responseText);
 				swal({
 					type: 'error',
@@ -796,7 +870,7 @@ $(document).ready(function() {
 		});
 	});
 
-	$('#form-SalesByProduct').on('submit', function(e) {
+	$('#form-SalesByProduct').on('submit', function (e) {
 		e.preventDefault();
 		limpiarReportes();
 
@@ -847,9 +921,9 @@ $(document).ready(function() {
 			data: datos,
 			url: $(this).attr('action'),
 			datatype: 'json',
-			success: function(data) {
+			success: function (data) {
 				// console.log(data);
-				$.each(data, function(key, registro) {
+				$.each(data, function (key, registro) {
 					var contenido = '<tr>';
 					contenido += '<td>' + registro.code + '</td>';
 					contenido += '<td>' + registro.name + '</td>';
@@ -864,7 +938,7 @@ $(document).ready(function() {
 				swal.close();
 				funciones();
 			},
-			error: function(error, data) {
+			error: function (error, data) {
 				console.log(error.responseText);
 				swal({
 					type: 'error',
@@ -875,7 +949,7 @@ $(document).ready(function() {
 		});
 	});
 
-	$('#form-TotalCollected').on('submit', function(e) {
+	$('#form-TotalCollected').on('submit', function (e) {
 		e.preventDefault();
 		limpiarReportes();
 
@@ -922,10 +996,10 @@ $(document).ready(function() {
 			data: datos,
 			url: $(this).attr('action'),
 			datatype: 'json',
-			success: function(data) {
+			success: function (data) {
 				console.log(data);
 				var totalCobrado = 0;
-				$.each(data, function(key, registro) {
+				$.each(data, function (key, registro) {
 					totalCobrado += parseFloat(registro.amount);
 					var contenido = '<tr>';
 					contenido += '<td>' + convertDate(registro.date) + '</td>';
@@ -940,7 +1014,7 @@ $(document).ready(function() {
 				swal.close();
 				funciones();
 			},
-			error: function(error, data) {
+			error: function (error, data) {
 				console.log(error.responseText);
 				swal({
 					type: 'error',
@@ -955,6 +1029,7 @@ $(document).ready(function() {
 function limpiarReportes() {
 	$('#listadoReporte1').html('');
 	$('#listadoReporte2').html('');
+	$('#listadoReporte2-1').html('');
 	$('#listadoReporte3').html('');
 	$('#listadoReporte4').html('');
 	$('#listadoReporte4-1').html('');
@@ -1005,7 +1080,7 @@ function listarDetallerpt2(idv) {
 		success(data) {
 			console.log(data);
 			var totalCom = 0;
-			$.each(data, function(key, registro) {
+			$.each(data, function (key, registro) {
 				var sub =
 					registro.quantity *
 					(parseFloat(Math.round(registro.priceS * 100) / 100).toFixed(2) -
@@ -1031,7 +1106,7 @@ function listarDetallerpt2(idv) {
 			swal.close();
 			funciones2();
 		},
-		error: function(data) {
+		error: function (data) {
 			swal({
 				type: 'error',
 				title: 'Error',
@@ -1067,7 +1142,7 @@ function listarDetallerpt3(idc) {
 		url: 'BLL/rptDetailCustomByDep.php',
 		success(data) {
 			console.log(data);
-			$.each(data, function(key, registro) {
+			$.each(data, function (key, registro) {
 				var contenido = '<tr>';
 				contenido += '<td>' + registro.noDeliver + '</td>';
 				contenido += '<td>' + convertDate(registro.dateStart);
@@ -1079,7 +1154,7 @@ function listarDetallerpt3(idc) {
 			swal.close();
 			funciones2();
 		},
-		error: function(data) {
+		error: function (data) {
 			swal({
 				type: 'error',
 				title: 'Error',
@@ -1100,11 +1175,11 @@ function printReport2() {
 	var f2 = $("[name='dateErpt2']").val();
 	changeReport(
 		'salesBySeller.php?idVendedor=' +
-			idSeller +
-			'&fecha1=' +
-			f1 +
-			'&fecha2=' +
-			f2
+		idSeller +
+		'&fecha1=' +
+		f1 +
+		'&fecha2=' +
+		f2
 	);
 	$('#modal-reporte').modal('show');
 }
@@ -1114,11 +1189,11 @@ function printrptDetail2(idVent) {
 	var fec2 = $('.fv' + idVent).val();
 	changeReport(
 		'salesBySellerDetail.php?idVenta=' +
-			idVent +
-			'&fecha1=' +
-			fec1 +
-			'&fecha2=' +
-			fec2
+		idVent +
+		'&fecha1=' +
+		fec1 +
+		'&fecha2=' +
+		fec2
 	);
 	$('#modal-reporte').modal('show');
 }
@@ -1177,13 +1252,13 @@ function printReport9() {
 	var type = $("[name='typeS']").val();
 	changeReport(
 		'totalCollected.php?fecha1=' +
-			f1 +
-			'&fecha2=' +
-			f2 +
-			'&idSeller=' +
-			idSeller +
-			'&type=' +
-			type
+		f1 +
+		'&fecha2=' +
+		f2 +
+		'&idSeller=' +
+		idSeller +
+		'&type=' +
+		type
 	);
 	$('#modal-reporte').modal('show');
 }

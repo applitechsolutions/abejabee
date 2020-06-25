@@ -11,7 +11,7 @@ $fi = date('Y-m-d', strtotime($fechainicio));
 $ff = date('Y-m-d', strtotime($fechafinal));
 
 $result = $conn->query("SELECT * FROM balance B INNER JOIN sale S ON B._idSale = S.idSale WHERE S.state = 0 AND B.state
-= 0 AND B.balpay = 1 AND S._idSeller = $idSeller AND S.type = $typeS AND B.date BETWEEN '$fi' AND '$ff'ORDER BY B.date
+= 0 AND B.balpay = 1 AND B._idSeller = $idSeller AND S.type = $typeS AND B.date BETWEEN '$fi' AND '$ff'ORDER BY B.date
 ASC" );
 
 $outp = array();
