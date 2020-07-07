@@ -93,7 +93,7 @@ const store = new Vuex.Store({
             formData.append('producto', 'actualizarCosto');
             formData.append('id_producto', product.idProduct);
             formData.append('cost', product.cost);
-            axios.post('BLL/product', formData)
+            axios.post('BLL/product.php', formData)
                 .then(function (response) {
                     commit('pushProduct', product)
                     toastr.success(response.data.mensaje)
