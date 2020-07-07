@@ -4,7 +4,7 @@ $(document).ready(function () {
         e.preventDefault();
 
         var datos = new FormData(this);
-        
+
 
         swal({
             title: 'Guardando el producto...'
@@ -299,7 +299,7 @@ function priceSale_edit(idProduct, idPrice, price) {
                         type: 'success'
                     }).then(
                         setTimeout(function () {
-                           window.location.href = 'listProducts.php';
+                            window.location.href = 'listProducts.php';
                         }, 1500))
                 }
             } else if (resultado.respuesta == 'error') {

@@ -71,6 +71,7 @@ if ($_POST['producto'] == 'nuevo') {
 }
 
 if ($_POST['producto'] == 'actualizar') {
+
     $id_product = $_POST['id_producto'];
     $name = $_POST['name'];
     $code = $_POST['code'];
@@ -128,6 +129,44 @@ if ($_POST['producto'] == 'actualizar') {
                     'pharma' => $pharma,
                     'business' => $business,
                     'bonus' => $bonus,
+                    'mensaje' => 'Producto actualizado correctamente!',
+                    'proceso' => 'editado',
+                );
+            } else {
+                $respuesta = array(
+                    'respuesta' => 'error',
+                    'idProduct' => $id_product,
+                );
+            }
+            $stmt->close();
+            $conn->close();
+        }
+    } catch (Exception $e) {
+        echo 'Error: ' . $e . getMessage();
+    }
+    die(json_encode($respuesta));
+}
+
+if ($_POST['producto'] == 'actualizarCosto') {
+
+    $id_product = $_POST['id_producto'];
+    $cost = $_POST['cost'];
+
+    try {
+        if ($cost == '') {
+            $respuesta = array(
+                'respuesta' => 'vacio',
+            );
+        } else {
+
+                $stmt = $conn->prepare("UPDATE product SET cost = ? WHERE idProduct = ?");
+                $stmt->bind_param("di", $cost, $id_product);
+
+            $estado = $stmt->execute();
+
+            if ($estado == true) {
+                $respuesta = array(
+                    'respuesta' => 'exito',
                     'mensaje' => 'Producto actualizado correctamente!',
                     'proceso' => 'editado',
                 );

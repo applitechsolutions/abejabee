@@ -118,32 +118,27 @@ $(document).ready(function() {
         .datepicker({
             format: 'dd/mm/yyyy',
             autoclose: true,
-        })
-        .datepicker('setDate', moment(new Date()).format('DD/MM/YYYY'));
+        });
 
     $('.datepick').datepicker({
-            format: 'dd/mm/yyyy',
-            autoclose: true,
-        })
-        .datepicker('setDate', moment(new Date()).format('DD/MM/YYYY'));
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+    });
 
     $('#datepicker2').datepicker({
-            format: 'dd/mm/yyyy',
-            autoclose: true
-        })
-        .datepicker('setDate', moment(new Date()).format('DD/MM/YYYY'));
+        format: 'dd/mm/yyyy',
+        autoclose: true
+    });
 
     $('#datepicker3').datepicker({
-            format: 'dd/mm/yyyy',
-            autoclose: true
-        })
-        .datepicker('setDate', moment(new Date()).format('DD/MM/YYYY'));
+        format: 'dd/mm/yyyy',
+        autoclose: true
+    });
 
     $('#datepicker4').datepicker({
-            format: 'dd/mm/yyyy',
-            autoclose: true
-        })
-        .datepicker('setDate', moment(new Date()).format('DD/MM/YYYY'));
+        format: 'dd/mm/yyyy',
+        autoclose: true
+    });
 
     //iCheck for checkbox and radio inputs
     $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({

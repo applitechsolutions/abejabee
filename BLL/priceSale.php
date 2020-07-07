@@ -15,7 +15,7 @@ if ($_POST['priceSale'] == 'nuevo') {
         if ($id_registro > 0) {
             $respuesta = array(
                 'respuesta' => 'exito',
-                'mensaje' => 'Producto creado correctamente!'           
+                'mensaje' => 'Producto creado correctamente!'
             );
         } else {
             $respuesta = array(
@@ -36,7 +36,7 @@ if ($_POST['priceSale'] == 'editar') {
     $id_Product = $_POST['id_product'];
     $id_price = $_POST['id_price'];
     $price = $_POST['price'];
-    
+
     try {
         $stmt = $conn->prepare('UPDATE priceSale SET price = ? WHERE _idProduct = ? AND _idPrice = ?');
         $stmt->bind_param("dii", $price, $id_Product, $id_price);
@@ -44,7 +44,7 @@ if ($_POST['priceSale'] == 'editar') {
         if ($stmt->affected_rows) {
             $respuesta = array(
                 'respuesta' => 'exito',
-                'mensaje' => 'Producto actualizado correctamente!'   
+                'mensaje' => 'Producto actualizado correctamente!'
             );
         } else {
             $respuesta = array(

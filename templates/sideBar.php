@@ -114,7 +114,8 @@
                       </span>
                   </a>
                   <ul class="treeview-menu">
-                      <li><a href="listProducts.php"><i class="fa fa-list-ul" aria-hidden="true"></i> Ver Todos</a></li>
+                      <li><a href="listProducts.php"><i class="fa fa-list-ul" aria-hidden="true"></i> Ver Todos</a>
+                      </li>
                       <?php
                     if ($_SESSION['rol'] == 1) { ?>
                       <li><a href="newProduct.php"><i class="fa fa-plus-circle" aria-hidden="true"></i> Nuevo
