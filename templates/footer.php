@@ -51,6 +51,8 @@ function convertDate(dateString) {
     <script src="js/bootstrap-notify.min">
     </script>
     <!-- AJAX FOR SCHLENKER PHARMA -->
+    <script src="js/ajax/files-ajax.js">
+    </script>
     <script src="js/ajax/index-ajax.js">
     </script>
     <script src="js/ajax/bill-ajax.js">
