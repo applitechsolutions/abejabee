@@ -7,14 +7,12 @@ include_once '../funciones/bd_conexion.php';
 $idCustomer = $_GET['idCustomer'];
 
 try {
-    $sql = "SELECT idCustomer, customerCode, customerName, customerTel, customerNit, customerAddress, owner, inCharge,
-    (SELECT name FROM deparment where idDeparment = C._idDeparment) as deparment,
-    (SELECT routeName FROM route WHERE idRoute = C._idRoute) as route, S.noDeliver, S.dateStart, S.advance, S.dateEnd, S.type, S.cancel, S.totalSale,
-    (SELECT concat(sellerFirstName, ' ', sellerLastName) FROM seller where idSeller = S._idSeller) as seller,
-    (SELECT balance FROM balance WHERE _idSale = idSale AND state != 2 ORDER BY idBalance DESC LIMIT 1) AS saldo,
-    (SELECT SUM(amount) FROM balance WHERE _idSale = idSale AND cheque = 1 AND state = 1) AS abono
-    FROM customer C INNER JOIN sale S ON C.idCustomer = S._idCustomer
-    WHERE C.idCustomer = $idCustomer AND S.state = 0 ORDER BY S.dateStart DESC";
+    $sql = "SELECT S.dateStart, S.dateEnd,  S.noDeliver, S.type,  S.advance, S.cancel, B.date, B.noDocument, B.amount, B.balance, B.balpay, B.cheque,
+ C.customerCode, C.customerName, C.customerTel, C.customerNit, C.customerAddress, C.owner, C.inCharge,
+ (SELECT name FROM deparment where idDeparment = C._idDeparment) as deparment,
+(SELECT routeName FROM route WHERE idRoute = C._idRoute) as route,
+(SELECT concat(sellerFirstName, ' ', sellerLastName) FROM seller where idSeller = S._idSeller) as seller
+FROM sale S INNER JOIN balance B ON B._idSale = S.idSale INNER JOIN customer C ON C.idCustomer = S._idCustomer WHERE S._idCustomer = $idCustomer AND S.state = 0 AND B.state = 0 ORDER BY S.dateStart DESC, B.date ASC";
 
     $resultado = $conn->query($sql);
     $res = $conn->query($sql);
@@ -74,7 +72,6 @@ $pagina = '
                             <th style="background-color: #1d2128; color: white">Vendedor</th>
                             <th style="background-color: #1d2128; color: white">Fecha de vencimiento</th>
                             <th style="background-color: #1d2128; color: white">Anticipo</th>
-                            <th style="background-color: #1d2128; color: white">Total</th>
                             <th style="background-color: #1d2128; color: white">Abono</th>
                             <th style="background-color: #1d2128; color: white">Saldo</th>
                         </tr>
@@ -83,29 +80,42 @@ $pagina = '
 while ($cliente = $resultado->fetch_assoc()) {
     $dateStart = date_create($cliente['dateStart']);
     $dateEnd = date_create($cliente['dateEnd']);
-    if ($cliente['abono'] == null) {
-        $abono = '0.00';
-        $saldo = $cliente['saldo'];
-    } else {
-        $abono = $cliente['abono'];
-        $saldo = $cliente['saldo'] - $cliente['abono'];
-    }
+    $date = date_create($cliente['date']);
     if ($cliente['type'] == 0) {
         $type = 'Dist.';
     } else {
         $type = 'Schl.';
     }
-    $pagina .= '
-                        <tr>
-                        <td>' . date_format($dateStart, 'd/m/y') . '</td>
-                        <td>' . $cliente['noDeliver'] . ' ' . $type . '</td>
-                        <td>' . $cliente['seller'] . '</td>
-                        <td>' . date_format($dateEnd, 'd/m/y') . '</td>
-                        <td>' . 'Q.' . $cliente['advance'] . '</td>
-                        <td>' . 'Q.' . $cliente['totalSale'] . '</td>
-                        <td>' . 'Q.' . $abono . '</td>
-                        <td>' . 'Q.' . number_format($saldo, 2, '.', ',') . '</td>
-                        </tr>';
+    if ($cliente['cheque'] == 1) {
+        $cheque = '(*cheque)';
+    } else {
+        $cheque = '';
+    }
+
+    if ($cliente['balpay'] == 0) {
+        $pagina .= '
+                            <tr><b>
+                            <td>' . date_format($dateStart, 'd/m/y') . '</td>
+                            <td>' . $cliente['noDeliver'] . ' ' . $type . '</td>
+                            <td>' . $cliente['seller'] . '</td>
+                            <td>' . date_format($dateEnd, 'd/m/y') . '</td>
+                            <td>' . 'Q.' . $cliente['advance'] . '</td>
+                            <td>-</td>
+                            <td style="color: red;">' . 'Q.' . number_format($cliente['balance'], 2, '.', ',') . '</td>
+                            </b>
+                            </tr>';
+    } else {
+        $pagina .= '
+                            <tr>
+                            <td>' . date_format($dateStart, 'd/m/y') . '</td>
+                            <td>' . $cliente['noDeliver'] . ' ' . $type . '</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>'.  date_format($date, 'd/m/y')  .'<br>'. $cliente['noDocument']  .'<br>'. 'Q.' . number_format($cliente['amount'], 2, '.', ',') . $cheque .'</td>
+                            <td style="color: green;">' . 'Q.' . number_format($cliente['balance'], 2, '.', ',') . '</td>
+                            </tr>';
+    }
 }
 $pagina .= '</tbody>
                 </table>
@@ -119,4 +129,4 @@ $file = "EstadodeCuenta.pdf"; //Se nombra el archivo
 $mpdf = new mPDF('utf-8', 'LETTER', 0, '', 10, 10, 10, 10, 0, 0); //se define el tamaño de pagina y los margenes
 $mpdf->WriteHTML($pagina); //se escribe la variable pagina
 
-$mpdf->Output($file, 'I'); //Se crea el documento pdf y se muestra en el navegador
+$mpdf->Output($file, 'I');  //Se crea el documento pdf y se muestra en el navegador

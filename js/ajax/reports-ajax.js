@@ -76,7 +76,7 @@ $(document).ready(function () {
 		var datos = $(this).serializeArray();
 
 		swal({
-			title: 'Generando el reporte...'
+			title: 'Generando el reporte...',
 		});
 
 		swal.showLoading();
@@ -118,9 +118,9 @@ $(document).ready(function () {
 				swal({
 					type: 'error',
 					title: 'Error',
-					text: 'Algo ha salido mal, intentalo más tarde'
+					text: 'Algo ha salido mal, intentalo más tarde',
 				});
-			}
+			},
 		});
 		$.ajax({
 			type: $(this).attr('method'),
@@ -159,9 +159,9 @@ $(document).ready(function () {
 				swal({
 					type: 'error',
 					title: 'Error',
-					text: 'Algo ha salido mal, intentalo más tarde'
+					text: 'Algo ha salido mal, intentalo más tarde',
 				});
-			}
+			},
 		});
 	});
 
@@ -173,7 +173,7 @@ $(document).ready(function () {
 		var datos = $(this).serializeArray();
 
 		swal({
-			title: 'Generando el reporte...'
+			title: 'Generando el reporte...',
 		});
 
 		swal.showLoading();
@@ -221,9 +221,9 @@ $(document).ready(function () {
 				swal({
 					type: 'error',
 					title: 'Error',
-					text: 'Algo ha salido mal, intentalo más tarde'
+					text: 'Algo ha salido mal, intentalo más tarde',
 				});
-			}
+			},
 		});
 	});
 
@@ -241,7 +241,7 @@ $(document).ready(function () {
 		var datos = $(this).serializeArray();
 
 		swal({
-			title: 'Generando el reporte...'
+			title: 'Generando el reporte...',
 		});
 
 		swal.showLoading();
@@ -284,9 +284,9 @@ $(document).ready(function () {
 				swal({
 					type: 'error',
 					title: 'Error',
-					text: 'Algo ha salido mal, intentalo más tarde'
+					text: 'Algo ha salido mal, intentalo más tarde',
 				});
-			}
+			},
 		});
 	});
 
@@ -382,7 +382,7 @@ $(document).ready(function () {
 		var datos = $(this).serializeArray();
 
 		swal({
-			title: 'Generando el reporte...'
+			title: 'Generando el reporte...',
 		});
 
 		swal.showLoading();
@@ -418,9 +418,9 @@ $(document).ready(function () {
 				swal({
 					type: 'error',
 					title: 'Error',
-					text: 'Algo ha salido mal, intentalo más tarde'
+					text: 'Algo ha salido mal, intentalo más tarde',
 				});
-			}
+			},
 		});
 
 		$.ajax({
@@ -445,9 +445,9 @@ $(document).ready(function () {
 				swal({
 					type: 'error',
 					title: 'Error',
-					text: 'Algo ha salido mal, intentalo más tarde'
+					text: 'Algo ha salido mal, intentalo más tarde',
 				});
-			}
+			},
 		});
 
 		$.ajax({
@@ -484,9 +484,9 @@ $(document).ready(function () {
 				swal({
 					type: 'error',
 					title: 'Error',
-					text: 'Algo ha salido mal, intentalo más tarde'
+					text: 'Algo ha salido mal, intentalo más tarde',
 				});
-			}
+			},
 		});
 	});
 
@@ -530,7 +530,7 @@ $(document).ready(function () {
 		var datos = $(this).serializeArray();
 
 		swal({
-			title: 'Generando el reporte...'
+			title: 'Generando el reporte...',
 		});
 
 		swal.showLoading();
@@ -577,9 +577,9 @@ $(document).ready(function () {
 				swal({
 					type: 'error',
 					title: 'Error',
-					text: 'Algo ha salido mal, intentalo más tarde'
+					text: 'Algo ha salido mal, intentalo más tarde',
 				});
-			}
+			},
 		});
 	});
 
@@ -651,7 +651,7 @@ $(document).ready(function () {
 		var datos = $(this).serializeArray();
 
 		swal({
-			title: 'Generando el reporte...'
+			title: 'Generando el reporte...',
 		});
 
 		swal.showLoading();
@@ -685,9 +685,9 @@ $(document).ready(function () {
 				swal({
 					type: 'error',
 					title: 'Error',
-					text: 'Algo ha salido mal, intentalo más tarde'
+					text: 'Algo ha salido mal, intentalo más tarde',
 				});
-			}
+			},
 		});
 
 		$.ajax({
@@ -724,9 +724,9 @@ $(document).ready(function () {
 				swal({
 					type: 'error',
 					title: 'Error',
-					text: 'Algo ha salido mal, intentalo más tarde'
+					text: 'Algo ha salido mal, intentalo más tarde',
 				});
-			}
+			},
 		});
 	});
 
@@ -769,7 +769,6 @@ $(document).ready(function () {
 			'<th>Vendedor</th>' +
 			'<th>Fecha de vencimiento</th>' +
 			'<th>Anticipo</th>' +
-			'<th>Total</th>' +
 			'<th>Abono</th>' +
 			'<th>Saldo</th>' +
 			'</tr>' +
@@ -782,7 +781,6 @@ $(document).ready(function () {
 			'<th>Vendedor</th>' +
 			'<th>Fecha de vencimiento</th>' +
 			'<th>Anticipo</th>' +
-			'<th>Total</th>' +
 			'<th>Abono</th>' +
 			'<th>Saldo</th>' +
 			'</tr>' +
@@ -798,7 +796,7 @@ $(document).ready(function () {
 		var datos = $(this).serializeArray();
 
 		swal({
-			title: 'Generando el reporte...'
+			title: 'Generando el reporte...',
 		});
 
 		swal.showLoading();
@@ -829,29 +827,43 @@ $(document).ready(function () {
 					);
 					$('#owner').text(registro.owner + ' ' + registro.inCharge);
 					var contenido = '<tr>';
-					contenido += '<td>' + convertDate(registro.dateStart) + '</td>';
-					if (registro.type == 0) {
-						contenido += '<td>' + registro.noDeliver + ' Dist.' + '</td>';
+					if (registro.balpay == 0) {
+						contenido += '<td>' + convertDate(registro.dateStart) + '</td>';
+						if (registro.type == 0) {
+							contenido += '<td>' + registro.noDeliver + ' Dist.' + '</td>';
+						} else {
+							contenido += '<td>' + registro.noDeliver + ' Schl.' + '</td>';
+						}
+						contenido += '<td>' + registro.seller + '</td>';
+						contenido += '<td>' + convertDate(registro.dateEnd) + '</td>';
+						contenido += '<td>Q.' + registro.advance + '</td>';
+						contenido += '<td> - </td>';
+						contenido +=
+							'<td class="text-danger">Q.' + registro.balance + '</td>';
 					} else {
-						contenido += '<td>' + registro.noDeliver + ' Schl.' + '</td>';
-					}
-					contenido += '<td>' + registro.seller + '</td>';
-					contenido += '<td>' + convertDate(registro.dateEnd) + '</td>';
-					contenido += '<td>Q.' + registro.advance + '</td>';
-					contenido += '<td>Q.' + registro.totalSale + '</td>';
-					if (registro.abono == null) {
+						contenido += '<td>' + convertDate(registro.dateStart) + '</td>';
+						if (registro.type == 0) {
+							contenido += '<td>' + registro.noDeliver + ' Dist.' + '</td>';
+						} else {
+							contenido += '<td>' + registro.noDeliver + ' Schl.' + '</td>';
+						}
 						contenido += '<td>-</td>';
-						saldo = parseFloat(registro.saldo);
-					} else {
-						contenido += '<td>Q.' + registro.abono + '</td>';
-						saldo = parseFloat(registro.saldo) - parseFloat(registro.abono);
-					}
-					if (saldo > 0) {
+						contenido += '<td>-</td>';
+						contenido += '<td>-</td>';
 						contenido +=
-							"<td class='text-danger'><b>Q." + saldo.toFixed(2) + '</b></td>';
-					} else {
+							'<td>' +
+							convertDate(registro.date) +
+							'<br>Doc: ' +
+							registro.noDocument +
+							'<br>Q.' +
+							registro.amount;
+						if (registro.cheque == 1) {
+							contenido += ' (*cheque)</td>';
+						} else {
+							contenido += '</td>';
+						}
 						contenido +=
-							"<td class='text-success'>Q." + saldo.toFixed(2) + '</td>';
+							'<td class="text-success">Q.' + registro.balance + '</td>';
 					}
 					contenido += '</tr>';
 					$('.contenidoRPT7').append(contenido);
@@ -864,9 +876,9 @@ $(document).ready(function () {
 				swal({
 					type: 'error',
 					title: 'Error',
-					text: 'Algo ha salido mal, intentalo más tarde'
+					text: 'Algo ha salido mal, intentalo más tarde',
 				});
-			}
+			},
 		});
 	});
 
@@ -911,7 +923,7 @@ $(document).ready(function () {
 		var datos = $(this).serializeArray();
 
 		swal({
-			title: 'Generando el reporte...'
+			title: 'Generando el reporte...',
 		});
 
 		swal.showLoading();
@@ -943,9 +955,9 @@ $(document).ready(function () {
 				swal({
 					type: 'error',
 					title: 'Error',
-					text: 'Algo ha salido mal, intentalo más tarde'
+					text: 'Algo ha salido mal, intentalo más tarde',
 				});
-			}
+			},
 		});
 	});
 
@@ -986,7 +998,7 @@ $(document).ready(function () {
 		var datos = $(this).serializeArray();
 
 		swal({
-			title: 'Generando el reporte...'
+			title: 'Generando el reporte...',
 		});
 
 		swal.showLoading();
@@ -1019,9 +1031,9 @@ $(document).ready(function () {
 				swal({
 					type: 'error',
 					title: 'Error',
-					text: 'Algo ha salido mal, intentalo más tarde'
+					text: 'Algo ha salido mal, intentalo más tarde',
 				});
-			}
+			},
 		});
 	});
 });
@@ -1066,7 +1078,7 @@ function listarDetallerpt2(idv) {
 	console.log(diffDays);
 
 	swal({
-		title: 'Generando el reporte...'
+		title: 'Generando el reporte...',
 	});
 
 	swal.showLoading();
@@ -1074,7 +1086,7 @@ function listarDetallerpt2(idv) {
 	$.ajax({
 		type: 'POST',
 		data: {
-			idVenta: idv
+			idVenta: idv,
 		},
 		url: 'BLL/rptDetailSalesBySeller.php',
 		success(data) {
@@ -1110,9 +1122,9 @@ function listarDetallerpt2(idv) {
 			swal({
 				type: 'error',
 				title: 'Error',
-				text: 'Algo ha salido mal, intentalo más tarde'
+				text: 'Algo ha salido mal, intentalo más tarde',
 			});
-		}
+		},
 	});
 }
 
@@ -1129,7 +1141,7 @@ function listarDetallerpt3(idc) {
 	$('#listadoDetalle3').append(tabla);
 
 	swal({
-		title: 'Generando el reporte...'
+		title: 'Generando el reporte...',
 	});
 
 	swal.showLoading();
@@ -1137,7 +1149,7 @@ function listarDetallerpt3(idc) {
 	$.ajax({
 		type: 'POST',
 		data: {
-			idCliente: idc
+			idCliente: idc,
 		},
 		url: 'BLL/rptDetailCustomByDep.php',
 		success(data) {
@@ -1158,9 +1170,9 @@ function listarDetallerpt3(idc) {
 			swal({
 				type: 'error',
 				title: 'Error',
-				text: 'Algo ha salido mal, intentalo más tarde'
+				text: 'Algo ha salido mal, intentalo más tarde',
 			});
-		}
+		},
 	});
 }
 
@@ -1175,11 +1187,11 @@ function printReport2() {
 	var f2 = $("[name='dateErpt2']").val();
 	changeReport(
 		'salesBySeller.php?idVendedor=' +
-		idSeller +
-		'&fecha1=' +
-		f1 +
-		'&fecha2=' +
-		f2
+			idSeller +
+			'&fecha1=' +
+			f1 +
+			'&fecha2=' +
+			f2
 	);
 	$('#modal-reporte').modal('show');
 }
@@ -1189,11 +1201,11 @@ function printrptDetail2(idVent) {
 	var fec2 = $('.fv' + idVent).val();
 	changeReport(
 		'salesBySellerDetail.php?idVenta=' +
-		idVent +
-		'&fecha1=' +
-		fec1 +
-		'&fecha2=' +
-		fec2
+			idVent +
+			'&fecha1=' +
+			fec1 +
+			'&fecha2=' +
+			fec2
 	);
 	$('#modal-reporte').modal('show');
 }
@@ -1252,13 +1264,13 @@ function printReport9() {
 	var type = $("[name='typeS']").val();
 	changeReport(
 		'totalCollected.php?fecha1=' +
-		f1 +
-		'&fecha2=' +
-		f2 +
-		'&idSeller=' +
-		idSeller +
-		'&type=' +
-		type
+			f1 +
+			'&fecha2=' +
+			f2 +
+			'&idSeller=' +
+			idSeller +
+			'&type=' +
+			type
 	);
 	$('#modal-reporte').modal('show');
 }
@@ -1313,14 +1325,14 @@ function funciones() {
 		columnDefs: [
 			{
 				targets: 'no-sort',
-				orderable: false
-			}
+				orderable: false,
+			},
 		],
 		paging: true,
 		lengthChange: true,
 		aLengthMenu: [
 			[10, 25, 50, -1],
-			[10, 25, 50, 'Todos']
+			[10, 25, 50, 'Todos'],
 		],
 		searching: true,
 		ordering: true,
@@ -1331,7 +1343,7 @@ function funciones() {
 				next: 'Siguiente',
 				previous: 'Anterior',
 				first: 'Primero',
-				last: 'Último'
+				last: 'Último',
 			},
 			info: 'Mostrando _START_-_END_ de _TOTAL_ registros',
 			empyTable: 'No hay registros',
@@ -1342,8 +1354,8 @@ function funciones() {
 			loadingRecords: 'Cargando...',
 			processing: 'Procesando...',
 			search: 'Buscar:',
-			zeroRecords: 'Sin resultados encontrados'
-		}
+			zeroRecords: 'Sin resultados encontrados',
+		},
 	});
 }
 
@@ -1353,14 +1365,14 @@ function funciones2() {
 		columnDefs: [
 			{
 				targets: 'no-sort',
-				orderable: false
-			}
+				orderable: false,
+			},
 		],
 		paging: true,
 		lengthChange: true,
 		aLengthMenu: [
 			[10, 25, 50, -1],
-			[10, 25, 50, 'Todos']
+			[10, 25, 50, 'Todos'],
 		],
 		searching: true,
 		ordering: true,
@@ -1371,7 +1383,7 @@ function funciones2() {
 				next: 'Siguiente',
 				previous: 'Anterior',
 				first: 'Primero',
-				last: 'Último'
+				last: 'Último',
 			},
 			info: 'Mostrando _START_-_END_ de _TOTAL_ registros',
 			empyTable: 'No hay registros',
@@ -1382,8 +1394,8 @@ function funciones2() {
 			loadingRecords: 'Cargando...',
 			processing: 'Procesando...',
 			search: 'Buscar:',
-			zeroRecords: 'Sin resultados encontrados'
-		}
+			zeroRecords: 'Sin resultados encontrados',
+		},
 	});
 }
 
@@ -1393,14 +1405,14 @@ function funciones3() {
 		columnDefs: [
 			{
 				targets: 'no-sort',
-				orderable: false
-			}
+				orderable: false,
+			},
 		],
 		paging: true,
 		lengthChange: true,
 		aLengthMenu: [
 			[10, 25, 50, -1],
-			[10, 25, 50, 'Todos']
+			[10, 25, 50, 'Todos'],
 		],
 		searching: true,
 		ordering: true,
@@ -1411,7 +1423,7 @@ function funciones3() {
 				next: 'Siguiente',
 				previous: 'Anterior',
 				first: 'Primero',
-				last: 'Último'
+				last: 'Último',
 			},
 			info: 'Mostrando _START_-_END_ de _TOTAL_ registros',
 			empyTable: 'No hay registros',
@@ -1422,7 +1434,7 @@ function funciones3() {
 			loadingRecords: 'Cargando...',
 			processing: 'Procesando...',
 			search: 'Buscar:',
-			zeroRecords: 'Sin resultados encontrados'
-		}
+			zeroRecords: 'Sin resultados encontrados',
+		},
 	});
 }
