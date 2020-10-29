@@ -28,7 +28,7 @@ if ($_POST['tipo'] == 'pago') {
             // Verificamos si el NoDocument ya existe en otros pagos
             $noDocumentConsulta = str_replace(' ', '', $noDocument);
             try {
-                $sql = "SELECT noDeliver FROM balance B INNER JOIN sale S ON B._idSale = S.idSale WHERE B.noDocument = '$noDocumentConsulta' AND S.state = 0 AND B.state = 0";
+                $sql = "SELECT noDeliver FROM balance B INNER JOIN sale S ON B._idSale = S.idSale WHERE B.noDocument = '$noDocumentConsulta' AND S.state = 0 AND B.state = 0 ORDER BY S.idSale DESC LIMIT 5";
                 $ventas = $conn->query($sql);
                 if ($ventas->num_rows > 0) {
                     $text = 'Documento encontrado en remisiones: ';
