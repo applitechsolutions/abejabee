@@ -89,7 +89,7 @@ if ($_POST['tipo'] == 'pago') {
                     $respuesta = array(
                         'respuesta' => 'error',
                         'idVenta' => $id_registro,
-                        'text' => $text,
+                        'error' => $stmt->error,
                     );
                 }
                 $stmt->close();
