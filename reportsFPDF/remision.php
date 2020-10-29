@@ -174,5 +174,9 @@ while ($sale = $resultado->fetch_assoc()) {
     $note = iconv('UTF-8', 'windows-1252', $sale['note']);
     $pdf->SetXY(10, $Contador + 20);
     $pdf->MultiCell(85, 5, $note, 1, 'L', 0);
+    $pdf->SetFont('Arial', '', 8);
+    $pdf->SetXY(10, $Contador + 28);
+    $nota = 'No se aceptaran reclamos por producto dañado o incompleto despues de 3 dias de haber recibido su pedido. En el momento que reciba su pedido revisar que este completo, de no ser asi, tomar fotografia y enviarla a su visitador para informarle y poder darle la solucion respectiva.';
+    $pdf->MultiCell(190, 5, iconv('UTF-8', 'windows-1252', $nota), 0, 'C', 0);
 }
 $pdf->Output(); //Salida al navegador
