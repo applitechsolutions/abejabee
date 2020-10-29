@@ -4,7 +4,7 @@
 
 if ($conn->connect_error) {
 echo $error->$conn->connect_error;
-}*/
+} */
 
 $connectstr_dbhost = '';
 $connectstr_dbname = '';

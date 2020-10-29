@@ -25,11 +25,28 @@ if ($_POST['tipo'] == 'pago') {
                 'respuesta' => 'vacio',
             );
         } else {
+            // Verificamos si el NoDocument ya existe en otros pagos
+            $noDocumentConsulta = str_replace(' ', '', $noDocument);
+            try {
+                $sql = "SELECT noDeliver FROM balance B INNER JOIN sale S ON B._idSale = S.idSale WHERE B.noDocument = '$noDocumentConsulta' AND S.state = 0 AND B.state = 0";
+                $ventas = $conn->query($sql);
+                if ($ventas->num_rows > 0) {
+                    $text = 'Documento encontrado en remisiones: ';
+                } else {
+                    $text = '';
+                }
+            } catch (Exception $e) {
+                $query_success = false;
+            }
+            while ($venta = $ventas->fetch_assoc()) {
+                $text = $text . $venta['noDeliver'] . ' ';
+            }
+
             $cheque = 0;
             if (isset($_POST['cheque'])) {
                 $cheque = 1;
-                $stmt = $conn->prepare("INSERT INTO balance(_idSale, noDocument, date, balpay, amount, noReceipt, balance, cheque, state, commissionS, totalS, commissionO, totalO, _idSeller) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                $stmt->bind_param("issidsdiiididi", $id_sale, $noDocument, $fc, $bal, $amount, $noReceipt, $totalB, $cheque, $cheque, $comiS, $totalS, $comiD, $totalD, $vendedor);
+                $stmt = $conn->prepare("INSERT INTO balance(_idSale, noDocument, date, balpay, amount, noReceipt, balance, cheque, state, commissionS, totalS, commissionO, totalO, _idSeller, textDocument) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                $stmt->bind_param("issidsdiiididis", $id_sale, $noDocument, $fc, $bal, $amount, $noReceipt, $totalB, $cheque, $cheque, $comiS, $totalS, $comiD, $totalD, $vendedor, $text);
                 $stmt->execute();
                 $id_registro = $stmt->insert_id;
                 if ($id_registro > 0) {
@@ -41,6 +58,7 @@ if ($_POST['tipo'] == 'pago') {
                         'idSale' => $id_sale,
                         'new_totalB' => $new_totalB,
                         'cheque' => $cheque,
+                        'text' => $text,
                     );
                 } else {
                     $respuesta = array(
@@ -51,8 +69,8 @@ if ($_POST['tipo'] == 'pago') {
                 $stmt->close();
                 $conn->close();
             } else {
-                $stmt = $conn->prepare("INSERT INTO balance(_idSale, noDocument, date, balpay, amount, noReceipt, balance, commissionS, totalS, commissionO, totalO, _idSeller) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                $stmt->bind_param("issidsdididi", $id_sale, $noDocument, $fc, $bal, $amount, $noReceipt, $new_totalB, $comiS, $totalS, $comiD, $totalD, $vendedor);
+                $stmt = $conn->prepare("INSERT INTO balance(_idSale, noDocument, date, balpay, amount, noReceipt, balance, commissionS, totalS, commissionO, totalO, _idSeller, textDocument) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                $stmt->bind_param("issidsdididis", $id_sale, $noDocument, $fc, $bal, $amount, $noReceipt, $new_totalB, $comiS, $totalS, $comiD, $totalD, $vendedor, $text);
                 $stmt->execute();
                 $id_registro = $stmt->insert_id;
                 if ($id_registro > 0) {
@@ -64,6 +82,7 @@ if ($_POST['tipo'] == 'pago') {
                         'idSale' => $id_sale,
                         'new_totalB' => $new_totalB,
                         'cheque' => $cheque,
+                        'text' => $text,
                     );
                 } else {
                     $respuesta = array(

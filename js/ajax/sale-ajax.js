@@ -11,7 +11,7 @@ $(document).ready(function () {
 			type: 'POST',
 			data: {
 				id: id,
-				producto: 'agregarPrec'
+				producto: 'agregarPrec',
 			},
 			url: 'BLL/product.php',
 			success(data) {
@@ -27,7 +27,7 @@ $(document).ready(function () {
 						$('#SelectPrecio' + registro.idProduct).val(registro.bonus);
 					}
 				});
-			}
+			},
 		});
 	});
 
@@ -53,7 +53,7 @@ $(document).ready(function () {
 			swal({
 				type: 'error',
 				title: 'Error',
-				text: 'No se puede agregar al carrito'
+				text: 'No se puede agregar al carrito',
 			});
 		} else {
 			var tipo = $(this).attr('data-tipo');
@@ -63,7 +63,7 @@ $(document).ready(function () {
 				type: 'POST',
 				data: {
 					id: id,
-					producto: 'agregarS'
+					producto: 'agregarS',
 				},
 				url: 'BLL/' + tipo + '.php',
 				success(data) {
@@ -152,16 +152,16 @@ $(document).ready(function () {
 						type: 'success',
 						title: '¡Agregado al detalle!',
 						showConfirmButton: false,
-						timer: 1500
+						timer: 1500,
 					});
 				},
 				error: function (data) {
 					swal({
 						type: 'error',
 						title: 'Error',
-						text: 'No se puede agregar al carrito'
+						text: 'No se puede agregar al carrito',
 					});
-				}
+				},
 			});
 		}
 	});
@@ -170,7 +170,7 @@ $(document).ready(function () {
 		e.preventDefault();
 
 		swal({
-			title: 'Generando la venta...'
+			title: 'Generando la venta...',
 		});
 		swal.showLoading();
 		var datos = $(this).serializeArray();
@@ -191,7 +191,7 @@ $(document).ready(function () {
 		obj = JSON.parse('{ "detailS" : [' + json.substr(1) + ']}');
 		datos.push({
 			name: 'json',
-			value: JSON.stringify(obj)
+			value: JSON.stringify(obj),
 		});
 
 		$.ajax({
@@ -212,7 +212,7 @@ $(document).ready(function () {
 							title: 'Exito!',
 							text: '¡Venta creada exitosamente!',
 							timer: 2000,
-							type: 'success'
+							type: 'success',
 						});
 						tab3();
 					} else if (resultado.proceso == 'editado') {
@@ -223,7 +223,7 @@ $(document).ready(function () {
 							title: 'Exito!',
 							text: '¡Venta editada exitosamente!',
 							timer: 2000,
-							type: 'success'
+							type: 'success',
 						});
 						tab3();
 					}
@@ -231,16 +231,16 @@ $(document).ready(function () {
 					swal({
 						type: 'warning',
 						title: 'Oops...',
-						text: 'Debe llenar todos los campos'
+						text: 'Debe llenar todos los campos',
 					});
 				} else if (resultado.respuesta == 'error') {
 					swal({
 						type: 'error',
 						title: 'Error',
-						text: 'No se pudo guardar en la base de datos'
+						text: 'No se pudo guardar en la base de datos',
 					});
 				}
-			}
+			},
 		});
 	});
 
@@ -250,7 +250,7 @@ $(document).ready(function () {
 		var datos = $(this).serializeArray();
 
 		swal({
-			title: 'Generando el envío...'
+			title: 'Generando el envío...',
 		});
 		swal.showLoading();
 		$.ajax({
@@ -269,22 +269,22 @@ $(document).ready(function () {
 						type: 'success',
 						title: '¡' + resultado.mensaje,
 						showConfirmButton: false,
-						timer: 1000
+						timer: 1000,
 					});
 				} else if (resultado.respuesta == 'vacio') {
 					swal({
 						type: 'warning',
 						title: 'Oops...',
-						text: 'No se ha generado ninguna venta'
+						text: 'No se ha generado ninguna venta',
 					});
 				} else if (resultado.respuesta == 'error') {
 					swal({
 						type: 'error',
 						title: 'Error',
-						text: 'No se pudo guardar en la base de datos'
+						text: 'No se pudo guardar en la base de datos',
 					});
 				}
-			}
+			},
 		});
 	});
 
@@ -300,13 +300,13 @@ $(document).ready(function () {
 			swal({
 				type: 'warning',
 				title: 'Oops...',
-				text: 'La cantidad sobrepasa el saldo restante :o'
+				text: 'La cantidad sobrepasa el saldo restante :o',
 			});
 		} else {
 			var datos = $(this).serializeArray();
 			console.log(datos);
 			swal({
-				title: 'Ingresando pago...'
+				title: 'Ingresando pago...',
 			});
 			swal.showLoading();
 			$.ajax({
@@ -324,27 +324,36 @@ $(document).ready(function () {
 						document.getElementById('form-pay').reset();
 						$('#correlativeCloseB').click();
 						swal.close();
-						swal({
-							position: 'top-end',
-							type: 'success',
-							title: '¡' + resultado.mensaje,
-							showConfirmButton: false,
-							timer: 1000
-						});
+						if (resultado.text === '') {
+							swal({
+								position: 'top-end',
+								type: 'success',
+								title: '¡' + resultado.mensaje,
+								showConfirmButton: false,
+								timer: 1000,
+							});
+						} else {
+							swal({
+								position: 'top-end',
+								type: 'success',
+								title: '¡' + resultado.text,
+								showConfirmButton: true,
+							});
+						}
 					} else if (resultado.respuesta == 'vacio') {
 						swal({
 							type: 'warning',
 							title: 'Oops...',
-							text: 'No se han podido procesar los datos'
+							text: 'No se han podido procesar los datos',
 						});
 					} else if (resultado.respuesta == 'error') {
 						swal({
 							type: 'error',
 							title: 'Error',
-							text: 'No se pudo guardar en la base de datos'
+							text: 'No se pudo guardar en la base de datos',
 						});
 					}
-				}
+				},
 			});
 		}
 	});
@@ -368,7 +377,7 @@ $(document).ready(function () {
 						type: 'success',
 						title: '¡' + resultado.mensaje,
 						showConfirmButton: false,
-						timer: 1000
+						timer: 1000,
 					});
 
 					$('#correlativeClose').click();
@@ -382,7 +391,7 @@ $(document).ready(function () {
 						type: 'warning',
 						title: 'Debes llenar los campos obligatorios :/',
 						showConfirmButton: false,
-						timer: 1500
+						timer: 1500,
 					});
 				} else if (resultado.respuesta == 'error') {
 					swal({
@@ -390,7 +399,7 @@ $(document).ready(function () {
 						type: 'error',
 						title: 'Algo salió mal, intenta de nuevo',
 						showConfirmButton: false,
-						timer: 1500
+						timer: 1500,
 					});
 				}
 			},
@@ -400,9 +409,9 @@ $(document).ready(function () {
 					type: 'error',
 					title: 'Algo salió mal, intenta de nuevo',
 					showConfirmButton: false,
-					timer: 1500
+					timer: 1500,
 				});
-			}
+			},
 		});
 	});
 
@@ -425,7 +434,7 @@ $(document).ready(function () {
 						type: 'success',
 						title: '¡' + resultado.mensaje,
 						showConfirmButton: false,
-						timer: 1000
+						timer: 1000,
 					});
 
 					$('#correlativeCloseGuia').click();
@@ -437,7 +446,7 @@ $(document).ready(function () {
 						type: 'warning',
 						title: 'Debes llenar los campos obligatorios :/',
 						showConfirmButton: false,
-						timer: 1500
+						timer: 1500,
 					});
 				} else if (resultado.respuesta == 'error') {
 					swal({
@@ -445,7 +454,7 @@ $(document).ready(function () {
 						type: 'error',
 						title: 'Algo salió mal, intenta de nuevo',
 						showConfirmButton: false,
-						timer: 1500
+						timer: 1500,
 					});
 				}
 			},
@@ -455,9 +464,9 @@ $(document).ready(function () {
 					type: 'error',
 					title: 'Algo salió mal, intenta de nuevo',
 					showConfirmButton: false,
-					timer: 1500
+					timer: 1500,
 				});
-			}
+			},
 		});
 	});
 
@@ -480,7 +489,7 @@ $(document).ready(function () {
 						type: 'success',
 						title: '¡' + resultado.mensaje,
 						showConfirmButton: false,
-						timer: 1000
+						timer: 1000,
 					});
 
 					$('#correlativeCloseEnvio').click();
@@ -492,7 +501,7 @@ $(document).ready(function () {
 						type: 'warning',
 						title: 'Debes llenar los campos obligatorios :/',
 						showConfirmButton: false,
-						timer: 1500
+						timer: 1500,
 					});
 				} else if (resultado.respuesta == 'error') {
 					swal({
@@ -500,7 +509,7 @@ $(document).ready(function () {
 						type: 'error',
 						title: 'Algo salió mal, intenta de nuevo',
 						showConfirmButton: false,
-						timer: 1500
+						timer: 1500,
 					});
 				}
 			},
@@ -510,29 +519,27 @@ $(document).ready(function () {
 					type: 'error',
 					title: 'Algo salió mal, intenta de nuevo',
 					showConfirmButton: false,
-					timer: 1500
+					timer: 1500,
 				});
-			}
+			},
 		});
 	});
 
 	$('.detalle_sale').on('click', function (e) {
 		e.preventDefault();
-		$('#detalles')
-			.find('tbody')
-			.html('');
+		$('#detalles').find('tbody').html('');
 		$('#anularV').html('');
 		var id = $(this).attr('data-id');
 		var tipo = $(this).attr('data-tipo');
 
 		swal({
-			title: 'Cargando detalle de Venta...'
+			title: 'Cargando detalle de Venta...',
 		});
 		swal.showLoading();
 		$.ajax({
 			type: 'POST',
 			data: {
-				id: id
+				id: id,
 			},
 			url: 'BLL/' + tipo + '.php',
 			success(data) {
@@ -586,20 +593,16 @@ $(document).ready(function () {
 				swal({
 					type: 'error',
 					title: 'Error',
-					text: 'No se puede agregar al carrito'
+					text: 'No se puede agregar al carrito',
 				});
-			}
+			},
 		});
 	});
 
 	$('.detalle_balance').on('click', function (e) {
 		e.preventDefault();
-		$('#detallesB')
-			.find('tbody')
-			.html('');
-		$('#anuladosB')
-			.find('tbody')
-			.html('');
+		$('#detallesB').find('tbody').html('');
+		$('#anuladosB').find('tbody').html('');
 		$('#days').html('');
 		$('#infoComi').html('');
 		var id = $(this).attr('data-id');
@@ -614,13 +617,13 @@ $(document).ready(function () {
 		$('#sellerS').trigger('change'); // Notify any JS components that the value changed
 
 		swal({
-			title: 'Cargando balance de saldos...'
+			title: 'Cargando balance de saldos...',
 		});
 		swal.showLoading();
 		$.ajax({
 			type: 'POST',
 			data: {
-				id: id
+				id: id,
 			},
 			url: 'BLL/' + tipo + '.php',
 			success(data) {
@@ -633,7 +636,12 @@ $(document).ready(function () {
 						var nuevaFila = '<tr>';
 						nuevaFila += '<td>' + convertDate(registro.date);
 						+'</td>';
-						nuevaFila += '<td>' + registro.noReceipt + '<br>' + registro._idSeller + '</td>';
+						nuevaFila +=
+							'<td>' +
+							registro.noReceipt +
+							'<br>' +
+							registro._idSeller +
+							'</td>';
 						if (registro.cheque == 1) {
 							nuevaFila +=
 								"<td><small class='label label-warning'><i class='fa fa-bank'></i> Cheque</small></td>";
@@ -641,7 +649,12 @@ $(document).ready(function () {
 							nuevaFila +=
 								"<td><small class='label label-primary'><i class='fa fa-credit-card'></i> Pago</small></td>";
 						}
-						nuevaFila += '<td>' + registro.noDocument + '</td>';
+						nuevaFila +=
+							'<td>' +
+							registro.noDocument +
+							'<br>' +
+							registro.textDocument +
+							'</td>';
 						nuevaFila += '<td>Q.' + registro.amount + '</td>';
 						nuevaFila += '</tr>';
 						$('#anuladosB').append(nuevaFila);
@@ -657,7 +670,12 @@ $(document).ready(function () {
 						if (tipo == 0) {
 							nuevaFila += '<td><small>-</small></td>';
 						} else if (tipo == 1) {
-							nuevaFila += '<td>' + registro.noReceipt + '<br>' + registro._idSeller + '</td>';
+							nuevaFila +=
+								'<td>' +
+								registro.noReceipt +
+								'<br>' +
+								registro._idSeller +
+								'</td>';
 						}
 						if (tipo == 0) {
 							var d = new Date();
@@ -670,7 +688,7 @@ $(document).ready(function () {
 							$.ajax({
 								type: 'POST',
 								data: {
-									id: id
+									id: id,
 								},
 								url: 'BLL/listCommissionP.php',
 								success(data) {
@@ -683,11 +701,11 @@ $(document).ready(function () {
 										) {
 											$('#infoComi').append(
 												seller +
-												'<br> Comisión base: Schlenker: ' +
-												registro.s30 +
-												'%, Otros: ' +
-												registro.o30 +
-												'%'
+													'<br> Comisión base: Schlenker: ' +
+													registro.s30 +
+													'%, Otros: ' +
+													registro.o30 +
+													'%'
 											);
 											$('#comiS').val(registro.s30);
 											$('#comiD').val(registro.o30);
@@ -699,11 +717,11 @@ $(document).ready(function () {
 										) {
 											$('#infoComi').append(
 												seller +
-												'<br> Comisión base: Schlenker: ' +
-												registro.s60 +
-												'%, Otros: ' +
-												registro.o60 +
-												'%'
+													'<br> Comisión base: Schlenker: ' +
+													registro.s60 +
+													'%, Otros: ' +
+													registro.o60 +
+													'%'
 											);
 											$('#comiS').val(registro.s60);
 											$('#comiD').val(registro.o60);
@@ -715,9 +733,9 @@ $(document).ready(function () {
 										) {
 											$('#infoComi').append(
 												seller +
-												'<br> Comisión base: Schlenker: ' +
-												registro.s90 +
-												'%, Otros: 0%'
+													'<br> Comisión base: Schlenker: ' +
+													registro.s90 +
+													'%, Otros: 0%'
 											);
 											$('#comiS').val(registro.s90);
 											$('#comiD').val('0');
@@ -734,9 +752,9 @@ $(document).ready(function () {
 									swal({
 										type: 'error',
 										title: 'Error',
-										text: 'No se puede agregar al carrito'
+										text: 'No se puede agregar al carrito',
 									});
-								}
+								},
 							});
 							nuevaFila +=
 								"<td><small class='label label-danger'><i class='fa fa-database'></i> Saldo</small></td>";
@@ -753,7 +771,12 @@ $(document).ready(function () {
 							nuevaFila += '<td><small></small></td>';
 							nuevaFila += '<td><small>-</small></td>';
 						} else if (tipo == 1) {
-							nuevaFila += '<td>' + registro.noDocument + '</td>';
+							nuevaFila +=
+								'<td>' +
+								registro.noDocument +
+								'<br>' +
+								registro.textDocument +
+								'</td>';
 							nuevaFila +=
 								"<td><p class='text-muted'><i>" +
 								registro.commissionS +
@@ -803,8 +826,8 @@ $(document).ready(function () {
 				$('#totalP').val(totalP.toFixed(2));
 				$('#days').append(
 					"<h4><i class='icon fa fa-info'></i>" +
-					diferencia +
-					' Día(s) Transcurridos</h4>'
+						diferencia +
+						' Día(s) Transcurridos</h4>'
 				);
 
 				balance(id);
@@ -813,9 +836,9 @@ $(document).ready(function () {
 				swal({
 					type: 'error',
 					title: 'Error',
-					text: 'No se puede agregar al carrito'
+					text: 'No se puede agregar al carrito',
 				});
-			}
+			},
 		});
 	});
 
@@ -831,23 +854,19 @@ $(document).ready(function () {
 
 	$('.detalle_balanceC').on('click', function (e) {
 		e.preventDefault();
-		$('#detallesB')
-			.find('tbody')
-			.html('');
-		$('#anuladosB')
-			.find('tbody')
-			.html('');
+		$('#detallesB').find('tbody').html('');
+		$('#anuladosB').find('tbody').html('');
 		var id = $(this).attr('data-id');
 		var tipo = $(this).attr('data-tipo');
 
 		swal({
-			title: 'Cargando balance de saldos...'
+			title: 'Cargando balance de saldos...',
 		});
 		swal.showLoading();
 		$.ajax({
 			type: 'POST',
 			data: {
-				id: id
+				id: id,
 			},
 			url: 'BLL/' + tipo + '.php',
 			success(data) {
@@ -857,7 +876,12 @@ $(document).ready(function () {
 						var nuevaFila = '<tr>';
 						nuevaFila += '<td>' + convertDate(registro.date);
 						+'</td>';
-						nuevaFila += '<td>' + registro.noReceipt + '<br>' + registro._idSeller + '</td>';
+						nuevaFila +=
+							'<td>' +
+							registro.noReceipt +
+							'<br>' +
+							registro._idSeller +
+							'</td>';
 						if (registro.cheque == 1) {
 							nuevaFila +=
 								"<td><small class='label label-warning'><i class='fa fa-bank'></i> Cheque</small></td>";
@@ -865,7 +889,12 @@ $(document).ready(function () {
 							nuevaFila +=
 								"<td><small class='label label-primary'><i class='fa fa-credit-card'></i> Pago</small></td>";
 						}
-						nuevaFila += '<td>' + registro.noDocument + '</td>';
+						nuevaFila +=
+							'<td>' +
+							registro.noDocument +
+							'<br>' +
+							registro.textDocument +
+							'</td>';
 						nuevaFila += '<td>Q.' + registro.amount + '</td>';
 						nuevaFila += '</tr>';
 						$('#anuladosB').append(nuevaFila);
@@ -882,7 +911,12 @@ $(document).ready(function () {
 							nuevaFila += '<td><small>-</small></td>';
 							nuevaFila += '<td><small>-</small></td>';
 						} else if (tipo == 1) {
-							nuevaFila += '<td>' + registro.noReceipt + '<br>' + registro._idSeller + '</td>';
+							nuevaFila +=
+								'<td>' +
+								registro.noReceipt +
+								'<br>' +
+								registro._idSeller +
+								'</td>';
 							if (registro.cheque == 1) {
 								nuevaFila +=
 									"<td><small class='label label-warning'><i class='fa fa-bank'></i> Cheque</small></td>";
@@ -890,7 +924,12 @@ $(document).ready(function () {
 								nuevaFila +=
 									"<td><small class='label label-primary'><i class='fa fa-credit-card'></i> Pago</small></td>";
 							}
-							nuevaFila += '<td>' + registro.noDocument + '</td>';
+							nuevaFila +=
+								'<td>' +
+								registro.noDocument +
+								'<br>' +
+								registro.textDocument +
+								'</td>';
 							nuevaFila +=
 								"<td><p class='text-muted'><i>" +
 								registro.commissionS +
@@ -923,9 +962,9 @@ $(document).ready(function () {
 				swal({
 					type: 'error',
 					title: 'Error',
-					text: 'No se puede agregar al carrito'
+					text: 'No se puede agregar al carrito',
 				});
-			}
+			},
 		});
 	});
 
@@ -937,7 +976,7 @@ $(document).ready(function () {
 			swal({
 				type: 'error',
 				title: 'Error',
-				text: 'Seleccione un cliente, No hay ningun cliente seleccionado'
+				text: 'Seleccione un cliente, No hay ningun cliente seleccionado',
 			});
 			return;
 		}
@@ -1001,7 +1040,7 @@ $(document).ready(function () {
 		var datos = $(this).serializeArray();
 
 		swal({
-			title: 'Generando el reporte...'
+			title: 'Generando el reporte...',
 		});
 
 		swal.showLoading();
@@ -1009,7 +1048,7 @@ $(document).ready(function () {
 		$.ajax({
 			type: 'POST',
 			data: {
-				idCustomer: $('#customerS').val()
+				idCustomer: $('#customerS').val(),
 			},
 			url: 'BLL/rptstateByCustomer.php',
 			success: function (data) {
@@ -1067,9 +1106,9 @@ $(document).ready(function () {
 				swal({
 					type: 'error',
 					title: 'Error',
-					text: 'Algo ha salido mal, intentalo más tarde'
+					text: 'Algo ha salido mal, intentalo más tarde',
 				});
-			}
+			},
 		});
 	});
 
@@ -1099,7 +1138,7 @@ $(document).ready(function () {
 		$.ajax({
 			type: 'POST',
 			data: {
-				id: id
+				id: id,
 			},
 			url: 'BLL/listCommissionP.php',
 			success(data) {
@@ -1109,11 +1148,11 @@ $(document).ready(function () {
 					if (diferencia <= registro.sd30 || diferencia <= registro.od30) {
 						$('#infoComi').append(
 							seller +
-							'<br> Comisión base: Schlenker: ' +
-							registro.s30 +
-							'%, Otros: ' +
-							registro.o30 +
-							'%'
+								'<br> Comisión base: Schlenker: ' +
+								registro.s30 +
+								'%, Otros: ' +
+								registro.o30 +
+								'%'
 						);
 						$('#comiS').val(registro.s30);
 						$('#comiD').val(registro.o30);
@@ -1123,11 +1162,11 @@ $(document).ready(function () {
 					) {
 						$('#infoComi').append(
 							seller +
-							'<br> Comisión base: Schlenker: ' +
-							registro.s60 +
-							'%, Otros: ' +
-							registro.o60 +
-							'%'
+								'<br> Comisión base: Schlenker: ' +
+								registro.s60 +
+								'%, Otros: ' +
+								registro.o60 +
+								'%'
 						);
 						$('#comiS').val(registro.s60);
 						$('#comiD').val(registro.o60);
@@ -1137,9 +1176,9 @@ $(document).ready(function () {
 					) {
 						$('#infoComi').append(
 							seller +
-							'<br> Comisión base: Schlenker: ' +
-							registro.s90 +
-							'%, Otros: 0%'
+								'<br> Comisión base: Schlenker: ' +
+								registro.s90 +
+								'%, Otros: 0%'
 						);
 						$('#comiS').val(registro.s90);
 						$('#comiD').val('0');
@@ -1153,8 +1192,8 @@ $(document).ready(function () {
 				});
 				$('#days').append(
 					"<h4><i class='icon fa fa-info'></i>" +
-					diferencia +
-					' Día(s) Transcurridos</h4>'
+						diferencia +
+						' Día(s) Transcurridos</h4>'
 				);
 				swal.close();
 			},
@@ -1162,9 +1201,9 @@ $(document).ready(function () {
 				swal({
 					type: 'error',
 					title: 'Error',
-					text: 'No se puede agregar al carrito'
+					text: 'No se puede agregar al carrito',
 				});
-			}
+			},
 		});
 	});
 });
@@ -1178,30 +1217,26 @@ function confirmarPago(idSale, idBalance) {
 		confirmButtonColor: '#3085d6',
 		cancelButtonColor: '#d33',
 		confirmButtonText: 'Sí, Eliminar!',
-		cancelButtonText: 'Cancelar'
-	}).then(result => {
+		cancelButtonText: 'Cancelar',
+	}).then((result) => {
 		$.ajax({
 			type: 'POST',
 			data: {
 				idBalance: idBalance,
 				idSale: idSale,
-				tipo: 'confirmar'
+				tipo: 'confirmar',
 			},
 			url: 'BLL/balance.php',
 			success(data) {
 				console.log(data);
 				var resultado = JSON.parse(data);
 				if (resultado.respuesta == 'exito') {
-					$('#detallesB')
-						.find('tbody')
-						.html('');
-					$('#anuladosB')
-						.find('tbody')
-						.html('');
+					$('#detallesB').find('tbody').html('');
+					$('#anuladosB').find('tbody').html('');
 					$.ajax({
 						type: 'POST',
 						data: {
-							id: idSale
+							id: idSale,
 						},
 						url: 'BLL/listBalance.php',
 						success(data) {
@@ -1212,7 +1247,12 @@ function confirmarPago(idSale, idBalance) {
 									var nuevaFila = '<tr>';
 									nuevaFila += '<td>' + convertDate(registro.date);
 									+'</td>';
-									nuevaFila += '<td>' + registro.noReceipt + '<br>' + registro._idSeller + '</td>';
+									nuevaFila +=
+										'<td>' +
+										registro.noReceipt +
+										'<br>' +
+										registro._idSeller +
+										'</td>';
 									if (registro.cheque == 1) {
 										nuevaFila +=
 											"<td><small class='label label-warning'><i class='fa fa-bank'></i> Cheque</small></td>";
@@ -1220,7 +1260,12 @@ function confirmarPago(idSale, idBalance) {
 										nuevaFila +=
 											"<td><small class='label label-primary'><i class='fa fa-credit-card'></i> Pago</small></td>";
 									}
-									nuevaFila += '<td>' + registro.noDocument + '</td>';
+									nuevaFila +=
+										'<td>' +
+										registro.noDocument +
+										'<br>' +
+										registro.textDocument +
+										'</td>';
 									nuevaFila += '<td>Q.' + registro.amount + '</td>';
 									nuevaFila += '</tr>';
 									$('#anuladosB').append(nuevaFila);
@@ -1236,7 +1281,12 @@ function confirmarPago(idSale, idBalance) {
 									if (tipo == 0) {
 										nuevaFila += '<td><small></small></td>';
 									} else if (tipo == 1) {
-										nuevaFila += '<td>' + registro.noReceipt + '<br>' + registro._idSeller + '</td>';
+										nuevaFila +=
+											'<td>' +
+											registro.noReceipt +
+											'<br>' +
+											registro._idSeller +
+											'</td>';
 									}
 									if (tipo == 0) {
 										nuevaFila +=
@@ -1253,7 +1303,12 @@ function confirmarPago(idSale, idBalance) {
 									if (tipo == 0) {
 										nuevaFila += '<td><small></small></td>';
 									} else if (tipo == 1) {
-										nuevaFila += '<td>' + registro.noDocument + '</td>';
+										nuevaFila +=
+											'<td>' +
+											registro.noDocument +
+											'<br>' +
+											registro.textDocument +
+											'</td>';
 									}
 									nuevaFila += '<td>Q.' + registro.amount + '</td>';
 									nuevaFila += '<td>Q.' + registro.balance + '</td>';
@@ -1301,18 +1356,18 @@ function confirmarPago(idSale, idBalance) {
 							swal({
 								type: 'error',
 								title: 'Error',
-								text: 'No se puede agregar al carrito'
+								text: 'No se puede agregar al carrito',
 							});
-						}
+						},
 					});
 				} else {
 					swal({
 						type: 'error',
 						title: 'Error!',
-						text: 'No se pudo anular el pago.'
+						text: 'No se pudo anular el pago.',
 					});
 				}
-			}
+			},
 		});
 	});
 }
@@ -1326,30 +1381,26 @@ function anularPago(idSale, idBalance) {
 		confirmButtonColor: '#3085d6',
 		cancelButtonColor: '#d33',
 		confirmButtonText: 'Sí, Eliminar!',
-		cancelButtonText: 'Cancelar'
-	}).then(result => {
+		cancelButtonText: 'Cancelar',
+	}).then((result) => {
 		$.ajax({
 			type: 'POST',
 			data: {
 				idBalance: idBalance,
 				idSale: idSale,
-				tipo: 'anular'
+				tipo: 'anular',
 			},
 			url: 'BLL/balance.php',
 			success(data) {
 				console.log(data);
 				var resultado = JSON.parse(data);
 				if (resultado.respuesta == 'exito') {
-					$('#detallesB')
-						.find('tbody')
-						.html('');
-					$('#anuladosB')
-						.find('tbody')
-						.html('');
+					$('#detallesB').find('tbody').html('');
+					$('#anuladosB').find('tbody').html('');
 					$.ajax({
 						type: 'POST',
 						data: {
-							id: idSale
+							id: idSale,
 						},
 						url: 'BLL/listBalance.php',
 						success(data) {
@@ -1360,7 +1411,12 @@ function anularPago(idSale, idBalance) {
 									var nuevaFila = '<tr>';
 									nuevaFila += '<td>' + convertDate(registro.date);
 									+'</td>';
-									nuevaFila += '<td>' + registro.noReceipt + '<br>' + registro._idSeller + '</td>';
+									nuevaFila +=
+										'<td>' +
+										registro.noReceipt +
+										'<br>' +
+										registro._idSeller +
+										'</td>';
 									if (registro.cheque == 1) {
 										nuevaFila +=
 											"<td><small class='label label-warning'><i class='fa fa-bank'></i> Cheque</small></td>";
@@ -1368,7 +1424,12 @@ function anularPago(idSale, idBalance) {
 										nuevaFila +=
 											"<td><small class='label label-primary'><i class='fa fa-credit-card'></i> Pago</small></td>";
 									}
-									nuevaFila += '<td>' + registro.noDocument + '</td>';
+									nuevaFila +=
+										'<td>' +
+										registro.noDocument +
+										'<br>' +
+										registro.textDocument +
+										'</td>';
 									nuevaFila += '<td>Q.' + registro.amount + '</td>';
 									nuevaFila += '</tr>';
 									$('#anuladosB').append(nuevaFila);
@@ -1384,7 +1445,12 @@ function anularPago(idSale, idBalance) {
 									if (tipo == 0) {
 										nuevaFila += '<td><small></td>';
 									} else if (tipo == 1) {
-										nuevaFila += '<td>' + registro.noReceipt + '<br>' + registro._idSeller + '</td>';
+										nuevaFila +=
+											'<td>' +
+											registro.noReceipt +
+											'<br>' +
+											registro._idSeller +
+											'</td>';
 									}
 									if (tipo == 0) {
 										nuevaFila +=
@@ -1401,7 +1467,12 @@ function anularPago(idSale, idBalance) {
 									if (tipo == 0) {
 										nuevaFila += '<td><small></small></td>';
 									} else if (tipo == 1) {
-										nuevaFila += '<td>' + registro.noDocument + '</td>';
+										nuevaFila +=
+											'<td>' +
+											registro.noDocument +
+											'<br>' +
+											registro.textDocument +
+											'</td>';
 									}
 									nuevaFila += '<td>Q.' + registro.amount + '</td>';
 									nuevaFila += '<td>Q.' + registro.balance + '</td>';
@@ -1449,9 +1520,9 @@ function anularPago(idSale, idBalance) {
 							swal({
 								type: 'error',
 								title: 'Error',
-								text: 'No se puede agregar al carrito'
+								text: 'No se puede agregar al carrito',
 							});
-						}
+						},
 					});
 					if ((resultado.activa = 'true')) {
 						recargarPagina();
@@ -1460,10 +1531,10 @@ function anularPago(idSale, idBalance) {
 					swal({
 						type: 'error',
 						title: 'Error!',
-						text: 'No se pudo anular el pago.'
+						text: 'No se pudo anular el pago.',
 					});
 				}
-			}
+			},
 		});
 	});
 }
@@ -1476,7 +1547,7 @@ function ImgError(source) {
 
 function anularSale(idSale) {
 	swal({
-		title: 'Anulando la venta...'
+		title: 'Anulando la venta...',
 	});
 	swal.showLoading();
 
@@ -1493,11 +1564,11 @@ function anularSale(idSale) {
 	datos = Array(
 		{
 			name: 'json',
-			value: JSON.stringify(obj)
+			value: JSON.stringify(obj),
 		},
 		{
 			name: 'idSale',
-			value: idSale
+			value: idSale,
 		}
 	);
 
@@ -1515,7 +1586,7 @@ function anularSale(idSale) {
 					type: 'success',
 					title: '¡Venta Anulada!',
 					showConfirmButton: false,
-					timer: 1500
+					timer: 1500,
 				});
 				setTimeout(function () {
 					location.reload();
@@ -1524,10 +1595,10 @@ function anularSale(idSale) {
 				swal({
 					type: 'error',
 					title: 'Error!',
-					text: 'No se pudo anular la venta.'
+					text: 'No se pudo anular la venta.',
 				});
 			}
-		}
+		},
 	});
 }
 
@@ -1544,7 +1615,7 @@ function generarFactura() {
 		confirmButtonColor: '#3085d6',
 		cancelButtonColor: '#d33',
 		confirmButtonText: 'Sí, abandonar!',
-		cancelButtonText: 'Cancelar'
+		cancelButtonText: 'Cancelar',
 	}).then(() => {
 		var idSale = $('#idSale').val();
 		setTimeout(function () {
@@ -1563,7 +1634,7 @@ function imprimir(tipo, idSale) {
 			confirmButtonColor: '#3085d6',
 			cancelButtonColor: '#d33',
 			confirmButtonText: 'Sí, Generar!',
-			cancelButtonText: 'Cancelar'
+			cancelButtonText: 'Cancelar',
 		}).then(() => {
 			$.ajax({
 				type: 'GET',
@@ -1579,7 +1650,7 @@ function imprimir(tipo, idSale) {
 							data: {
 								venta: 'editarShipment',
 								idSale: idSale,
-								last: last
+								last: last,
 							},
 							url: 'BLL/sale.php',
 							datatype: 'json',
@@ -1590,13 +1661,13 @@ function imprimir(tipo, idSale) {
 								} else if (resultado.respuesta == 'vacio') {
 								} else if (resultado.respuesta == 'error') {
 								}
-							}
+							},
 						});
 					});
 				},
 				error: function (data) {
 					alert('error');
-				}
+				},
 			});
 			changeReportL(tipo + '.php?idSale=' + idSale);
 			$('#modal-printS').modal('show');
@@ -1617,7 +1688,7 @@ function cancelSale(idSale) {
 		type: 'POST',
 		data: {
 			venta: 'cancel',
-			idSale: idSale
+			idSale: idSale,
 		},
 		url: 'BLL/sale.php',
 		success(data) {
@@ -1631,10 +1702,10 @@ function cancelSale(idSale) {
 				swal({
 					type: 'error',
 					title: 'Error!',
-					text: 'No se pudo culminar la venta.'
+					text: 'No se pudo culminar la venta.',
 				});
 			}
-		}
+		},
 	});
 }
 
@@ -1642,7 +1713,7 @@ function balance(idSale) {
 	$.ajax({
 		type: 'POST',
 		data: {
-			id: idSale
+			id: idSale,
 		},
 		url: 'BLL/listBalanceT.php',
 		success(data) {
@@ -1663,9 +1734,9 @@ function balance(idSale) {
 			swal({
 				type: 'error',
 				title: 'Error',
-				text: 'No se puede mostrar balance de saldos'
+				text: 'No se puede mostrar balance de saldos',
 			});
-		}
+		},
 	});
 }
 
@@ -1675,7 +1746,7 @@ function updateCorrelativo(correlative, serie, last) {
 		data: {
 			correlative: correlative,
 			serieC: serie,
-			last: last
+			last: last,
 		},
 		url: 'BLL/correlative.php',
 		dataType: 'json',
@@ -1689,7 +1760,7 @@ function updateCorrelativo(correlative, serie, last) {
 					type: 'warning',
 					title: 'Debes llenar los campos obligatorios :/',
 					showConfirmButton: false,
-					timer: 1500
+					timer: 1500,
 				});
 			} else if (resultado.respuesta == 'error') {
 				swal({
@@ -1697,7 +1768,7 @@ function updateCorrelativo(correlative, serie, last) {
 					type: 'error',
 					title: 'Algo salió mal, intenta de nuevo',
 					showConfirmButton: false,
-					timer: 1500
+					timer: 1500,
 				});
 			}
 		},
@@ -1707,44 +1778,40 @@ function updateCorrelativo(correlative, serie, last) {
 				type: 'error',
 				title: 'Algo salió mal, intenta de nuevo',
 				showConfirmButton: false,
-				timer: 1500
+				timer: 1500,
 			});
-		}
+		},
 	});
 }
 
 function changeReportF(report) {
 	$('#divreporteF').html(
 		'<iframe src="reportsFPDF/' +
-		report +
-		'" style="width: 100%; min-width: 300px; height: 640px"></iframe>'
+			report +
+			'" style="width: 100%; min-width: 300px; height: 640px"></iframe>'
 	);
 }
 
 function changeReportE(report) {
 	$('#divreporteE').html(
 		'<iframe src="reportsFPDF/' +
-		report +
-		'" style="width: 100%; min-width: 300px; height: 390px"></iframe>'
+			report +
+			'" style="width: 100%; min-width: 300px; height: 390px"></iframe>'
 	);
 }
 
 function changeReportL(report) {
 	$('#divreporteL').html(
 		'<iframe src="reportsFPDF/' +
-		report +
-		'" style="width: 100%; min-width: 300px; height: 600px"></iframe>'
+			report +
+			'" style="width: 100%; min-width: 300px; height: 600px"></iframe>'
 	);
 }
 
 function eliminarS(idp) {
-	$('#registros_length select')
-		.val('-1')
-		.trigger('change');
+	$('#registros_length select').val('-1').trigger('change');
 	//jQuery('[data-id="' + idp + '"]').attr('hidden', false);
-	$('#registros_length select')
-		.val('10')
-		.trigger('change');
+	$('#registros_length select').val('10').trigger('change');
 
 	var idproduct = document.getElementsByClassName('idproducto_class');
 	var nprecio = document.getElementsByClassName('precio_class');
