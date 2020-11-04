@@ -12,7 +12,7 @@ try {
     (select name from village where idVillage = C._idVillage) as aldea,
     (select name from deparment where idDeparment = C._idDeparment) as departamento,
     (SELECT routeName FROM route WHERE idRoute = C._idRoute) as depName, S.noDeliver, S.dateStart,
-    (SELECT balance FROM balance WHERE _idSale = idSale ORDER BY idBalance DESC LIMIT 1) AS saldo,
+    (SELECT balance FROM balance WHERE _idSale = idSale and state != 2 ORDER BY idBalance DESC LIMIT 1) AS saldo,
     (SELECT SUM(amount) FROM balance WHERE _idSale = idSale AND cheque = 1 AND state = 1) AS abono
     FROM customer C INNER JOIN sale S ON C.idCustomer = S._idCustomer
     WHERE _idRoute = $idRoute AND S.cancel = 0 AND S.state = 0 ORDER BY C.idCustomer ASC";
@@ -25,10 +25,10 @@ WHERE _idRoute = $idRoute AND S.cancel = 0 AND S.state = 0 AND B.cheque = 1 AND 
     (select name from town where idTown = _idTown) as municipio,
     (select name from village where idVillage = _idVillage) as aldea,
     (select name from deparment where idDeparment = _idDeparment) as departamento,
-    (select Sum((SELECT balance FROM balance where _idSale = idSale and state = 0 order by idBalance desc limit 1))
+    (select Sum((SELECT balance FROM balance where _idSale = idSale order by idBalance desc limit 1))
     from sale where _idCustomer = idCustomer and cancel = 0 and state = 0) as total
     FROM customer WHERE _idRoute = $idRoute AND state = 0 AND
-    (select Sum((SELECT balance FROM balance where _idSale = idSale and state = 0 order by idBalance desc limit 1)) from sale where _idCustomer = idCustomer and cancel = 0 and state = 0) IS NULL";
+    (select Sum((SELECT balance FROM balance where _idSale = idSale order by idBalance desc limit 1)) from sale where _idCustomer = idCustomer and cancel = 0 and state = 0) IS NULL";
 
     $resultado = $conn->query($sql);
     $resultadoCheques = $conn->query($sql2);
