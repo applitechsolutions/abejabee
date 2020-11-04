@@ -28,7 +28,7 @@ WHERE _idRoute = $idRoute AND S.cancel = 0 AND S.state = 0 AND B.cheque = 1 AND 
     (select Sum((SELECT balance FROM balance where _idSale = idSale order by idBalance desc limit 1))
     from sale where _idCustomer = idCustomer and cancel = 0 and state = 0) as total
     FROM customer WHERE _idRoute = $idRoute AND state = 0 AND
-    (select Sum((SELECT balance FROM balance where _idSale = idSale order by idBalance desc limit 1)) from sale where _idCustomer = idCustomer and cancel = 0 and state = 0) IS NULL";
+    (select Sum((SELECT balance FROM balance where _idSale = idSale and state = 0 order by idBalance desc limit 1)) from sale where _idCustomer = idCustomer and cancel = 0 and state = 0) IS NULL";
 
     $resultado = $conn->query($sql);
     $resultadoCheques = $conn->query($sql2);
@@ -102,7 +102,7 @@ while ($cliente = $resultado->fetch_assoc()) {
                             <td>' . $cliente['customerCode'] . '</td>
                             <td>' . $cliente['customerName'] . '</td>
                             <td>' . $cliente['customerTel'] . '</td>
-                            <td>' . $cliente['departamento']. $cliente['municipio'].$cliente['aldea'].$cliente['customerAddress']. '</td>
+                            <td>' . $cliente['departamento'] . $cliente['municipio'] . $cliente['aldea'] . $cliente['customerAddress'] . '</td>
                             <td>' . $cliente['noDeliver'] . '</td>
                             <td>' . date_format($dateStart, 'd/m/y') . '</td>
                             <td>' . 'Q.' . $cliente['saldo'] . '</td>
@@ -134,8 +134,8 @@ while ($cliente = $resultadoOtros->fetch_assoc()) {
                             <td>' . $cliente['customerCode'] . '</td>
                             <td>' . $cliente['customerName'] . '</td>
                             <td>' . $cliente['customerTel'] . '</td>
-                            <td>' . $cliente['departamento'].
-                                $cliente['municipio'].$cliente['aldea'].$cliente['customerAddress']. '</td>
+                            <td>' . $cliente['departamento'] .
+        $cliente['municipio'] . $cliente['aldea'] . $cliente['customerAddress'] . '</td>
                             <td>Q 0.00</td>
                         </tr>';
 }
