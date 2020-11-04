@@ -25,7 +25,7 @@ WHERE _idRoute = $idRoute AND S.cancel = 0 AND S.state = 0 AND B.cheque = 1 AND 
     (select name from town where idTown = _idTown) as municipio,
     (select name from village where idVillage = _idVillage) as aldea,
     (select name from deparment where idDeparment = _idDeparment) as departamento,
-    (select Sum((SELECT balance FROM balance where _idSale = idSale order by idBalance desc limit 1))
+    (select Sum((SELECT balance FROM balance where _idSale = idSale and state = 0 order by idBalance desc limit 1))
     from sale where _idCustomer = idCustomer and cancel = 0 and state = 0) as total
     FROM customer WHERE _idRoute = $idRoute AND state = 0 AND
     (select Sum((SELECT balance FROM balance where _idSale = idSale and state = 0 order by idBalance desc limit 1)) from sale where _idCustomer = idCustomer and cancel = 0 and state = 0) IS NULL";
