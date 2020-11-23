@@ -1015,7 +1015,6 @@ $(document).ready(function () {
 			'<th>No. de remisión</th>' +
 			'<th>Vendedor</th>' +
 			'<th>Anticipo</th>' +
-			'<th>Total</th>' +
 			'<th>Abono</th>' +
 			'<th>Saldo</th>' +
 			'</tr>' +
@@ -1027,7 +1026,6 @@ $(document).ready(function () {
 			'<th>No. de remisión</th>' +
 			'<th>Vendedor</th>' +
 			'<th>Anticipo</th>' +
-			'<th>Total</th>' +
 			'<th>Abono</th>' +
 			'<th>Saldo</th>' +
 			'</tr>' +
@@ -1072,28 +1070,41 @@ $(document).ready(function () {
 					);
 					$('#owner').text(registro.owner + ' ' + registro.inCharge);
 					var contenido = '<tr>';
-					contenido += '<td>' + convertDate(registro.dateStart) + '</td>';
-					if (registro.type == 0) {
-						contenido += '<td>' + registro.noDeliver + ' Dist.' + '</td>';
-					} else {
-						contenido += '<td>' + registro.noDeliver + ' Schl.' + '</td>';
-					}
-					contenido += '<td>' + registro.seller + '</td>';
-					contenido += '<td>Q.' + registro.advance + '</td>';
-					contenido += '<td>Q.' + registro.totalSale + '</td>';
-					if (registro.abono == null) {
+					if (registro.balpay == 0) {
+						contenido += '<td>' + convertDate(registro.dateStart) + '</td>';
+						if (registro.type == 0) {
+							contenido += '<td>' + registro.noDeliver + ' Dist.' + '</td>';
+						} else {
+							contenido += '<td>' + registro.noDeliver + ' Schl.' + '</td>';
+						}
+						contenido += '<td>' + registro.seller + '</td>';
+						contenido += '<td>Q.' + registro.advance + '</td>';
 						contenido += '<td>-</td>';
-						saldo = parseFloat(registro.saldo);
-					} else {
-						contenido += '<td>Q.' + registro.abono + '</td>';
-						saldo = parseFloat(registro.saldo) - parseFloat(registro.abono);
-					}
-					if (saldo > 0) {
 						contenido +=
-							"<td class='text-danger'><b>Q." + saldo.toFixed(2) + '</b></td>';
+							'<td class="text-danger">Q.' + registro.balance + '</td>';
 					} else {
+						contenido += '<td>' + convertDate(registro.dateStart) + '</td>';
+						if (registro.type == 0) {
+							contenido += '<td>' + registro.noDeliver + ' Dist.' + '</td>';
+						} else {
+							contenido += '<td>' + registro.noDeliver + ' Schl.' + '</td>';
+						}
+						contenido += '<td>-</td>';
+						contenido += '<td>-</td>';
 						contenido +=
-							"<td class='text-success'>Q." + saldo.toFixed(2) + '</td>';
+							'<td>' +
+							convertDate(registro.date) +
+							'<br>Doc: ' +
+							registro.noDocument +
+							'<br>Q.' +
+							registro.amount;
+						if (registro.cheque == 1) {
+							contenido += ' (*cheque)</td>';
+						} else {
+							contenido += '</td>';
+						}
+						contenido +=
+							'<td class="text-success">Q.' + registro.balance + '</td>';
 					}
 					contenido += '</tr>';
 					$('.contenidoRPT7').append(contenido);
