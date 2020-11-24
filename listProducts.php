@@ -143,10 +143,12 @@
                   <tbody>
    <tr v-for="product of products">
                         <td>
-                        {{ product.productCode }}
+                        <span class=" text-muted text-sm">{{ product.productCode }}</span>
+                            <input @change="editProduct(product)" v-model="product.productCode" class="form-control input-sm" type="text" :value="product.productCode">
                         </td>
                         <td>
-                        {{ product.productName }}
+                        <span class=" text-muted text-sm">{{ product.productName }}</span>
+                        <textarea @change="editProduct(product)" v-model="product.productName" class="form-control input-sm" type="text" :value="product.productName"></textarea>
                         </td>
                         <td>
                         {{ product.make }}
@@ -158,13 +160,13 @@
                         {{ product.unity }}
                         </td>
                         <td>
-                        <input @change="editCostProduct(product)" v-model="product.cost" class="form-control input-sm" type="number" min="0.00" step="0.01" :value="product.cost">
+                        <input @change="editProduct(product)" v-model="product.cost" class="form-control input-sm" type="number" min="0.00" step="0.01" :value="product.cost">
                         </td>
                         <td class="text-center">
-                        {{ product.minStock }}
+                        <input @change="editProduct(product)" v-model="product.minStock" class="form-control input-sm" type="number" min="0" step="1" :value="product.minStock">
                         </td>
                         <td>
-                        {{ product.description }}
+                        <textarea @change="editProduct(product)" v-model="product.description" class="form-control input-sm" type="text" :value="product.description"></textarea>
                         </td>
                         <td>
                         <table class="table table-striped">
@@ -239,7 +241,7 @@
             ...Vuex.mapState(['products'])
         },
         methods: {
-            ...Vuex.mapActions(['getProducts', 'editCostProduct', 'editPricesProduct']),
+            ...Vuex.mapActions(['getProducts', 'editProduct', 'editPricesProduct']),
             editPrice(product, idPrice) {
                 product.id_price = idPrice;
                 switch (idPrice) {

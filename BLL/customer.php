@@ -14,7 +14,7 @@ if ($_POST['customer'] == 'nuevo') {
     $aldea = $_POST['aldea'];
     $ruta = $_POST['ruta'];
     $encargado = $_POST['incharge'];
-    
+
     try{
         if ($nombre == '' || $codigo == '' || $direccion == '' || $departamento == '' || $muni == '' || $aldea == '' || $ruta == '') {
             $respuesta = array(
@@ -31,7 +31,7 @@ if ($_POST['customer'] == 'nuevo') {
                     'idCliente' => $id_registro,
                     'mensaje' => 'Cliente creado correctamente!',
                     'proceso' => 'nuevo'
-                );                
+                );
             }else {
                 $respuesta = array(
                     'respuesta' => 'error',
@@ -41,7 +41,7 @@ if ($_POST['customer'] == 'nuevo') {
             $stmt->close();
             $conn->close();
         }
-        
+
     }catch(Exception $e){
         echo 'Error: '. $e.getMessage();
     }
@@ -77,7 +77,7 @@ if ($_POST['customer'] == 'actualizar') {
                     'idCliente' => $stmt->insert_id,
                     'mensaje' => 'Cliente actualizado correctamente!',
                     'proceso' => 'editado'
-                );                
+                );
             }else {
                 $respuesta = array(
                     'respuesta' => 'error'
@@ -86,7 +86,53 @@ if ($_POST['customer'] == 'actualizar') {
             $stmt->close();
             $conn->close();
         }
-        
+
+    }catch(Exception $e){
+        echo 'Error: '. $e.getMessage();
+    }
+    die(json_encode($respuesta));
+
+}
+
+if ($_POST['customer'] == 'actualizarTemp') {
+    $id_customer = $_POST['id_customer'];
+    $nombre = $_POST['customerName'];
+    $codigo = $_POST['customerCode'];
+    $telefono = $_POST['customerTel'];
+    $nit = $_POST['customerNit'];
+    $direccion = $_POST['customerAddress'];
+    // $owner = $_POST['owner'];
+    // $departamento = $_POST['departamento'];
+    // $muni = $_POST['muni'];
+    // $aldea = $_POST['aldea'];
+    // $ruta = $_POST['ruta'];
+    // $encargado = $_POST['incharge'];
+
+    try{
+        if ($nombre == '' || $codigo == '' || $direccion == '') {
+            $respuesta = array(
+                'respuesta' => 'vacio'
+            );
+        }else {
+            $stmt = $conn->prepare("UPDATE customer SET customerName = ?, customerCode = ?, customerTel = ?, customerNit = ?, customerAddress = ? WHERE idCustomer = ?");
+            $stmt->bind_param("sssssi", $nombre, $codigo, $telefono, $nit, $direccion, $id_customer);
+            $stmt->execute();
+            if ($stmt->affected_rows) {
+                $respuesta = array(
+                    'respuesta' => 'exito',
+                    'idCliente' => $stmt->insert_id,
+                    'mensaje' => 'Cliente actualizado correctamente!',
+                    'proceso' => 'editado'
+                );
+            }else {
+                $respuesta = array(
+                    'respuesta' => 'error'
+                );
+            }
+            $stmt->close();
+            $conn->close();
+        }
+
     }catch(Exception $e){
         echo 'Error: '. $e.getMessage();
     }

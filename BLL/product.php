@@ -150,6 +150,10 @@ if ($_POST['producto'] == 'actualizar') {
 if ($_POST['producto'] == 'actualizarCosto') {
 
     $id_product = $_POST['id_producto'];
+    $productCode = $_POST['productCode'];
+    $productName = $_POST['productName'];
+    $minStock = $_POST['minStock'];
+    $description = $_POST['description'];
     $cost = $_POST['cost'];
 
     try {
@@ -159,8 +163,8 @@ if ($_POST['producto'] == 'actualizarCosto') {
             );
         } else {
 
-                $stmt = $conn->prepare("UPDATE product SET cost = ? WHERE idProduct = ?");
-                $stmt->bind_param("di", $cost, $id_product);
+                $stmt = $conn->prepare("UPDATE product SET productName = ?, productCode = ?, cost = ?, minStock = ?, description = ? WHERE idProduct = ?");
+                $stmt->bind_param("ssdisi", $productName, $productCode, $cost, $minStock, $description, $id_product);
 
             $estado = $stmt->execute();
 
