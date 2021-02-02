@@ -162,6 +162,7 @@
                         {{customer.roName}}
                         </td>
                         <td>
+                        <span class=" text-muted text-sm">{{ customer.customerAddress }}</span>
                         <textarea @change="editCustomer(customer)" v-model="customer.customerAddress" class="form-control" rows="3" type="text" :value="customer.customerAddress"></textarea>
                         </td>
                         <td>

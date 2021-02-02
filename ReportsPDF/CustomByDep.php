@@ -88,14 +88,17 @@ $pagina = '
                         </tr>
                     </thead>
                     <tbody class="w3-white">';
+$saldoT = 0;
 while ($cliente = $resultado->fetch_assoc()) {
     $dateStart = date_create($cliente['dateStart']);
     if ($cliente['abono'] == null) {
         $abono = '0.00';
         $saldo = $cliente['saldo'];
+        $saldoT = $saldoT + $saldo;
     } else {
         $abono = $cliente['abono'];
         $saldo = $cliente['saldo'] - $cliente['abono'];
+        $saldoT = $saldoT + $saldo;
     }
     $pagina .= '
                         <tr>
@@ -109,6 +112,17 @@ while ($cliente = $resultado->fetch_assoc()) {
                             <td><small class="w3-text-gray">Abono: </small><br><small>' . 'Q.' . $abono . '</small><br><small class="w3-text-green">Saldo: </small><br><small>' . 'Q.' . number_format($saldo, 2, '.', ',') . '</small></td>
                         </tr>';
 }
+$pagina .= '
+<tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>Saldo Total:</td>
+    <td>Q.' . number_format($saldoT, 2, '.', ',') . '</td>
+</tr>';
 $pagina .= '</tbody>
                 </table>
             </div>
